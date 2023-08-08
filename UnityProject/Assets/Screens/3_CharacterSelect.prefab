@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3829821342936219660}
   m_Layer: 0
-  m_Name: CharacterSelect
+  m_Name: 3_CharacterSelect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
