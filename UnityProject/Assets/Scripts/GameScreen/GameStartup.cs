@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class GameStartup : MonoBehaviour
 {
+    [SerializeField] 
+    private AudioClip[] backgroundAudioClips;
+
     void Start()
     {
-        //Initiate UImanager
-        //Initiate Playstate
-        //
+        gameObject.GetComponent<GameUIManager>();
+        
+        gameObject.AddComponent<GameChild>();
+        gameObject.AddComponent<GameParent>();
+
+        if (backgroundAudioClips.Length > 0)
+        {
+            SoundSystem.PlayBackgroundMusic(backgroundAudioClips);
+        }
     }
 }
