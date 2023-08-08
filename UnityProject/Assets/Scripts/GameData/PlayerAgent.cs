@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum Character
 {
-    Mom, Child
+    None,Mom, Child
 }
 
 [CreateAssetMenu(fileName = "ADataObject", menuName = "Custom/AData/PlayerAgent")]
@@ -12,5 +12,6 @@ public class PlayerAgent : AData
 {
     public string score;
     public Character character;
-    
+
+    public string inputDevice;
 }
