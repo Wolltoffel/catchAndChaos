@@ -7,9 +7,10 @@ public enum Character
     Mom, Child
 }
 
-[CreateAssetMenu(fileName = "ADataObject", menuName = "Custom/AData")]
+[CreateAssetMenu(fileName = "ADataObject", menuName = "Custom/AData/PlayerAgent")]
 public class PlayerAgent : AData
 {
     public string score;
     public Character character;
+    
 }

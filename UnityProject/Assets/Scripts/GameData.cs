@@ -57,9 +57,12 @@ public class GameData : MonoBehaviour
         + "(Requested return type - {typeof(T)})");
     }
 
-    public static void SetData<T>(T newData, string key) where T : AData
+    public static void SetData(AData newData, string key)
     {
-        T oldData = GetData<T>(key);
+        var type  = newData.GetType();
+        
+        AData oldData = GetData<AData>(key);
         oldData = newData;
     }
+
 }
