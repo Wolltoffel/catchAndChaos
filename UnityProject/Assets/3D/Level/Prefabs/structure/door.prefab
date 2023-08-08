@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5801639764706012270}
   - component: {fileID: 8603959864613787812}
   m_Layer: 0
-  m_Name: "Eingangst\xFCr"
+  m_Name: door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

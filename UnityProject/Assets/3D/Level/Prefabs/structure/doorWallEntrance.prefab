@@ -206,7 +206,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3116174435039376698}
   m_Layer: 0
-  m_Name: Door Wall Prefab (entrance)
+  m_Name: doorWallEntrance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
