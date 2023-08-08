@@ -23,21 +23,22 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2594845433343104867}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4548239001166795895}
   - {fileID: 901381839053381029}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &795135459125541454
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 2425974219059673091}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 57c19a541bd5cc841a609d33ee689417, type: 3}
@@ -117,6 +118,9 @@ PrefabInstance:
       value: Lamellen
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57c19a541bd5cc841a609d33ee689417, type: 3}
 --- !u!4 &901381839053381029 stripped
 Transform:
@@ -128,6 +132,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 2425974219059673091}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: c14439887f08782498e2c06adc6fa778, type: 3}
@@ -183,6 +188,9 @@ PrefabInstance:
       value: Wand mit Slide
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c14439887f08782498e2c06adc6fa778, type: 3}
 --- !u!4 &4548239001166795895 stripped
 Transform:
