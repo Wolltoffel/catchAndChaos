@@ -215,6 +215,10 @@ PrefabInstance:
       value: "T\xFCr L"
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 93e39ed13c41c8c4daf9663dcf13cd21, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 93e39ed13c41c8c4daf9663dcf13cd21, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
@@ -299,6 +303,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: d833af873ce7c504e9b9ba3d9269febf, type: 3}
       propertyPath: m_Name
       value: "T\xFCr R"
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d833af873ce7c504e9b9ba3d9269febf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d833af873ce7c504e9b9ba3d9269febf, type: 3}
       propertyPath: m_StaticEditorFlags

@@ -1,0 +1,8 @@
+- Die Map ist zur halfte wieder hergestellt! Ihr findest sie unter 3D/Level/Prefabs/Map
+- alle Assets wurden sortiert!
+- alle Texturen otimal komprimiert!
+
+
+NUTZT DIE ERSTELLTEN PREFABS!! :3 
+gerade wwenn ihr script auf Objecte legen muesst:
+(das spart euch stunden an arbeit und macht mich happy!)
