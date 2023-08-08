@@ -7,10 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: doorWallEntrance
+  m_Name: wallSlidePink
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ValidKeywords:
-  - _GLOSSYREFLECTIONS_OFF
   - _METALLICGLOSSMAP
   - _NORMALMAP
   m_InvalidKeywords:
@@ -25,15 +24,15 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 3f9fe1974fac2b14d9d787f30e18755f, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1195713d801b4724e8d91e28cdf3ca14, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 6299d14e202f7d946b995d4a88a6e688, type: 3}
+        m_Texture: {fileID: 2800000, guid: f72b573639a804f488d3ab4a7c6111dd, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ClearCoatMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 4aa95e7daee69c24ea436706ee8c21e2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -53,11 +52,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 3f9fe1974fac2b14d9d787f30e18755f, type: 3}
+        m_Texture: {fileID: 2800000, guid: af38f6b311fc0b649a20d18fe8c526ba, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 2800000, guid: 3baa8cedfbcd76c438f206c2ff32991f, type: 3}
+        m_Texture: {fileID: 2800000, guid: b6fc8008bf5b34246be80ad903d1bae1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -95,7 +94,7 @@ Material:
     - _BlendOp: 0
     - _BumpScale: 1
     - _ClearCoat: 0
-    - _ClearCoatMask: 0
+    - _ClearCoatMask: 0.01
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
@@ -103,17 +102,22 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _GlossMapScale: 0.576
-    - _Glossiness: 0
-    - _GlossyReflections: 0
+    - _GlossMapScale: 0.696
+    - _Glossiness: 0.5
+    - _GlossinessSource: 0
+    - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _Parallax: 0.005
+    - _Parallax: 0.02
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Smoothness: 0.627
+    - _SampleGI: 0
+    - _Shininess: 0
+    - _Smoothness: 1
+    - _SmoothnessSource: 0
     - _SmoothnessTextureChannel: 0
+    - _SpecSource: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
@@ -126,7 +130,7 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_BuildTextureStacks: []
---- !u!114 &4814242975234950164
+--- !u!114 &7339913254723533809
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
