@@ -1,18 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System;
+using TMPro;
 
 public class GameUIManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Header("UI Element Managers")]
+    [SerializeField] private SlideCooldown slideCooldown;
+    [SerializeField] private ChaosMeter chaosMeter;
+    [SerializeField] private TimeCounter timeCounter;
+    [SerializeField] private PlayerScores playerScores;
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator Start()
     {
-        
+        var temp = GameData.GetData<PlayTimeRemaining>("PlayTimeRemaining");
+        temp.ResetValues();
+
+        while (true)
+        {
+            timeCounter.UpdateUI(temp.RemainingPlayTimeInt);
+
+            yield return new WaitForSeconds(1);
+
+            temp.remainingPlayTime--;
+        }
     }
 }

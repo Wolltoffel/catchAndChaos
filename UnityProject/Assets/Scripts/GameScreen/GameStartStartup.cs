@@ -2,15 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameStartup : MonoBehaviour
+public class GameStartStartup : MonoBehaviour
 {
     [SerializeField] 
     private AudioClip[] backgroundAudioClips;
 
+    private float timeRemaining;
+
     void Start()
     {
         gameObject.GetComponent<GameUIManager>();
-        
+
         gameObject.AddComponent<GameChild>();
         gameObject.AddComponent<GameParent>();
 
