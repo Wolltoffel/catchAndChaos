@@ -53,8 +53,8 @@ public class GameData : MonoBehaviour
             return (T)data;
 
         throw new System.Exception($"The retrun type of the data is not equal to the return type of the key. {System.Environment.NewLine}"
-        + "(Key return type - {data.GetType()}) {System.Environment.NewLine} "
-        + "(Requested return type - {typeof(T)})");
+        + $"(Key return type - {data.GetType()}) {System.Environment.NewLine} "
+        + $"(Requested return type - {typeof(T)})");
     }
 
     public static void SetData(AData newData, string key)
