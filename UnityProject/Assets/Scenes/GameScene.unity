@@ -314,8 +314,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: dd8ac7f95ec47f54691fd29d9cf6c018, type: 2}
+  - {fileID: 11400000, guid: caca00439f13d2f47ac21ad93bc99220, type: 2}
 --- !u!114 &2128072741
 MonoBehaviour:
   m_ObjectHideFlags: 0

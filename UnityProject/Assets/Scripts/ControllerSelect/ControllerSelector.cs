@@ -9,14 +9,14 @@ public class ControllerSelector : MonoBehaviour
     List<string> setInputDevices = new List<string>();
 
     IEnumerator Start()
-    {
-        yield return WaitForKeyInput(1);
-        yield return WaitForKeyInput (2);
-
+    {   
+        yield return WaitForKeyInput("Parent");
+        yield return WaitForKeyInput ("Child");
         yield return null;
+        ScreenSwitcher.SwitchScreen(Screen.CharacterSelect);
     }
 
-    IEnumerator WaitForKeyInput(int playerIndex)
+    IEnumerator WaitForKeyInput(string character)
     {
         while (true)
         {   
@@ -25,8 +25,8 @@ public class ControllerSelector : MonoBehaviour
             if (inputDevice!="")
             {   
                 setInputDevices.Add (inputDevice);
-                GameData.GetData<PlayerAgent>($"Player {playerIndex}").inputDevice = inputDevice; //Set Input Device for Player
-                controllerUI.controllerSet(playerIndex,inputDevice);
+                GameData.GetData<PlayerAgent>(character).inputDevice = inputDevice; //Set Input Device for Player
+                controllerUI.ControllerSet(character,inputDevice);
                 yield return null;
                 break; 
             }
@@ -49,7 +49,6 @@ public class ControllerSelector : MonoBehaviour
                 inputDevice=  "K1";
             else if (Input.GetButtonDown("K2A")) // Second Keyboard Layout
                 inputDevice=  "K2";
-
 
             //Check if input device is already set
             for (int i = 0; i<setInputDevices.Count;i++)

@@ -5,10 +5,19 @@ using TMPro;
 
 public class ControllerUI : MonoBehaviour
 {
-    [SerializeField]TextMeshProUGUI[] playerControllerInfo;
+    [SerializeField]TextMeshProUGUI child;
+    [SerializeField]TextMeshProUGUI parent;
 
-    public void controllerSet(int playerIndex, string inputDevice)
+    public void ControllerSet(string character, string inputDevice)
     {
-        playerControllerInfo[playerIndex-1].text = $"Player {playerIndex}: Input is {inputDevice}";
+        Debug.Log ($"Player {character}: Input is {inputDevice}");
+
+        if (character=="Child")
+            child.text = $"Child Input is {inputDevice}";
+        else if (character=="Parent")
+            child.text = $"Parent Input is {inputDevice}";
+        else       
+            throw new System.Exception("There's no other text then child and parent");
+
     }
 }

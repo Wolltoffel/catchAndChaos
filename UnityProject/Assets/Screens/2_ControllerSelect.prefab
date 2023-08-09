@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 6427265535624875022}
   - component: {fileID: 8950437965567851562}
   m_Layer: 5
-  m_Name: Player I
+  m_Name: Parent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Player 1: Input is J1'
+  m_text: Parent
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -249,7 +249,7 @@ GameObject:
   - component: {fileID: 4409425349374090763}
   - component: {fileID: 5756278835864810129}
   m_Layer: 5
-  m_Name: Player II
+  m_Name: Child
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -302,7 +302,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Player 2: Input is K2'
+  m_text: Child
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -429,9 +429,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 841f373515994c040a1500edb8a3ea2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerControllerInfo:
-  - {fileID: 8950437965567851562}
-  - {fileID: 5756278835864810129}
+  child: {fileID: 5756278835864810129}
+  parent: {fileID: 8950437965567851562}
 --- !u!1 &7166359736404755316
 GameObject:
   m_ObjectHideFlags: 0
