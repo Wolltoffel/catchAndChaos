@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebf6b81632afd8a4ebc895c2cb34c9ae, type: 3}
-  m_Name: parent
+  m_Script: {fileID: 11500000, guid: d29239f7e4719a74aa2c20884563f4cb, type: 3}
+  m_Name: Parent
   m_EditorClassIdentifier: 
-  key: Player 1
-  score: 
-  character: 0
-  inputDevice: 
+  key: Parent
+  tempScore: 
+  tempInputDevice: 
+  tempSkinColor: 
+  skinContainer: {fileID: 11400000, guid: cc1cf37f412ecfa48885957c9d0aa826, type: 2}

@@ -16,7 +16,7 @@ public class ControllerSelector : MonoBehaviour
         ScreenSwitcher.SwitchScreen(Screen.CharacterSelect);
     }
 
-    IEnumerator WaitForKeyInput(string character)
+    IEnumerator WaitForKeyInput(string key)
     {
         while (true)
         {   
@@ -25,8 +25,8 @@ public class ControllerSelector : MonoBehaviour
             if (inputDevice!="")
             {   
                 setInputDevices.Add (inputDevice);
-                GameData.GetData<PlayerAgent>(character).inputDevice = inputDevice; //Set Input Device for Player
-                controllerUI.ControllerSet(character,inputDevice);
+                GameData.GetData<PlayerAgent>(key).tempInputDevice = inputDevice; //Set Input Device for Player
+                controllerUI.ControllerSet(key,inputDevice);
                 yield return null;
                 break; 
             }

@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-[CreateAssetMenu(fileName = "ADataObject", menuName = "Custom/AData/PlayerAgent")]
-public class PlayerAgent : AData
+public enum Gender
 {
-    public string score;
+    Male, Female
+}
 
-    public string inputDevice;
+
+public abstract class PlayerAgent : AData
+{
+    [HideInInspector]public Gender tempGender;
+    [HideInInspector]public string tempScore;
+    [HideInInspector]public string tempInputDevice;
+
 }

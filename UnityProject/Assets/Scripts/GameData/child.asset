@@ -9,10 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebf6b81632afd8a4ebc895c2cb34c9ae, type: 3}
-  m_Name: child
+  m_Script: {fileID: 11500000, guid: 5f78c30b5bb81bf4fa0fdeb78879b0d7, type: 3}
+  m_Name: Child
   m_EditorClassIdentifier: 
   key: Child
-  score: 
-  character: 0
-  inputDevice: K1
+  tempScore: 
+  tempInputDevice: 
+  tempGender: 0
+  tempSkinColor: 
+  skinContainerBoy: {fileID: 11400000, guid: e14adfe80b0e29745a2d7ae43e53559c, type: 2}
+  skinContainerGirl: {fileID: 11400000, guid: 727d284ea3202b649b5e0239e194391d, type: 2}
+  tempSlideCoolDown: 0

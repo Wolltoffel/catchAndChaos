@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d3c10427920c554e84c1ddeb7bfa0bf, type: 3}
+  m_Name: Boy
+  m_EditorClassIdentifier: 
+  key: BoyAssetContainer
+  clothing: {fileID: 2100000, guid: 22fa76140c7a04649b320b1a1c874dd2, type: 2}
+  hair:
+  - {fileID: 2100000, guid: c1b5a705ce35fdc41beec15685a42b05, type: 2}
+  - {fileID: 2100000, guid: 97ecaa5cf0bcada488abf6d0e17f8257, type: 2}
+  skinMaterials:
+  - body: {fileID: 2100000, guid: 726e25aa4f22ff7429fb30c850560e79, type: 2}
+    face: {fileID: 2100000, guid: 5d14f6f93c1786f4c99a30a4242d8ee6, type: 2}
+  - body: {fileID: 2100000, guid: 631416c107fbc3648bc3d341f39c0602, type: 2}
+    face: {fileID: 2100000, guid: 09639cae0834e1f43a804ffbdd5b8164, type: 2}
+  - body: {fileID: 2100000, guid: f6fc0c67061e1c440904a3e17d6ca181, type: 2}
+    face: {fileID: 2100000, guid: 06796e284671d4742a771ac9b5372775, type: 2}
+  - body: {fileID: 2100000, guid: 471916accc75f0448a8d1008d1ef486a, type: 2}
+    face: {fileID: 2100000, guid: 39f2b6ee7558c3448a8e7ca0c8bfd8a5, type: 2}
+  prefab: {fileID: 838799245651974869, guid: 4c470c394e829e54cab1589d9311ce13, type: 3}
