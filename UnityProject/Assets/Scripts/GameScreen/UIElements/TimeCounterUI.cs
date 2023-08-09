@@ -3,7 +3,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class TimeCounter : MonoBehaviour
+public class TimeCounterUI : MonoBehaviour
 {
     private TextMeshProUGUI textField;
 

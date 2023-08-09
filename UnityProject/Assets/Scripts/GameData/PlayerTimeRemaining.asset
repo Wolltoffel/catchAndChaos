@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: PlayerTimeRemaining
   m_EditorClassIdentifier: 
   key: PlayTimeRemaining
-  playTime: 0
-  remainingPlayTime: 62
+  playTime: 100
