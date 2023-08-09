@@ -8,22 +8,41 @@ using TMPro;
 public class GameUIManager : MonoBehaviour
 {
     [Header("UI Element Managers")]
-    [SerializeField] private SlideCooldown slideCooldown;
-    [SerializeField] private ChaosMeter chaosMeter;
-    [SerializeField] private TimeCounter timeCounter;
+    [SerializeField] private SlideCooldownUI slideCooldown;
+    [SerializeField] private ChaosMeterUI chaosMeter;
+    [SerializeField] private TimeCounterUI timeCounter;
 
-    IEnumerator Start()
+    private void Update()
     {
-        var temp = GameData.GetData<PlayTimeRemaining>("PlayTimeRemaining");
-        temp.ResetValues();
+        UpdateTimeCounterVisual();
+        UpdateChaosMeter();
+        //UpdateSlideCooldown();
+    }
 
-        while (true)
-        {
-            timeCounter.UpdateUI(temp.RemainingPlayTimeInt);
+    /// <summary>
+    /// Sends the TimeCounter the current data
+    /// </summary>
+    private void UpdateTimeCounterVisual()
+    {
+        PlayTimeRemaining data = GameData.GetData<PlayTimeRemaining>("PlayTimeRemaining");
+        timeCounter.UpdateUI(data.RemainingPlayTimeInt);
+    }
 
-            yield return new WaitForSeconds(1);
+    /// <summary>
+    /// Sends the SlideCooldown the current data
+    /// </summary>
+    private void UpdateSlideCooldown()
+    {
+        //finsih after merge
+        throw new NotImplementedException();
+    }
 
-            temp.remainingPlayTime--;
-        }
+    /// <summary>
+    /// Sends the ChaosMeter the current data
+    /// </summary>
+    private void UpdateChaosMeter()
+    {
+        ChaosData data = GameData.GetData<ChaosData>("ChaosData");
+        chaosMeter.UpdateUI(data.CurrentChaos);
     }
 }

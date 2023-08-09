@@ -6,11 +6,17 @@ using UnityEngine;
 public class PlayTimeRemaining : AData
 {
     [SerializeField] private int playTime; 
-    public float remainingPlayTime;
-    public int RemainingPlayTimeInt { get => Mathf.FloorToInt(remainingPlayTime); }
+    private float tempRemainingPlayTime;
+
+    public int RemainingPlayTimeInt { get => Mathf.FloorToInt(tempRemainingPlayTime); }
+    public float TempRemainingPlayTime 
+    {
+        get => tempRemainingPlayTime; 
+        set => tempRemainingPlayTime = Mathf.Clamp(value,0,999);
+    }
 
     public void ResetValues()
     {
-        remainingPlayTime = playTime;
+        tempRemainingPlayTime = playTime;
     }
 }
