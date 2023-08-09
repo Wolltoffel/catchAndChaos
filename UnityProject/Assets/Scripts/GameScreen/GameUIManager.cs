@@ -11,7 +11,6 @@ public class GameUIManager : MonoBehaviour
     [SerializeField] private SlideCooldown slideCooldown;
     [SerializeField] private ChaosMeter chaosMeter;
     [SerializeField] private TimeCounter timeCounter;
-    [SerializeField] private PlayerScores playerScores;
 
     IEnumerator Start()
     {
