@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class MovementScript : MonoBehaviour
 {
-    [SerializeField] private float movementSpeed = 1f;
-    [SerializeField] private float rotationSpeed = 2f;
+    public bool IsSlideDone { get => coroutine == null; }
+
     private Transform obj;
     private Vector2 previousMovement;
     private Rigidbody rigidbody;
+    private Coroutine coroutine;
 
     [SerializeField] private float lerpValue = 0.2f;
+    [SerializeField] private float movementSpeed = 1f;
+    [SerializeField] private float rotationSpeed = 2f;
 
     private void Awake()
     {
@@ -50,5 +53,51 @@ public class MovementScript : MonoBehaviour
                 transform.rotation = targetRotation;
             }
         }
+    }
+
+    public void DoSlide(GameObject vent, float slideDuration = 1)
+    {
+        coroutine = StartCoroutine(_DoSlide(vent, slideDuration));
+    }
+    public IEnumerator _DoSlide(GameObject vent, float slideDuration = 1)
+    {
+        float time = 0;
+        Vector3 slideDir = GetSlideDir(vent);
+
+        while (time < 0.1f)
+        {
+            Vector3 originPos = transform.position;
+            Quaternion originRot = transform.rotation;
+
+            Vector3 targetPos = vent.transform.position + slideDir * 0.5f;
+            Quaternion targetRot = Quaternion.LookRotation(slideDir);
+
+            transform.position = Vector3.Lerp(originPos, targetPos,time*10);
+            transform.rotation = Quaternion.Slerp(originRot,targetRot,time*10);
+
+            yield return null;
+        }
+
+        time = 0;
+
+        while (time<slideDuration)
+        {
+            transform.Translate(slideDir * Time.deltaTime);
+
+            time += Time.deltaTime * Time.timeScale;
+
+            yield return null;
+        }
+
+        coroutine = null;
+    }
+    public Vector3 GetSlideDir(GameObject vent)
+    {
+        Vector3 ventPos = vent.transform.position;
+        Vector3 ventDir = vent.transform.forward;
+        Vector3 relativePos = Vector3.Normalize(transform.position - ventPos);
+        float scalar = Vector3.Dot(relativePos, ventDir) > 0 ? 1 : -1;
+
+        return ventDir * scalar;
     }
 }
