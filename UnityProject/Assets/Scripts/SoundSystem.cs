@@ -13,7 +13,7 @@ public class SoundSystem : MonoBehaviour
 
     private static SoundSystem instance;
 
-    private void Start()
+    private void Awake()
     {
         // Set up and play the background music
         backgroundMusicPlayer = gameObject.AddComponent<AudioSource>();

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class GameScreenManager : MonoBehaviour
 {
+    //Parent and Child
+    [SerializeField] private GameParent parent;
+    [SerializeField] private GameChild child;
+
     //Audio
     [SerializeField] 
     private AudioClip[] backgroundAudioClips;
@@ -18,10 +22,11 @@ public class GameScreenManager : MonoBehaviour
 
     void Start()
     {
-        //Set up everything needed in this state
-        gameObject.AddComponent<GameChild>();
-        gameObject.AddComponent<GameParent>();
+        SetupGame();
+    }
 
+    private void SetupGame()
+    {
         //Set up background Sounds
         if (backgroundAudioClips.Length > 0)
         {
