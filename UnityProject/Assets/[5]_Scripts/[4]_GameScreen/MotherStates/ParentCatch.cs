@@ -8,7 +8,7 @@ class ParentCatch : ParentBaseMovementState
     private GameObject parent;
     private MovementScript movement;
 
-    public ParentCatch(ParentData data, ParentBaseObjectState objectState) : base(data, objectState)
+    public ParentCatch(ParentData data) : base(data)
     {
         time = 0;
         parent = data.gameObject;
@@ -20,7 +20,7 @@ class ParentCatch : ParentBaseMovementState
     {
         if (movement.IsCoroutineDone)
         {
-            return new ParentIdle(parentData,objectState);
+            return new ParentIdle(parentData);
         }
 
         return this;

@@ -5,7 +5,7 @@ class ParentMovement : ParentBaseMovementState
 {
     private MovementScript movement;
 
-    public ParentMovement(ParentData data, ParentBaseObjectState objectState) : base(data, objectState)
+    public ParentMovement(ParentData data) : base(data)
     {
         gameObject = data.gameObject;
 
@@ -25,24 +25,13 @@ class ParentMovement : ParentBaseMovementState
         //MovePlayer
         movement.MovePlayer(xAxis, yAxis);
 
-        //UpdateObjectState
-        bool hasBeenThrown;
-        objectState = objectState.UpdateState(out hasBeenThrown);
+        //CheckForPlushie
+        bool hasBeenThrown = CheckForPlushie(inputDevice);
         if (hasBeenThrown)
-            return new ParentIdle(parentData, objectState);
-
-        if (!moveInput)
-            return new ParentIdle(parentData,objectState);
+        {
+            return new ParentLocked(parentData);
+        }
 
         return this;
-    }
-
-    public bool GetMovement(string inputDevice, out float xAxis, out float yAxis)
-    {
-        xAxis = Input.GetAxis(inputDevice + " Horizontal");
-        yAxis = Input.GetAxis(inputDevice + " Vertical");
-
-        return xAxis != 0 || yAxis != 0;
-
     }
 }

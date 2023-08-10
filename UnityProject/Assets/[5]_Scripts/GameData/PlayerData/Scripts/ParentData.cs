@@ -7,4 +7,5 @@ using UnityEngine;
 public class ParentData : PlayerData
 {
     public Transform handTransform;
+    public Plushie plushie;
 }
