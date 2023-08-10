@@ -3,9 +3,11 @@ using UnityEngine;
 abstract class ParentBaseMovementState : State
 {
     protected ParentData parentData;
-    public ParentBaseMovementState(ParentData data)
+    protected ParentBaseObjectState objectState;
+
+    public ParentBaseMovementState(ParentData data, ParentBaseObjectState objectState)
     {
-    parentData = data;
+        parentData = data;
     }
 
     public abstract ParentBaseMovementState UpdateState();
@@ -24,22 +26,6 @@ abstract class ParentBaseMovementState : State
 
                 DoorSwitch toggle = interactable.GetComponent<DoorSwitch>();
                 toggle.Toggle();
-            }
-        }
-        else
-        {
-            //hideprompt
-        }
-    }
-    protected void CheckPlushie(string inputDevice)
-    {
-        GameObject interactable;
-        if (InteractableInRange("Plushie", out interactable))
-        {
-            //show prompt
-            if (Input.GetButton($"{inputDevice}X"))
-            {
-
             }
         }
         else

@@ -1,9 +1,36 @@
+using UnityEngine;
+
 class ParentNoObject : ParentBaseObjectState
 {
-    public ParentNoObject(ParentData data) : base(data) {}
+    private GameObject prompt;
 
-    public override ParentBaseObjectState UpdateState()
+    public ParentNoObject(ParentData data) : base(data){}
+
+    public override ParentBaseObjectState UpdateState(out bool hasBeenThrown)
     {
+        hasBeenThrown = false;
+
+        GameObject interactable;
+        if (InteractableInRange("Plushie", out interactable))
+        {
+            //show prompt
+
+            if (Input.GetButton($"{parentData.tempInputDevice}X"))
+            {
+                //hideprompt
+
+                Plushie plushie = interactable.GetComponent<Plushie>();
+                
+                return new ParentObject(parentData, plushie);
+            }
+        }
+        else
+        {
+            if (prompt != null)
+            {
+                //hideprompt
+            }
+        }
         return this;
     }
 }

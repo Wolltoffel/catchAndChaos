@@ -16,13 +16,11 @@ public class GameParent : MonoBehaviour
         parentData = GameData.GetData<ParentData>("Parent");
 
         //Spawn 3d model
-        movementState = new ParentIdle(parentData);
-        objectState = new ParentNoObject(parentData);
+        movementState = new ParentIdle(parentData, new ParentNoObject(parentData));
     }
 
     private void Update()
     {
         movementState = movementState.UpdateState();
-        objectState = objectState.UpdateState();
     }
 }

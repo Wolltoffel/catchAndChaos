@@ -5,7 +5,7 @@ class ParentMovement : ParentBaseMovementState
 {
     private MovementScript movement;
 
-    public ParentMovement(ParentData data) : base(data)
+    public ParentMovement(ParentData data, ParentBaseObjectState objectState) : base(data, objectState)
     {
         gameObject = data.gameObject;
 
@@ -15,24 +15,24 @@ class ParentMovement : ParentBaseMovementState
     public override ParentBaseMovementState UpdateState()
     {
         string inputDevice = parentData.tempInputDevice;
-
-        //remove
-        inputDevice = "K1";
-        //remove
-
         float xAxis;
         float yAxis;
         bool moveInput = GetMovement(inputDevice, out xAxis, out yAxis);
 
-        //Customcode
-        CheckPlushie(inputDevice);
+        //CheckForDoorToggle
         CheckDoorToggle(inputDevice);
+
+        //MovePlayer
         movement.MovePlayer(xAxis, yAxis);
 
+        //UpdateObjectState
+        bool hasBeenThrown;
+        objectState = objectState.UpdateState(out hasBeenThrown);
+        if (hasBeenThrown)
+            return new ParentIdle(parentData, objectState);
+
         if (!moveInput)
-        {
-            return new ParentIdle(parentData);
-        }
+            return new ParentIdle(parentData,objectState);
 
         return this;
     }
