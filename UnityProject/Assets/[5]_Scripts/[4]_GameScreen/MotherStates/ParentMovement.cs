@@ -3,13 +3,13 @@ using UnityEngine;
 
 class ParentMovement : ParentBaseMovementState
 {
-    private GameObject parent;
     private MovementScript movement;
 
     public ParentMovement(ParentData data) : base(data)
     {
-        //parent = data.gameObject;
-        movement = parent.GetComponent<MovementScript>();
+        gameObject = data.gameObject;
+
+        movement = gameObject.GetComponent<MovementScript>();
     }
 
     public override ParentBaseMovementState UpdateState()
@@ -24,13 +24,15 @@ class ParentMovement : ParentBaseMovementState
         float yAxis;
         bool moveInput = GetMovement(inputDevice, out xAxis, out yAxis);
 
+        //Customcode
+        CheckPlushie(inputDevice);
+        CheckDoorToggle(inputDevice);
+        movement.MovePlayer(xAxis, yAxis);
+
         if (!moveInput)
         {
             return new ParentIdle(parentData);
         }
-
-        //Customcode
-        movement.MovePlayer(xAxis,yAxis);
 
         return this;
     }

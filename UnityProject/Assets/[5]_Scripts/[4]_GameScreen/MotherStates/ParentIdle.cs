@@ -1,8 +1,11 @@
 using UnityEngine;
+using UnityEngine.XR;
 
 class ParentIdle : ParentBaseMovementState
 {
-    public ParentIdle(ParentData data) : base(data) {}
+    public ParentIdle(ParentData data) : base(data) {
+        gameObject = data.gameObject;
+    }
 
     public override ParentBaseMovementState UpdateState()
     {
@@ -16,12 +19,14 @@ class ParentIdle : ParentBaseMovementState
         float yAxis;
         bool moveInput = CheckMovement(inputDevice, out xAxis, out yAxis);
 
+        //Custom code
+        CheckPlushie(inputDevice);
+        CheckDoorToggle(inputDevice);
+
         if (moveInput)
         {
             return new ParentMovement(parentData);
         }
-
-        //Custom code
 
         return this;
     }
@@ -34,4 +39,6 @@ class ParentIdle : ParentBaseMovementState
         return xAxis != 0 || yAxis != 0;
 
     }
+
+    
 }

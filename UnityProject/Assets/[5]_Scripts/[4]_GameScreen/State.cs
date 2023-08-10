@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class State 
 {
-    public GameObject gameObject;
+    protected GameObject gameObject;
     public bool InteractableInRange(string interactableTag, out GameObject interactableObject) 
     {
         Interactable interactable = GameData.GetData<InteractableHolder>("InteractableHolder").GetInteractable(interactableTag);

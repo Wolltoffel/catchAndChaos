@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MovementScript : MonoBehaviour
 {
-    public bool IsSlideDone { get => coroutine == null; }
+    public bool IsCoroutineDone { get => coroutine == null; }
 
     private Transform obj;
     private Vector2 previousMovement;
@@ -55,23 +55,24 @@ public class MovementScript : MonoBehaviour
         }
     }
 
+    #region Slide
     public void DoSlide(GameObject vent, float slideDuration = 1)
     {
         coroutine = StartCoroutine(_DoSlide(vent, slideDuration));
     }
-    public IEnumerator _DoSlide(GameObject vent, float slideDuration = 1)
+    private IEnumerator _DoSlide(GameObject vent, float slideDuration = 1)
     {
         float time = 0;
         Vector3 slideDir = GetSlideDir(vent);
 
+        Vector3 originPos = transform.position;
+        Quaternion originRot = transform.rotation;
+
+        Vector3 targetPos = vent.transform.position + slideDir * 0.5f;
+        Quaternion targetRot = Quaternion.LookRotation(slideDir);
+
         while (time < 0.1f)
         {
-            Vector3 originPos = transform.position;
-            Quaternion originRot = transform.rotation;
-
-            Vector3 targetPos = vent.transform.position + slideDir * 0.5f;
-            Quaternion targetRot = Quaternion.LookRotation(slideDir);
-
             transform.position = Vector3.Lerp(originPos, targetPos,time*10);
             transform.rotation = Quaternion.Slerp(originRot,targetRot,time*10);
 
@@ -100,4 +101,28 @@ public class MovementScript : MonoBehaviour
 
         return ventDir * scalar;
     }
+    #endregion
+
+    #region Catch
+    public void DoCatch()
+    {
+        coroutine = StartCoroutine(_DoCatch());
+    }
+    private IEnumerator _DoCatch(float catchDuration = 1.5f)
+    {
+        float time = 0;
+        Vector3 catchDir = transform.forward;
+
+        while (time < catchDuration)
+        {
+            Vector3 movement = catchDir * (Mathf.Pow(time, 8) + 1);
+
+            rigidbody.velocity = movement;
+
+            yield return null;
+        }
+
+        coroutine = null;
+    }
+    #endregion
 }
