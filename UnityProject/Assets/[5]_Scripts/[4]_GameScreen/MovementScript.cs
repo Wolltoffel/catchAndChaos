@@ -20,6 +20,8 @@ public class MovementScript : MonoBehaviour
         {
             rigidbody = gameObject.AddComponent<Rigidbody>();
             rigidbody.useGravity = false;
+            rigidbody.freezeRotation = true;
+            rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
         }        
     }
 
@@ -35,10 +37,18 @@ public class MovementScript : MonoBehaviour
         Vector3 movementDir = (new Vector3(previousMovement.x, 0, previousMovement.y));
         rigidbody.velocity = movementDir * movementSpeed * Time.deltaTime * 1000;
 
-        if (movementDir != Vector3.zero)
+        if (Vector3.Distance(movementDir,Vector3.zero) > 0.01)
         {
             Quaternion targetRotation = Quaternion.LookRotation(movementDir.normalized);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            float angleDifference = Quaternion.Angle(transform.rotation, targetRotation);
+            if (angleDifference > 3)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, lerpValue * rotationSpeed * Time.deltaTime);
+            }
+            else
+            {
+                transform.rotation = targetRotation;
+            }
         }
     }
 }

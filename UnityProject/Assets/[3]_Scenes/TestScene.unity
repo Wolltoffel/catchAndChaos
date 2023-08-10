@@ -342,7 +342,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 1
-  rotationSpeed: 10
+  rotationSpeed: 50
   lerpValue: 0.2
 --- !u!65 &643025449
 BoxCollider:
