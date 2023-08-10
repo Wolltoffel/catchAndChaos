@@ -8,5 +8,5 @@ public class ChildData : PlayerData
 {
     
     [Header ("Data")]
-    [HideInInspector] public int tempSlideCoolDown;
+    [HideInInspector] public int tempSlideCoolDown = 0;
 }

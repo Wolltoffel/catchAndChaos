@@ -12,11 +12,22 @@ public class GameUIManager : MonoBehaviour
     [SerializeField] private ChaosMeterUI chaosMeter;
     [SerializeField] private TimeCounterUI timeCounter;
 
+    private PlayTimeRemaining timeData;
+    private ChaosData chaosData;
+    private ChildData childData;
+
+    private void Awake()
+    {
+        timeData = GameData.GetData<PlayTimeRemaining>("PlayTimeRemaining");
+        chaosData = GameData.GetData<ChaosData>("ChaosData");
+        childData = GameData.GetData<ChildData>("Child");
+    }
+
     private void Update()
     {
         UpdateTimeCounterVisual();
         UpdateChaosMeter();
-        //UpdateSlideCooldown();
+        UpdateSlideCooldown();
     }
 
     /// <summary>
@@ -24,8 +35,7 @@ public class GameUIManager : MonoBehaviour
     /// </summary>
     private void UpdateTimeCounterVisual()
     {
-        PlayTimeRemaining data = GameData.GetData<PlayTimeRemaining>("PlayTimeRemaining");
-        timeCounter.UpdateUI(data.RemainingPlayTimeInt);
+        timeCounter.UpdateUI(timeData.RemainingPlayTimeInt);
     }
 
     /// <summary>
@@ -33,8 +43,7 @@ public class GameUIManager : MonoBehaviour
     /// </summary>
     private void UpdateSlideCooldown()
     {
-        //finsih after merge
-        throw new NotImplementedException();
+        slideCooldown.UpdateUI(childData.tempSlideCoolDown);
     }
 
     /// <summary>
@@ -42,7 +51,6 @@ public class GameUIManager : MonoBehaviour
     /// </summary>
     private void UpdateChaosMeter()
     {
-        ChaosData data = GameData.GetData<ChaosData>("ChaosData");
-        chaosMeter.UpdateUI(data.CurrentChaos);
+        chaosMeter.UpdateUI(chaosData.CurrentChaos);
     }
 }
