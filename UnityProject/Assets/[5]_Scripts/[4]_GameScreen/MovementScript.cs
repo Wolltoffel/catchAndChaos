@@ -25,10 +25,10 @@ public class MovementScript : MonoBehaviour
         }        
     }
 
-    private void FixedUpdate()
-    {
-        MovePlayer(Input.GetAxisRaw("K1 Horizontal"),Input.GetAxisRaw("K1 Vertical"));
-    }
+    //private void FixedUpdate()
+    //{
+    //    MovePlayer(Input.GetAxis("K1 Horizontal"),Input.GetAxis("K1 Vertical"));
+    //}
 
     public void MovePlayer(float xAxis, float yAxis)
     {

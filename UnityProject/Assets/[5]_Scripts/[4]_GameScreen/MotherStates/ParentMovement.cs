@@ -3,7 +3,14 @@ using UnityEngine;
 
 class ParentMovement : ParentBaseMovementState
 {
-    public ParentMovement(ParentData data) : base(data) {}
+    private GameObject parent;
+    private MovementScript movement;
+
+    public ParentMovement(ParentData data) : base(data)
+    {
+        //parent = data.gameObject;
+        movement = parent.GetComponent<MovementScript>();
+    }
 
     public override ParentBaseMovementState UpdateState()
     {
@@ -23,6 +30,7 @@ class ParentMovement : ParentBaseMovementState
         }
 
         //Customcode
+        movement.MovePlayer(xAxis,yAxis);
 
         return this;
     }
