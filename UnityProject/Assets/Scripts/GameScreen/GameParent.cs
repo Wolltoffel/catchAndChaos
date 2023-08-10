@@ -14,8 +14,9 @@ public class GameParent : MonoBehaviour
   private void Awake()
   {
     parentData = GameData.GetData<ParentData>("Parent");
-    //update 3d model
-    movementState = new ParentNoMovement(parentData);
+
+    //Spawn 3d model
+    movementState = new ParentIdle(parentData);
     objectState = new ParentNoObject(parentData);
   }
 
