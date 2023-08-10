@@ -30,12 +30,12 @@ public class MovementScript : MonoBehaviour
     //    MovePlayer(Input.GetAxis("K1 Horizontal"),Input.GetAxis("K1 Vertical"));
     //}
 
-    public void MovePlayer(float xAxis, float yAxis)
+    public void MovePlayer(float xAxis, float yAxis, float speed = 1)
     {
         Vector2 axis = new Vector2(xAxis,yAxis);
         previousMovement = Vector2.Lerp(previousMovement,axis,lerpValue);
         Vector3 movementDir = (new Vector3(previousMovement.x, 0, previousMovement.y));
-        rigidbody.velocity = movementDir * movementSpeed * Time.deltaTime * 1000;
+        rigidbody.velocity = movementDir * movementSpeed * Time.deltaTime * 1000 * speed;
 
         if (Vector3.Distance(movementDir,Vector3.zero) > 0.01)
         {
@@ -43,7 +43,7 @@ public class MovementScript : MonoBehaviour
             float angleDifference = Quaternion.Angle(transform.rotation, targetRotation);
             if (angleDifference > 3)
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, lerpValue * rotationSpeed * Time.deltaTime);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, lerpValue * rotationSpeed * Time.deltaTime* speed);
             }
             else
             {
