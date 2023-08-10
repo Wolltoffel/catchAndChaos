@@ -20,9 +20,8 @@ public enum Step
 
 
 [System.Serializable]
-public struct AssetContainer
-{
-    public GameObject prefab;
+public class AssetContainer
+{    public GameObject prefab;
 
     [Header ("Materials")]
     public Material  clothing;
@@ -41,11 +40,12 @@ public struct AssetContainer
      public void UpdateActiveHairIndex(Step step)
     {
         int numberOfHairMaterials = hair.Length;
-
-        if (step == Step.Next)
-            tempActiveHairIndex = (tempActiveHairIndex+1)%numberOfHairMaterials;
+        if (step == Step.Next){
+             tempActiveHairIndex = (tempActiveHairIndex+1)%numberOfHairMaterials;
+        }    
         else
             tempActiveHairIndex = (tempActiveHairIndex-1+ numberOfHairMaterials)%numberOfHairMaterials;
+
     }
     public int GetActiveSkinIndex()
     {
@@ -59,14 +59,15 @@ public struct AssetContainer
          if (step == Step.Next)
             tempActiveSkinIndex = (tempActiveSkinIndex+1)%numberOfSkinMaterials;
         else
-            tempActiveHairIndex = (tempActiveHairIndex-1+ numberOfSkinMaterials)%numberOfSkinMaterials;
+            tempActiveSkinIndex = (tempActiveSkinIndex-1+ numberOfSkinMaterials)%numberOfSkinMaterials;
     }
     public Material[] GetActiveMaterials()
     {   
         Material [] materials = new Material[4];
         materials[0] = hair[tempActiveHairIndex]; //Hair
         materials[1] = skinMaterials[tempActiveSkinIndex].face; //Face
-        materials[1] = skinMaterials[tempActiveSkinIndex].body;
+        materials[2] = skinMaterials[tempActiveSkinIndex].body; //Body
+        materials[3] = clothing;
 
         return materials;
     }

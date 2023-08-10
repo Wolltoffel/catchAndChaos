@@ -9,7 +9,7 @@ using System;
 public class CharacterAssets : AData
 {
     public AssetContainer male, female;
-    private Gender gender;
+    private Gender gender = Gender.Male;
 
     public AssetContainer GetContainer()
     {

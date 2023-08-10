@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: parent
   m_EditorClassIdentifier: 
   key: Parent
-  tempGender: 0
   tempScore: 
   tempInputDevice: 
-  tempSkinColor: 
-  skinContainer: {fileID: 11400000, guid: cc1cf37f412ecfa48885957c9d0aa826, type: 2}
+  characterAssets: {fileID: 11400000, guid: cc1cf37f412ecfa48885957c9d0aa826, type: 2}

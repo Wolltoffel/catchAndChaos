@@ -13,10 +13,7 @@ MonoBehaviour:
   m_Name: child
   m_EditorClassIdentifier: 
   key: Child
-  tempGender: 0
   tempScore: 
   tempInputDevice: 
-  tempSkinColor: 
-  skinContainerBoy: {fileID: 11400000, guid: e14adfe80b0e29745a2d7ae43e53559c, type: 2}
-  skinContainerGirl: {fileID: 11400000, guid: 727d284ea3202b649b5e0239e194391d, type: 2}
+  characterAssets: {fileID: 11400000, guid: e14adfe80b0e29745a2d7ae43e53559c, type: 2}
   tempSlideCoolDown: 0
