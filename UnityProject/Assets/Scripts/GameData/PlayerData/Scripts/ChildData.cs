@@ -4,12 +4,9 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "ADataObject", menuName = "Custom/AData/PlayerAgent/ChildData")]
-public class ChildData : PlayerAgent
+public class ChildData : PlayerData
 {
     
-    [Header ("Customisation")]
-    [HideInInspector] public string tempSkinColor;
-
-    public CharacterAssetContainer skinContainerBoy,skinContainerGirl;
+    [Header ("Data")]
     [HideInInspector] public int tempSlideCoolDown;
 }

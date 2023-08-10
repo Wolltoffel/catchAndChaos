@@ -25,7 +25,7 @@ public class ControllerSelector : MonoBehaviour
             if (inputDevice!="")
             {   
                 setInputDevices.Add (inputDevice);
-                GameData.GetData<PlayerAgent>(key).tempInputDevice = inputDevice; //Set Input Device for Player
+                GameData.GetData<PlayerData>(key).tempInputDevice = inputDevice; //Set Input Device for Player
                 controllerUI.ControllerSet(key,inputDevice);
                 yield return null;
                 break; 

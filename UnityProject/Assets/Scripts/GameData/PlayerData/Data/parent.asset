@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d29239f7e4719a74aa2c20884563f4cb, type: 3}
-  m_Name: Parent
+  m_Name: parent
   m_EditorClassIdentifier: 
   key: Parent
+  tempGender: 0
   tempScore: 
   tempInputDevice: 
   tempSkinColor: 

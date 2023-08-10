@@ -2,16 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Gender
-{
-    Male, Female
-}
 
 
-public abstract class PlayerAgent : AData
+public abstract class PlayerData : AData
 {
-    [HideInInspector]public Gender tempGender;
     [HideInInspector]public string tempScore;
     [HideInInspector]public string tempInputDevice;
+    public CharacterAssets characterAssets;
 
 }

@@ -9,7 +9,6 @@ public enum Screen
 }
 
 
-[CreateAssetMenu(fileName = "ScreenSwitcher", menuName = "Custom/ScreenSwitcher", order = 1)]
 public class ScreenSwitcher : MonoBehaviour
 {
     [SerializeField] Screen startScreen;

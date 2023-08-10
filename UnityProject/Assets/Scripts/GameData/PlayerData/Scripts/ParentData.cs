@@ -4,9 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "ADataObject", menuName = "Custom/AData/PlayerAgent/ParentData")]
 
-public class ParentData : PlayerAgent
+public class ParentData : PlayerData
 {
-    [Header ("Customisation")]
-    [HideInInspector] public string tempSkinColor;
-     public CharacterAssetContainer skinContainer;
+    
 }
