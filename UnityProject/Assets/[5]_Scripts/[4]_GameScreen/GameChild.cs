@@ -22,7 +22,7 @@ abstract class ChildState : State
     public ChildState Slide()
     {
         //Slide
-        if (InteractableInRange("Lolly", out GameObject interactableObject) )
+        if (InteractableInRange("Wall", out GameObject interactableObject) )
         {   
             //Show Buttonprompt
             if (Input.GetButtonDown(inputDevice+"B"))
