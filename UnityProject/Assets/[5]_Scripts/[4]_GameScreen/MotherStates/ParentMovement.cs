@@ -3,44 +3,35 @@ using UnityEngine;
 
 class ParentMovement : ParentBaseMovementState
 {
-    private GameObject parent;
     private MovementScript movement;
 
     public ParentMovement(ParentData data) : base(data)
     {
-        //parent = data.gameObject;
-        movement = parent.GetComponent<MovementScript>();
+        gameObject = data.gameObject;
+
+        movement = gameObject.GetComponent<MovementScript>();
     }
 
     public override ParentBaseMovementState UpdateState()
     {
         string inputDevice = parentData.tempInputDevice;
-
-        //remove
-        inputDevice = "K1";
-        //remove
-
         float xAxis;
         float yAxis;
         bool moveInput = GetMovement(inputDevice, out xAxis, out yAxis);
 
-        if (!moveInput)
+        //CheckForDoorToggle
+        CheckDoorToggle(inputDevice);
+
+        //MovePlayer
+        movement.MovePlayer(xAxis, yAxis);
+
+        //CheckForPlushie
+        bool hasBeenThrown = CheckForPlushie(inputDevice);
+        if (hasBeenThrown)
         {
-            return new ParentIdle(parentData);
+            return new ParentLocked(parentData);
         }
 
-        //Customcode
-        movement.MovePlayer(xAxis,yAxis);
-
         return this;
-    }
-
-    public bool GetMovement(string inputDevice, out float xAxis, out float yAxis)
-    {
-        xAxis = Input.GetAxis(inputDevice + " Horizontal");
-        yAxis = Input.GetAxis(inputDevice + " Vertical");
-
-        return xAxis != 0 || yAxis != 0;
-
     }
 }

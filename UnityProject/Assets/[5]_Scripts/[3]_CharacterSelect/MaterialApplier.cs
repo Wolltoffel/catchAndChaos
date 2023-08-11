@@ -5,13 +5,14 @@ using UnityEngine;
 public class MaterialApplier : MonoBehaviour
 {   
     [SerializeField] Character character;
-    [SerializeField] GameObject characterPrefab;
+    [SerializeField] GameObject placeholder;
+    Transform parent;
     Material[] materials;
     string searchkey;
    void Start()
    {
-        materials = characterPrefab.GetComponentInChildren<SkinnedMeshRenderer>().materials;
-        
+        parent = placeholder.transform.parent;
+
         if (character == Character.Child)
             searchkey = "Child";
         else
@@ -24,15 +25,17 @@ public class MaterialApplier : MonoBehaviour
    {    
         ApplyGender();
         materials = GameData.GetData<PlayerData>(searchkey).characterAssets.GetActiveMaterials();
-        characterPrefab.GetComponentInChildren<SkinnedMeshRenderer>().materials = materials;
+        placeholder.GetComponentInChildren<SkinnedMeshRenderer>().materials = materials;
 
    }
 
    public void ApplyGender()
    {
-        Destroy(characterPrefab);
+        Vector3 position = placeholder.transform.position;
+        Destroy(placeholder);
         GameObject spawnableObject = GameData.GetData<PlayerData>(searchkey).characterAssets.GetContainer().prefab;
-        characterPrefab = Instantiate (spawnableObject);
-        characterPrefab.name = "BodyTest";
+        placeholder = Instantiate (spawnableObject, position, Quaternion.identity);
+        placeholder.transform.parent = parent;
+        placeholder.name = "BodyTest";
    }
 }

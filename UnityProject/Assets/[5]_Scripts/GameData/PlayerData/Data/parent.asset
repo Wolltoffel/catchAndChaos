@@ -14,5 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: Parent
   tempScore: 
-  tempInputDevice: 
+  tempInputDevice: K1
+  gameObject: {fileID: 0}
   characterAssets: {fileID: 11400000, guid: cc1cf37f412ecfa48885957c9d0aa826, type: 2}
+  handTransform: {fileID: 0}
+  plushie: {fileID: 0}

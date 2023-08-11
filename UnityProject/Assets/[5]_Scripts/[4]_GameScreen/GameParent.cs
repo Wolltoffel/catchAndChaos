@@ -4,25 +4,22 @@ using UnityEngine;
 
 public class GameParent : MonoBehaviour
 {
-  private GameObject parent;
-  private ParentData parentData;
+    private GameObject parent;
+    private ParentData parentData;
 
-  private ParentBaseMovementState movementState;
-  private ParentBaseObjectState objectState;
+    private ParentBaseMovementState state;
 
 
-  private void Awake()
-  {
-    parentData = GameData.GetData<ParentData>("Parent");
+    private void Awake()
+    {
+        parentData = GameData.GetData<ParentData>("Parent");
 
-    //Spawn 3d model
-    movementState = new ParentIdle(parentData);
-    objectState = new ParentNoObject(parentData);
-  }
+        //Spawn 3d model
+        state = new ParentIdle(parentData);
+    }
 
-  private void Update()
-  {
-    movementState = movementState.UpdateState();
-    objectState = objectState.UpdateState();
-  }
+    private void Update()
+    {
+        state = state.UpdateState();
+    }
 }

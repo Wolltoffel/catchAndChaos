@@ -9,13 +9,28 @@ using System;
 public class CharacterAssets : AData
 {
     public AssetContainer male, female;
-    private Gender gender = Gender.Male;
+    private Gender gender = Gender.Female;
 
     public AssetContainer GetContainer()
     {
-        if (gender == Gender.Female)
-            return female;
-        else return male;
+        AssetContainer container;
+        if (gender == Gender.Male)
+        {
+            container = male;
+            if (container.prefab == null)
+            {
+                return female;
+            }
+        }
+        else
+        {
+            container = female;
+            if (container.prefab == null)
+            {
+                return male;
+            }
+        }
+        return container;
     }
     public Material[] GetActiveMaterials()
     {   

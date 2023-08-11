@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: Child
   tempScore: 
-  tempInputDevice: 
+  tempInputDevice: K2
+  gameObject: {fileID: 0}
   characterAssets: {fileID: 11400000, guid: e14adfe80b0e29745a2d7ae43e53559c, type: 2}
   tempSlideCoolDown: 0

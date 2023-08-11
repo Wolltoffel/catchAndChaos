@@ -53,10 +53,13 @@ public class SoundSystem : MonoBehaviour
 
     public static void PlayBackgroundMusic(AudioClip[] musicClips)
     {
-        if (backgroundMusicCoroutine != null)
-            instance.StopCoroutine(backgroundMusicCoroutine);
-        IEnumerator i = instance._PlayBackgroundMusic(musicClips);
-        instance.StartCoroutine(i);
+        if (musicClips.Length > 0)
+        {
+            if (backgroundMusicCoroutine != null)
+                instance.StopCoroutine(backgroundMusicCoroutine);
+            IEnumerator i = instance._PlayBackgroundMusic(musicClips);
+            instance.StartCoroutine(i);
+        }
     }
 
     private IEnumerator _PlayBackgroundMusic(AudioClip[] musicClips, float fadeTime = 3)

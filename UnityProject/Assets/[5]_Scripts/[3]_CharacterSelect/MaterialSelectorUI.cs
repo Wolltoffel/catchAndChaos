@@ -20,6 +20,12 @@ public class Selector
     {
         this.modelProperty = modelProperty;
     }
+
+    public void HideButtons()
+    {
+        left.gameObject.SetActive(false);
+        right.gameObject.SetActive(false);
+    }
 }
 
 [Serializable]
@@ -27,8 +33,11 @@ public class Section
 {  
     Character character;
     [SerializeField]MaterialApplier materialApplier;
+    [HideInInspector] public bool isConfirmed = false;
+    Action checkAction;
 
-    [Header ("Buttons")]
+    [Header("Buttons")]
+    public Button confirm;
     public Selector genderSelector;
     public Selector hairColorSelector;
     public Selector skinColorSelector;
@@ -45,8 +54,11 @@ public class Section
         skinColorSelector.SetModelProperty(ModelProperty.Skincolor);
     }
      
-    public void AddListenersToSelectors()
+    public void AddListeners(Action action)
     {
+        checkAction = action;
+        confirm.onClick.AddListener(ConfirmSelection);
+
         AddListenerToSelector(genderSelector);
         AddListenerToSelector (hairColorSelector);
         AddListenerToSelector(skinColorSelector);
@@ -66,24 +78,45 @@ public class Section
         propertyHandler.SetProperty(character,selector.modelProperty,step);
         materialApplier.ApplyMaterials();
     }
+
+    public void ConfirmSelection()
+    {
+        isConfirmed = true;
+
+        genderSelector.HideButtons();
+        hairColorSelector.HideButtons();
+        skinColorSelector.HideButtons();
+
+        checkAction();
+    }
 }
 
 public class MaterialSelectorUI : MonoBehaviour
 {   
-    [SerializeField]Section child/*, parent*/;
+    [SerializeField]Section child, parent;
 
     void  Awake()
     {   
         child.SetCharacter(Character.Child);
-        //parent.SetCharacter(Character.Parent);
+        parent.SetCharacter(Character.Parent);
         child.SetModelProperties();
-        //parent.SetModelProperties();
-        child.AddListenersToSelectors();
-        //parent.AddListenersToSelectors();
+        parent.SetModelProperties();
+        child.AddListeners(CheckConfirm);
+        parent.AddListeners(CheckConfirm);
     }
 
     void Update()
     {
         //Debug.Log (GameData.GetData<PlayerData>("Child").characterAssets.male.GetActiveHairIndex());
+
+    }
+
+    void CheckConfirm()
+    {
+        Debug.Log(child.isConfirmed + "---" + parent.isConfirmed);
+        if (child.isConfirmed && parent.isConfirmed)
+        {
+            ScreenSwitcher.SwitchScreen(Screen.GameScreen);
+        }
     }
 }
