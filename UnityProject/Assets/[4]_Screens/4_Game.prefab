@@ -281,11 +281,9 @@ MonoBehaviour:
   parent: {fileID: 287948614333363542}
   child: {fileID: 7616841772322256298}
   backgroundAudioClips:
-  - {fileID: 8300000, guid: c3b301035e58d48cbae816ce30b6aa1f, type: 3}
-  - {fileID: 8300000, guid: b8cfb2ee589ab45f08ec8235cae250f9, type: 3}
-  - {fileID: 8300000, guid: 38943e235cbf146d296225ee94869d58, type: 3}
-  - {fileID: 8300000, guid: bc8cb585fa3b24401a269664b7fde2fa, type: 3}
-  - {fileID: 8300000, guid: ed78433d09c5443b8b5e0ab7c3492f44, type: 3}
+  - {fileID: 8300000, guid: 1783f4605b4e04f2a84a6098076f4b46, type: 3}
+  - {fileID: 8300000, guid: 9a005715e6cdf4cb5a59c93bdc0dcb64, type: 3}
+  - {fileID: 8300000, guid: f6ada45734529445db6d7b3b31a5b574, type: 3}
 --- !u!114 &4631060029137468080
 MonoBehaviour:
   m_ObjectHideFlags: 0
