@@ -1,4 +1,4 @@
-Shader "Custom/NewSurfaceShaderXRay"
+Shader "Custom/StandardWithXRay"
 {
     Properties
     {
@@ -14,16 +14,14 @@ Shader "Custom/NewSurfaceShaderXRay"
 
         Pass
         {
-          Stencil
-            {
-                Ref 1
-                Comp GEqual
-                Pass Replace
-            }
+          Blend SrcAlpha OneMinusSrcAlpha
 
-            Cull Off
-            ZWrite Off
-            ZTest Always
+            Stencil {
+                 Ref 10
+                 ReadMask 10
+                 Comp NotEqual
+                 Pass Replace
+             }
 
             CGPROGRAM
             #pragma vertex vert
