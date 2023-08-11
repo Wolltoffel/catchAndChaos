@@ -17,7 +17,7 @@ public class GameParent : MonoBehaviour
         state = new ParentIdle(parentData);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         state = state.UpdateState();
     }

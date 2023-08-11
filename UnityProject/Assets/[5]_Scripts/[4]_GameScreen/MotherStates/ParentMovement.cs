@@ -14,6 +14,8 @@ class ParentMovement : ParentBaseMovementState
 
     public override ParentBaseMovementState UpdateState()
     {
+        Debug.Log("Parent-Movement");
+
         string inputDevice = parentData.tempInputDevice;
         float xAxis;
         float yAxis;
@@ -22,15 +24,15 @@ class ParentMovement : ParentBaseMovementState
         //CheckForDoorToggle
         CheckDoorToggle(inputDevice);
 
-        //MovePlayer
-        movement.MovePlayer(xAxis, yAxis);
-
         //CheckForPlushie
         bool hasBeenThrown = CheckForPlushie(inputDevice);
         if (hasBeenThrown)
-        {
             return new ParentLocked(parentData);
-        }
+
+        //MovePlayer
+        movement.MovePlayer(xAxis, yAxis);
+        if (!moveInput)
+            return new ParentIdle(parentData);
 
         return this;
     }

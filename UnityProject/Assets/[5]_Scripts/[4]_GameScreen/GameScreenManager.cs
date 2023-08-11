@@ -10,8 +10,8 @@ public class GameScreenManager : MonoBehaviour
     //Parent and Child
     [SerializeField] private GameParent parent;
     [SerializeField] private GameChild child;
-    private GameObject parentObj;
-    private GameObject childObj;
+    [SerializeField] private GameObject parentObj;
+    [SerializeField] private GameObject childObj;
 
     //Audio
     [SerializeField] 
@@ -37,6 +37,7 @@ public class GameScreenManager : MonoBehaviour
         //Position Camera
         camera = Camera.main.GetComponent<CameraManager>();
         camera.GameCamera();
+        camera.TrackPlayers(parentObj.transform,childObj.transform);
 
         //Set up background Sounds
         if (backgroundAudioClips.Length > 0)
@@ -55,8 +56,8 @@ public class GameScreenManager : MonoBehaviour
 
     private void SpawnCharacters()
     {
-        CharacterInstantiator.InstantiateCharacter(Characters.Parent, out parentObj, Vector3.left);
-        CharacterInstantiator.InstantiateCharacter(Characters.Child, out childObj, Vector3.right);
+        CharacterInstantiator.InstantiateCharacter(Characters.Parent, out parentObj, parentObj.transform);
+        CharacterInstantiator.InstantiateCharacter(Characters.Child, out childObj, childObj.transform);
     }
 
     private void Update()

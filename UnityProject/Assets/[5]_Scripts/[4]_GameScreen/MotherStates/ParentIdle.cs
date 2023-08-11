@@ -11,6 +11,8 @@ class ParentIdle : ParentBaseMovementState
 
     public override ParentBaseMovementState UpdateState()
     {
+        Debug.Log("Parent-Idle");
+
         string inputDevice = parentData.tempInputDevice;
         float xAxis;
         float yAxis;

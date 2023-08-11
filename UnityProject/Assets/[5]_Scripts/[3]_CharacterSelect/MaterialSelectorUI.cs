@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using UnityEngine.TextCore.Text;
 
 [Serializable]
 public class Selector
@@ -30,10 +31,12 @@ public class Selector
 
 [Serializable]
 public class Section
-{  
+{
     Characters character;
     [HideInInspector] public bool isConfirmed = false;
     Action checkAction;
+
+    public Transform parent;
 
     [Header("Buttons")]
     public Button confirm;
@@ -52,30 +55,35 @@ public class Section
         hairColorSelector.SetModelProperty(ModelProperty.Hair);
         skinColorSelector.SetModelProperty(ModelProperty.Skincolor);
     }
-     
+
     public void AddListeners(Action action)
     {
         checkAction = action;
         confirm.onClick.AddListener(ConfirmSelection);
 
         AddListenerToSelector(genderSelector);
-        AddListenerToSelector (hairColorSelector);
+        AddListenerToSelector(hairColorSelector);
         AddListenerToSelector(skinColorSelector);
     }
     void AddListenerToSelector(Selector selector)
-    {   PropertyHandler propertyHandler = new PropertyHandler();
+    { PropertyHandler propertyHandler = new PropertyHandler();
         Characters character = this.character;
-        Section section  = this;
+        Section section = this;
         selector.AddListener(
-            ()=>section.UpdateAndApplyMaterials(selector,character,selector.modelProperty,Step.Prev),
-            ()=>section.UpdateAndApplyMaterials(selector,character,selector.modelProperty,Step.Next));
+            () => section.UpdateAndApplyMaterials(selector, character, selector.modelProperty, Step.Prev),
+            () => section.UpdateAndApplyMaterials(selector, character, selector.modelProperty, Step.Next));
+    }
+
+    public void SetCharacterSpawnAnchor(Transform parent)
+    {
+        this.parent = parent;
     }
 
     void UpdateAndApplyMaterials(Selector selector,Characters character, ModelProperty modelProperty, Step step)
     {   
         PropertyHandler propertyHandler = new PropertyHandler();
         propertyHandler.SetProperty(character,selector.modelProperty,step);
-        CharacterInstantiator.InstantiateCharacter(character, out GameObject obj, Vector3.right * (int)character);
+        CharacterInstantiator.InstantiateCharacter(character, out GameObject obj, parent);
     }
 
     public void ConfirmSelection()
@@ -91,7 +99,8 @@ public class Section
 }
 
 public class MaterialSelectorUI : MonoBehaviour
-{   
+{
+    [SerializeField] Transform cameraPosition;
     [SerializeField]Section child, parent;
 
     void  Awake()
@@ -102,6 +111,9 @@ public class MaterialSelectorUI : MonoBehaviour
         parent.SetModelProperties();
         child.AddListeners(CheckConfirm);
         parent.AddListeners(CheckConfirm);
+        CharacterInstantiator.InstantiateCharacter(Characters.Child, out GameObject obj, child.parent);
+        CharacterInstantiator.InstantiateCharacter(Characters.Parent, out obj, parent.parent);
+        Camera.main.GetComponent<CameraManager>().SetCameraPosition(cameraPosition);
     }
 
     void Update()

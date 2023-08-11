@@ -15,14 +15,20 @@ MonoBehaviour:
   key: InteractableHolder
   interactables:
   - tag: Lolly
+    range: 2
     objects: []
   - tag: Slidable
+    range: 2
     objects: []
   - tag: Door
+    range: 2
     objects: []
   - tag: Plushie
+    range: 2
     objects: []
   - tag: Movable
+    range: 2
     objects: []
   - tag: Destroyable
+    range: 2
     objects: []

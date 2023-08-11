@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterInstantiator : MonoBehaviour
 {
-    [SerializeField] private float initialScale = 20;
+    [SerializeField] private float initialScale = 4.5f;
 
     private static float _initialScale;
     private static ParentData parentData;
@@ -36,9 +36,18 @@ public class CharacterInstantiator : MonoBehaviour
             character = parent = Instantiate(characterData.characterAssets.GetContainer().prefab);
 
         }
-        
+
         character.transform.position = position;
         character.transform.localScale = Vector3.one * _initialScale;
+    }
+
+    public static void InstantiateCharacter(Characters characterType, out GameObject character, Transform parentOfCharacter)
+    {
+        InstantiateCharacter(characterType, out character, parentOfCharacter.position);
+        
+        character.transform.parent = parentOfCharacter;
+        character.transform.localRotation = Quaternion.identity;
+        character.transform.localPosition = Vector3.zero;
     }
 
     public static GameObject GetActiveCharacter(Characters character)
