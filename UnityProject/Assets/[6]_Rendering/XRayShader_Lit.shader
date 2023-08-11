@@ -1,260 +1,329 @@
-// Example Shader for Universal RP
-// Written by @Cyanilux
-// https://cyangamedev.wordpress.com/urp-shader-code/
-Shader "Custom/XRayShader_Lit" {
-	Properties {
-		_BaseMap ("Base Texture", 2D) = "white" {}
-		_BaseColor ("Example Colour", Color) = (0, 0.66, 0.73, 1)
-		_Smoothness ("Smoothness", Float) = 0.5
-        _XRayColor ("XRayColor", Color) = (0, 0, 0, 0)
+// When creating shaders for Universal Render Pipeline you can you the ShaderGraph which is super AWESOME!
+// However, if you want to author shaders in shading language you can use this teamplate as a base.
+// Please note, this shader does not necessarily match perfomance of the built-in URP Lit shader.
+// This shader works with URP 7.1.x and above
+Shader "Custom/XRayShader_Lit"
+{
+    Properties
+    {
+        // Specular vs Metallic workflow
+        [HideInInspector] _WorkflowMode("WorkflowMode", Float) = 1.0
 
-		[Toggle(_ALPHATEST_ON)] _EnableAlphaTest("Enable Alpha Cutoff", Float) = 0.0
-		_Cutoff ("Alpha Cutoff", Float) = 0.5
+		_XRayColor("Color", Color) = (0.5,0.5,0.5,1)
 
-		[Toggle(_NORMALMAP)] _EnableBumpMap("Enable Normal/Bump Map", Float) = 0.0
-		_BumpMap ("Normal/Bump Texture", 2D) = "bump" {}
-		_BumpScale ("Bump Scale", Float) = 1
+        [MainColor] _BaseColor("Color", Color) = (0.5,0.5,0.5,1)
+        [MainTexture] _BaseMap("Albedo", 2D) = "white" {}
 
-		[Toggle(_EMISSION)] _EnableEmission("Enable Emission", Float) = 0.0
-		_EmissionMap ("Emission Texture", 2D) = "white" {}
-		_EmissionColor ("Emission Colour", Color) = (0, 0, 0, 0)
-	}
-	SubShader { 
-		//Tags {"RenderType"="Opaque" "RenderPipeline"="UniversalPipeline" }
-		
-		HLSLINCLUDE
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+        _Cutoff("Alpha Cutoff", Range(0.0, 1.0)) = 0.5
 
-			CBUFFER_START(UnityPerMaterial)
-			float4 _BaseMap_ST;
-			float4 _BaseColor;
-			float _BumpScale;
-			float4 _EmissionColor;
-			float _Smoothness;
-			float _Cutoff;
-			CBUFFER_END
-		ENDHLSL
-		
-		Pass {
-			Name "Universal Forward"
-			Tags { "LightMode"="UniversalForward" "Queue" = "Opaque" }
+        _Smoothness("Smoothness", Range(0.0, 1.0)) = 0.5
+        _GlossMapScale("Smoothness Scale", Range(0.0, 1.0)) = 1.0
+        _SmoothnessTextureChannel("Smoothness texture channel", Float) = 0
 
-           ZWrite On
+        [Gamma] _Metallic("Metallic", Range(0.0, 1.0)) = 0.0
+        _MetallicGlossMap("Metallic", 2D) = "white" {}
 
-            Stencil {
+        _SpecColor("Specular", Color) = (0.2, 0.2, 0.2)
+        _SpecGlossMap("Specular", 2D) = "white" {}
+
+        [ToggleOff] _SpecularHighlights("Specular Highlights", Float) = 1.0
+        [ToggleOff] _EnvironmentReflections("Environment Reflections", Float) = 1.0
+
+        _BumpScale("Scale", Float) = 1.0
+        _BumpMap("Normal Map", 2D) = "bump" {}
+
+        _OcclusionStrength("Strength", Range(0.0, 1.0)) = 1.0
+        _OcclusionMap("Occlusion", 2D) = "white" {}
+
+        _EmissionColor("Color", Color) = (0,0,0)
+        _EmissionMap("Emission", 2D) = "white" {}
+
+        // Blending state
+        [HideInInspector] _Surface("__surface", Float) = 0.0
+        [HideInInspector] _Blend("__blend", Float) = 0.0
+        [HideInInspector] _AlphaClip("__clip", Float) = 0.0
+        [HideInInspector] _SrcBlend("__src", Float) = 1.0
+        [HideInInspector] _DstBlend("__dst", Float) = 0.0
+        [HideInInspector] _ZWrite("__zw", Float) = 1.0
+        [HideInInspector] _Cull("__cull", Float) = 2.0
+
+        _ReceiveShadows("Receive Shadows", Float) = 1.0
+
+            // Editmode props
+            [HideInInspector] _QueueOffset("Queue offset", Float) = 0.0
+    }
+
+    SubShader
+    {
+        // With SRP we introduce a new "RenderPipeline" tag in Subshader. This allows to create shaders
+        // that can match multiple render pipelines. If a RenderPipeline tag is not set it will match
+        // any render pipeline. In case you want your subshader to only run in LWRP set the tag to
+        // "UniversalRenderPipeline"
+        Tags{"RenderType" = "Opaque" "RenderPipeline" = "UniversalRenderPipeline" "IgnoreProjector" = "True"}
+        LOD 300
+
+		 ZWrite On
+
+        Stencil {
                 Ref 1       // Set the reference value for the stencil test
                 Comp Always // Always pass the stencil test (to write the reference value)
                 Pass Replace // Replace the stencil value with the reference value
+        }
+
+        // ------------------------------------------------------------------
+        // Forward pass. Shades GI, emission, fog and all lights in a single pass.
+        // Compared to Builtin pipeline forward renderer, LWRP forward renderer will
+        // render a scene with multiple lights with less drawcalls and less overdraw.
+        Pass
+        {
+            // "Lightmode" tag must be "UniversalForward" or not be defined in order for
+            // to render objects.
+            Name "StandardLit"
+            Tags{"LightMode" = "UniversalForward"}
+
+            Blend[_SrcBlend][_DstBlend]
+            ZWrite[_ZWrite]
+            Cull[_Cull]
+
+            HLSLPROGRAM
+            // Required to compile gles 2.0 with standard SRP library
+            // All shaders must be compiled with HLSLcc and currently only gles is not using HLSLcc by default
+            #pragma prefer_hlslcc gles
+            #pragma exclude_renderers d3d11_9x
+            #pragma target 2.0
+
+            // -------------------------------------
+            // Material Keywords
+            // unused shader_feature variants are stripped from build automatically
+            #pragma shader_feature _NORMALMAP
+            #pragma shader_feature _ALPHATEST_ON
+            #pragma shader_feature _ALPHAPREMULTIPLY_ON
+            #pragma shader_feature _EMISSION
+            #pragma shader_feature _METALLICSPECGLOSSMAP
+            #pragma shader_feature _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+            #pragma shader_feature _OCCLUSIONMAP
+
+            #pragma shader_feature _SPECULARHIGHLIGHTS_OFF
+            #pragma shader_feature _GLOSSYREFLECTIONS_OFF
+            #pragma shader_feature _SPECULAR_SETUP
+            #pragma shader_feature _RECEIVE_SHADOWS_OFF
+
+            // -------------------------------------
+            // Universal Render Pipeline keywords
+            // When doing custom shaders you most often want to copy and past these #pragmas
+            // These multi_compile variants are stripped from the build depending on:
+            // 1) Settings in the LWRP Asset assigned in the GraphicsSettings at build time
+            // e.g If you disable AdditionalLights in the asset then all _ADDITIONA_LIGHTS variants
+            // will be stripped from build
+            // 2) Invalid combinations are stripped. e.g variants with _MAIN_LIGHT_SHADOWS_CASCADE
+            // but not _MAIN_LIGHT_SHADOWS are invalid and therefore stripped.
+            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS
+            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE
+            #pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
+            #pragma multi_compile _ _ADDITIONAL_LIGHT_SHADOWS
+            #pragma multi_compile _ _SHADOWS_SOFT
+            #pragma multi_compile _ _MIXED_LIGHTING_SUBTRACTIVE
+
+            // -------------------------------------
+            // Unity defined keywords
+            #pragma multi_compile _ DIRLIGHTMAP_COMBINED
+            #pragma multi_compile _ LIGHTMAP_ON
+            #pragma multi_compile_fog
+
+            //--------------------------------------
+            // GPU Instancing
+            #pragma multi_compile_instancing
+
+            #pragma vertex LitPassVertex
+            #pragma fragment LitPassFragment
+
+            // Including the following two function is enought for shading with Universal Pipeline. Everything is included in them.
+            // Core.hlsl will include SRP shader library, all constant buffers not related to materials (perobject, percamera, perframe).
+            // It also includes matrix/space conversion functions and fog.
+            // Lighting.hlsl will include the light functions/data to abstract light constants. You should use GetMainLight and GetLight functions
+            // that initialize Light struct. Lighting.hlsl also include GI, Light BDRF functions. It also includes Shadows.
+
+            // Required by all Universal Render Pipeline shaders.
+            // It will include Unity built-in shader variables (except the lighting variables)
+            // (https://docs.unity3d.com/Manual/SL-UnityShaderVariables.html
+            // It will also include many utilitary functions. 
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+
+            // Include this if you are doing a lit shader. This includes lighting shader variables,
+            // lighting and shadow functions
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+
+            // Material shader variables are not defined in SRP or LWRP shader library.
+            // This means _BaseColor, _BaseMap, _BaseMap_ST, and all variables in the Properties section of a shader
+            // must be defined by the shader itself. If you define all those properties in CBUFFER named
+            // UnityPerMaterial, SRP can cache the material properties between frames and reduce significantly the cost
+            // of each drawcall.
+            // In this case, for sinmplicity LitInput.hlsl is included. This contains the CBUFFER for the material
+            // properties defined above. As one can see this is not part of the ShaderLibrary, it specific to the
+            // LWRP Lit shader.
+            #include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
+
+            struct Attributes
+            {
+                float4 positionOS   : POSITION;
+                float3 normalOS     : NORMAL;
+                float4 tangentOS    : TANGENT;
+                float2 uv           : TEXCOORD0;
+                float2 uvLM         : TEXCOORD1;
+                UNITY_VERTEX_INPUT_INSTANCE_ID
+            };
+
+            struct Varyings
+            {
+                float2 uv                       : TEXCOORD0;
+                float2 uvLM                     : TEXCOORD1;
+                float4 positionWSAndFogFactor   : TEXCOORD2; // xyz: positionWS, w: vertex fog factor
+                half3  normalWS                 : TEXCOORD3;
+
+#if _NORMALMAP
+                half3 tangentWS                 : TEXCOORD4;
+                half3 bitangentWS               : TEXCOORD5;
+#endif
+
+#ifdef _MAIN_LIGHT_SHADOWS
+                float4 shadowCoord              : TEXCOORD6; // compute shadow coord per-vertex for the main light
+#endif
+                float4 positionCS               : SV_POSITION;
+            };
+
+            Varyings LitPassVertex(Attributes input)
+            {
+                Varyings output;
+
+                // VertexPositionInputs contains position in multiple spaces (world, view, homogeneous clip space)
+                // Our compiler will strip all unused references (say you don't use view space).
+                // Therefore there is more flexibility at no additional cost with this struct.
+                VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz);
+
+                // Similar to VertexPositionInputs, VertexNormalInputs will contain normal, tangent and bitangent
+                // in world space. If not used it will be stripped.
+                VertexNormalInputs vertexNormalInput = GetVertexNormalInputs(input.normalOS, input.tangentOS);
+
+                // Computes fog factor per-vertex.
+                float fogFactor = ComputeFogFactor(vertexInput.positionCS.z);
+
+                // TRANSFORM_TEX is the same as the old shader library.
+                output.uv = TRANSFORM_TEX(input.uv, _BaseMap);
+                output.uvLM = input.uvLM.xy * unity_LightmapST.xy + unity_LightmapST.zw;
+
+                output.positionWSAndFogFactor = float4(vertexInput.positionWS, fogFactor);
+                output.normalWS = vertexNormalInput.normalWS;
+
+                // Here comes the flexibility of the input structs.
+                // In the variants that don't have normal map defined
+                // tangentWS and bitangentWS will not be referenced and
+                // GetVertexNormalInputs is only converting normal
+                // from object to world space
+#ifdef _NORMALMAP
+                output.tangentWS = vertexNormalInput.tangentWS;
+                output.bitangentWS = vertexNormalInput.bitangentWS;
+#endif
+
+#ifdef _MAIN_LIGHT_SHADOWS
+                // shadow coord for the main light is computed in vertex.
+                // If cascades are enabled, LWRP will resolve shadows in screen space
+                // and this coord will be the uv coord of the screen space shadow texture.
+                // Otherwise LWRP will resolve shadows in light space (no depth pre-pass and shadow collect pass)
+                // In this case shadowCoord will be the position in light space.
+                output.shadowCoord = GetShadowCoord(vertexInput);
+#endif
+                // We just use the homogeneous clip position from the vertex input
+                output.positionCS = vertexInput.positionCS;
+                return output;
             }
 
+            half4 LitPassFragment(Varyings input) : SV_Target
+            {
+                // Surface data contains albedo, metallic, specular, smoothness, occlusion, emission and alpha
+                // InitializeStandarLitSurfaceData initializes based on the rules for standard shader.
+                // You can write your own function to initialize the surface data of your shader.
+                SurfaceData surfaceData;
+                InitializeStandardLitSurfaceData(input.uv, surfaceData);
 
-			HLSLPROGRAM
+#if _NORMALMAP
+                half3 normalWS = TransformTangentToWorld(surfaceData.normalTS,
+                    half3x3(input.tangentWS, input.bitangentWS, input.normalWS));
+#else
+                half3 normalWS = input.normalWS;
+#endif
+                normalWS = normalize(normalWS);
 
-			// Required to compile gles 2.0 with standard SRP library
-			// All shaders must be compiled with HLSLcc and currently only gles is not using HLSLcc by default
-			#pragma prefer_hlslcc gles
-			#pragma exclude_renderers d3d11_9x gles
+#ifdef LIGHTMAP_ON
+                // Normal is required in case Directional lightmaps are baked
+                half3 bakedGI = SampleLightmap(input.uvLM, normalWS);
+#else
+                // Samples SH fully per-pixel. SampleSHVertex and SampleSHPixel functions
+                // are also defined in case you want to sample some terms per-vertex.
+                half3 bakedGI = SampleSH(normalWS);
+#endif
 
-			//#pragma target 4.5 // https://docs.unity3d.com/Manual/SL-ShaderCompileTargets.html
+                float3 positionWS = input.positionWSAndFogFactor.xyz;
+                half3 viewDirectionWS = SafeNormalize(GetCameraPositionWS() - positionWS);
 
-			#pragma vertex vert
-			#pragma fragment frag
-			
-			// Material Keywords
-			#pragma shader_feature _NORMALMAP
-			#pragma shader_feature _ALPHATEST_ON
-			#pragma shader_feature _ALPHAPREMULTIPLY_ON
-			#pragma shader_feature _EMISSION
-			#pragma shader_feature _RECEIVE_SHADOWS_OFF
+                // BRDFData holds energy conserving diffuse and specular material reflections and its roughness.
+                // It's easy to plugin your own shading fuction. You just need replace LightingPhysicallyBased function
+                // below with your own.
+                BRDFData brdfData;
+                InitializeBRDFData(surfaceData.albedo, surfaceData.metallic, surfaceData.specular, surfaceData.smoothness, surfaceData.alpha, brdfData);
 
-			// URP Keywords
-			#pragma multi_compile _ _MAIN_LIGHT_SHADOWS
-			#pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE
-			#pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
-			#pragma multi_compile _ _ADDITIONAL_LIGHT_SHADOWS
-			#pragma multi_compile _ _SHADOWS_SOFT
-			#pragma multi_compile _ _MIXED_LIGHTING_SUBTRACTIVE
+                // Light struct is provide by LWRP to abstract light shader variables.
+                // It contains light direction, color, distanceAttenuation and shadowAttenuation.
+                // LWRP take different shading approaches depending on light and platform.
+                // You should never reference light shader variables in your shader, instead use the GetLight
+                // funcitons to fill this Light struct.
+#ifdef _MAIN_LIGHT_SHADOWS
+                // Main light is the brightest directional light.
+                // It is shaded outside the light loop and it has a specific set of variables and shading path
+                // so we can be as fast as possible in the case when there's only a single directional light
+                // You can pass optionally a shadowCoord (computed per-vertex). If so, shadowAttenuation will be
+                // computed.
+                Light mainLight = GetMainLight(input.shadowCoord);
+#else
+                Light mainLight = GetMainLight();
+#endif
 
-			// Unity defined keywords
-			#pragma multi_compile _ DIRLIGHTMAP_COMBINED
-			#pragma multi_compile _ LIGHTMAP_ON
-			#pragma multi_compile_fog
+                // Mix diffuse GI with environment reflections.
+                half3 color = GlobalIllumination(brdfData, bakedGI, surfaceData.occlusion, normalWS, viewDirectionWS);
 
-			// Includes
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
+                // LightingPhysicallyBased computes direct light contribution.
+                color += LightingPhysicallyBased(brdfData, mainLight, normalWS, viewDirectionWS);
 
-			struct Attributes {
-				float4 positionOS   : POSITION;
-				float3 normalOS		: NORMAL;
-				float4 tangentOS	: TANGENT;
-				float4 color		: COLOR;
-				float2 uv           : TEXCOORD0;
-				float2 lightmapUV   : TEXCOORD1;
-			};
+                // Additional lights loop
+#ifdef _ADDITIONAL_LIGHTS
 
-			struct Varyings {
-				float4 positionCS				: SV_POSITION;
-				float4 color					: COLOR;
-				float2 uv					: TEXCOORD0;
-				DECLARE_LIGHTMAP_OR_SH(lightmapUV, vertexSH, 1);
-				
-				#ifdef REQUIRES_WORLD_SPACE_POS_INTERPOLATOR
-					float3 positionWS			: TEXCOORD2;
-				#endif
+                // Returns the amount of lights affecting the object being renderer.
+                // These lights are culled per-object in the forward renderer
+                int additionalLightsCount = GetAdditionalLightsCount();
+                for (int i = 0; i < additionalLightsCount; ++i)
+                {
+                    // Similar to GetMainLight, but it takes a for-loop index. This figures out the
+                    // per-object light index and samples the light buffer accordingly to initialized the
+                    // Light struct. If _ADDITIONAL_LIGHT_SHADOWS is defined it will also compute shadows.
+                    Light light = GetAdditionalLight(i, positionWS);
 
-				float3 normalWS					: TEXCOORD3;
-				#ifdef _NORMALMAP
-					float4 tangentWS 			: TEXCOORD4;
-				#endif
+                    // Same functions used to shade the main light.
+                    color += LightingPhysicallyBased(brdfData, light, normalWS, viewDirectionWS);
+                }
+#endif
+                // Emission
+                color += surfaceData.emission;
 
-				float3 viewDirWS 				: TEXCOORD5;
-				half4 fogFactorAndVertexLight	: TEXCOORD6; // x: fogFactor, yzw: vertex light
+                float fogFactor = input.positionWSAndFogFactor.w;
 
-				#ifdef REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR
-					float4 shadowCoord			: TEXCOORD7;
-				#endif
-			};
+                // Mix the pixel color with fogColor. You can optionaly use MixFogColor to override the fogColor
+                // with a custom one.
+                color = MixFog(color, fogFactor);
+                return half4(color, surfaceData.alpha);
+            }
+            ENDHLSL
+        }
 
-			// Automatically defined with SurfaceInput.hlsl
-			//TEXTURE2D(_BaseMap);
-			//SAMPLER(sampler_BaseMap);
-			
-			#if SHADER_LIBRARY_VERSION_MAJOR < 9
-			// This function was added in URP v9.x.x versions, if we want to support URP versions before, we need to handle it instead.
-			// Computes the world space view direction (pointing towards the viewer).
-			float3 GetWorldSpaceViewDir(float3 positionWS) {
-				if (unity_OrthoParams.w == 0) {
-					// Perspective
-					return _WorldSpaceCameraPos - positionWS;
-				} else {
-					// Orthographic
-					float4x4 viewMat = GetWorldToViewMatrix();
-					return viewMat[2].xyz;
-				}
-			}
-			#endif
-
-			Varyings vert(Attributes IN) {
-				Varyings OUT;
-
-				VertexPositionInputs positionInputs = GetVertexPositionInputs(IN.positionOS.xyz);
-				OUT.positionCS = positionInputs.positionCS;
-				OUT.uv = TRANSFORM_TEX(IN.uv, _BaseMap);
-				OUT.color = IN.color;
-
-				#ifdef REQUIRES_WORLD_SPACE_POS_INTERPOLATOR
-					OUT.positionWS = positionInputs.positionWS;
-				#endif
-
-				OUT.viewDirWS = GetWorldSpaceViewDir(positionInputs.positionWS);
-
-				VertexNormalInputs normalInputs = GetVertexNormalInputs(IN.normalOS, IN.tangentOS);
-				OUT.normalWS =  normalInputs.normalWS;
-				#ifdef _NORMALMAP
-					real sign = IN.tangentOS.w * GetOddNegativeScale();
-					OUT.tangentWS = half4(normalInputs.tangentWS.xyz, sign);
-				#endif
-
-				half3 vertexLight = VertexLighting(positionInputs.positionWS, normalInputs.normalWS);
-				half fogFactor = ComputeFogFactor(positionInputs.positionCS.z);
-
-				OUT.fogFactorAndVertexLight = half4(fogFactor, vertexLight);
-
-				OUTPUT_LIGHTMAP_UV(IN.lightmapUV, unity_LightmapST, OUT.lightmapUV);
-				OUTPUT_SH(OUT.normalWS.xyz, OUT.vertexSH);
-
-				#ifdef REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR
-					OUT.shadowCoord = GetShadowCoord(positionInputs);
-				#endif
-
-				return OUT;
-			}
-			
-			InputData InitializeInputData(Varyings IN, half3 normalTS){
-				InputData inputData = (InputData)0;
-
-				#if defined(REQUIRES_WORLD_SPACE_POS_INTERPOLATOR)
-					inputData.positionWS = IN.positionWS;
-				#endif
-				
-				half3 viewDirWS = SafeNormalize(IN.viewDirWS);
-				#ifdef _NORMALMAP
-					float sgn = IN.tangentWS.w; // should be either +1 or -1
-					float3 bitangent = sgn * cross(IN.normalWS.xyz, IN.tangentWS.xyz);
-					inputData.normalWS = TransformTangentToWorld(normalTS, half3x3(IN.tangentWS.xyz, bitangent.xyz, IN.normalWS.xyz));
-				#else
-					inputData.normalWS = IN.normalWS;
-				#endif
-
-				inputData.normalWS = NormalizeNormalPerPixel(inputData.normalWS);
-				inputData.viewDirectionWS = viewDirWS;
-
-				#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
-					inputData.shadowCoord = IN.shadowCoord;
-				#elif defined(MAIN_LIGHT_CALCULATE_SHADOWS)
-					inputData.shadowCoord = TransformWorldToShadowCoord(inputData.positionWS);
-				#else
-					inputData.shadowCoord = float4(0, 0, 0, 0);
-				#endif
-
-				inputData.fogCoord = IN.fogFactorAndVertexLight.x;
-				inputData.vertexLighting = IN.fogFactorAndVertexLight.yzw;
-				inputData.bakedGI = SAMPLE_GI(IN.lightmapUV, IN.vertexSH, inputData.normalWS);
-				return inputData;
-			}
-
-			SurfaceData InitializeSurfaceData(Varyings IN){
-				SurfaceData surfaceData = (SurfaceData)0;
-				// Note, we can just use SurfaceData surfaceData; here and not set it.
-				// However we then need to ensure all values in the struct are set before returning.
-				// By casting 0 to SurfaceData, we automatically set all the contents to 0.
-				
-				half4 albedoAlpha = SampleAlbedoAlpha(IN.uv, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));
-				surfaceData.alpha = Alpha(albedoAlpha.a, _BaseColor, _Cutoff);
-				surfaceData.albedo = albedoAlpha.rgb * _BaseColor.rgb * IN.color.rgb;
-
-				// For the sake of simplicity I'm not supporting the metallic/specular map or occlusion map
-				// for an example of that see : https://github.com/Unity-Technologies/Graphics/blob/master/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl
-
-				surfaceData.smoothness = 0.5;
-				surfaceData.normalTS = SampleNormal(IN.uv, TEXTURE2D_ARGS(_BumpMap, sampler_BumpMap), _BumpScale);
-				surfaceData.emission = SampleEmission(IN.uv, _EmissionColor.rgb, TEXTURE2D_ARGS(_EmissionMap, sampler_EmissionMap));
-
-				surfaceData.occlusion = 1;
-
-				return surfaceData;
-			}
-
-			half4 frag(Varyings IN) : SV_Target {
-				SurfaceData surfaceData = InitializeSurfaceData(IN);
-				InputData inputData		= InitializeInputData(IN, surfaceData.normalTS);
-				
-				// In URP v10+ versions we could use this :
-				// half4 color = UniversalFragmentPBR(inputData, surfaceData);
-
-				// But for other versions, we need to use this instead.
-				// We could also avoid using the SurfaceData struct completely, but it helps to organise things.
-				half4 color = UniversalFragmentPBR(inputData, surfaceData.albedo, surfaceData.metallic, 
-					surfaceData.specular, surfaceData.smoothness, surfaceData.occlusion, 
-					surfaceData.emission, surfaceData.alpha);
-				
-				color.rgb = MixFog(color.rgb, inputData.fogCoord);
-
-				// color.a = OutputAlpha(color.a);
-				// Not sure if this is important really. It's implemented as :
-				// saturate(outputAlpha + _DrawObjectPassData.a);
-				// Where _DrawObjectPassData.a is 1 for opaque objects and 0 for alpha blended.
-				// But it was added in URP v8, and versions before just didn't have it.
-				// We could still saturate the alpha to ensure it doesn't go outside the 0-1 range though :
-				color.a = saturate(color.a);
-
-				return color; // float4(inputData.bakedGI,1);
-			}
-			ENDHLSL
-		}
-
-        Pass
+		Pass
         {   
             Name "Silhouette"
              Tags {"Queue" = "Transparent+2" }
@@ -315,5 +384,21 @@ Shader "Custom/XRayShader_Lit" {
             } 
             ENDHLSL
         }              
-	}
+
+        // Used for rendering shadowmaps
+        UsePass "Universal Render Pipeline/Lit/ShadowCaster"
+
+        // Used for depth prepass
+        // If shadows cascade are enabled we need to perform a depth prepass. 
+        // We also need to use a depth prepass in some cases camera require depth texture
+        // (e.g, MSAA is enabled and we can't resolve with Texture2DMS
+        UsePass "Universal Render Pipeline/Lit/DepthOnly"
+
+        // Used for Baking GI. This pass is stripped from build.
+        UsePass "Universal Render Pipeline/Lit/Meta"
+    }
+
+    // Uses a custom shader GUI to display settings. Re-use the same from Lit shader as they have the
+    // same properties.
+    //CustomEditor "UnityEditor.Rendering.Universal.ShaderGUI.LitShader"
 }

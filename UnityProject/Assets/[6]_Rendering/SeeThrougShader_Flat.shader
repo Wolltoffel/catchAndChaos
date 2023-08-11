@@ -1,4 +1,4 @@
-Shader "Custom/XRayShader_Lit"
+Shader "Custom/XRayShader_Flat"
 {
     Properties
     {

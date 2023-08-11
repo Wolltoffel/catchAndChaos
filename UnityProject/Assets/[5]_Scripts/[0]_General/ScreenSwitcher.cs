@@ -19,11 +19,8 @@ public class ScreenSwitcher : MonoBehaviour
     [SerializeField] GameObject controllerSelect;
     [SerializeField] GameObject characterSelect;
     [SerializeField] GameObject game;
-
-
-
     private static ScreenSwitcher instance;
-    Dictionary<Screen, GameObject> activeScreenDataBase = new Dictionary<Screen, GameObject>();
+    static Dictionary<Screen, GameObject> activeScreenDataBase = new Dictionary<Screen, GameObject>();
 
     void Awake()
     {
@@ -52,6 +49,11 @@ public class ScreenSwitcher : MonoBehaviour
         instance.ActivateScreen(screen);
     }
 
+    public static void AddScreen(Screen screen)
+    {
+        instance.ActivateScreen(screen);
+    }
+
     void ActivateScreen(Screen screen){
         
         GameObject screenByName  = GetScreenByName(screen);
@@ -60,7 +62,7 @@ public class ScreenSwitcher : MonoBehaviour
         activeScreenDataBase.TryAdd(screen,newScreen);
     }
 
-    void DeactivateScreen(Screen screen)
+    public static void DeactivateScreen(Screen screen)
     {
         activeScreenDataBase.TryGetValue(screen, out GameObject screenToDeactivate);
         
