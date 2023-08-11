@@ -7,7 +7,7 @@ public enum ModelProperty
     Hair, Gender, Skincolor
 }
 
-public enum Character
+public enum Characters
 {
     Child, Parent
 }
@@ -19,7 +19,7 @@ public class PropertyHandler
 
     public PropertyHandler(){}
 
-    public void SetProperty (Character character,ModelProperty modelProperty, Step step)
+    public void SetProperty (Characters character,ModelProperty modelProperty, Step step)
     {
         CharacterAssets characterAssets = GetCharacterAssets(character);
 
@@ -39,7 +39,7 @@ public class PropertyHandler
         ApplyProperties(character);
     }
 
-    public void ApplyProperties(Character character)
+    public void ApplyProperties(Characters character)
     {
         CharacterAssets characterAssets = GetCharacterAssets(character);
         GameObject prefab = GetPlayerData(character).characterAssets.GetContainer().prefab;
@@ -47,17 +47,17 @@ public class PropertyHandler
     }
 
 
-    CharacterAssets GetCharacterAssets(Character character)
+    CharacterAssets GetCharacterAssets(Characters character)
     {
         PlayerData playerData = GetPlayerData(character);
         return playerData.characterAssets;
     }
 
-    PlayerData GetPlayerData(Character character)
+    PlayerData GetPlayerData(Characters character)
     {
         string searchKey = "";
 
-        if (character == Character.Child)
+        if (character == Characters.Child)
             searchKey = "Child";
         else
             searchKey = "Parent";

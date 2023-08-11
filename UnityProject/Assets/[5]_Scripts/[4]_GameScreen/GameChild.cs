@@ -16,7 +16,7 @@ abstract class ChildState : State
 
     public ChildState()
     {
-        gameObject = GameData.GetData<ChildData>("Child").gameObject;
+        gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Child);
     }
 
     public ChildState Slide()

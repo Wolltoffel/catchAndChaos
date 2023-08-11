@@ -502,6 +502,7 @@ GameObject:
   - component: {fileID: 2128072742}
   - component: {fileID: 2128072741}
   - component: {fileID: 2128072740}
+  - component: {fileID: 2128072744}
   - component: {fileID: 2128072743}
   m_Layer: 0
   m_Name: Globals
@@ -572,6 +573,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63035393885434b38a9268dc876ab7f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2128072744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2128072739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8106f5ca1249a481294739a02eab3391, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialScale: 20
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

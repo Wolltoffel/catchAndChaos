@@ -31,8 +31,7 @@ public class Selector
 [Serializable]
 public class Section
 {  
-    Character character;
-    [SerializeField]CharacterSpawner characterSpawner;
+    Characters character;
     [HideInInspector] public bool isConfirmed = false;
     Action checkAction;
 
@@ -42,7 +41,7 @@ public class Section
     public Selector hairColorSelector;
     public Selector skinColorSelector;
 
-    public void SetCharacter(Character character)
+    public void SetCharacter(Characters character)
     {
         this.character = character;
     }
@@ -65,18 +64,18 @@ public class Section
     }
     void AddListenerToSelector(Selector selector)
     {   PropertyHandler propertyHandler = new PropertyHandler();
-        Character character = this.character;
+        Characters character = this.character;
         Section section  = this;
         selector.AddListener(
             ()=>section.UpdateAndApplyMaterials(selector,character,selector.modelProperty,Step.Prev),
             ()=>section.UpdateAndApplyMaterials(selector,character,selector.modelProperty,Step.Next));
     }
 
-    void UpdateAndApplyMaterials(Selector selector,Character character, ModelProperty modelProperty, Step step)
+    void UpdateAndApplyMaterials(Selector selector,Characters character, ModelProperty modelProperty, Step step)
     {   
         PropertyHandler propertyHandler = new PropertyHandler();
         propertyHandler.SetProperty(character,selector.modelProperty,step);
-        characterSpawner.SpawnCharacter();
+        CharacterInstantiator.InstantiateCharacter(character, out GameObject obj, Vector3.right * (int)character);
     }
 
     public void ConfirmSelection()
@@ -97,8 +96,8 @@ public class MaterialSelectorUI : MonoBehaviour
 
     void  Awake()
     {   
-        child.SetCharacter(Character.Child);
-        parent.SetCharacter(Character.Parent);
+        child.SetCharacter(Characters.Child);
+        parent.SetCharacter(Characters.Parent);
         child.SetModelProperties();
         parent.SetModelProperties();
         child.AddListeners(CheckConfirm);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterSpawner : MonoBehaviour
 {   
-    [SerializeField] public Character character;
+    [SerializeField] public Characters character;
     [SerializeField] public GameObject placeholder;
     Transform parent;
     Material[] materials;
@@ -39,8 +39,6 @@ public class CharacterSpawner : MonoBehaviour
     public void SetData()
     {
         var temp = GameData.GetData<PlayerData>(searchkey);
-        temp.gameObject = placeholder;
-        Debug.Log(temp.gameObject);
     }
 
     public void SpawnCharacter()
@@ -52,7 +50,7 @@ public class CharacterSpawner : MonoBehaviour
 
     public void SetSearchKey()
     {
-        if (character == Character.Child)
+        if (character == Characters.Child)
             searchkey = "Child";
         else
             searchkey = "Parent";

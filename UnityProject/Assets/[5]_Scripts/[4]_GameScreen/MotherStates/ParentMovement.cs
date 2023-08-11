@@ -7,7 +7,7 @@ class ParentMovement : ParentBaseMovementState
 
     public ParentMovement(ParentData data) : base(data)
     {
-        gameObject = data.gameObject;
+        gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Parent);
 
         movement = gameObject.GetComponent<MovementScript>();
     }
