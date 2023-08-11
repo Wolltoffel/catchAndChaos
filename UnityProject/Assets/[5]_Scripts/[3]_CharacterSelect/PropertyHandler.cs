@@ -35,15 +35,25 @@ public class PropertyHandler
                 characterAssets.SwitchGender();
             break;
         }
+
+        ApplyProperties(character);
     }
 
-    public void ApplyProperties(Character character, GameObject body)
+    public void ApplyProperties(Character character)
     {
         CharacterAssets characterAssets = GetCharacterAssets(character);
-        body.GetComponent<SkinnedMeshRenderer>().materials = characterAssets.GetActiveMaterials();
+        GameObject prefab = GetPlayerData(character).characterAssets.GetContainer().prefab;
+        prefab.GetComponentInChildren<SkinnedMeshRenderer>().materials = characterAssets.GetActiveMaterials();
     }
 
+
     CharacterAssets GetCharacterAssets(Character character)
+    {
+        PlayerData playerData = GetPlayerData(character);
+        return playerData.characterAssets;
+    }
+
+    PlayerData GetPlayerData(Character character)
     {
         string searchKey = "";
 
@@ -52,8 +62,7 @@ public class PropertyHandler
         else
             searchKey = "Parent";
 
-        PlayerData playerData = GameData.GetData<PlayerData>(searchKey);
-        return playerData.characterAssets;
+        return GameData.GetData<PlayerData>(searchKey);
     }
 
 }
