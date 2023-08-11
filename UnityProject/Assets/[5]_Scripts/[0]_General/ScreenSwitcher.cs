@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using System.Linq;
 public enum Screen
 {
     Empty,MainMenu, ControllerSelect, CharacterSelect, GameScreen
@@ -21,10 +21,9 @@ public class ScreenSwitcher : MonoBehaviour
     [SerializeField] GameObject game;
 
 
-    private static ScreenSwitcher instance;
-    static Screen activeScreen;
-    static GameObject spawnedScreen;
 
+    private static ScreenSwitcher instance;
+    Dictionary<Screen, GameObject> activeScreenDataBase = new Dictionary<Screen, GameObject>();
 
     void Awake()
     {
@@ -49,25 +48,39 @@ public class ScreenSwitcher : MonoBehaviour
 
     public static void SwitchScreen(Screen screen)
     {
-        instance.DeactivateScreen (activeScreen);
+        instance.DeactivateAllScreens ();
         instance.ActivateScreen(screen);
-        activeScreen = screen;
     }
 
     void ActivateScreen(Screen screen){
         
         GameObject screenByName  = GetScreenByName(screen);
-        spawnedScreen = Instantiate(screenByName);
-        spawnedScreen.name = screenByName.name+ " instance";
-        activeScreen = screen;
+        GameObject newScreen = Instantiate(screenByName);
+        newScreen.name = screenByName.name+ " instance";
+        activeScreenDataBase.TryAdd(screen,newScreen);
     }
 
     void DeactivateScreen(Screen screen)
     {
-        if (spawnedScreen!=null)
-            Destroy(spawnedScreen);
-        activeScreen = Screen.Empty;
-        spawnedScreen = null;
+        activeScreenDataBase.TryGetValue(screen, out GameObject screenToDeactivate);
+        
+        if (screenToDeactivate!=null)
+            Destroy(screenToDeactivate);
+
+        activeScreenDataBase.Remove(screen);
+    }
+
+    void DeactivateAllScreens()
+    {
+        GameObject[] screensToDeactivate = activeScreenDataBase.Values.ToArray<GameObject>();
+
+        for (int i= 0; i<screensToDeactivate.Length;i++)
+        {
+            if (screensToDeactivate[i]!=null)
+                Destroy(screensToDeactivate[i]);
+        }
+
+        activeScreenDataBase.Clear();
     }
 
     GameObject GetScreenByName(Screen screen)
