@@ -11,7 +11,7 @@ class ParentCatch : ParentBaseMovementState
     public ParentCatch(ParentData data) : base(data)
     {
         time = 0;
-        parent = data.gameObject;
+        parent = CharacterInstantiator.GetActiveCharacter(Characters.Parent);
         movement = parent.GetComponent<MovementScript>();
         movement.DoCatch();
     }

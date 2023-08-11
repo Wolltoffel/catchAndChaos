@@ -6,12 +6,11 @@ class ParentIdle : ParentBaseMovementState
 {
     public ParentIdle(ParentData data) : base(data)
     {
-        gameObject = data.gameObject;
+        gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Parent);
     }
 
     public override ParentBaseMovementState UpdateState()
     {
-        Debug.Log(gameObject);
         string inputDevice = parentData.tempInputDevice;
         float xAxis;
         float yAxis;

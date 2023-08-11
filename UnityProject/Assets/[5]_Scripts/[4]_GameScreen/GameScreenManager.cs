@@ -10,6 +10,8 @@ public class GameScreenManager : MonoBehaviour
     //Parent and Child
     [SerializeField] private GameParent parent;
     [SerializeField] private GameChild child;
+    private GameObject parentObj;
+    private GameObject childObj;
 
     //Audio
     [SerializeField] 
@@ -23,7 +25,7 @@ public class GameScreenManager : MonoBehaviour
     private ChaosData chaosData;
     private PlayTimeRemaining timeData;
 
-    void Start()
+    void Awake()
     {
         SetupGame();
     }
@@ -53,14 +55,8 @@ public class GameScreenManager : MonoBehaviour
 
     private void SpawnCharacters()
     {
-        var temp = gameObject.AddComponent<CharacterSpawner>();
-        temp.placeholder = new GameObject();
-        temp.character = Character.Child;
-        temp.Start();
-        temp.placeholder = new GameObject();
-        temp.character = Character.Parent;
-        temp.Start();
-        Destroy(temp);
+        CharacterInstantiator.InstantiateCharacter(Characters.Parent, out parentObj, Vector3.left);
+        CharacterInstantiator.InstantiateCharacter(Characters.Child, out childObj, Vector3.right);
     }
 
     private void Update()
