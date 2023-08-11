@@ -56,26 +56,18 @@ abstract class ParentBaseMovementState : State
         return null;
     }
 
-    protected Plushie CheckPlushieThrow(string inputDevice, Plushie plushie, out bool hasBeenThrown)
-    {
-        hasBeenThrown = false;
-        if (Input.GetButton($"{inputDevice}X"))
-        {
-            plushie.ThrowPlushie();
-            hasBeenThrown = true;
-            return null;
-        }
-        return plushie;
-    }
-
     protected bool CheckForPlushie(string inputDevice)
     {
-        bool hasBeenThrown = false;
         if (parentData.plushie == null)
             parentData.plushie = CheckPlushiePickup(inputDevice);
         else
-            parentData.plushie = CheckPlushieThrow(inputDevice, parentData.plushie, out hasBeenThrown);
-        return hasBeenThrown;
+        {
+            if (Input.GetButton($"{inputDevice}X"))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     protected bool GetMovement(string inputDevice, out float xAxis, out float yAxis)

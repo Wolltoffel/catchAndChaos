@@ -281,6 +281,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d564d4e145cbd604e84da9e4c788136e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  titleMusic:
+  - {fileID: 8300000, guid: ea5916fd20ac44401abad4e2bb9d89dd, type: 3}
+  - {fileID: 8300000, guid: ed6c6c274626247938945ccec379a9c2, type: 3}
   playButton: {fileID: 2794958706020038821}
   quitButton: {fileID: 8259614370814035325}
 --- !u!1 &7659480606811864473

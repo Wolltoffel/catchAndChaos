@@ -7,7 +7,7 @@ public class GameParent : MonoBehaviour
     private GameObject parent;
     private ParentData parentData;
 
-    private ParentBaseMovementState movementState;
+    private ParentBaseMovementState state;
 
 
     private void Awake()
@@ -15,11 +15,11 @@ public class GameParent : MonoBehaviour
         parentData = GameData.GetData<ParentData>("Parent");
 
         //Spawn 3d model
-        movementState = new ParentIdle(parentData);
+        state = new ParentIdle(parentData);
     }
 
     private void Update()
     {
-        movementState = movementState.UpdateState();
+        state = state.UpdateState();
     }
 }
