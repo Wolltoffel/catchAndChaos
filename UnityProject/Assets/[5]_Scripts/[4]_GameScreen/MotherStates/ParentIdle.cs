@@ -11,10 +11,12 @@ class ParentIdle : ParentBaseMovementState
 
     public override ParentBaseMovementState UpdateState()
     {
+        Debug.Log(gameObject);
         string inputDevice = parentData.tempInputDevice;
         float xAxis;
         float yAxis;
         bool moveInput = GetMovement(inputDevice, out xAxis, out yAxis);
+
 
         //CheckForPlushie
         bool hasBeenThrown = CheckForPlushie(inputDevice);

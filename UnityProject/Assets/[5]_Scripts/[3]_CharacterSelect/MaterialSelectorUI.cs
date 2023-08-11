@@ -32,7 +32,7 @@ public class Selector
 public class Section
 {  
     Character character;
-    [SerializeField]MaterialApplier materialApplier;
+    [SerializeField]CharacterSpawner characterSpawner;
     [HideInInspector] public bool isConfirmed = false;
     Action checkAction;
 
@@ -76,7 +76,7 @@ public class Section
     {   
         PropertyHandler propertyHandler = new PropertyHandler();
         propertyHandler.SetProperty(character,selector.modelProperty,step);
-        materialApplier.ApplyMaterials();
+        characterSpawner.SpawnCharacter();
     }
 
     public void ConfirmSelection()
@@ -113,7 +113,6 @@ public class MaterialSelectorUI : MonoBehaviour
 
     void CheckConfirm()
     {
-        Debug.Log(child.isConfirmed + "---" + parent.isConfirmed);
         if (child.isConfirmed && parent.isConfirmed)
         {
             ScreenSwitcher.SwitchScreen(Screen.GameScreen);

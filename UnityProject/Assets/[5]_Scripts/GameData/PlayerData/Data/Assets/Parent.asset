@@ -19,7 +19,7 @@ MonoBehaviour:
     hair: []
     skinMaterials: []
   female:
-    prefab: {fileID: 2338372649390966681, guid: 13eb01f10e451684487bd7b7662889f1, type: 3}
+    prefab: {fileID: 4973842765608015006, guid: 911f9aaf77b5b4b40a91e9e993f27a0e, type: 3}
     clothing: {fileID: 2100000, guid: 3e26b9f9b5d84464ca05b075ee594bc7, type: 2}
     hair:
     - {fileID: 2100000, guid: d7af515de87f5994783fcee7c85584d7, type: 2}

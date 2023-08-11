@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: ChildAssets
   male:
-    prefab: {fileID: 838799245651974869, guid: 4c470c394e829e54cab1589d9311ce13, type: 3}
+    prefab: {fileID: 7577541607973089606, guid: fb695e346747cdc42afab0dba0b791b7, type: 3}
     clothing: {fileID: 2100000, guid: 32634fcde945cdb43866ab40d965a227, type: 2}
     hair:
     - {fileID: 2100000, guid: c1b5a705ce35fdc41beec15685a42b05, type: 2}
@@ -24,8 +24,12 @@ MonoBehaviour:
       face: {fileID: 2100000, guid: 5d14f6f93c1786f4c99a30a4242d8ee6, type: 2}
     - body: {fileID: 2100000, guid: 631416c107fbc3648bc3d341f39c0602, type: 2}
       face: {fileID: 2100000, guid: 09639cae0834e1f43a804ffbdd5b8164, type: 2}
+    - body: {fileID: 2100000, guid: f6fc0c67061e1c440904a3e17d6ca181, type: 2}
+      face: {fileID: 2100000, guid: 06796e284671d4742a771ac9b5372775, type: 2}
+    - body: {fileID: 2100000, guid: 471916accc75f0448a8d1008d1ef486a, type: 2}
+      face: {fileID: 2100000, guid: 39f2b6ee7558c3448a8e7ca0c8bfd8a5, type: 2}
   female:
-    prefab: {fileID: 892097272309416091, guid: de46b571c92bbde409f7d4d52526c0e4, type: 3}
+    prefab: {fileID: 6515412663111107442, guid: 0fd699db01e14fa45869d2266d57653f, type: 3}
     clothing: {fileID: 2100000, guid: 22fa76140c7a04649b320b1a1c874dd2, type: 2}
     hair:
     - {fileID: 2100000, guid: be27abef187375f4d8c262efd951195a, type: 2}
@@ -33,3 +37,9 @@ MonoBehaviour:
     skinMaterials:
     - body: {fileID: 2100000, guid: 255fc5e796024dd4da85a0db8bed7819, type: 2}
       face: {fileID: 2100000, guid: 3ea6553ff8231a0449c84eeeb56902a9, type: 2}
+    - body: {fileID: 2100000, guid: 1e86b5742bf0ba24d86fb54fa5bee723, type: 2}
+      face: {fileID: 2100000, guid: d726cf7389ab0c54d9ab67c5beb6e375, type: 2}
+    - body: {fileID: 2100000, guid: 563035264492eb44488270c86bf789ff, type: 2}
+      face: {fileID: 2100000, guid: 90225d1291c87c04a887cc2a75c5f053, type: 2}
+    - body: {fileID: 2100000, guid: dc766ac788e15da4fb2a65e4edd392aa, type: 2}
+      face: {fileID: 2100000, guid: 15c0897d99aa08f4e973f6c7d8fd2942, type: 2}

@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameScreenManager : MonoBehaviour
 {
+    [SerializeField] private CameraManager camera;
+
     //Parent and Child
     [SerializeField] private GameParent parent;
     [SerializeField] private GameChild child;
@@ -27,6 +30,12 @@ public class GameScreenManager : MonoBehaviour
 
     private void SetupGame()
     {
+        SpawnCharacters();
+
+        //Position Camera
+        camera = Camera.main.GetComponent<CameraManager>();
+        camera.GameCamera();
+
         //Set up background Sounds
         if (backgroundAudioClips.Length > 0)
         {
@@ -40,6 +49,18 @@ public class GameScreenManager : MonoBehaviour
 
         //Set up time counter
         SetupTimeCounter();
+    }
+
+    private void SpawnCharacters()
+    {
+        var temp = gameObject.AddComponent<CharacterSpawner>();
+        temp.placeholder = new GameObject();
+        temp.character = Character.Child;
+        temp.Start();
+        temp.placeholder = new GameObject();
+        temp.character = Character.Parent;
+        temp.Start();
+        Destroy(temp);
     }
 
     private void Update()

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GameParent : MonoBehaviour
 {
-    private GameObject parent;
     private ParentData parentData;
 
     private ParentBaseMovementState state;
