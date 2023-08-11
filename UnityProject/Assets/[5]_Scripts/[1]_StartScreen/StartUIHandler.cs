@@ -13,7 +13,7 @@ public class StartUIHandler : MonoBehaviour
 
     void Awake()
     {
-        playButton.onClick.AddListener(() => ScreenSwitcher.SwitchScreen(Screen.ControllerSelect));
+        playButton.onClick.AddListener(() => ScreenSwitcher.SwitchScreen(ScreenType.ControllerSelect));
         quitButton.onClick.AddListener(() =>
         {
 #if UNITY_EDITOR

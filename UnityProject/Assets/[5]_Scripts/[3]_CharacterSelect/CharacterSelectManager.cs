@@ -34,7 +34,6 @@ public class Section
 {
     Characters character;
     [HideInInspector] public bool isConfirmed = false;
-    Action checkAction;
 
     public Transform parent;
 
@@ -56,9 +55,8 @@ public class Section
         skinColorSelector.SetModelProperty(ModelProperty.Skincolor);
     }
 
-    public void AddListeners(Action action)
+    public void AddListeners()
     {
-        checkAction = action;
         confirm.onClick.AddListener(ConfirmSelection);
 
         AddListenerToSelector(genderSelector);
@@ -66,17 +64,13 @@ public class Section
         AddListenerToSelector(skinColorSelector);
     }
     void AddListenerToSelector(Selector selector)
-    { PropertyHandler propertyHandler = new PropertyHandler();
+    { 
+        PropertyHandler propertyHandler = new PropertyHandler();
         Characters character = this.character;
         Section section = this;
         selector.AddListener(
             () => section.UpdateAndApplyMaterials(selector, character, selector.modelProperty, Step.Prev),
             () => section.UpdateAndApplyMaterials(selector, character, selector.modelProperty, Step.Next));
-    }
-
-    public void SetCharacterSpawnAnchor(Transform parent)
-    {
-        this.parent = parent;
     }
 
     void UpdateAndApplyMaterials(Selector selector,Characters character, ModelProperty modelProperty, Step step)
@@ -89,44 +83,34 @@ public class Section
     public void ConfirmSelection()
     {
         isConfirmed = true;
+        HideButtons();
+    }
 
+    public void HideButtons()
+    {
         genderSelector.HideButtons();
         hairColorSelector.HideButtons();
         skinColorSelector.HideButtons();
-
-        checkAction();
     }
+
 }
 
-public class MaterialSelectorUI : MonoBehaviour
+public class CharacterSelectManager : MonoBehaviour
 {
-    [SerializeField] Transform cameraPosition;
-    [SerializeField]Section child, parent;
+
+    [SerializeField]public Section child, parent;
 
     void  Awake()
     {   
+        CharacterInstantiator.InstantiateCharacter(Characters.Child, out GameObject obj, child.parent);
+        CharacterInstantiator.InstantiateCharacter(Characters.Parent, out obj, parent.parent);
+
         child.SetCharacter(Characters.Child);
         parent.SetCharacter(Characters.Parent);
         child.SetModelProperties();
         parent.SetModelProperties();
-        child.AddListeners(CheckConfirm);
-        parent.AddListeners(CheckConfirm);
-        CharacterInstantiator.InstantiateCharacter(Characters.Child, out GameObject obj, child.parent);
-        CharacterInstantiator.InstantiateCharacter(Characters.Parent, out obj, parent.parent);
-        Camera.main.GetComponent<CameraManager>().SetCameraPosition(cameraPosition);
-    }
+        child.AddListeners();
+        parent.AddListeners();
 
-    void Update()
-    {
-        //Debug.Log (GameData.GetData<PlayerData>("Child").characterAssets.male.GetActiveHairIndex());
-
-    }
-
-    void CheckConfirm()
-    {
-        if (child.isConfirmed && parent.isConfirmed)
-        {
-            ScreenSwitcher.SwitchScreen(Screen.GameScreen);
-        }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
-public enum Screen
+public enum ScreenType
 {
     Empty,MainMenu, ControllerSelect, CharacterSelect, GameScreen
 }
@@ -11,7 +11,7 @@ public enum Screen
 
 public class ScreenSwitcher : MonoBehaviour
 {
-    [SerializeField] Screen startScreen;
+    [SerializeField] ScreenType startScreen;
 
     [Header ("Screen Prefabs")]
 
@@ -20,7 +20,7 @@ public class ScreenSwitcher : MonoBehaviour
     [SerializeField] GameObject characterSelect;
     [SerializeField] GameObject game;
     private static ScreenSwitcher instance;
-    static Dictionary<Screen, GameObject> activeScreenDataBase = new Dictionary<Screen, GameObject>();
+    static Dictionary<ScreenType, GameObject> activeScreenDataBase = new Dictionary<ScreenType, GameObject>();
 
     void Awake()
     {
@@ -43,18 +43,18 @@ public class ScreenSwitcher : MonoBehaviour
         ActivateScreen(startScreen);
     }
 
-    public static void SwitchScreen(Screen screen)
+    public static void SwitchScreen(ScreenType screen)
     {
         instance.DeactivateAllScreens ();
         instance.ActivateScreen(screen);
     }
 
-    public static void AddScreen(Screen screen)
+    public static void AddScreen(ScreenType screen)
     {
         instance.ActivateScreen(screen);
     }
 
-    void ActivateScreen(Screen screen){
+    void ActivateScreen(ScreenType screen){
         
         GameObject screenByName  = GetScreenByName(screen);
         GameObject newScreen = Instantiate(screenByName);
@@ -62,7 +62,7 @@ public class ScreenSwitcher : MonoBehaviour
         activeScreenDataBase.TryAdd(screen,newScreen);
     }
 
-    public static void DeactivateScreen(Screen screen)
+    public static void DeactivateScreen(ScreenType screen)
     {
         activeScreenDataBase.TryGetValue(screen, out GameObject screenToDeactivate);
         
@@ -85,17 +85,17 @@ public class ScreenSwitcher : MonoBehaviour
         activeScreenDataBase.Clear();
     }
 
-    GameObject GetScreenByName(Screen screen)
+    GameObject GetScreenByName(ScreenType screen)
     {
         switch (screen)
         {
-            case Screen.MainMenu:
+            case ScreenType.MainMenu:
                 return mainMenu;
-            case Screen.ControllerSelect:
+            case ScreenType.ControllerSelect:
                 return controllerSelect;
-            case Screen.CharacterSelect:
+            case ScreenType.CharacterSelect:
                 return characterSelect;
-            case Screen.GameScreen:
+            case ScreenType.GameScreen:
                 return game;
         }
 

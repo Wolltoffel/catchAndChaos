@@ -10,10 +10,11 @@ public class ControllerSelector : MonoBehaviour
 
     IEnumerator Start()
     {   
+        ScreenSwitcher.AddScreen(ScreenType.CharacterSelect);
         yield return WaitForKeyInput("Parent");
         yield return WaitForKeyInput ("Child");
         yield return null;
-        ScreenSwitcher.SwitchScreen(Screen.CharacterSelect);
+        ScreenSwitcher.DeactivateScreen(ScreenType.ControllerSelect);
     }
 
     IEnumerator WaitForKeyInput(string key)
