@@ -76,9 +76,17 @@ public class WaitForKeyInput: MenuState
     public WaitForKeyInput(CustomisationData data) : base(data) {}
         public override MenuState UpdateMenu()
         {
-            string inputDevice = GetInputDevice();
+            Debug.Log (dataPack.key + " is waiting for input");
+
+            string inputDevice = "";
+            if (dataPack.character == Characters.Child)
+                inputDevice = GetInputDevice("X");
+            else
+                inputDevice = GetInputDevice("B");
+            
                 if (inputDevice!="")
                 {   
+                    Debug.Log (dataPack.key + " has input device "+inputDevice+ "now");    
                     dataPack.setInputDevices.Add (inputDevice);
                     //Set Input Device for Player
                     GameData.GetData<PlayerData>(dataPack.key).tempInputDevice = inputDevice; 
@@ -89,30 +97,30 @@ public class WaitForKeyInput: MenuState
             return this;
         }
 
-        string GetInputDevice()
+        string GetInputDevice(string buttton)
         {
                 string inputDevice = "";
-                if (Input.GetButtonDown("J1A")) //Controller 1
-                inputDevice =  "J1";
-                else if (Input.GetButtonDown("J2A")) //Controller 2
+                if (Input.GetButtonDown("J1"+buttton)) //Controller 1
+                    {inputDevice =  "J1"; Debug.Log (dataPack.key + " has pressed button on Controller 1");}
+                else if (Input.GetButtonDown("J2"+buttton)) //Controller 2
                     inputDevice=  "J2";
-                else if (Input.GetButtonDown("J3A"))  //Controller 3
+                else if (Input.GetButtonDown("J3"+buttton))  //Controller 3
                     inputDevice=  "J3";
-            else if (Input.GetButtonDown("J4A")) //Controller 4
+                else if (Input.GetButtonDown("J4"+buttton)) //Controller 4
                     inputDevice= "J4";
-                else if (Input.GetButtonDown("K1A")) // First Keyboard Layout
+                else if (Input.GetButtonDown("K1"+buttton)) // First Keyboard Layout
                     inputDevice=  "K1";
-                else if (Input.GetButtonDown("K2A")) // Second Keyboard Layout
+                else if (Input.GetButtonDown("K2"+buttton)) // Second Keyboard Layout
                     inputDevice=  "K2";
 
                 //Check if input device is already set
                 for (int i = 0; i<dataPack.setInputDevices.Count;i++)
                 {
                         if (inputDevice==dataPack.setInputDevices[i])
-                        {
+                        {   
                             return "";
                         }
-                }     
+                } 
                 return inputDevice;
         }  
 }
