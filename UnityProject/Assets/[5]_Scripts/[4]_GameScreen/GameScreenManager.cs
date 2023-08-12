@@ -24,15 +24,18 @@ public class GameScreenManager : MonoBehaviour
     //Data
     private ChaosData chaosData;
     private PlayTimeRemaining timeData;
+    private GameInteractableManager interactableManager;
 
     void Awake()
     {
         SetupGame();
+        interactableManager = GetComponent<GameInteractableManager>();
     }
 
     private void SetupGame()
     {
         SpawnCharacters();
+        interactableManager.LoadInteractablesIntoDatabase();
 
         //Position Camera
         camera = Camera.main.GetComponent<CameraManager>();

@@ -242,6 +242,7 @@ GameObject:
   - component: {fileID: 8859055359586037656}
   - component: {fileID: 7275115341930146678}
   - component: {fileID: 4631060029137468080}
+  - component: {fileID: 1523996336303013180}
   m_Layer: 0
   m_Name: GameScreenManagers
   m_TagString: Untagged
@@ -302,6 +303,29 @@ MonoBehaviour:
   slideCooldown: {fileID: 7935943004802207553}
   chaosMeter: {fileID: 6890191997123060700}
   timeCounter: {fileID: 2245734481076800219}
+--- !u!114 &1523996336303013180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3226880609466124650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57f451ae0bd83ff4a80a96de2bfee81d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactableTags:
+  - tag: Plushie
+    interactionRange: 2
+  - tag: Door
+    interactionRange: 2
+  - tag: Lolly
+    interactionRange: 2
+  - tag: Vent
+    interactionRange: 2
+  - tag: Chaos
+    interactionRange: 2
 --- !u!1 &4185518816038439600
 GameObject:
   m_ObjectHideFlags: 0
