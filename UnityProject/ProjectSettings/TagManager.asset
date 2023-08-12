@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Movable
   - Chaos
+  - Plushie
+  - Door
+  - Lolly
+  - Vent
   layers:
   - Default
   - TransparentFX

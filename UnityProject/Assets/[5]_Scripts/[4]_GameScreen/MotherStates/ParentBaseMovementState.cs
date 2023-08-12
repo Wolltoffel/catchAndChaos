@@ -18,7 +18,7 @@ abstract class ParentBaseMovementState : State
         {
             //show prompt
 
-            if (Input.GetButton($"{inputDevice}B"))
+            if (Input.GetButtonDown($"{inputDevice}B"))
             {
                 //DoAnimation
                 //Sound
@@ -33,14 +33,14 @@ abstract class ParentBaseMovementState : State
         }
     }
 
-    protected Plushie CheckPlushiePickup(string inputDevice)
+    protected Plushie GetPlushieIfInRange(string inputDevice)
     {
         GameObject interactable;
         if (InteractableInRange("Plushie", out interactable))
         {
             //show prompt
 
-            if (Input.GetButton($"{inputDevice}X"))
+            if (Input.GetButtonDown($"{inputDevice}X"))
             {
                 //hideprompt
 
@@ -56,17 +56,27 @@ abstract class ParentBaseMovementState : State
         return null;
     }
 
-    protected bool CheckForPlushie(string inputDevice)
+    protected bool CheckForPlushieAction(string inputDevice)
     {
         if (parentData.plushie == null)
-            parentData.plushie = CheckPlushiePickup(inputDevice);
+        {
+            parentData.plushie = GetPlushieIfInRange(inputDevice);
+            if (Input.GetButtonDown($"{inputDevice}X"))
+            {
+                if (parentData.plushie != null)
+                {
+                    parentData.plushie.AttachToTarget(gameObject.transform);
+                }
+            }
+        }
         else
         {
-            if (Input.GetButton($"{inputDevice}X"))
+            if (Input.GetButtonDown($"{inputDevice}X"))
             {
                 return true;
             }
         }
+
         return false;
     }
 

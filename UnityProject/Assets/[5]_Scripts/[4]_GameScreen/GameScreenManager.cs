@@ -28,8 +28,8 @@ public class GameScreenManager : MonoBehaviour
 
     void Awake()
     {
-        SetupGame();
         interactableManager = GetComponent<GameInteractableManager>();
+        SetupGame();
     }
 
     private void SetupGame()

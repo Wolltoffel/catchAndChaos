@@ -11,8 +11,6 @@ class ParentIdle : ParentBaseMovementState
 
     public override ParentBaseMovementState UpdateState()
     {
-        Debug.Log("Parent-Idle");
-
         string inputDevice = parentData.tempInputDevice;
         float xAxis;
         float yAxis;
@@ -20,13 +18,22 @@ class ParentIdle : ParentBaseMovementState
 
 
         //CheckForPlushie
-        bool hasBeenThrown = CheckForPlushie(inputDevice);
+        bool hasBeenThrown = CheckForPlushieAction(inputDevice);
         if (hasBeenThrown)
         {
             return new ParentLocked(parentData);
         }
 
+        //CheckForDoors
         CheckDoorToggle(inputDevice);
+
+        //CheckForCatch
+        if (Input.GetButtonDown($"{inputDevice}A"))
+        {
+            MovementScript movement = gameObject.GetComponent<MovementScript>();
+            movement.DoCatch();
+            return new ParentCatch(parentData,movement);
+        }
 
         if (moveInput)
         {

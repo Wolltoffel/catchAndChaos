@@ -25,6 +25,7 @@ public class Plushie : MonoBehaviour
         Debug.Log("Plushie Thrown");
         transform.parent = null;
         yield return null;
+        coroutine = null;
     }
 
     public void AttachToTarget(Transform target)

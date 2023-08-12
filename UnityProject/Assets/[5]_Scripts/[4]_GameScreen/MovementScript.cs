@@ -145,9 +145,11 @@ public class MovementScript : MonoBehaviour
 
         while (time < catchDuration)
         {
-            Vector3 movement = catchDir * (Mathf.Pow(time, 8) + 1);
+            Vector3 movement = catchDir * (Mathf.Pow(time, 8) + 1)  / 1000;
 
-            rigidbody.velocity = movement;
+            characterController.Move(movement);
+
+            time += Time.deltaTime * Time.timeScale;
 
             yield return null;
         }

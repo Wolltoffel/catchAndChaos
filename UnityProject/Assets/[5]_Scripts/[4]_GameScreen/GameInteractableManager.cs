@@ -57,6 +57,11 @@ public class InteractableContainer : Object
     {
         InteractableCategory interactable = GetInteractableCategory(tag);
 
+        if (interactable.objects == null || interactable.objects.Count == 0)
+        {
+            return null;
+        }
+
         GameObject closestObject = interactable.objects[0];
         float currentDistance = Vector3.Distance(closestObject.transform.position, position);
 
@@ -114,5 +119,6 @@ public class GameInteractableManager : MonoBehaviour
             else
                 allInteractables.AddObjectsToCategory(tag,objectsWithTag);
         }
+        GameData.SetData(allInteractables, "InteractableContainer");
     }
 }
