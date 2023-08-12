@@ -62,7 +62,6 @@ class Idle: ChildState
     public override ChildState UpdateState()
     {
         
-
         //Go to Run
         float horizontal = Input.GetAxis(inputDevice+" Horizontal");
         float vertical = Input.GetAxis(inputDevice+" Vertical");
@@ -103,7 +102,7 @@ class Run: ChildState
         float horizontal = Input.GetAxis(inputDevice+" Horizontal");
         float vertical = Input.GetAxis(inputDevice+" Vertical");
 
-        Debug.Log ("Im runnign "+ vertical);
+        Debug.Log ("Im runnign "+ horizontal);
 
         GameObject gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Child);
         gameObject.GetComponent<MovementScript>().MovePlayer(horizontal, vertical);
