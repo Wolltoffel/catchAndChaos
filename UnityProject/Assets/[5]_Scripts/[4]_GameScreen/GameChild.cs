@@ -3,12 +3,17 @@ using UnityEngine;
 
 public class GameChild : MonoBehaviour
 {
-    ChildState childState = new Idle();
+    private ChildState childState;
 
-  void  Update()
-  {
+    private void Start()
+    {
+        childState = new Idle();
+    }
+
+    void  Update()
+    {
         childState = childState.UpdateState();
-  }
+    }
 }
 
 abstract class ChildState : State
