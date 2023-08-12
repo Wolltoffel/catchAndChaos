@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ADataObject", menuName = "Custom/AData/PlayTimeRemaining")]
-public class PlayTimeRemaining : AData
+public class PlayTimeRemaining : StaticData
 {
     [SerializeField] private int playTime; 
     private float tempRemainingPlayTime;

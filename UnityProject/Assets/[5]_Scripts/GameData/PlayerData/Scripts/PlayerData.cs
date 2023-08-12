@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 
-public abstract class PlayerData : AData
+public abstract class PlayerData : StaticData
 {
     [HideInInspector] public string tempScore;
     [HideInInspector] public string tempInputDevice = "K1";
