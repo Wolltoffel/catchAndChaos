@@ -5,27 +5,36 @@ using UnityEngine;
 
 public class CustomisationData
 {
-    public CharacterSelectManager materialSelectorUI;
+    public InputSelectUIManager inputSelectUI;
+    public CharacterSelectManager characterSelectManager;
     public string key;
+    public Characters character;
     public List<string> setInputDevices;
 
-    public CustomisationData(string key,CharacterSelectManager materialSelectorUI,List<string> setInputDevices)
+    public CustomisationData(Characters character,InputSelectUIManager inputSelectUI,
+    CharacterSelectManager characterSelectManager,List<string> setInputDevices)
     {
-        this.key = key;
-        this.materialSelectorUI = materialSelectorUI;
+        this.character = character;
+        if (character == Characters.Child)
+            key = "Child";
+        else
+            key = "Parent";
+        this.inputSelectUI = inputSelectUI;
         this.setInputDevices = setInputDevices;
+        this.characterSelectManager = characterSelectManager;
     }
 }
 
 public class SelectScreenManager : MonoBehaviour
 {
-    List<string> setInputDevices = new List<string>();
-    CustomisationData parent_characterCustomisationDataPack, child_CustomisationData;
-
-    MenuState child,parent;
-
-    [SerializeField]CharacterSelectManager materialSelectorUI;
+    
+    [SerializeField]InputSelectUIManager inputSelectUI;
+    [SerializeField] CharacterSelectManager characterSelectManager;
     [SerializeField] Transform cameraPosition;
+
+    List<string> setInputDevices = new List<string>();
+    MenuState child,parent;
+    CustomisationData parent_CustomisationData, child_CustomisationData;
 
     void Start()
     {   
@@ -33,11 +42,11 @@ public class SelectScreenManager : MonoBehaviour
 
         Camera.main.GetComponent<CameraManager>().SetCameraPosition(cameraPosition);
 
-        parent_characterCustomisationDataPack = new CustomisationData("Parent",materialSelectorUI,setInputDevices);
-        child_CustomisationData = new CustomisationData("Child",materialSelectorUI,setInputDevices);
+        parent_CustomisationData = new CustomisationData(Characters.Parent,inputSelectUI,characterSelectManager,setInputDevices);
+        child_CustomisationData = new CustomisationData(Characters.Child,inputSelectUI,characterSelectManager,setInputDevices);
 
         child = new WaitForKeyInput(child_CustomisationData);
-        parent = new WaitForKeyInput(parent_characterCustomisationDataPack);
+        parent = new WaitForKeyInput(parent_CustomisationData);
     }
 
    void Update()
@@ -48,7 +57,6 @@ public class SelectScreenManager : MonoBehaviour
         if (child is Ready && parent is Ready)
             ScreenSwitcher.SwitchScreen(ScreenType.GameScreen);
    }
-
     
 }
 
@@ -74,7 +82,7 @@ public class WaitForKeyInput: MenuState
                     dataPack.setInputDevices.Add (inputDevice);
                     //Set Input Device for Player
                     GameData.GetData<PlayerData>(dataPack.key).tempInputDevice = inputDevice; 
-                    //UIHandler.UpdateUIToChaacterSelect;
+                    dataPack.inputSelectUI.HideUI(dataPack.character);
                     return new CustomiseCharacter(dataPack);
                 }
 
@@ -114,8 +122,8 @@ public class CustomiseCharacter: MenuState
     public CustomiseCharacter(CustomisationData data) : base(data) {}
     public override MenuState UpdateMenu()
     {
-          CharacterSelectManager materialSelectorUI =   dataPack.materialSelectorUI;
-        if (materialSelectorUI.child.isConfirmed && materialSelectorUI.parent.isConfirmed)
+          CharacterSelectManager characterSelectManager =  dataPack.characterSelectManager;
+        if (characterSelectManager.child.isConfirmed && characterSelectManager.parent.isConfirmed)
             return new Ready(dataPack);
             
             return this;

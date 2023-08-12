@@ -1518,6 +1518,7 @@ MonoBehaviour:
   lerpValue: 0.2
   movementSpeed: 1
   rotationSpeed: 50
+  pushForce: 5
 --- !u!1 &7772254691193900145
 GameObject:
   m_ObjectHideFlags: 0
@@ -1604,8 +1605,8 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: c1b5a705ce35fdc41beec15685a42b05, type: 2}
-  - {fileID: 2100000, guid: 5d14f6f93c1786f4c99a30a4242d8ee6, type: 2}
-  - {fileID: 2100000, guid: 726e25aa4f22ff7429fb30c850560e79, type: 2}
+  - {fileID: 2100000, guid: 06796e284671d4742a771ac9b5372775, type: 2}
+  - {fileID: 2100000, guid: f6fc0c67061e1c440904a3e17d6ca181, type: 2}
   - {fileID: 2100000, guid: 32634fcde945cdb43866ab40d965a227, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0

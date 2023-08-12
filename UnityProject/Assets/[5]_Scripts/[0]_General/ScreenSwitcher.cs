@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 public enum ScreenType
 {
-    Empty,MainMenu, ControllerSelect, CharacterSelect, GameScreen
+    Empty,MainMenu,CharacterInputSelect, GameScreen
 }
 
 
@@ -16,8 +16,7 @@ public class ScreenSwitcher : MonoBehaviour
     [Header ("Screen Prefabs")]
 
     [SerializeField] GameObject mainMenu;
-    [SerializeField] GameObject controllerSelect;
-    [SerializeField] GameObject characterSelect;
+    [SerializeField] GameObject characterInputSelect;
     [SerializeField] GameObject game;
     private static ScreenSwitcher instance;
     static Dictionary<ScreenType, GameObject> activeScreenDataBase = new Dictionary<ScreenType, GameObject>();
@@ -91,10 +90,8 @@ public class ScreenSwitcher : MonoBehaviour
         {
             case ScreenType.MainMenu:
                 return mainMenu;
-            case ScreenType.ControllerSelect:
-                return controllerSelect;
-            case ScreenType.CharacterSelect:
-                return characterSelect;
+            case ScreenType.CharacterInputSelect:
+                return characterInputSelect;
             case ScreenType.GameScreen:
                 return game;
         }

@@ -2,19 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ControllerSelector : MonoBehaviour
+public class InputSelector_old : MonoBehaviour
 {   
-
-    [SerializeField]ControllerUI controllerUI;
+    [SerializeField]InputSelectUIManager inputSelectUIManager;
     List<string> setInputDevices = new List<string>();
 
     IEnumerator Start()
     {   
-        ScreenSwitcher.AddScreen(ScreenType.CharacterSelect);
         yield return WaitForKeyInput("Parent");
         yield return WaitForKeyInput ("Child");
         yield return null;
-        ScreenSwitcher.DeactivateScreen(ScreenType.ControllerSelect);
+       // ScreenSwitcher.DeactivateScreen(ScreenType.ControllerSelect);
     }
 
     IEnumerator WaitForKeyInput(string key)
@@ -27,7 +25,7 @@ public class ControllerSelector : MonoBehaviour
             {   
                 setInputDevices.Add (inputDevice);
                 GameData.GetData<PlayerData>(key).tempInputDevice = inputDevice; //Set Input Device for Player
-                controllerUI.ControllerSet(key,inputDevice);
+                //inputSelectUIManager.HideUI();
                 yield return null;
                 break; 
             }

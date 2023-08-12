@@ -34,8 +34,7 @@ public class Section
 {
     Characters character;
     [HideInInspector] public bool isConfirmed = false;
-
-    public Transform parent;
+    public Transform anchor;
 
     [Header("Buttons")]
     public Button confirm;
@@ -77,7 +76,7 @@ public class Section
     {   
         PropertyHandler propertyHandler = new PropertyHandler();
         propertyHandler.SetProperty(character,selector.modelProperty,step);
-        CharacterInstantiator.InstantiateCharacter(character, out GameObject obj, parent);
+        CharacterInstantiator.InstantiateCharacter(character, out GameObject obj, anchor);
     }
 
     public void ConfirmSelection()
@@ -102,8 +101,8 @@ public class CharacterSelectManager : MonoBehaviour
 
     void  Awake()
     {   
-        CharacterInstantiator.InstantiateCharacter(Characters.Child, out GameObject obj, child.parent);
-        CharacterInstantiator.InstantiateCharacter(Characters.Parent, out obj, parent.parent);
+        CharacterInstantiator.InstantiateCharacter(Characters.Child, out GameObject obj, child.anchor);
+        CharacterInstantiator.InstantiateCharacter(Characters.Parent, out obj, parent.anchor);
 
         child.SetCharacter(Characters.Child);
         parent.SetCharacter(Characters.Parent);
