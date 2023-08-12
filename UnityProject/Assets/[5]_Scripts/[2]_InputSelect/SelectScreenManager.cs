@@ -86,7 +86,6 @@ public class WaitForKeyInput: MenuState
             
                 if (inputDevice!="")
                 {   
-                    Debug.Log (dataPack.key + " has input device "+inputDevice+ "now");    
                     dataPack.setInputDevices.Add (inputDevice);
                     //Set Input Device for Player
                     GameData.GetData<PlayerData>(dataPack.key).tempInputDevice = inputDevice; 
@@ -101,7 +100,7 @@ public class WaitForKeyInput: MenuState
         {
                 string inputDevice = "";
                 if (Input.GetButtonDown("J1"+buttton)) //Controller 1
-                    {inputDevice =  "J1"; Debug.Log (dataPack.key + " has pressed button on Controller 1");}
+                    inputDevice =  "J1";
                 else if (Input.GetButtonDown("J2"+buttton)) //Controller 2
                     inputDevice=  "J2";
                 else if (Input.GetButtonDown("J3"+buttton))  //Controller 3
