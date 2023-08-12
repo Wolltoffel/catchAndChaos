@@ -36,16 +36,18 @@ namespace UnityEngine.EventSystems
         }
 
         [SerializeField]
-        private string m_HorizontalAxis = "Horizontal";
+        private string horizontalAxis_Keyboard = "Horizontal";
+         [SerializeField]
+        private string horizontalAxis_Gamepad = "Horizontal";
 
         /// <summary>
         /// Name of the vertical axis for movement (if axis events are used).
         /// </summary>
         [SerializeField]
-        private string m_VerticalAxis_1 = "Vertical_1";
+        private string verticalAxis_Keyboard = "Vertical_1";
                 /// </summary>
         [SerializeField]
-        private string m_VerticalAxis_2 = "Vertical_2";
+        private string verticalAxis_Gamepad = "Vertical_2";
 
         /// <summary>
         /// Name of the submit button.
@@ -94,8 +96,8 @@ namespace UnityEngine.EventSystems
         /// </summary>
         public string horizontalAxis
         {
-            get { return m_HorizontalAxis; }
-            set { m_HorizontalAxis = value; }
+            get { return horizontalAxis_Keyboard; }
+            set { horizontalAxis_Keyboard = value; }
         }
 
         /// <summary>
@@ -103,8 +105,8 @@ namespace UnityEngine.EventSystems
         /// </summary>
         public string verticalAxis
         {
-            get { return m_VerticalAxis_1; }
-            set { m_VerticalAxis_1 = value; }
+            get { return verticalAxis_Keyboard; }
+            set { verticalAxis_Keyboard = value; }
         }
 
         /// <summary>
@@ -200,9 +202,10 @@ namespace UnityEngine.EventSystems
             var shouldActivate = m_ForceModuleActive;
             shouldActivate |= input.GetButtonDown(m_SubmitButton);
             shouldActivate |= input.GetButtonDown(m_CancelButton);
-            shouldActivate |= !Mathf.Approximately(input.GetAxisRaw(m_HorizontalAxis), 0.0f);
-            shouldActivate |= !Mathf.Approximately(input.GetAxisRaw(m_VerticalAxis_1), 0.0f) ||
-                   !Mathf.Approximately(input.GetAxisRaw(m_VerticalAxis_2), 0.0f);
+            shouldActivate |= !Mathf.Approximately(input.GetAxisRaw(horizontalAxis_Keyboard), 0.0f)||
+                    !Mathf.Approximately(input.GetAxisRaw(horizontalAxis_Gamepad), 0.0f);
+            shouldActivate |= !Mathf.Approximately(input.GetAxisRaw(verticalAxis_Keyboard), 0.0f) ||
+                   !Mathf.Approximately(input.GetAxisRaw(verticalAxis_Gamepad), 0.0f);
             shouldActivate |= (m_MousePosition - m_LastMousePosition).sqrMagnitude > 0.0f;
             shouldActivate |= input.GetMouseButtonDown(0);
 
@@ -427,18 +430,14 @@ namespace UnityEngine.EventSystems
          private Vector2 GetRawMoveVector()
         {
             Vector2 move = Vector2.zero;
-            move.x = input.GetAxisRaw(m_HorizontalAxis);
 
-            float verticalInput = input.GetAxisRaw(m_VerticalAxis_1) + Input.GetAxis(m_VerticalAxis_2);
+            float verticalInput = input.GetAxisRaw(verticalAxis_Keyboard) + Input.GetAxis(verticalAxis_Gamepad);
+            float horizontalInput = input.GetAxisRaw(horizontalAxis_Keyboard) + Input.GetAxis(horizontalAxis_Gamepad);
 
-            Debug.Log (verticalInput);
-
-            if (input.GetButtonDown(m_HorizontalAxis))
+            
+            if (Mathf.Abs(horizontalInput) > 0.5f)
             {
-                if (move.x < 0)
-                    move.x = -1f;
-                if (move.x > 0)
-                    move.x = 1f;
+                move.x = Mathf.Sign(horizontalInput);
             }
 
             if (Mathf.Abs(verticalInput) > 0.5f)

@@ -61,9 +61,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SendPointerHoverToParent: 1
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis_1: K Vertical
-  m_VerticalAxis_2: J Vertical
+  horizontalAxis_Keyboard: K Horizontal
+  horizontalAxis_Gamepad: J Horizontal
+  verticalAxis_Keyboard: K Vertical
+  verticalAxis_Gamepad: J Vertical
   m_SubmitButton: AA
   m_CancelButton: AB
   m_InputActionsPerSecond: 100
