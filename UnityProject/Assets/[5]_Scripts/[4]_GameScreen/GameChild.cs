@@ -3,9 +3,11 @@ using UnityEngine;
 
 public class GameChild : MonoBehaviour
 {
+    ChildState childState = new Idle();
+
   void  Update()
   {
-    
+        childState = childState.UpdateState();
   }
 }
 
@@ -19,10 +21,10 @@ abstract class ChildState : State
         gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Child);
     }
 
-    public ChildState Slide()
+    protected ChildState Slide()
     {
         //Slide
-        if (InteractableInRange("Wall", out GameObject interactableObject) )
+       /* if (InteractableInRange("Wall", out GameObject interactableObject) )
         {   
             //Show Buttonprompt
             if (Input.GetButtonDown(inputDevice+"B"))
@@ -30,21 +32,21 @@ abstract class ChildState : State
                 //Lollyspeed
                 return new Slide();
             }    
-        }
+        }*/
         return null;
     }
 
-    public void LollyPickUp()
+    protected void LollyPickUp()
     {
          //Lolly PickUp
-        if (InteractableInRange("Lolly", out GameObject interactableObject) )
+        /*if (InteractableInRange("Lolly", out GameObject interactableObject) )
         {   
             //Show Buttonprompt
             if (Input.GetButtonDown(inputDevice+"B"))
             {
                 //Lollyspeed
             };    
-        }
+        }*/
     }
 
     
@@ -54,10 +56,12 @@ class Idle: ChildState
 {
     public override ChildState UpdateState()
     {
+        
+
         //Go to Run
         float horizontal = Input.GetAxis(inputDevice+" Horizontal");
         float vertical = Input.GetAxis(inputDevice+" Vertical");
-        if (horizontal>0 || vertical>0)
+        if (horizontal!=0 || vertical!=0)
         {
             return new Run();
         }
@@ -70,12 +74,12 @@ class Idle: ChildState
             return slide;
 
         //Destroy Object
-        if (InteractableInRange("Slidable", out GameObject interactableObject) )
+/*        if (InteractableInRange("Slidable", out GameObject interactableObject) )
         {   
             //Show Buttonprompt
             if (Input.GetButtonDown(inputDevice+"X"))
                 return new Destroy();
-        }
+        }*/
 
         return this;
         
@@ -88,12 +92,21 @@ class Run: ChildState
     {
         LollyPickUp();
 
+        Debug.Log  ("Why are you running?");
+
         //Turn to idle
         float horizontal = Input.GetAxis(inputDevice+" Horizontal");
         float vertical = Input.GetAxis(inputDevice+" Vertical");
-        if (horizontal<=0 || vertical<=0)
+
+        Debug.Log ("Im runnign "+ vertical);
+
+        GameObject gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Child);
+        gameObject.GetComponent<MovementScript>().MovePlayer(horizontal, vertical);
+
+
+        if (horizontal!=0 || vertical!=0)
         {
-            return new Run();
+            return new Idle();
         }
         
         //Slide

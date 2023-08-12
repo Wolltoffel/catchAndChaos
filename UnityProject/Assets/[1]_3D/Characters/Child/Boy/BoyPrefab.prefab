@@ -1479,6 +1479,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7089516137536957436}
   - component: {fileID: 4553314103456191335}
+  - component: {fileID: 7295345367787980048}
+  - component: {fileID: -1657406957420862105}
   m_Layer: 0
   m_Name: BoyPrefab
   m_TagString: Untagged
@@ -1515,10 +1517,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be49d5e250fca40ec8c920e91c74453b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lerpValue: 0.2
-  movementSpeed: 1
-  rotationSpeed: 50
-  pushForce: 5
+  lerpValue: 1
+  movementSpeed: 0.25
+  rotationSpeed: 20
+  pushForce: 800
+--- !u!143 &7295345367787980048
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7577541607973089606}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 0.84
+  m_Radius: 0.18
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0.36, z: 0}
+--- !u!54 &-1657406957420862105
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7577541607973089606}
+  serializedVersion: 4
+  m_Mass: 100
+  m_Drag: 20
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 116
+  m_CollisionDetection: 0
 --- !u!1 &7772254691193900145
 GameObject:
   m_ObjectHideFlags: 0
