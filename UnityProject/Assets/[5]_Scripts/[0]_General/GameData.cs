@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 
-public abstract class AData : ScriptableObject
+public abstract class StaticData : ScriptableObject
 {
     public string key;
 }
@@ -13,9 +13,9 @@ public class GameData : MonoBehaviour
 {
     private static GameData instance;
 
-    private static Dictionary<string, AData> dataBase = new Dictionary<string, AData>();
+    private static Dictionary<string, UnityEngine.Object> dataBase = new Dictionary<string, UnityEngine.Object>();
 
-    [SerializeField] private AData[] data;
+    [SerializeField] private StaticData[] data;
 
     void Awake()
     {
@@ -27,7 +27,7 @@ public class GameData : MonoBehaviour
         //Add files from inspector to static dataBase
         for (int i = 0; i < data.Length; i++)
         {
-            dataBase.Add(data[i].key, data[i]);
+            SetData(data[i], data[i].key);
         }
     }
 
@@ -37,9 +37,9 @@ public class GameData : MonoBehaviour
             instance = null;
     }
 
-    public static T GetData<T>(string key) where T : AData
+    public static T GetData<T>(string key) where T : UnityEngine.Object
     {
-        AData data;
+        UnityEngine.Object data;
         try
         {
             dataBase.TryGetValue(key, out data);
@@ -52,17 +52,16 @@ public class GameData : MonoBehaviour
         if (data is T)
             return (T)data;
 
-        throw new System.Exception($"The retrun type of the data is not equal to the return type of the key. {System.Environment.NewLine}"
-        + $"(Key return type - {data.GetType()}) {System.Environment.NewLine} "
-        + $"(Requested return type - {typeof(T)})");
+        throw new System.Exception($"The retrun type of the data is not equal to the return type of the key.");
     }
 
-    public static void SetData(AData newData, string key)
+    public static void SetData(UnityEngine.Object newData, string key)
     {
-        var type  = newData.GetType();
-        
-        AData oldData = GetData<AData>(key);
-        oldData = newData;
+        if (dataBase.ContainsKey(key))
+        {
+            dataBase.Remove(key);
+            Debug.Log($"Key \"{key}\" was Overwritten");
+        }
+        dataBase.Add(key,newData);
     }
-
 }

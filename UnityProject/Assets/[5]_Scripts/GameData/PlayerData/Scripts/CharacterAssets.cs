@@ -6,7 +6,7 @@ using System;
 
 
 [CreateAssetMenu(fileName = "ADataObject", menuName = "Custom/AData/CharacterAssetContainer")]
-public class CharacterAssets : AData
+public class CharacterAssets : StaticData
 {
     public AssetContainer male, female;
     private Gender gender = Gender.Female;

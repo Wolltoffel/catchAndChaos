@@ -48,6 +48,8 @@ public class CameraManager : MonoBehaviour
     {
         while (true)
         {
+            yield return new WaitForEndOfFrame();
+
             if (parent == null || child == null)
             {
                 Debug.Log("Lost targets");

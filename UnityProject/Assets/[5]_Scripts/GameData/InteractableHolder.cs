@@ -11,7 +11,7 @@ public class Interactable
 }
 
 [CreateAssetMenu(fileName = "ADataObject", menuName = "Custom/AData/InteractableHolder")]
-public class InteractableHolder : AData{
+public class InteractableHolder : StaticData{
 
 
     [SerializeField]Interactable[] interactables ;

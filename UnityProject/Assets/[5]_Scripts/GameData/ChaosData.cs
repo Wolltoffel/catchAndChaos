@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ADataObject", menuName = "Custom/AData/ChaosData")]
-public class ChaosData : AData
+public class ChaosData : StaticData
 {
     [SerializeField] private int targetChaos = 100;
     [SerializeField] private int currentChaos;
