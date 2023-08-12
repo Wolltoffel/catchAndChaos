@@ -28,45 +28,37 @@ public class AssetContainer
     public Material []hair;
     public SkinMaterials[] skinMaterials;
 
-    [Header ("Properties")]
-    private int tempActiveHairIndex;
-    private int tempActiveSkinIndex;
 
-    public int GetActiveHairIndex()
-    {
-         return tempActiveHairIndex;
-    }
 
-     public void UpdateActiveHairIndex(Step step)
+    public void UpdateActiveHairIndex(Step step, int activeHairIndex, out int newActiveHairIndex)
     {
         int numberOfHairMaterials = hair.Length;
         if (step == Step.Next){
-             tempActiveHairIndex = (tempActiveHairIndex+1)%numberOfHairMaterials;
+             activeHairIndex = (activeHairIndex+1)%numberOfHairMaterials;
         }    
         else
-            tempActiveHairIndex = (tempActiveHairIndex-1+ numberOfHairMaterials)%numberOfHairMaterials;
+            activeHairIndex = (activeHairIndex-1+ numberOfHairMaterials)%numberOfHairMaterials;
 
+        newActiveHairIndex = activeHairIndex;
     }
-    public int GetActiveSkinIndex()
-    {
-        return tempActiveSkinIndex;
-    }
-
-    public void UpdateActiveSkinIndex(Step step)
+    public void UpdateActiveSkinIndex(Step step, int activeSkinIndex, out int newActiveSkinIndex)
     {   
         int numberOfSkinMaterials = skinMaterials.Length;
 
          if (step == Step.Next)
-            tempActiveSkinIndex = (tempActiveSkinIndex+1)%numberOfSkinMaterials;
+            activeSkinIndex = (activeSkinIndex+1)%numberOfSkinMaterials;
         else
-            tempActiveSkinIndex = (tempActiveSkinIndex-1+ numberOfSkinMaterials)%numberOfSkinMaterials;
+            activeSkinIndex = (activeSkinIndex-1+ numberOfSkinMaterials)%numberOfSkinMaterials;
+
+        newActiveSkinIndex = activeSkinIndex;
     }
-    public Material[] GetActiveMaterials()
+
+    public Material[] GetActiveMaterials(int activeHairIndex,int activeSkinIndex)
     {   
         Material [] materials = new Material[4];
-        materials[0] = hair[tempActiveHairIndex]; //Hair
-        materials[1] = skinMaterials[tempActiveSkinIndex].face; //Face
-        materials[2] = skinMaterials[tempActiveSkinIndex].body; //Body
+        materials[0] = hair[activeHairIndex]; //Hair
+        materials[1] = skinMaterials[activeSkinIndex].face; //Face
+        materials[2] = skinMaterials[activeSkinIndex].body; //Body
         materials[3] = clothing;
 
         return materials;

@@ -1,74 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &764177929342308533
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4479457297806579528}
-  - component: {fileID: 230729873786105522}
-  - component: {fileID: 3697470566652814497}
-  m_Layer: 0
-  m_Name: EventSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4479457297806579528
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 764177929342308533}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7713504398940813748}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &230729873786105522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 764177929342308533}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 9122262665331475904}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
---- !u!114 &3697470566652814497
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 764177929342308533}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 225bae2792086444ebc5857a65e5d37a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
-  horizontalAxis_Keyboard: K Horizontal
-  horizontalAxis_Gamepad: J Horizontal
-  verticalAxis_Keyboard: K Vertical
-  verticalAxis_Gamepad: J Vertical
-  m_SubmitButton: AA
-  m_CancelButton: AB
-  m_InputActionsPerSecond: 100
-  m_RepeatDelay: 0.001
 --- !u!1 &3618125957015210228
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,6 +33,7 @@ RectTransform:
   m_Children:
   - {fileID: 7785218366172084604}
   - {fileID: 7164247362484068145}
+  - {fileID: 2934649551691573317}
   m_Father: {fileID: 7713504398940813748}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -355,6 +287,75 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ed6c6c274626247938945ccec379a9c2, type: 3}
   playButton: {fileID: 2794958706020038821}
   quitButton: {fileID: 8259614370814035325}
+--- !u!1 &5877975363423237303
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2934649551691573317}
+  - component: {fileID: 4835523460855795055}
+  - component: {fileID: 3206514569182942729}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2934649551691573317
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5877975363423237303}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -960, y: -539.75903, z: 0}
+  m_LocalScale: {x: 1.7794254, y: 1.7794254, z: 1.7794254}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3783887081056680932}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4835523460855795055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5877975363423237303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 9122262665331475904}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!114 &3206514569182942729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5877975363423237303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 225bae2792086444ebc5857a65e5d37a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  horizontalAxis_Keyboard: K Horizontal
+  horizontalAxis_Gamepad: J Horizontal
+  verticalAxis_Keyboard: K Vertical
+  verticalAxis_Gamepad: J Vertical
+  m_SubmitButton: AA
+  m_CancelButton: AB
+  m_InputActionsPerSecond: 100
+  m_RepeatDelay: 0.001
 --- !u!1 &7659480606811864473
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,7 +521,6 @@ Transform:
   m_Children:
   - {fileID: 1792704468049946502}
   - {fileID: 3783887081056680932}
-  - {fileID: 4479457297806579528}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9122262665331475904
