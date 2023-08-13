@@ -2,57 +2,64 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterSpawner : MonoBehaviour
+public class CharacterSpawner 
 {   
-    [SerializeField] public Characters character;
-    [SerializeField] public GameObject placeholder;
-    Transform parent;
-    Material[] materials;
-    string searchkey;
+    static GameObject childInstance, parentInstance;
 
-    public void Start()
+    public CharacterSpawner(GameObject placeHolderParent, GameObject placeHolderChild)
     {
-        parent = placeholder.transform.parent;
-
-        SetSearchKey();
-
-        SpawnCharacter();
+        childInstance = placeHolderChild;
+        parentInstance = placeHolderParent;
     }
 
-    private void ApplyMaterials()
-    {    
-        ApplyGender();
-        materials = GameData.GetData<PlayerData>(searchkey).characterAssets.GetActiveMaterials();
-        placeholder.GetComponentInChildren<SkinnedMeshRenderer>().materials = materials;
+    public static void Initialize(GameObject placeHolderParent, GameObject placeHolderChild)
+    {
+        childInstance = placeHolderChild;
+        parentInstance = placeHolderParent;
     }
 
-    private void ApplyGender()
+    public static void UpdateCharacter(Characters characters)
     {
-        Vector3 position = placeholder.transform.position;
-        Destroy(placeholder);
-        GameObject spawnableObject = GameData.GetData<PlayerData>(searchkey).characterAssets.GetContainer().prefab;
-        placeholder = Instantiate (spawnableObject, position, Quaternion.identity);
-        placeholder.transform.parent = parent;
-        placeholder.name = searchkey + "_Spawned";
-    }
+        if (childInstance == null)
+        {
+            Debug.Log ("chlild isntacen is null");
+            childInstance = GameObject.Instantiate (new GameObject("ChildSpawnPosition"));
+        }
+            
+        if (parentInstance == null)
+            parentInstance = GameObject.Instantiate (new GameObject("ParentSpawnPosition"));
 
-    public void SetData()
-    {
-        var temp = GameData.GetData<PlayerData>(searchkey);
-    }
+        GameObject instance;
+        GameObject oldInstance;
+        Transform instanceParent;
 
-    public void SpawnCharacter()
-    {
-        ApplyGender();
-        ApplyMaterials();
-        SetData();
-    }
-
-    public void SetSearchKey()
-    {
-        if (character == Characters.Child)
-            searchkey = "Child";
+        if (characters == Characters.Child)
+        {
+            instance = childInstance;
+        }
         else
-            searchkey = "Parent";
+        {
+            instance = parentInstance;
+        }
+
+        oldInstance = instance;
+        instanceParent = instance.transform.parent;
+
+        CharacterInstantiator.InstantiateCharacter(characters, out instance,instance.transform.position);
+        instance.transform.rotation = oldInstance.transform.rotation;
+        instance.transform.parent = instanceParent;
+        instance.name =  instance.name+ "_Spawned";
+
+        if (characters == Characters.Child)
+        {
+            childInstance = instance;
+        }
+        else
+        {
+            parentInstance = instance;
+        }
+               
+        GameObject.Destroy (oldInstance);
+        
     }
 }

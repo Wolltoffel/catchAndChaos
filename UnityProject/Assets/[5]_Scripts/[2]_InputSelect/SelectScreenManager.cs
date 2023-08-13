@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class CustomisationData
 {
     public InputSelectUIManager inputSelectUI;
-    public CharacterSelectManager characterSelectManager;
+    public CharacterSelectNavigation characterSelectNavigation;
     public string key;
     public Characters character;
     public List<string> setInputDevices;
 
+
     public CustomisationData(Characters character,InputSelectUIManager inputSelectUI,
-    CharacterSelectManager characterSelectManager,List<string> setInputDevices)
+    CharacterSelectNavigation characterSelectNavigation,List<string> setInputDevices)
     {
         this.character = character;
         if (character == Characters.Child)
@@ -21,7 +21,8 @@ public class CustomisationData
             key = "Parent";
         this.inputSelectUI = inputSelectUI;
         this.setInputDevices = setInputDevices;
-        this.characterSelectManager = characterSelectManager;
+
+        this.characterSelectNavigation = characterSelectNavigation;
     }
 }
 
@@ -29,22 +30,25 @@ public class SelectScreenManager : MonoBehaviour
 {
     
     [SerializeField]InputSelectUIManager inputSelectUI;
-    [SerializeField] CharacterSelectManager characterSelectManager;
+    [SerializeField] CharacterSelectNavigation childUI, parentUI;
+    [SerializeField] GameObject spawnPositionChild, spawnPositionParent;
     [SerializeField] Transform cameraPosition;
 
     List<string> setInputDevices = new List<string>();
     MenuState child,parent;
     CustomisationData parent_CustomisationData, child_CustomisationData;
 
-    void Start()
+    void Awake()
     {   
         //Spawn Characters and ajdust Camera
-
+        CharacterSpawner.Initialize(spawnPositionParent, spawnPositionChild);
+        CharacterSpawner.UpdateCharacter(Characters.Child);
+        CharacterSpawner.UpdateCharacter(Characters.Parent);
         Camera.main.GetComponent<CameraManager>().SetCameraPosition(cameraPosition);
 
-        parent_CustomisationData = new CustomisationData(Characters.Parent,inputSelectUI,characterSelectManager,setInputDevices);
-        child_CustomisationData = new CustomisationData(Characters.Child,inputSelectUI,characterSelectManager,setInputDevices);
-
+        //Initialise StateMachine
+        parent_CustomisationData = new CustomisationData(Characters.Parent,inputSelectUI,parentUI,setInputDevices);
+        child_CustomisationData = new CustomisationData(Characters.Child,inputSelectUI,childUI,setInputDevices);
         child = new WaitForKeyInput(child_CustomisationData);
         parent = new WaitForKeyInput(parent_CustomisationData);
     }
@@ -76,7 +80,6 @@ public class WaitForKeyInput: MenuState
     public WaitForKeyInput(CustomisationData data) : base(data) {}
         public override MenuState UpdateMenu()
         {
-            Debug.Log (dataPack.key + " is waiting for input");
 
             string inputDevice = "";
             if (dataPack.character == Characters.Child)
@@ -90,6 +93,7 @@ public class WaitForKeyInput: MenuState
                     //Set Input Device for Player
                     GameData.GetData<PlayerData>(dataPack.key).tempInputDevice = inputDevice; 
                     dataPack.inputSelectUI.HideUI(dataPack.character);
+                    dataPack.characterSelectNavigation.ActivateCharacterSelection();
                     return new CustomiseCharacter(dataPack);
                 }
 
@@ -129,8 +133,8 @@ public class CustomiseCharacter: MenuState
     public CustomiseCharacter(CustomisationData data) : base(data) {}
     public override MenuState UpdateMenu()
     {
-          CharacterSelectManager characterSelectManager =  dataPack.characterSelectManager;
-        if (characterSelectManager.child.isConfirmed && characterSelectManager.parent.isConfirmed)
+          CharacterSelectNavigation characterSelectNavigation =  dataPack.characterSelectNavigation;
+        if (characterSelectNavigation.isConfirmed)
             return new Ready(dataPack);
             
             return this;
