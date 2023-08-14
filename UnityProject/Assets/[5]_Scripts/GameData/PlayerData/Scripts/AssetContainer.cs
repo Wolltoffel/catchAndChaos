@@ -10,7 +10,7 @@ public struct SkinMaterials
 
 public enum Gender
 {
-    Male, Female
+    None,Male, Female
 }
 
 public enum Step
@@ -41,9 +41,19 @@ public class AssetContainer
 
         newActiveHairIndex = activeHairIndex;
     }
+
+    public void SetActiveHairIndex (int newActiveHairIndex, out int updatedActiveHairIndex)
+    {
+        if (newActiveHairIndex>hair.Length-1)
+            throw new System.Exception ("NewActiveHairIndex exceeds number of materials");
+        else
+            updatedActiveHairIndex = newActiveHairIndex;
+    }
     public void UpdateActiveSkinIndex(Step step, int activeSkinIndex, out int newActiveSkinIndex)
     {   
         int numberOfSkinMaterials = skinMaterials.Length;
+
+        Debug.Log (activeSkinIndex +" Skin Index before");
 
          if (step == Step.Next)
             activeSkinIndex = (activeSkinIndex+1)%numberOfSkinMaterials;
@@ -51,6 +61,15 @@ public class AssetContainer
             activeSkinIndex = (activeSkinIndex-1+ numberOfSkinMaterials)%numberOfSkinMaterials;
 
         newActiveSkinIndex = activeSkinIndex;
+        Debug.Log (activeSkinIndex +" Skin Index after");
+    }
+
+    public void SetActiveSkinIndex (int newActiveSkinIndex, out int updatedActiveSkinIndex)
+    {
+        if (newActiveSkinIndex>skinMaterials.Length-1)
+            throw new System.Exception ("NewActiveSkinIndex exceeds number of materials");
+        else
+            updatedActiveSkinIndex = newActiveSkinIndex;
     }
 
     public Material[] GetActiveMaterials(int activeHairIndex,int activeSkinIndex)

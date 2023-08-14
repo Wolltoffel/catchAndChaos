@@ -19,8 +19,10 @@ public class PropertyHandler
 
     public PropertyHandler(){}
 
-    public void SetProperty (Characters character,ModelProperty modelProperty, Step step)
+    public void SwitchProperty (Characters character,ModelProperty modelProperty, Step step)
     {
+        Debug.Log ("Setting new Property "+ modelProperty);
+
         CharacterAssets characterAssets = GetCharacterAssets(character);
 
         switch (modelProperty)
@@ -37,6 +39,35 @@ public class PropertyHandler
         }
 
         ApplyProperties(character);
+    }
+
+    public void SetProperty(Characters characters, ModelProperty modelProperty, int valueInt = 999, Gender valueGender = Gender.None)
+    {
+        CharacterAssets characterAssets = GetCharacterAssets(characters);
+
+         switch (modelProperty)
+        {
+            case ModelProperty.Hair:
+                if (valueInt != 999)
+                    characterAssets.SetActiveHairIndex(valueInt);
+                else
+                    throw new System.Exception ("No value specified");
+            break;
+            case ModelProperty.Skincolor:
+                if (valueInt != 999)
+                    characterAssets.SetActiveSkinIndex(valueInt);
+                else
+                    throw new System.Exception ("No value specified");
+            break;
+            case ModelProperty.Gender:
+                if (valueGender != Gender.None)
+                    characterAssets.SetGender(valueGender);
+                else
+                    throw new System.Exception ("No value specified");
+            break;
+        }
+
+        ApplyProperties(characters);
     }
 
     public void ApplyProperties(Characters character)

@@ -6,13 +6,16 @@ using UnityEngine.UI;
 
 public class CharacterSelectNavigation : MonoBehaviour
 {
-    [SerializeField]CustomSelectable [] selectables;
-    [SerializeField] CustomSelectable startSelected;
+    [SerializeField]CharacterCustomSelectable [] selectables;
+    [SerializeField] CharacterCustomSelectable startSelected;
     [SerializeField] Characters characters;
-    CustomSelectable activeSelectable;
+    [SerializeField]ConfirmSelectable confirmSelectable;
+    CharacterCustomSelectable activeSelectable;
     string inputDevice;
+    float lastInput;
     bool activeController;
-
+    bool active;
+    bool blockedInput;
     public bool isConfirmed;
 
     void Start()
@@ -20,47 +23,70 @@ public class CharacterSelectNavigation : MonoBehaviour
         activeSelectable = startSelected;
         activeSelectable.SelectCustomSelectable();
         
-        //Find out input device
-        string key = "";
-        if (characters == Characters.Child)
-            key = "Child";
-        else
-            key = "Parent";
-
-        inputDevice = GameData.GetData<PlayerData>(key).tempInputDevice;
-        bool activeController = CheckForController();
-        
         for (int i = 0; i<selectables.Length; i++)
         {
-            //Set Data to selectables
-            selectables[i].SetData(inputDevice, activeController, characters);
             //Deactivate selectables
             selectables[i].gameObject.SetActive (false);
         }
 
+        confirmSelectable.gameObject.SetActive (false);
     }
 
     void Update() 
     {
+        isConfirmed = confirmSelectable.GetConfirmed(characters);
+
         WaitForControllerInput();
     }
 
+    
+    IEnumerator BlockInput()
+    {
+        blockedInput = true;
+
+        float startTime = Time.unscaledTime;
+        float waitTime = 0.2f;
+
+        while (Time.unscaledTime-startTime<waitTime)
+        {
+           // If Input goes in a drastically different direction fast
+            float verticalInput = Input.GetAxis (inputDevice+" Vertical");
+           if (Mathf.Abs(lastInput-verticalInput)>0.6)
+               break;
+            yield return null;
+        }
+        blockedInput = false;
+        StopAllCoroutines();
+    }
+
+
     void WaitForControllerInput()
     {
-        if (activeController)
+        if (activeController && !blockedInput)
         {
-            if (Input.GetAxis(inputDevice+" Vertical")>0)
-            {
-                activeSelectable.DeselectCustomSelectable();
-                activeSelectable = activeSelectable.FindSelectableOnDown() as CustomSelectable;
-                activeSelectable.Select();
-            }
-            else if (Input.GetAxis(inputDevice+" Vertical")<0)
-            {
-                activeSelectable.DeselectCustomSelectable();
-                activeSelectable = activeSelectable.FindSelectableOnUp() as CustomSelectable;
-                activeSelectable.Select();
-            }
+            lastInput = Input.GetAxis(inputDevice+" Vertical");
+            CharacterCustomSelectable nextCustomSelectable  = null;
+            Selectable nextSelectable = null;
+
+            if (lastInput<-0.5f)
+                nextSelectable = activeSelectable.FindSelectableOnDown() as CharacterCustomSelectable; 
+
+            else if (lastInput>0.5f)    
+                nextSelectable  = activeSelectable.FindSelectableOnUp() as CharacterCustomSelectable;
+
+            if (nextSelectable is CharacterCustomSelectable)
+                nextCustomSelectable = nextSelectable as CharacterCustomSelectable;
+            else if (nextSelectable is not CharacterCustomSelectable && nextSelectable!=null)
+                throw new System.Exception ("No custom CharactterSelectable input");
+
+            if (nextCustomSelectable!=null)
+            {    
+                    activeSelectable.DeselectCustomSelectable();
+                    activeSelectable = nextCustomSelectable;
+                    activeSelectable.SelectCustomSelectable();
+                    StartCoroutine (BlockInput());
+            }   
+        
         }
     }
 
@@ -72,14 +98,40 @@ public class CharacterSelectNavigation : MonoBehaviour
                 return true;
         }
         return false;
+
     }
 
     public void ActivateCharacterSelection()
     {
+        active = true;
+
         for (int i = 0; i<selectables.Length; i++)
         {
             selectables[i].gameObject.SetActive(true);
-        }   
+            selectables[i].interactable = true;
+        } 
+
+        confirmSelectable.gameObject.SetActive (true);  
+        confirmSelectable.interactable = true;
+
+        //Find out input device
+        string key = "";
+        if (characters == Characters.Child)
+            key = "Child";
+        else
+            key = "Parent";
+
+        
+        inputDevice = GameData.GetData<PlayerData>(key).tempInputDevice;
+        activeController = CheckForController();
+
+        for (int i = 0; i<selectables.Length; i++)
+        {
+            //Set Data to selectables
+            selectables[i].SetData(inputDevice, activeController, characters);
+        }
+
+       confirmSelectable.SetData(characters,inputDevice, activeController);
     }
 
 }

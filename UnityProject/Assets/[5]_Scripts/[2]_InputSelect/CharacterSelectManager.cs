@@ -75,7 +75,7 @@ public class Section
     void UpdateAndApplyMaterials(Selector selector,Characters character, ModelProperty modelProperty, Step step)
     {   
         PropertyHandler propertyHandler = new PropertyHandler();
-        propertyHandler.SetProperty(character,selector.modelProperty,step);
+        propertyHandler.SwitchProperty(character,selector.modelProperty,step);
         CharacterInstantiator.InstantiateCharacter(character, out GameObject obj, anchor);
     }
 

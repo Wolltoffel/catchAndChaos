@@ -10,9 +10,12 @@ public class CustomisationData
     public Characters character;
     public List<string> setInputDevices;
 
+    public BackButton backButton;
+
 
     public CustomisationData(Characters character,InputSelectUIManager inputSelectUI,
-    CharacterSelectNavigation characterSelectNavigation,List<string> setInputDevices)
+    CharacterSelectNavigation characterSelectNavigation,List<string> setInputDevices,
+    BackButton backButton)
     {
         this.character = character;
         if (character == Characters.Child)
@@ -23,6 +26,7 @@ public class CustomisationData
         this.setInputDevices = setInputDevices;
 
         this.characterSelectNavigation = characterSelectNavigation;
+        this.backButton = backButton;
     }
 }
 
@@ -33,6 +37,7 @@ public class SelectScreenManager : MonoBehaviour
     [SerializeField] CharacterSelectNavigation childUI, parentUI;
     [SerializeField] GameObject spawnPositionChild, spawnPositionParent;
     [SerializeField] Transform cameraPosition;
+    [SerializeField] BackButton backButton;
 
     List<string> setInputDevices = new List<string>();
     MenuState child,parent;
@@ -47,14 +52,14 @@ public class SelectScreenManager : MonoBehaviour
         Camera.main.GetComponent<CameraManager>().SetCameraPosition(cameraPosition);
 
         //Initialise StateMachine
-        parent_CustomisationData = new CustomisationData(Characters.Parent,inputSelectUI,parentUI,setInputDevices);
-        child_CustomisationData = new CustomisationData(Characters.Child,inputSelectUI,childUI,setInputDevices);
+        parent_CustomisationData = new CustomisationData(Characters.Parent,inputSelectUI,parentUI,setInputDevices,backButton);
+        child_CustomisationData = new CustomisationData(Characters.Child,inputSelectUI,childUI,setInputDevices,backButton);
         child = new WaitForKeyInput(child_CustomisationData);
         parent = new WaitForKeyInput(parent_CustomisationData);
     }
 
    void Update()
-   {
+   {    
         child = child.UpdateMenu();
         parent = parent.UpdateMenu();
 
@@ -85,7 +90,7 @@ public class WaitForKeyInput: MenuState
             if (dataPack.character == Characters.Child)
                 inputDevice = GetInputDevice("X");
             else
-                inputDevice = GetInputDevice("B");
+                inputDevice = GetInputDevice("Y");
             
                 if (inputDevice!="")
                 {   
@@ -94,6 +99,7 @@ public class WaitForKeyInput: MenuState
                     GameData.GetData<PlayerData>(dataPack.key).tempInputDevice = inputDevice; 
                     dataPack.inputSelectUI.HideUI(dataPack.character);
                     dataPack.characterSelectNavigation.ActivateCharacterSelection();
+                    dataPack.backButton.SetScreenScreenToJumpTo(ScreenType.CharacterInputSelect);
                     return new CustomiseCharacter(dataPack);
                 }
 
@@ -146,6 +152,7 @@ public class Ready: MenuState
     public Ready(CustomisationData data) : base(data) {}
     public override MenuState UpdateMenu()
     {   
+        dataPack.characterSelectNavigation.gameObject.SetActive (false);
         return this;
     }
 }

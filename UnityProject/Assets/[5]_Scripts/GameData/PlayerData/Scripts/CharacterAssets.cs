@@ -48,11 +48,23 @@ public class CharacterAssets : StaticData
         assetContainer.UpdateActiveSkinIndex(step,tempActiveSkinIndex,out tempActiveSkinIndex);
     }
 
+    public void SetActiveSkinIndex(int newActiveSkinIndex)
+    {
+        AssetContainer assetContainer = GetContainer();
+        assetContainer.SetActiveSkinIndex(newActiveSkinIndex, out tempActiveSkinIndex);
+    }
+
 
     public void UpdateActiveHairIndex(Step step)
     {
         AssetContainer assetContainer = GetContainer();
         assetContainer.UpdateActiveHairIndex(step, tempActiveHairIndex, out tempActiveHairIndex);
+    }
+
+    public void SetActiveHairIndex(int newActiveHairIndex)
+    {
+        AssetContainer assetContainer = GetContainer();
+        assetContainer.SetActiveHairIndex(newActiveHairIndex, out tempActiveHairIndex);
     }
 
     public void SwitchGender()
@@ -61,6 +73,11 @@ public class CharacterAssets : StaticData
             gender = Gender.Male;
         else
             gender = Gender.Female;
+    }
+
+    public void SetGender(Gender gender)
+    {
+       this.gender = gender;
     }
 
 }
