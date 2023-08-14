@@ -6,4 +6,5 @@ using UnityEngine.UI;
 public abstract class CustomSelectable : Selectable
 { 
         protected bool active;
+    
 }

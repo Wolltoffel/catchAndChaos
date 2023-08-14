@@ -38,7 +38,7 @@ public class CharacterCustomSelectable: CustomSelectable
 
 
     PropertyHandler propertyHandler = new PropertyHandler();
-    private void Start()
+    protected override void Start()
     {
         previousButton.onClick.AddListener (()=> Switch(Step.Prev));
         nextButton.onClick.AddListener (()=> Switch(Step.Next));
@@ -53,7 +53,7 @@ public class CharacterCustomSelectable: CustomSelectable
             WaitForControllerInputSet();
     }
 
-    public void SetData(string inputDevice, bool activeController, Characters characters)
+    public void SetData(string inputDevice, bool activeController, Characters characters = Characters.Child)
     {
         this.inputDevice = inputDevice;
         this.activeController = activeController;

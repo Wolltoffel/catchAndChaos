@@ -9,15 +9,13 @@ public class CharacterSelectNavigation : MonoBehaviour
     [SerializeField]CharacterCustomSelectable [] selectables;
     [SerializeField] CharacterCustomSelectable startSelected;
     [SerializeField] Characters characters;
+    [SerializeField]ConfirmSelectable confirmSelectable;
     CharacterCustomSelectable activeSelectable;
     string inputDevice;
-    bool activeController;
-
-    bool active;
-
-    bool blockedInput;
     float lastInput;
-
+    bool activeController;
+    bool active;
+    bool blockedInput;
     public bool isConfirmed;
 
     void Start()
@@ -31,11 +29,13 @@ public class CharacterSelectNavigation : MonoBehaviour
             selectables[i].gameObject.SetActive (false);
         }
 
-
+        confirmSelectable.gameObject.SetActive (false);
     }
 
     void Update() 
     {
+        isConfirmed = confirmSelectable.GetConfirmed(characters);
+
         WaitForControllerInput();
     }
 
@@ -49,7 +49,6 @@ public class CharacterSelectNavigation : MonoBehaviour
 
         while (Time.unscaledTime-startTime<waitTime)
         {
-
            // If Input goes in a drastically different direction fast
             float verticalInput = Input.GetAxis (inputDevice+" Vertical");
            if (Mathf.Abs(lastInput-verticalInput)>0.6)
@@ -63,35 +62,31 @@ public class CharacterSelectNavigation : MonoBehaviour
 
     void WaitForControllerInput()
     {
-
         if (activeController && !blockedInput)
         {
             lastInput = Input.GetAxis(inputDevice+" Vertical");
+            CharacterCustomSelectable nextCustomSelectable  = null;
+            Selectable nextSelectable = null;
 
             if (lastInput<-0.5f)
-            {
-                CharacterCustomSelectable nextSelectable = activeSelectable.FindSelectableOnDown() as CharacterCustomSelectable;
-                if (nextSelectable!=null)
-                {    
-                    activeSelectable.DeselectCustomSelectable();
-                    activeSelectable = nextSelectable;
-                    activeSelectable.SelectCustomSelectable();
-                    StartCoroutine (BlockInput());
-                }    
-            }
+                nextSelectable = activeSelectable.FindSelectableOnDown() as CharacterCustomSelectable; 
 
-            else if (lastInput>0.5f)
+            else if (lastInput>0.5f)    
+                nextSelectable  = activeSelectable.FindSelectableOnUp() as CharacterCustomSelectable;
+
+            if (nextSelectable is CharacterCustomSelectable)
+                nextCustomSelectable = nextSelectable as CharacterCustomSelectable;
+            else if (nextSelectable is not CharacterCustomSelectable && nextSelectable!=null)
+                throw new System.Exception ("No custom CharactterSelectable input");
+
+            if (nextCustomSelectable!=null)
             {    
-                CharacterCustomSelectable nextSelectable = activeSelectable.FindSelectableOnUp() as CharacterCustomSelectable;
-
-                if (nextSelectable!=null)
-                {
                     activeSelectable.DeselectCustomSelectable();
-                    activeSelectable = nextSelectable;
+                    activeSelectable = nextCustomSelectable;
                     activeSelectable.SelectCustomSelectable();
                     StartCoroutine (BlockInput());
-                }
-            }
+            }   
+        
         }
     }
 
@@ -114,7 +109,10 @@ public class CharacterSelectNavigation : MonoBehaviour
         {
             selectables[i].gameObject.SetActive(true);
             selectables[i].interactable = true;
-        }   
+        } 
+
+        confirmSelectable.gameObject.SetActive (true);  
+        confirmSelectable.interactable = true;
 
         //Find out input device
         string key = "";
@@ -127,13 +125,13 @@ public class CharacterSelectNavigation : MonoBehaviour
         inputDevice = GameData.GetData<PlayerData>(key).tempInputDevice;
         activeController = CheckForController();
 
-        Debug.Log ("Selectables Length"+ selectables.Length);
-
         for (int i = 0; i<selectables.Length; i++)
         {
             //Set Data to selectables
             selectables[i].SetData(inputDevice, activeController, characters);
         }
+
+       confirmSelectable.SetData(characters,inputDevice, activeController);
     }
 
 }
