@@ -13,7 +13,5 @@ MonoBehaviour:
   m_Name: Child
   m_EditorClassIdentifier: 
   key: ChildAssets
-  prefab: {fileID: 0}
   characterPrefab:
-  - {fileID: 7577541607973089606, guid: fb695e346747cdc42afab0dba0b791b7, type: 3}
-  - {fileID: 6515412663111107442, guid: 0fd699db01e14fa45869d2266d57653f, type: 3}
+  - {fileID: 1164241999651989897, guid: 435de8776c1d6634f8f7b5dda05fcef8, type: 3}

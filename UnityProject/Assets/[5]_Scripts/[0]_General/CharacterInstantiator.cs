@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class CharacterInstantiator : MonoBehaviour
 {
@@ -45,6 +46,13 @@ public class CharacterInstantiator : MonoBehaviour
     {
         InstantiateCharacter(characterType, out character, parentOfCharacter.position);
         
+        ParentConstraint parentConstraint = character.AddComponent<ParentConstraint>();
+        parentConstraint.constraintActive = true;
+        ConstraintSource source = new ConstraintSource();
+        source.sourceTransform = parentOfCharacter.transform;
+        source.weight = 1f;
+        parentConstraint.AddSource (source);
+
         character.transform.parent = parentOfCharacter;
         character.transform.localRotation = Quaternion.identity;
         character.transform.localPosition = Vector3.zero;
@@ -57,5 +65,12 @@ public class CharacterInstantiator : MonoBehaviour
             return child;
         }
         return parent;
+    }
+
+    public static void ReplaceCharacter (Characters characterType, out GameObject character)
+    {
+        Transform parent  = GetActiveCharacter(characterType).transform.parent;
+        InstantiateCharacter(characterType, out character,parent);
+        GetActiveCharacter(characterType).transform.parent = parent;
     }
 }

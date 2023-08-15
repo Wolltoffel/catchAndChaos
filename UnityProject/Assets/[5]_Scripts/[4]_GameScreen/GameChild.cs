@@ -120,7 +120,7 @@ class Run: ChildState
         Debug.Log ( gameObject.GetComponentInChildren<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.name);
 
 
-        if (horizontal!=0 || vertical!=0)
+        if (horizontal==0 || vertical==0)
         {
             return new Idle();
         }

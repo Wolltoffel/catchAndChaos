@@ -46,9 +46,8 @@ public class SelectScreenManager : MonoBehaviour
     void Awake()
     {   
         //Spawn Characters and ajdust Camera
-        CharacterSpawner.Initialize(spawnPositionParent, spawnPositionChild);
-        CharacterSpawner.UpdateCharacter(Characters.Child);
-        CharacterSpawner.UpdateCharacter(Characters.Parent);
+        CharacterInstantiator.InstantiateCharacter(Characters.Child, out GameObject characterChild, spawnPositionChild.transform);
+        CharacterInstantiator.InstantiateCharacter(Characters.Parent, out GameObject characterParent, spawnPositionParent.transform);
         Camera.main.GetComponent<CameraManager>().SetCameraPosition(cameraPosition);
 
         //Initialise StateMachine
@@ -153,6 +152,7 @@ public class Ready: MenuState
     public override MenuState UpdateMenu()
     {   
         dataPack.characterSelectNavigation.gameObject.SetActive (false);
+        CharacterInstantiator.GetActiveCharacter(Characters.Child).GetComponent<Animator>().SetInteger("ChildIndex",0);
         return this;
     }
 }

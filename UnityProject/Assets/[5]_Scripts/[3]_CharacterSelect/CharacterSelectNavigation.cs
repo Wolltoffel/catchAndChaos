@@ -35,7 +35,6 @@ public class CharacterSelectNavigation : MonoBehaviour
     void Update() 
     {
         isConfirmed = confirmSelectable.GetConfirmed(characters);
-
         WaitForControllerInput();
     }
 
