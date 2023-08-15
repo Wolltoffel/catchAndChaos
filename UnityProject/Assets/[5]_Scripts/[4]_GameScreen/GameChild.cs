@@ -12,7 +12,8 @@ public class GameChild : MonoBehaviour
 
     void  Update()
     {
-        childState = childState.UpdateState();
+        if (Time.timeScale!=0)
+            childState = childState.UpdateState();
     }
 }
 
