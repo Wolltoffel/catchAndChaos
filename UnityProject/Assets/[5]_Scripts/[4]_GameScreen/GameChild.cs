@@ -55,6 +55,14 @@ abstract class ChildState : State
         }*/
     }
 
+    protected ChildState Stunned()
+    {
+        if (GameData.GetData<ChildData>("Child").stunned)
+            return new Stunned();
+        else
+            return null;
+    }
+
     
 }
 
@@ -77,6 +85,11 @@ class Idle: ChildState
         ChildState slide = Slide();
         if (slide!=null)
             return slide;
+
+        //Stunned
+        ChildState stunned = Stunned();
+        if (stunned!=null)
+            return stunned;
 
         //Destroy Object
 /*        if (InteractableInRange("Slidable", out GameObject interactableObject) )
@@ -103,6 +116,8 @@ class Run: ChildState
 
         GameObject gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Child);
         gameObject.GetComponent<MovementScript>().MovePlayer(horizontal, vertical);
+        gameObject.GetComponent<Animator>().SetInteger("ChilldIndex",1);
+        Debug.Log ( gameObject.GetComponentInChildren<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.name);
 
 
         if (horizontal!=0 || vertical!=0)
@@ -114,6 +129,12 @@ class Run: ChildState
         ChildState slide = Slide();
         if (slide!=null)
             return slide;
+
+        
+        //Stunned
+        ChildState stunned = Stunned();
+        if (stunned!=null)
+            return stunned;
 
         return this;
 
@@ -138,6 +159,25 @@ class Destroy: ChildState
     {
         bool destroyOver= false; //ask from movement whether slide is over
         if (destroyOver)
+            return new Idle();
+    
+        //Stunned
+        ChildState stunned = Stunned();
+        if (stunned!=null)
+            return stunned;
+        
+        return this;
+    } 
+}
+
+class Stunned: ChildState
+{
+    public override ChildState UpdateState()
+    {
+        float stunTime = GameData.GetData<ChildData>("ChildData").stunTime;
+        float timer = Time.time;
+
+        if (Time.time-timer >= stunTime)
             return new Idle();
         
         return this;

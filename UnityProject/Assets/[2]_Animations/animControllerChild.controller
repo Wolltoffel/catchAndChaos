@@ -891,9 +891,9 @@ AnimatorController:
   - m_Name: ChilldIndex
     m_Type: 3
     m_DefaultFloat: 0
-    m_DefaultInt: 0
+    m_DefaultInt: 1
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: StateSystem
@@ -1868,9 +1868,6 @@ AnimatorStateMachine:
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions:
-  - first: {fileID: -2711033663707965095}
-    second:
-    - {fileID: -4605884005146322131}
   - first: {fileID: -4663941918391660553}
     second:
     - {fileID: 845721084521881368}
@@ -1878,6 +1875,9 @@ AnimatorStateMachine:
     - {fileID: -1257238960550105008}
     - {fileID: 7843793934967696667}
     - {fileID: 4553830092442888184}
+  - first: {fileID: -2711033663707965095}
+    second:
+    - {fileID: -4605884005146322131}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: -190, y: 300, z: 0}
   m_EntryPosition: {x: -190, y: 340, z: 0}
