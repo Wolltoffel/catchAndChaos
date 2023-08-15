@@ -27,13 +27,13 @@ public class CharacterInstantiator : MonoBehaviour
         {
             Destroy(child);
             characterData = childData;
-            character = child = Instantiate(characterData.characterAssets.GetContainer().prefab);
+            character = child = Instantiate(characterData.characterAssets.prefab);
         }
         else
         {
             Destroy(parent);
             characterData = parentData;
-            character = parent = Instantiate(characterData.characterAssets.GetContainer().prefab);
+            character = parent = Instantiate(characterData.characterAssets.prefab);
 
         }
 

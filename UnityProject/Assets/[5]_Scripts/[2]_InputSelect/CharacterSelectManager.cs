@@ -5,7 +5,7 @@ using System;
 using UnityEngine.UI;
 using UnityEngine.TextCore.Text;
 
-[Serializable]
+/*[Serializable]
 public class Selector
 {
     [HideInInspector]public ModelProperty modelProperty;
@@ -64,7 +64,6 @@ public class Section
     }
     void AddListenerToSelector(Selector selector)
     { 
-        PropertyHandler propertyHandler = new PropertyHandler();
         Characters character = this.character;
         Section section = this;
         selector.AddListener(
@@ -72,12 +71,6 @@ public class Section
             () => section.UpdateAndApplyMaterials(selector, character, selector.modelProperty, Step.Next));
     }
 
-    void UpdateAndApplyMaterials(Selector selector,Characters character, ModelProperty modelProperty, Step step)
-    {   
-        PropertyHandler propertyHandler = new PropertyHandler();
-        propertyHandler.SwitchProperty(character,selector.modelProperty,step);
-        CharacterInstantiator.InstantiateCharacter(character, out GameObject obj, anchor);
-    }
 
     public void ConfirmSelection()
     {
@@ -112,4 +105,4 @@ public class CharacterSelectManager : MonoBehaviour
         parent.AddListeners();
 
     }
-}
+}*/

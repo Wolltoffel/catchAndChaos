@@ -48,12 +48,12 @@ public class Pausescreen : MonoBehaviour
     void PauseGame()
     {
         pauseScreenInstance = Instantiate(pauseScreenPrefab);
+        pauseScreenInstance.transform.name = "PauseScreen_instance";
 
         data = pauseScreenInstance.GetComponentInChildren<PauseScreenData>();
         data.unpauseButton.onClick.AddListener(()=>UnpauseGame()); 
         data.backToMainMenuButton.onClick.AddListener(()=>BackToMainMenu());
 
-        pauseScreenInstance.transform.name = "PauseScreen_instance";
         Time.timeScale = 0;
         gamePaused = true;
         //StartCoroutine(SetSelectedObjectLater());

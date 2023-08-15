@@ -10,34 +10,17 @@ enum Bumper
     Left, Right
 }
 
-enum ControlMethod
-{
-    ScrollThrough, SetValues
-}
-
 public class CharacterCustomSelectable: CustomSelectable
 {
-    [SerializeField] ControlMethod controlMethod;
-
     [Header ("Buttons")]
     [SerializeField] Button previousButton;
     [SerializeField] Button nextButton;
-
-
-    [Header ("Set Values")]
-    [SerializeField] int valueIntL;
-    [SerializeField] int valueIntR;
-    [SerializeField] Gender valueGenderL, valueGenderR;
-
-    [Header("Other")]
-    [SerializeField] ModelProperty modelProperty;
 
     string inputDevice;
     bool activeController;
     Characters characters;
 
 
-    PropertyHandler propertyHandler = new PropertyHandler();
     protected override void Start()
     {
         previousButton.onClick.AddListener (()=> Switch(Step.Prev));
@@ -47,10 +30,7 @@ public class CharacterCustomSelectable: CustomSelectable
 
     private void Update() 
     {
-        if (controlMethod == ControlMethod.ScrollThrough)
-            WaitForControllerInputSwitch();
-        else if (controlMethod == ControlMethod.SetValues)
-            WaitForControllerInputSet();
+        WaitForControllerInputSwitch();
     }
 
     public void SetData(string inputDevice, bool activeController, Characters characters = Characters.Child)
@@ -62,37 +42,11 @@ public class CharacterCustomSelectable: CustomSelectable
     
     void Switch(Step step)
     {
-        propertyHandler.SwitchProperty(characters, modelProperty, step);
+        PropertyHandler.SwitchProperty(characters,step);
         CharacterSpawner.UpdateCharacter(characters);
     }
 
-    void Set (Bumper bumper)
-    {
-        if (modelProperty == ModelProperty.Gender){
-            if (bumper == Bumper.Left)
-            {
-                propertyHandler.SetProperty(characters,modelProperty,valueGender:valueGenderL);
-            }
-            else if (bumper == Bumper.Right)
-            {
-                propertyHandler.SetProperty(characters,modelProperty,valueGender:valueGenderR);
-            }
-        }
-        else
-        {   
-            if (bumper == Bumper.Left)
-            {
-                propertyHandler.SetProperty(characters,modelProperty,valueIntL);
-            }
-            else if (bumper == Bumper.Right)
-            {
-                propertyHandler.SetProperty(characters,modelProperty,valueIntR);
-            }
-        }
-
-       CharacterSpawner.UpdateCharacter(characters);
-    }
-
+    
     void WaitForControllerInputSwitch()
     {
         if (activeController && active)
@@ -105,24 +59,6 @@ public class CharacterCustomSelectable: CustomSelectable
             else if (Input.GetButtonDown(inputDevice+"BumperL"))
             {
                 Switch (Step.Prev);
-            }
-                
-        }
-
-    }
-
-    void WaitForControllerInputSet()
-    {
-        if (activeController && active)
-        {          
-            if (Input.GetButtonDown(inputDevice+"BumperR"))
-            {
-                Set (Bumper.Right);
-            }
-                
-            else if (Input.GetButtonDown(inputDevice+"BumperL"))
-            {
-                Set (Bumper.Left);
             }
                 
         }

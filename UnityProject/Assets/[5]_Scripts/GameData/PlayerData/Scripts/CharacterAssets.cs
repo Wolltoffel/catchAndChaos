@@ -4,80 +4,44 @@ using UnityEngine;
 using System;
 
 
+public enum Step
+{
+    Prev, Next
+}
 
 [CreateAssetMenu(fileName = "ADataObject", menuName = "Custom/AData/CharacterAssetContainer")]
 public class CharacterAssets : StaticData
 {
-    public AssetContainer male, female;
-    private Gender gender = Gender.Female;
-
-    [Header ("Properties")]
-    private int tempActiveHairIndex;
-    private int tempActiveSkinIndex;
-
-    public AssetContainer GetContainer()
+    [HideInInspector]public GameObject prefab
     {
-        AssetContainer container;
-        if (gender == Gender.Male)
+        get
         {
-            container = male;
-            if (container.prefab == null)
-            {
-                return female;
-            }
+            return characterPrefab[activePrefabIndex];
+
         }
+    }
+
+    [SerializeField] GameObject[] characterPrefab;
+
+    int activePrefabIndex;
+
+
+    public void UpdateCharacterPrefab(Step step)
+    {
+        int numberOfPrefabs = characterPrefab.Length;
+        if (step == Step.Next){
+             activePrefabIndex = (activePrefabIndex+1)%numberOfPrefabs;
+        }    
         else
-        {
-            container = female;
-            if (container.prefab == null)
-            {
-                return male;
-            }
-        }
-        return container;
-    }
-    public Material[] GetActiveMaterials()
-    {   
-        AssetContainer assetContainer = GetContainer();
-        return assetContainer.GetActiveMaterials(tempActiveHairIndex, tempActiveSkinIndex);
+            activePrefabIndex = (activePrefabIndex-1+ numberOfPrefabs)%numberOfPrefabs;
     }
 
-    public void UpdateActiveSkinIndex(Step step)
-    {   
-        AssetContainer assetContainer = GetContainer();
-        assetContainer.UpdateActiveSkinIndex(step,tempActiveSkinIndex,out tempActiveSkinIndex);
-    }
-
-    public void SetActiveSkinIndex(int newActiveSkinIndex)
+    public void SetActivePrefabIndex (int newActivePrefabIndex)
     {
-        AssetContainer assetContainer = GetContainer();
-        assetContainer.SetActiveSkinIndex(newActiveSkinIndex, out tempActiveSkinIndex);
-    }
-
-
-    public void UpdateActiveHairIndex(Step step)
-    {
-        AssetContainer assetContainer = GetContainer();
-        assetContainer.UpdateActiveHairIndex(step, tempActiveHairIndex, out tempActiveHairIndex);
-    }
-
-    public void SetActiveHairIndex(int newActiveHairIndex)
-    {
-        AssetContainer assetContainer = GetContainer();
-        assetContainer.SetActiveHairIndex(newActiveHairIndex, out tempActiveHairIndex);
-    }
-
-    public void SwitchGender()
-    {
-        if (gender == Gender.Female)
-            gender = Gender.Male;
+        if (newActivePrefabIndex>characterPrefab.Length-1)
+            throw new System.Exception ("NewActiveHairIndex exceeds number of materials");
         else
-            gender = Gender.Female;
-    }
-
-    public void SetGender(Gender gender)
-    {
-       this.gender = gender;
+            activePrefabIndex = newActivePrefabIndex;
     }
 
 }
