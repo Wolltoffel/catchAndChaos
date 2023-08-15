@@ -69,8 +69,7 @@ abstract class ChildState : State
 class Idle: ChildState
 {
     public override ChildState UpdateState()
-    {
-        
+    {     
         //Go to Run
         float horizontal = Input.GetAxis(inputDevice+" Horizontal");
         float vertical = Input.GetAxis(inputDevice+" Vertical");
@@ -99,6 +98,7 @@ class Idle: ChildState
                 return new Destroy();
         }*/
 
+        gameObject.GetComponent<Animator>().SetInteger("ChildIndex",0);
         return this;
         
     }
@@ -116,7 +116,7 @@ class Run: ChildState
 
         GameObject gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Child);
         gameObject.GetComponent<MovementScript>().MovePlayer(horizontal, vertical);
-        gameObject.GetComponent<Animator>().SetInteger("ChilldIndex",1);
+        gameObject.GetComponent<Animator>().SetInteger("ChildIndex",1);
         Debug.Log ( gameObject.GetComponentInChildren<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.name);
 
 
