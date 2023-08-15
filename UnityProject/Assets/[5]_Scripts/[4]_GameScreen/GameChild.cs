@@ -96,13 +96,9 @@ class Run: ChildState
     {
         LollyPickUp();
 
-        Debug.Log  ("Why are you running?");
-
         //Turn to idle
         float horizontal = Input.GetAxis(inputDevice+" Horizontal");
         float vertical = Input.GetAxis(inputDevice+" Vertical");
-
-        Debug.Log ("Im runnign "+ horizontal);
 
         GameObject gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Child);
         gameObject.GetComponent<MovementScript>().MovePlayer(horizontal, vertical);
