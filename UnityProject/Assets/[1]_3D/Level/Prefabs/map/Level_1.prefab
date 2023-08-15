@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 4786161728765157485}
   m_Layer: 0
   m_Name: LollySpawnPos
-  m_TagString: Untagged
+  m_TagString: LollySpawnPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -270,7 +270,7 @@ GameObject:
   - component: {fileID: 7633049112990036188}
   m_Layer: 0
   m_Name: LollySpawnPos
-  m_TagString: Untagged
+  m_TagString: LollySpawnPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -460,7 +460,7 @@ GameObject:
   - component: {fileID: 6499862667589843306}
   m_Layer: 0
   m_Name: LollySpawnPos
-  m_TagString: Untagged
+  m_TagString: LollySpawnPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6181,7 +6181,7 @@ GameObject:
   - component: {fileID: 6112699053704144792}
   m_Layer: 0
   m_Name: LollySpawnPos
-  m_TagString: Untagged
+  m_TagString: LollySpawnPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6585,7 +6585,7 @@ GameObject:
   - component: {fileID: 3010999814940776958}
   m_Layer: 0
   m_Name: LollySpawnPos
-  m_TagString: Untagged
+  m_TagString: LollySpawnPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6829,7 +6829,7 @@ GameObject:
   - component: {fileID: 3992234467199987400}
   m_Layer: 0
   m_Name: LollySpawnPos
-  m_TagString: Untagged
+  m_TagString: LollySpawnPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

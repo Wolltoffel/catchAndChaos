@@ -53,7 +53,7 @@ public class Plushie : MonoBehaviour
         targetDir = Vector3.Dot(targetDir, parent.forward) > 0.2f ? Physics.Linecast(parent.position, target, out RaycastHit hit, obstacleLayer) ? parent.forward : targetDir : parent.forward;
         targetDir = new Vector3(targetDir.x,0,targetDir.z).normalized;
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.8f);
 
         collider.enabled = true;
 
@@ -61,6 +61,7 @@ public class Plushie : MonoBehaviour
         rigidbody.isKinematic = false;
         rigidbody.AddForce(force,ForceMode.Impulse);
 
+        yield return new WaitForSeconds(0.2f);
         Debug.Log("Plushie Thrown");
         isActive = true;
         transform.parent = null;
@@ -105,7 +106,7 @@ public class Plushie : MonoBehaviour
             {
                 Debug.Log("Child has been Hospitalized.");
                 ChildData data = GameData.GetData<ChildData>("Child");
-                data.isStunned = true;
+                data.stunned = true;
             }
         }
 
