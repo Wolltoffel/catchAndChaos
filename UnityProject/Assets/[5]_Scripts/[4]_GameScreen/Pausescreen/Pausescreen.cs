@@ -28,8 +28,6 @@ public class Pausescreen : MonoBehaviour
 
     void WaitForInputToPause()
     {
-            Debug.Log ("Wait for input to pause");
-            
             string parentInput = GameData.GetData<ParentData>("Parent").tempInputDevice;
             string childInput = GameData.GetData<ChildData>("Child").tempInputDevice;
 
