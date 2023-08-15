@@ -115,9 +115,9 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bcc79ab7ba596514fb745286bb841d08, type: 2}
-  - {fileID: 2100000, guid: 3ea6553ff8231a0449c84eeeb56902a9, type: 2}
-  - {fileID: 2100000, guid: 255fc5e796024dd4da85a0db8bed7819, type: 2}
+  - {fileID: 2100000, guid: be27abef187375f4d8c262efd951195a, type: 2}
+  - {fileID: 2100000, guid: 90225d1291c87c04a887cc2a75c5f053, type: 2}
+  - {fileID: 2100000, guid: 563035264492eb44488270c86bf789ff, type: 2}
   - {fileID: 2100000, guid: 22fa76140c7a04649b320b1a1c874dd2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -807,7 +807,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3283230447748401494}
-  - component: {fileID: 3958391785987772563}
   m_Layer: 0
   m_Name: Armature
   m_TagString: Untagged
@@ -831,27 +830,6 @@ Transform:
   - {fileID: 7297441652042590853}
   m_Father: {fileID: 5845872292678179272}
   m_LocalEulerAnglesHint: {x: -90, y: 180, z: 0}
---- !u!95 &3958391785987772563
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3967577679288140572}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e0bff44461125de4b9ebd5d2e850aa56, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4057020945308835143
 GameObject:
   m_ObjectHideFlags: 0
