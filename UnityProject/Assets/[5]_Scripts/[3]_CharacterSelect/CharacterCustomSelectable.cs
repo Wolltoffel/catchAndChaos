@@ -43,7 +43,7 @@ public class CharacterCustomSelectable: CustomSelectable
     void Switch(Step step)
     {
         PropertyHandler.SwitchProperty(characters,step);
-        CharacterInstantiator.ReplaceCharacter(characters, out GameObject character);
+        CharacterInstantiator.ReplaceCharacter(characters, out GameObject character, true);
     }
 
     

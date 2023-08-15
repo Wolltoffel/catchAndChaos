@@ -42,21 +42,28 @@ public class CharacterInstantiator : MonoBehaviour
         character.transform.localScale = Vector3.one * _initialScale;
     }
 
-    public static void InstantiateCharacter(Characters characterType, out GameObject character, Transform parentOfCharacter)
+    public static void InstantiateCharacter(Characters characterType, out GameObject character, Transform parentOfCharacter, bool addParentConstraint = false)
     {
         InstantiateCharacter(characterType, out character, parentOfCharacter.position);
         
-        ParentConstraint parentConstraint = character.AddComponent<ParentConstraint>();
-        parentConstraint.constraintActive = true;
-        ConstraintSource source = new ConstraintSource();
-        source.sourceTransform = parentOfCharacter.transform;
-        source.weight = 1f;
-        parentConstraint.AddSource (source);
+        if (addParentConstraint)
+        {
+            ParentConstraint parentConstraint = character.AddComponent<ParentConstraint>();
+            parentConstraint.constraintActive = true;
+            ConstraintSource source = new ConstraintSource();
+            source.sourceTransform = parentOfCharacter.transform;
+            source.weight = 1f;
+            parentConstraint.AddSource (source);
+        }
 
+        //character.GetComponent<Animator>().enabled = false;
         character.transform.parent = parentOfCharacter;
         character.transform.localRotation = Quaternion.identity;
         character.transform.localPosition = Vector3.zero;
+        //character.GetComponent<Animator>().enabled = true;
     }
+
+     
 
     public static GameObject GetActiveCharacter(Characters character)
     {
@@ -67,10 +74,10 @@ public class CharacterInstantiator : MonoBehaviour
         return parent;
     }
 
-    public static void ReplaceCharacter (Characters characterType, out GameObject character)
+    public static void ReplaceCharacter (Characters characterType, out GameObject character, bool addConstraint)
     {
         Transform parent  = GetActiveCharacter(characterType).transform.parent;
-        InstantiateCharacter(characterType, out character,parent);
+        InstantiateCharacter(characterType, out character,parent, addConstraint);
         GetActiveCharacter(characterType).transform.parent = parent;
     }
 }

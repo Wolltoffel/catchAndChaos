@@ -30,15 +30,15 @@ abstract class ChildState : State
     protected ChildState Slide()
     {
         //Slide
-       /* if (InteractableInRange("Wall", out GameObject interactableObject) )
+        if (InteractableInRange("SlideWall", out GameObject interactableObject) )
         {   
             //Show Buttonprompt
             if (Input.GetButtonDown(inputDevice+"B"))
             {
-                //Lollyspeed
+                gameObject.GetComponent<MovementScript>().DoSlide(interactableObject);
                 return new Slide();
             }    
-        }*/
+        }
         return null;
     }
 
@@ -117,7 +117,6 @@ class Run: ChildState
         GameObject gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Child);
         gameObject.GetComponent<MovementScript>().MovePlayer(horizontal, vertical);
         gameObject.GetComponent<Animator>().SetInteger("ChildIndex",1);
-        Debug.Log ( gameObject.GetComponentInChildren<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.name);
 
 
         if (horizontal==0 || vertical==0)

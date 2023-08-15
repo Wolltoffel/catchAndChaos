@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 0f6c8d00589dd184bacdb6a17328d70b, type: 3}
       propertyPath: m_Name
-      value: Parent Humanoid
+      value: ParentPrefab
       objectReference: {fileID: 0}
     - target: {fileID: 5102395909350310581, guid: 0f6c8d00589dd184bacdb6a17328d70b, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -72,6 +72,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 41d1e6f8fe26ae347b756d3c7c8ee740, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 0f6c8d00589dd184bacdb6a17328d70b, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -379,7 +379,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3829821342936219660}
+  m_Father: {fileID: 8859055359586037656}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6479657004453831743
 MonoBehaviour:
@@ -428,6 +428,8 @@ Transform:
   m_Children:
   - {fileID: 8754592547669430494}
   - {fileID: 2067557895936292303}
+  - {fileID: 5423461511303511578}
+  - {fileID: 6341452523033954004}
   m_Father: {fileID: 3829821342936219660}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7275115341930146678
@@ -805,6 +807,52 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &5796740024625262555
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6341452523033954004}
+  - component: {fileID: 4153714078181342988}
+  m_Layer: 0
+  m_Name: LollySpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6341452523033954004
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5796740024625262555}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8859055359586037656}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4153714078181342988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5796740024625262555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65075cd8ac6642341b602408820ad27c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lollyPrefab: {fileID: 839221885832150117, guid: 8b713f31acc9c774fbbb7842d9888299, type: 3}
+  amountOfLollys: 5
 --- !u!1 &6524864941952429753
 GameObject:
   m_ObjectHideFlags: 0
@@ -987,7 +1035,6 @@ Transform:
   - {fileID: 238652315873083436}
   - {fileID: 8874863069111707680}
   - {fileID: 820329246398975841}
-  - {fileID: 5423461511303511578}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7807713177249042652
@@ -1235,6 +1282,50 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3829821342936219660}
     m_Modifications:
+    - target: {fileID: 41664181973351332, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Vent
+      objectReference: {fileID: 0}
+    - target: {fileID: 599620136677800842, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: LollySpawnPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106975779169182910, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: LollySpawnPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416549068523227626, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Vent
+      objectReference: {fileID: 0}
+    - target: {fileID: 2521584558150459865, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: LollySpawnPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 2636459210160954763, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 2879232544628860396, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 3459372471376739102, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Vent
+      objectReference: {fileID: 0}
+    - target: {fileID: 3479806580428374388, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 4038974775866086890, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 4855181143334485436, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Door
+      objectReference: {fileID: 0}
     - target: {fileID: 4892528438904374977, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_Name
       value: Level_1
@@ -1278,6 +1369,46 @@ PrefabInstance:
     - target: {fileID: 4892528438904374978, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5470222813670645240, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: LollySpawnPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487140888156717293, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 5844427821161548743, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 6714984567277880643, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 6720373668601102726, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Vent
+      objectReference: {fileID: 0}
+    - target: {fileID: 7058459143131470819, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: LollySpawnPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 7330038950761631001, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Vent
+      objectReference: {fileID: 0}
+    - target: {fileID: 7711040619110599165, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: LollySpawnPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 7819372796392009927, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Vent
+      objectReference: {fileID: 0}
+    - target: {fileID: 8728228773147878455, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Vent
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
