@@ -43,7 +43,7 @@ public class MovementScript : MonoBehaviour
         previousMovement = Vector2.Lerp(previousMovement, axis, lerpValue);
         Vector3 movementDir = (new Vector3(previousMovement.x, 0, previousMovement.y));
 
-        Vector3 movement = movementDir * movementSpeed * speed / 10;
+        Vector3 movement = movementDir * movementSpeed * speed / 10 * Time.deltaTime * Time.timeScale * 500;
         characterController.Move(movement);
 
         if (movement.magnitude >= 0.001)
@@ -138,18 +138,18 @@ public class MovementScript : MonoBehaviour
     {
         coroutine = StartCoroutine(_DoCatch());
     }
-    private IEnumerator _DoCatch(float catchDuration = 1.5f)
+    private IEnumerator _DoCatch(float catchDuration = 1f)
     {
         float time = 0;
         Vector3 catchDir = transform.forward;
 
         while (time < catchDuration)
         {
-            Vector3 movement = catchDir * (Mathf.Pow(time, 8) + 1)  / 1000;
+            float multiplicator = -Mathf.Pow((time+0.5f), 8) + 1;
+            Vector3 movement = catchDir * (Mathf.Clamp01(multiplicator)) / 48;
+            characterController.Move(movement * Time.timeScale);
 
-            characterController.Move(movement);
-
-            time += Time.deltaTime * Time.timeScale;
+            time += Time.deltaTime;
 
             yield return null;
         }
@@ -159,6 +159,7 @@ public class MovementScript : MonoBehaviour
     #endregion
 }
 
+/*
 class OldMovementScript : MonoBehaviour
 {
     public bool IsCoroutineDone { get => coroutine == null; }
@@ -284,3 +285,4 @@ class OldMovementScript : MonoBehaviour
     }
     #endregion
 }
+*/

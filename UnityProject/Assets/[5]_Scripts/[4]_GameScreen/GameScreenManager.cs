@@ -71,7 +71,7 @@ public class GameScreenManager : MonoBehaviour
         }
     }
 
-    private void Endgame(EndCondition condition)
+    public static void Endgame(EndCondition condition)
     {
         Debug.Log($"Game Has Ended due to {condition}");
     }
@@ -103,7 +103,7 @@ public class GameScreenManager : MonoBehaviour
 
 }
 
-enum EndCondition
+public enum EndCondition
 {
     Chaos,
     Catch,
