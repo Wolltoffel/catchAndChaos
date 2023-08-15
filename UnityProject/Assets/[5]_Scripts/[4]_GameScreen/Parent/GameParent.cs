@@ -8,6 +8,12 @@ public class GameParent : MonoBehaviour
 
     private ParentBaseMovementState state;
 
+    private void OnDrawGizmos()
+    {
+        GameObject gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Parent);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(gameObject.transform.position + Vector3.up + (gameObject.transform.forward), 1);
+    }
 
     private void Awake()
     {
@@ -203,13 +209,12 @@ class ParentCatch : ParentBaseMovementState
     private Coroutine catchCoroutine;
     private float time;
     private float catchDistance;
-    private GameObject parent;
     private MovementScript movement;
 
     public ParentCatch(ParentData data, MovementScript movement) : base(data)
     {
         time = 0;
-        parent = CharacterInstantiator.GetActiveCharacter(Characters.Parent);
+        gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Parent);
         //movement = parent.GetComponent<MovementScript>();
         this.movement = movement;
         movement.DoCatch();
@@ -220,6 +225,14 @@ class ParentCatch : ParentBaseMovementState
         if (movement.IsCoroutineDone)
         {
             return new ParentIdle(parentData);
+        }
+
+        Vector3 sphereCenter = gameObject.transform.position + Vector3.up + (gameObject.transform.forward);
+
+        if (Physics.CheckSphere(sphereCenter, 0.5f, 8))
+        {
+            Debug.Log("Order has been restored");
+            GameScreenManager.Endgame(EndCondition.Catch);
         }
 
         return this;
@@ -244,10 +257,5 @@ class ParentThrow : ParentBaseMovementState
             return new ParentIdle(parentData);
         }
         return this;
-    }
-
-    private void ThrowPlushie()
-    {
-
     }
 }

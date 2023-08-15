@@ -104,8 +104,8 @@ public class Plushie : MonoBehaviour
             if (collision.gameObject.layer == 8)
             {
                 Debug.Log("Child has been Hospitalized.");
-                collision.gameObject.GetComponent<GameChild>();
-                //handleCollision
+                ChildData data = GameData.GetData<ChildData>("Child");
+                data.isStunned = true;
             }
         }
 

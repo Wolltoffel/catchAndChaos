@@ -145,12 +145,11 @@ public class MovementScript : MonoBehaviour
 
         while (time < catchDuration)
         {
-            float multiplicator = -Mathf.Pow(time, 8) + 1;
-            Vector3 movement = catchDir * multiplicator / 100;
-            Debug.Log(multiplicator);
-            characterController.Move(movement);
+            float multiplicator = -Mathf.Pow((time+0.5f), 8) + 1;
+            Vector3 movement = catchDir * (Mathf.Clamp01(multiplicator)) / 48;
+            characterController.Move(movement * Time.timeScale);
 
-            time += Time.deltaTime * Time.timeScale;
+            time += Time.deltaTime;
 
             yield return null;
         }
