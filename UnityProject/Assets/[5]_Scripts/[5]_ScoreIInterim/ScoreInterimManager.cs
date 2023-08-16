@@ -1,10 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class BetweenRoundsManager : MonoBehaviour
 {
+    [SerializeField] Button nextRoundButton;
+
+    void Awake()
+    {
+        GoToEndScreen();
+    }
+
     void Update()
     {
         WaitForKeyInput();
@@ -16,5 +24,14 @@ public class BetweenRoundsManager : MonoBehaviour
         string childInputDevice = GameData.GetData<PlayerData>("Child").tempInputDevice;
         if (Input.GetButtonDown(parentInputDevice + "A")|Input.GetButtonDown(childInputDevice + "A"))
             ScreenSwitcher.SwitchScreen (ScreenType.GameScreen);
+    }
+
+    public void GoToEndScreen()
+    {
+        if (GameData.GetData<PlayerData>("Child").tempScore>=3 |GameData.GetData<PlayerData>("Parent").tempScore>=3)
+        {
+            //Activate Endscreen
+        }
+        
     }
 }

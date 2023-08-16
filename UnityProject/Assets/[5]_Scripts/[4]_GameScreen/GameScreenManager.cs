@@ -67,13 +67,25 @@ public class GameScreenManager : MonoBehaviour
     {
         if (chaosData.EndGame)
         {
-            Endgame(EndCondition.Chaos);
+            EndGame(EndCondition.Chaos);
         }
     }
 
-    public static void Endgame(EndCondition condition)
+    public static void EndGame(EndCondition condition)
     {
-        Debug.Log($"Game Has Ended due to {condition}");
+        switch (condition)
+        {
+            case EndCondition.Catch |EndCondition.Time:
+                GameData.GetData<PlayerData>("Parent").tempScore++;
+                break;
+            case EndCondition.Chaos:
+                GameData.GetData<PlayerData>("Child").tempScore++;
+                break;
+        }
+
+        ScreenSwitcher.SwitchScreen(ScreenType.ScoreInterim);
+
+
     }
 
     #region Timecounter
@@ -91,7 +103,7 @@ public class GameScreenManager : MonoBehaviour
             timeData.TempRemainingPlayTime--;
         }
 
-        Endgame(EndCondition.Time);
+        EndGame(EndCondition.Time);
     }
 
     private void ResetTimeCounter()
