@@ -105,7 +105,7 @@ public class Plushie : MonoBehaviour
             {
                 Debug.Log("Child has been Hospitalized.");
                 ChildData data = GameData.GetData<ChildData>("Child");
-                data.isStunned = true;
+                data.stunned = true;
             }
         }
 
