@@ -50,7 +50,9 @@ abstract class ParentBaseMovementState : State
 
             if (Input.GetButtonDown($"{inputDevice}B"))
             {
-                //DoAnimation
+                //Do Antimator
+                gameObject.GetComponent<Animator>().SetInteger("MomIndex", 5);
+
                 //Sound
 
                 DoorSwitch toggle = interactable.GetComponent<DoorSwitch>();
@@ -96,6 +98,9 @@ abstract class ParentBaseMovementState : State
             {
                 if (parentData.plushie != null)
                 {
+                    //Do Antimator
+                    gameObject.GetComponent<Animator>().SetInteger("MomIndex", 5);
+
                     parentData.plushie.AttachToTarget(gameObject.transform);
                 }
             }
@@ -125,6 +130,8 @@ class ParentIdle : ParentBaseMovementState
     public ParentIdle(ParentData data) : base(data)
     {
         gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Parent);
+        //Do Antimator
+        gameObject.GetComponent<Animator>().SetInteger("MomIndex", 0);
     }
 
     public override ParentBaseMovementState UpdateState()
@@ -171,6 +178,9 @@ class ParentMovement : ParentBaseMovementState
         gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Parent);
 
         movement = gameObject.GetComponent<MovementScript>();
+
+        //Do Antimator
+        gameObject.GetComponent<Animator>().SetInteger("MomIndex", 1);
     }
 
     public override ParentBaseMovementState UpdateState()
@@ -218,6 +228,9 @@ class ParentCatch : ParentBaseMovementState
         //movement = parent.GetComponent<MovementScript>();
         this.movement = movement;
         movement.DoCatch();
+
+        //Do Antimator
+        gameObject.GetComponent<Animator>().SetInteger("MomIndex", 4);
     }
 
     public override ParentBaseMovementState UpdateState()
@@ -244,6 +257,8 @@ class ParentThrow : ParentBaseMovementState
     public ParentThrow(ParentData data) : base(data)
     {
         //Do Antimator
+        gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Parent);
+        gameObject.GetComponent<Animator>().SetInteger("MomIndex", 3);
 
         Vector3 childTarget = CharacterInstantiator.GetActiveCharacter(Characters.Child).transform.position;
         data.plushie.ThrowPlushie(childTarget);

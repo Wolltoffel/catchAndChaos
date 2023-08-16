@@ -36,7 +36,7 @@ public class LollySpawner : MonoBehaviour
     void SpawnLolly()
     {    
         //Get random transform
-        int random = Random.Range(0,spawnPositions.Count-1);
+        int random = Random.Range(0,spawnPositions.Count);
         Vector3 randomPos = spawnPositions[random];
         spawnPositions.Remove(spawnPositions[random]);
 

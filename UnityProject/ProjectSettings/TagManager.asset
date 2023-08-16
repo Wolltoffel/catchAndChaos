@@ -10,8 +10,9 @@ TagManager:
   - Door
   - Lolly
   - Vent
-  - Candy
   - LollySpawnPoint
+  - Item
+  - Hand
   layers:
   - Default
   - TransparentFX
