@@ -58,7 +58,6 @@ public class MovementScript : MonoBehaviour
                 transform.rotation = targetRotation;
             }
         }
-
         transform.position = new Vector3(transform.position.x, yValue, transform.position.z);
     }
 
