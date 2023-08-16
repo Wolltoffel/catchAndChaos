@@ -327,8 +327,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be49d5e250fca40ec8c920e91c74453b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lerpValue: 1.5
-  movementSpeed: 1
+  lerpValue: 1
+  movementSpeed: 0.3
   rotationSpeed: 20
   pushForce: 800
 --- !u!54 &7438187638548648562
@@ -381,6 +381,6 @@ CharacterController:
   m_Radius: 0.18
   m_SlopeLimit: 0
   m_StepOffset: 0
-  m_SkinWidth: 0.05
+  m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.36, z: 0}

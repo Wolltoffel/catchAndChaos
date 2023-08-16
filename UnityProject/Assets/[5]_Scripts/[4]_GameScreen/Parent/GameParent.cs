@@ -8,12 +8,12 @@ public class GameParent : MonoBehaviour
 
     private ParentBaseMovementState state;
 
-    private void OnDrawGizmos()
+   /* private void OnDrawGizmos()
     {
         GameObject gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Parent);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(gameObject.transform.position + Vector3.up + (gameObject.transform.forward), 1);
-    }
+    }*/
 
     private void Awake()
     {

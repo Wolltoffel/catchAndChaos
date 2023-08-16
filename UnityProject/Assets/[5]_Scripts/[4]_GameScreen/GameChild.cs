@@ -30,12 +30,15 @@ abstract class ChildState : State
     protected ChildState Slide()
     {
         //Slide
-        if (InteractableInRange("SlideWall", out GameObject interactableObject) )
+        if (InteractableInRange("Vent", out GameObject interactableObject) )
         {   
+            Debug.Log ("Vent in Range");
             //Show Buttonprompt
             if (Input.GetButtonDown(inputDevice+"B"))
             {
+                Debug.Log ("Going through vent");
                 gameObject.GetComponent<MovementScript>().DoSlide(interactableObject);
+                gameObject.GetComponent<Animator>().SetInteger("ChildIndex",4);
                 return new Slide();
             }    
         }
@@ -48,7 +51,7 @@ abstract class ChildState : State
         /*if (InteractableInRange("Lolly", out GameObject interactableObject) )
         {   
             //Show Buttonprompt
-            if (Input.GetButtonDown(inputDevice+"B"))
+            if (Input.GetButtonDown(inputDevice+"A"))
             {
                 //Lollyspeed
             };    
@@ -105,25 +108,29 @@ class Idle: ChildState
 }
 
 class Run: ChildState
-{
+{ 
     public override ChildState UpdateState()
     {
-        LollyPickUp();
+        Debug.Log ("Running");
+
+        //LollyPickUp();
 
         //Turn to idle
         float horizontal = Input.GetAxis(inputDevice+" Horizontal");
         float vertical = Input.GetAxis(inputDevice+" Vertical");
+        Vector2 inputVector = new Vector2(horizontal,vertical).normalized;
 
-        GameObject gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Child);
-        gameObject.GetComponent<MovementScript>().MovePlayer(horizontal, vertical);
-        gameObject.GetComponent<Animator>().SetInteger("ChildIndex",1);
-
-
-        if (horizontal==0 || vertical==0)
+        if (horizontal==0 && vertical==0)
         {
             return new Idle();
         }
         
+
+        GameObject gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Child);
+        gameObject.GetComponent<MovementScript>().MovePlayer(inputVector.x, inputVector.y);
+        gameObject.GetComponent<Animator>().SetInteger("ChildIndex",1);
+
+
         //Slide
         ChildState slide = Slide();
         if (slide!=null)
@@ -131,9 +138,9 @@ class Run: ChildState
 
         
         //Stunned
-        ChildState stunned = Stunned();
+        /*ChildState stunned = Stunned();
         if (stunned!=null)
-            return stunned;
+            return stunned;*/
 
         return this;
 
@@ -145,6 +152,8 @@ class Slide: ChildState
     public override ChildState UpdateState()
     {
         bool slideOver= false; //ask from movement whether slide is over
+
+
         if (slideOver)
             return new Idle();
         

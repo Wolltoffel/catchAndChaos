@@ -466,7 +466,7 @@ MonoBehaviour:
   - tag: Lolly
     interactionRange: 2
   - tag: Vent
-    interactionRange: 2
+    interactionRange: 5
   - tag: Chaos
     interactionRange: 2
 --- !u!1 &4185518816038439600

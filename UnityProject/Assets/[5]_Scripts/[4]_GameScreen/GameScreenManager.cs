@@ -99,8 +99,6 @@ public class GameScreenManager : MonoBehaviour
         timeData.ResetValues();
     }
     #endregion
-
-
 }
 
 public enum EndCondition

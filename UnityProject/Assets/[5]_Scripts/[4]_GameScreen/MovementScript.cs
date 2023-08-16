@@ -42,7 +42,6 @@ public class MovementScript : MonoBehaviour
         Vector2 axis = new Vector2(xAxis, yAxis);
         previousMovement = Vector2.Lerp(previousMovement, axis, lerpValue);
         Vector3 movementDir = (new Vector3(previousMovement.x, 0, previousMovement.y));
-
         Vector3 movement = movementDir * movementSpeed * speed / 10 * Time.deltaTime * Time.timeScale * 500;
         characterController.Move(movement);
 
