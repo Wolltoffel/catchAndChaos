@@ -127,8 +127,6 @@ class Run: ChildState
 { 
     public override ChildState UpdateState()
     {
-        //Debug.Log ("Running");
-
         //LollyPickUp();
 
         float horizontal = Input.GetAxis(inputDevice+" Horizontal");
@@ -145,7 +143,6 @@ class Run: ChildState
         GameObject gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Child);
         gameObject.GetComponent<MovementScript>().MovePlayer(inputVector.x, inputVector.y);
         gameObject.GetComponent<Animator>().SetInteger("ChildIndex",1);
-
 
         //Slide
         ChildState slide = Slide();
