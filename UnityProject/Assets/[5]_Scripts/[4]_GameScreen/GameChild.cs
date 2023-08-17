@@ -22,6 +22,8 @@ abstract class ChildState : State
     protected string inputDevice = GameData.GetData<ChildData>("Child").tempInputDevice;
     public abstract ChildState UpdateState();
 
+    static GameObject buttonPrompt;
+
     public ChildState()
     {
         gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Child);
@@ -29,16 +31,23 @@ abstract class ChildState : State
 
     protected ChildState Slide()
     {
-        //Slide
         if (InteractableInRange("Vent", out GameObject interactableObject) )
-        {   
-            Debug.Log ("Vent in Range");
-            //Show Buttonprompt
+        {    
+          //Show ButtonPrompt  
+          if (buttonPrompt==null)
+            ButtonPromptManager.ShowButtonPrompt(interactableObject.transform, "A",InputDevice.Controller,out buttonPrompt, "Vent");
+
             if (Input.GetButtonDown(inputDevice+"B"))
             {
+                //Remove Button Prompt
+                ButtonPromptManager.RemoveButtonPrompt(buttonPrompt);
+                buttonPrompt = null;
+
+                //Handle Animations & Movement
                 Debug.Log ("Going through vent");
                 gameObject.GetComponent<MovementScript>().DoSlide(interactableObject);
-                gameObject.GetComponent<Animator>().SetInteger("ChildIndex",4);
+                gameObject.GetComponent<Animator>().SetInteger("ChildIndex",2);
+                
                 return new Slide();
             }    
         }
@@ -73,9 +82,11 @@ class Idle: ChildState
 {
     public override ChildState UpdateState()
     {     
+        Debug.Log ("Idle");
         //Go to Run
         float horizontal = Input.GetAxis(inputDevice+" Horizontal");
         float vertical = Input.GetAxis(inputDevice+" Vertical");
+        
         if (horizontal!=0 || vertical!=0)
         {
             return new Run();
@@ -115,7 +126,6 @@ class Run: ChildState
 
         //LollyPickUp();
 
-        //Turn to idle
         float horizontal = Input.GetAxis(inputDevice+" Horizontal");
         float vertical = Input.GetAxis(inputDevice+" Vertical");
         Vector2 inputVector = new Vector2(horizontal,vertical).normalized;
@@ -191,4 +201,5 @@ class Stunned: ChildState
         return this;
     }
 }
+
 

@@ -10,8 +10,15 @@ public enum InputDevice
 [System.Serializable]
 public class ButtonPromptData
 {
-    public GameObject buttonAsset;
+    public Sprite buttonAsset;
     public string buttonName;
+}
+
+[System.Serializable]
+public class HintData
+{
+    public Sprite hintSprite;
+    public string hintName;
 }
 
 [CreateAssetMenu(fileName = "ADataObject", menuName = "Custom/AData/ButtonPromptAssets")]
@@ -20,18 +27,25 @@ public class ButtonPromptAsssets : StaticData
    public ButtonPromptData[] controller;
    public ButtonPromptData[] keyboard;
 
+   public HintData [] hints;
 
-    public GameObject GetButtonByName (string name, InputDevice inputDevice)
+
+    public Sprite GetButtonSpriteByName (string name, InputDevice inputDevice)
     {
         if (inputDevice == InputDevice.Controller)
-            return SearchList(name, controller).buttonAsset;
+            return SearchButtonList(name, controller).buttonAsset;
         else if (inputDevice == InputDevice.Controller)
-            return SearchList(name, keyboard).buttonAsset;
+            return SearchButtonList(name, keyboard).buttonAsset;
         else
             throw new System.Exception ("No input device selected");      
     }
 
-    ButtonPromptData SearchList(string name, ButtonPromptData[] buttonPromptDatas)
+     public Sprite GetHintSpriteByName (string name)
+    {
+        return SearchHintList(name).hintSprite;
+    }
+
+    ButtonPromptData SearchButtonList(string name, ButtonPromptData[] buttonPromptDatas)
     {
         for (int i= 0 ; i<buttonPromptDatas.Length; i++)
         {
@@ -40,5 +54,16 @@ public class ButtonPromptAsssets : StaticData
         }
         return null;
     }
+
+    HintData SearchHintList(string name)
+    {
+        for (int i= 0 ; i<hints.Length; i++)
+        {
+            if (hints[i].hintName == name)
+                return hints[i];
+        }
+        return null;
+    }
+    
 }
 

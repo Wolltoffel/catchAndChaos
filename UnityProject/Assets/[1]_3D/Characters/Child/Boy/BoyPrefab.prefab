@@ -250,7 +250,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: e0bff44461125de4b9ebd5d2e850aa56, type: 2}
     - target: {fileID: 5866666021909216657, guid: 0ae48de0be2788046a4263bd4bc8b3de, type: 3}
       propertyPath: m_CullingMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 0ae48de0be2788046a4263bd4bc8b3de, type: 3}
       propertyPath: m_ApplyRootMotion
@@ -309,9 +309,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0ae48de0be2788046a4263bd4bc8b3de, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1135976257143019385}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0ae48de0be2788046a4263bd4bc8b3de, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3403629715228978563}
   m_SourcePrefab: {fileID: 100100000, guid: 0ae48de0be2788046a4263bd4bc8b3de, type: 3}
 --- !u!1 &1164241999651989897 stripped
 GameObject:
@@ -331,9 +328,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lerpValue: 1
-  movementSpeed: 0.3
+  movementSpeed: 0.15
   rotationSpeed: 20
-  pushForce: 800
+  pushForce: 1000
 --- !u!54 &7438187638548648562
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -380,33 +377,10 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 0.84
+  m_Height: 0.74
   m_Radius: 0.18
   m_SlopeLimit: 0
   m_StepOffset: 0
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.36, z: 0}
---- !u!136 &3403629715228978563
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1164241999651989897}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.17
-  m_Height: 0.8
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.36, z: 0}
+  m_Center: {x: 0, y: 0.38, z: 0}

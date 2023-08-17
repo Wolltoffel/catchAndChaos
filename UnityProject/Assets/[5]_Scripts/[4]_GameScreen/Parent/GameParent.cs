@@ -245,7 +245,7 @@ class ParentCatch : ParentBaseMovementState
         if (Physics.CheckSphere(sphereCenter, 0.5f, 8))
         {
             Debug.Log("Order has been restored");
-            GameScreenManager.Endgame(EndCondition.Catch);
+            GameScreenManager.EndGame(EndCondition.Catch);
         }
 
         return this;
