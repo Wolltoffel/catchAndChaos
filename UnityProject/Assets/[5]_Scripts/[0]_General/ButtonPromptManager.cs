@@ -74,7 +74,6 @@ public class ButtonPromptManager : MonoBehaviour
    }
 
    
-
    public static void RemoveButtonPrompt(GameObject spawnedObjet)
    {
       for (int i = 0; i<buttonPrompts.Count; i++)
