@@ -115,7 +115,7 @@ public class GameInteractableManager : MonoBehaviour
             string tag = interactableTags[i].tag;
             GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag(tag);
             if (objectsWithTag.Length == 0 || objectsWithTag == null)
-                Debug.Log("No Objects Found");
+                Debug.Log($"No Objects Found \nTag: {tag}");
             else
                 allInteractables.AddObjectsToCategory(tag,objectsWithTag);
         }

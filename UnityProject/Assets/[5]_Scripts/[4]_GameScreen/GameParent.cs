@@ -8,13 +8,6 @@ public class GameParent : MonoBehaviour
 
     private ParentBaseMovementState state;
 
-    private void OnDrawGizmos()
-    {
-        GameObject gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Parent);
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(gameObject.transform.position + Vector3.up + (gameObject.transform.forward), 1);
-    }
-
     private void Awake()
     {
         parentData = GameData.GetData<ParentData>("Parent");
@@ -47,6 +40,7 @@ abstract class ParentBaseMovementState : State
         if (InteractableInRange("Door", out interactable))
         {
             //show prompt
+            Debug.Log("in range");
 
             if (Input.GetButtonDown($"{inputDevice}B"))
             {

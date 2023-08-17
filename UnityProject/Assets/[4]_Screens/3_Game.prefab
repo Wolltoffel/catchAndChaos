@@ -462,7 +462,7 @@ MonoBehaviour:
   - tag: Plushie
     interactionRange: 2
   - tag: Door
-    interactionRange: 2
+    interactionRange: 5
   - tag: Lolly
     interactionRange: 2
   - tag: Vent
