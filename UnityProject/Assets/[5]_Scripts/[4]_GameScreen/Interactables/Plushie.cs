@@ -29,7 +29,7 @@ public class Plushie : MonoBehaviour
         }
 
         gameObject.layer = 6;
-        Debug.Log(gameObject.layer);
+        //Debug.Log(gameObject.layer);
     }
 
     public void ThrowPlushie(Vector3 target)
