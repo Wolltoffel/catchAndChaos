@@ -73,6 +73,7 @@ public class GameScreenManager : MonoBehaviour
 
     public static void EndGame(EndCondition condition)
     {
+
         switch (condition)
         {
             case EndCondition.Catch |EndCondition.Time:

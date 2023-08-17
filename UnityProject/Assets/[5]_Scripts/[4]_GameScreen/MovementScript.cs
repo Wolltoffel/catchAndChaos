@@ -84,19 +84,22 @@ public class MovementScript : MonoBehaviour
     }
 
     #region Slide
-    public void DoSlide(GameObject vent, float slideDuration = 1)
+    public void DoSlide(GameObject vent, float slideDuration = 0.4f)
     {
         coroutine = StartCoroutine(_DoSlide(vent, slideDuration));
     }
-    private IEnumerator _DoSlide(GameObject vent, float slideDuration = 1)
+    private IEnumerator _DoSlide(GameObject vent, float slideDuration)
     {
+        //characterController.enabled = false;
+        //rigidbody.isKinematic = true;
+
         float time = 0;
         Vector3 slideDir = GetSlideDir(vent);
 
         Vector3 originPos = transform.position;
         Quaternion originRot = transform.rotation;
 
-        Vector3 targetPos = vent.transform.position + slideDir * 0.5f;
+        Vector3 targetPos = new Vector3(vent.transform.position.x, transform.position.y, vent.transform.position.z) + -slideDir * 1f;
         Quaternion targetRot = Quaternion.LookRotation(slideDir);
 
         while (time < 0.1f)
@@ -104,28 +107,35 @@ public class MovementScript : MonoBehaviour
             transform.position = Vector3.Lerp(originPos, targetPos, time * 10);
             transform.rotation = Quaternion.Slerp(originRot, targetRot, time * 10);
 
+            time += Time.deltaTime * Time.timeScale;
             yield return null;
         }
 
+        transform.position = targetPos;
+        transform.rotation = targetRot;
         time = 0;
 
         while (time < slideDuration)
         {
-            transform.Translate(slideDir * Time.deltaTime);
-
+            transform.Translate(slideDir * Time.timeScale * 500 * Time.deltaTime * movementSpeed / 10, Space.World);
             time += Time.deltaTime * Time.timeScale;
 
             yield return null;
         }
 
+        //characterController.enabled = true;
+        //rigidbody.isKinematic = false;
+
         coroutine = null;
     }
+
     private Vector3 GetSlideDir(GameObject vent)
     {
         Vector3 ventPos = vent.transform.position;
         Vector3 ventDir = vent.transform.forward;
         Vector3 relativePos = Vector3.Normalize(transform.position - ventPos);
-        float scalar = Vector3.Dot(relativePos, ventDir) > 0 ? 1 : -1;
+        float scalar = Vector3.Dot(relativePos, ventDir) > 0 ? -1 : 1;
+        ventDir = new Vector3(ventDir.x,0,ventDir.z).normalized;
 
         return ventDir * scalar;
     }

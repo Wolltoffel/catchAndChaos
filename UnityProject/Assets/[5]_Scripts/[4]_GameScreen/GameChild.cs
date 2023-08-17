@@ -46,7 +46,7 @@ abstract class ChildState : State
                 //Handle Animations & Movement
                 Debug.Log ("Going through vent");
                 gameObject.GetComponent<MovementScript>().DoSlide(interactableObject);
-                gameObject.GetComponent<Animator>().SetInteger("ChildIndex",2);
+                gameObject.GetComponent<Animator>().SetInteger("ChildIndex",4);
                 
                 return new Slide();
             }    
@@ -159,14 +159,18 @@ class Run: ChildState
 
 class Slide: ChildState
 {
+    private MovementScript movement;
+
+    public Slide()
+    {
+        movement = CharacterInstantiator.GetActiveCharacter(Characters.Child).GetComponent<MovementScript>();
+    }
+
     public override ChildState UpdateState()
     {
-        bool slideOver= false; //ask from movement whether slide is over
-
-
-        if (slideOver)
+        if (movement.IsCoroutineDone)
             return new Idle();
-        
+       
         return this;
     }
 }
