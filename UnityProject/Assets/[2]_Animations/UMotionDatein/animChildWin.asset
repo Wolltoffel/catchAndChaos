@@ -38,7 +38,7 @@ MonoBehaviour:
     FramesScrollPosition:
       valueInternal: -40
     FramesZoom:
-      valueInternal: 0.1348965
+      valueInternal: 0.13489653
     PropertiesScrollPosition:
       valueInternal: 0
     PropertiesZoom:
@@ -157,7 +157,7 @@ MonoBehaviour:
       BoneStyle:
         valueInternal: 2
       BonesVisible:
-        valueInternal: 0
+        valueInternal: 1
       TransformsVisible:
         valueInternal: 1
       NamesVisible:
@@ -260,9 +260,9 @@ MonoBehaviour:
       valueInternal: 0
     LocalPositionChannelList:
     - CurrentValue:
-        valueInternal: 5.278
+        valueInternal: 0
       ReferencePoseValue:
-        valueInternal: 5.278
+        valueInternal: 0
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
@@ -271,12 +271,12 @@ MonoBehaviour:
           newKeyListSerialized: 00000000
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: 5.278
+            valueInternal: 0
           newKeyListSerialized: 00000000
     - CurrentValue:
-        valueInternal: -11.272
+        valueInternal: 0
       ReferencePoseValue:
-        valueInternal: -11.272
+        valueInternal: 0
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
@@ -285,12 +285,12 @@ MonoBehaviour:
           newKeyListSerialized: 00000000
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: -11.272
+            valueInternal: 0
           newKeyListSerialized: 00000000
     - CurrentValue:
-        valueInternal: 11.852
+        valueInternal: 0
       ReferencePoseValue:
-        valueInternal: 11.852
+        valueInternal: 0
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
@@ -299,7 +299,7 @@ MonoBehaviour:
           newKeyListSerialized: 00000000
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: 11.852
+            valueInternal: 0
           newKeyListSerialized: 00000000
     LocalRotationSelected:
       valueInternal: 0
@@ -381,9 +381,9 @@ MonoBehaviour:
       valueInternal: 0
     LocalScaleChannelList:
     - CurrentValue:
-        valueInternal: 2.7059
+        valueInternal: 1
       ReferencePoseValue:
-        valueInternal: 2.7059
+        valueInternal: 1
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
@@ -392,12 +392,12 @@ MonoBehaviour:
           newKeyListSerialized: 00000000
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: 2.7059
+            valueInternal: 1
           newKeyListSerialized: 00000000
     - CurrentValue:
-        valueInternal: 2.7059
+        valueInternal: 1
       ReferencePoseValue:
-        valueInternal: 2.7059
+        valueInternal: 1
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
@@ -406,12 +406,12 @@ MonoBehaviour:
           newKeyListSerialized: 00000000
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: 2.7059
+            valueInternal: 1
           newKeyListSerialized: 00000000
     - CurrentValue:
-        valueInternal: 2.7059
+        valueInternal: 1
       ReferencePoseValue:
-        valueInternal: 2.7059
+        valueInternal: 1
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
@@ -420,7 +420,7 @@ MonoBehaviour:
           newKeyListSerialized: 00000000
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: 2.7059
+            valueInternal: 1
           newKeyListSerialized: 00000000
     IkEnable:
       valueInternal: 0
@@ -9264,6 +9264,236 @@ MonoBehaviour:
           - CurrentOriginalValue:
               valueInternal: 0
             newKeyListSerialized: 02000000000000000000000000000000000000000000abaaaa3eabaaaa3e00000000009300000000000000000000000000000000abaaaa3eabaaaa3e00000000
+    - Name:
+        valueInternal: a (1)
+      DrivenAnimatedObjectList:
+      - valueInternal:
+          Address: 0200000048000000
+          Length: 2
+      DrivenChannel:
+        valueInternal: 0
+      ScalingEnabled:
+        valueInternal: 0
+      ConstrainInput:
+        valueInternal: 1
+      DriverMin:
+        valueInternal: 0
+      DriverMax:
+        valueInternal: 100
+      DrivenMin:
+        valueInternal: 0
+      DrivenMax:
+        valueInternal: 1
+      Mode:
+        valueInternal: 1
+      PropertyPath:
+        valueInternal: blendShape.a
+      PropertyType:
+        valueInternal: UnityEngine.SkinnedMeshRenderer, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Preview:
+        valueInternal: 1
+      CustomPropertySelected:
+        valueInternal: 0
+      CustomPropertyChannel:
+        CurrentValue:
+          valueInternal: 0
+        ReferencePoseValue:
+          valueInternal: 0
+        PoseValueList: []
+        ChannelPerClipList:
+        - LayerList:
+          - CurrentOriginalValue:
+              valueInternal: 0
+            newKeyListSerialized: 00000000
+        - LayerList:
+          - CurrentOriginalValue:
+              valueInternal: 0
+            newKeyListSerialized: 00000000
+    - Name:
+        valueInternal: Angry (1)
+      DrivenAnimatedObjectList:
+      - valueInternal:
+          Address: 0200000048000000
+          Length: 2
+      DrivenChannel:
+        valueInternal: 0
+      ScalingEnabled:
+        valueInternal: 0
+      ConstrainInput:
+        valueInternal: 1
+      DriverMin:
+        valueInternal: 0
+      DriverMax:
+        valueInternal: 100
+      DrivenMin:
+        valueInternal: 0
+      DrivenMax:
+        valueInternal: 1
+      Mode:
+        valueInternal: 1
+      PropertyPath:
+        valueInternal: blendShape.Angry
+      PropertyType:
+        valueInternal: UnityEngine.SkinnedMeshRenderer, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Preview:
+        valueInternal: 1
+      CustomPropertySelected:
+        valueInternal: 0
+      CustomPropertyChannel:
+        CurrentValue:
+          valueInternal: 0
+        ReferencePoseValue:
+          valueInternal: 0
+        PoseValueList: []
+        ChannelPerClipList:
+        - LayerList:
+          - CurrentOriginalValue:
+              valueInternal: 0
+            newKeyListSerialized: 00000000
+        - LayerList:
+          - CurrentOriginalValue:
+              valueInternal: 0
+            newKeyListSerialized: 00000000
+    - Name:
+        valueInternal: Angry Shout (1)
+      DrivenAnimatedObjectList:
+      - valueInternal:
+          Address: 0200000048000000
+          Length: 2
+      DrivenChannel:
+        valueInternal: 0
+      ScalingEnabled:
+        valueInternal: 0
+      ConstrainInput:
+        valueInternal: 1
+      DriverMin:
+        valueInternal: 0
+      DriverMax:
+        valueInternal: 100
+      DrivenMin:
+        valueInternal: 0
+      DrivenMax:
+        valueInternal: 1
+      Mode:
+        valueInternal: 1
+      PropertyPath:
+        valueInternal: blendShape.Angry Shout
+      PropertyType:
+        valueInternal: UnityEngine.SkinnedMeshRenderer, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Preview:
+        valueInternal: 1
+      CustomPropertySelected:
+        valueInternal: 0
+      CustomPropertyChannel:
+        CurrentValue:
+          valueInternal: 0
+        ReferencePoseValue:
+          valueInternal: 0
+        PoseValueList: []
+        ChannelPerClipList:
+        - LayerList:
+          - CurrentOriginalValue:
+              valueInternal: 0
+            newKeyListSerialized: 00000000
+        - LayerList:
+          - CurrentOriginalValue:
+              valueInternal: 0
+            newKeyListSerialized: 00000000
+    - Name:
+        valueInternal: Evil
+      DrivenAnimatedObjectList:
+      - valueInternal:
+          Address: 0200000048000000
+          Length: 2
+      DrivenChannel:
+        valueInternal: 0
+      ScalingEnabled:
+        valueInternal: 0
+      ConstrainInput:
+        valueInternal: 1
+      DriverMin:
+        valueInternal: 0
+      DriverMax:
+        valueInternal: 100
+      DrivenMin:
+        valueInternal: 0
+      DrivenMax:
+        valueInternal: 1
+      Mode:
+        valueInternal: 1
+      PropertyPath:
+        valueInternal: blendShape.Evil
+      PropertyType:
+        valueInternal: UnityEngine.SkinnedMeshRenderer, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Preview:
+        valueInternal: 1
+      CustomPropertySelected:
+        valueInternal: 0
+      CustomPropertyChannel:
+        CurrentValue:
+          valueInternal: 0
+        ReferencePoseValue:
+          valueInternal: 0
+        PoseValueList: []
+        ChannelPerClipList:
+        - LayerList:
+          - CurrentOriginalValue:
+              valueInternal: 0
+            newKeyListSerialized: 00000000
+        - LayerList:
+          - CurrentOriginalValue:
+              valueInternal: 0
+            newKeyListSerialized: 00000000
+    - Name:
+        valueInternal: Tongue
+      DrivenAnimatedObjectList:
+      - valueInternal:
+          Address: 0200000048000000
+          Length: 2
+      DrivenChannel:
+        valueInternal: 0
+      ScalingEnabled:
+        valueInternal: 0
+      ConstrainInput:
+        valueInternal: 1
+      DriverMin:
+        valueInternal: 0
+      DriverMax:
+        valueInternal: 100
+      DrivenMin:
+        valueInternal: 0
+      DrivenMax:
+        valueInternal: 1
+      Mode:
+        valueInternal: 1
+      PropertyPath:
+        valueInternal: blendShape.Tongue
+      PropertyType:
+        valueInternal: UnityEngine.SkinnedMeshRenderer, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Preview:
+        valueInternal: 1
+      CustomPropertySelected:
+        valueInternal: 0
+      CustomPropertyChannel:
+        CurrentValue:
+          valueInternal: 0
+        ReferencePoseValue:
+          valueInternal: 0
+        PoseValueList: []
+        ChannelPerClipList:
+        - LayerList:
+          - CurrentOriginalValue:
+              valueInternal: 0
+            newKeyListSerialized: 00000000
+        - LayerList:
+          - CurrentOriginalValue:
+              valueInternal: 0
+            newKeyListSerialized: 00000000
   - TransformPath:
       valueInternal: Armature/Hips/Spine/Chest/Neck/Head/Eye_L
     Type:
@@ -19766,6 +19996,275 @@ MonoBehaviour:
               Length: 0
           newKeyListSerialized: 00000000
     CustomPropertyList: []
+  - TransformPath:
+      valueInternal: Body
+    Type:
+      valueInternal: 0
+    IsHumanBone:
+      valueInternal: 0
+    HumanBodyBone:
+      valueInternal: 0
+    Visibility:
+      valueInternal: 2
+    ParentLinkStyle:
+      valueInternal: 0
+    VisualizationTransformShape:
+      valueInternal: 0
+    VisualizationSize:
+      valueInternal: 1
+    SiblingOnOtherSide:
+      valueInternal:
+        Address: 
+        Length: 0
+    TransformPropsEnabledMask:
+      valueInternal: -1
+    LocalPositionSelected:
+      valueInternal: 0
+    LocalPositionChannelList:
+    - CurrentValue:
+        valueInternal: 0.0000000033876009
+      ReferencePoseValue:
+        valueInternal: 0.0000000033876009
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0.0000000033876009
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0.0000000056438134
+      ReferencePoseValue:
+        valueInternal: 0.0000000056438134
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0.0000000056438134
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0.0000000010803342
+      ReferencePoseValue:
+        valueInternal: 0.0000000010803342
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0.0000000010803342
+          newKeyListSerialized: 00000000
+    LocalRotationSelected:
+      valueInternal: 0
+    RotationModePerClip:
+    - valueInternal: 0
+    - valueInternal: 0
+    LocalRotationChannelList:
+    - CurrentValue:
+        valueInternal: 0.00000013795702
+      ReferencePoseValue:
+        valueInternal: 0.00000013795702
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0.00000013795702
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0.7071068
+      ReferencePoseValue:
+        valueInternal: 0.7071068
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0.7071068
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0.70710677
+      ReferencePoseValue:
+        valueInternal: 0.70710677
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0.70710677
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: -0.00000013740053
+      ReferencePoseValue:
+        valueInternal: -0.00000013740053
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: -0.00000013740053
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    LocalScaleSelected:
+      valueInternal: 0
+    LocalScaleChannelList:
+    - CurrentValue:
+        valueInternal: 100.00004
+      ReferencePoseValue:
+        valueInternal: 100.00004
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 100.00004
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 100
+      ReferencePoseValue:
+        valueInternal: 100
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 100
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 100.00004
+      ReferencePoseValue:
+        valueInternal: 100.00004
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 100.00004
+          newKeyListSerialized: 00000000
+    IkEnable:
+      valueInternal: 0
+    IkTarget:
+      valueInternal:
+        Address: 
+        Length: 0
+    IkPoleTarget:
+      valueInternal:
+        Address: 
+        Length: 0
+    IkChainLength:
+      valueInternal: 2
+    IkChainMask:
+      valueInternal: 2147483647
+    IkReferenceMode:
+      valueInternal: 0
+    IkTargetRotationMode:
+      valueInternal: 0
+    IkPlaneAngleOffset:
+      valueInternal: 0
+    IkLegacyMode:
+      valueInternal: 1
+    IkFkBlendSelected:
+      valueInternal: 0
+    IkFkBlendChannel:
+      CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    IkPoleRotationSelected:
+      valueInternal: 0
+    IkPoleRotationChannel:
+      CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    ChildOfEnable:
+      valueInternal: 0
+    ChildOfIKPinning:
+      valueInternal: 0
+    ChildOfParentSelected:
+      valueInternal: 0
+    ChildOfParentChannel:
+      CurrentValue:
+        valueInternal:
+          Address: 
+          Length: 0
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal:
+              Address: 
+              Length: 0
+          newKeyListSerialized: 00000000
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal:
+              Address: 
+              Length: 0
+          newKeyListSerialized: 00000000
+    CustomPropertyList: []
   PoseList: []
   ClipList:
   - Settings:
@@ -19857,22 +20356,4 @@ MonoBehaviour:
         valueInternal: 0
       StopReturnToStart:
         valueInternal: 1
-    EventList:
-    - Frame:
-        valueInternal: 40
-      EventFunctionList:
-      - FuncName:
-          valueInternal: footstep
-        ParamType:
-          valueInternal: 2
-        ParamValue:
-          valueInternal: 0
-    - Frame:
-        valueInternal: 83
-      EventFunctionList:
-      - FuncName:
-          valueInternal: footstep
-        ParamType:
-          valueInternal: 2
-        ParamValue:
-          valueInternal: 0
+    EventList: []
