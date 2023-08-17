@@ -240,12 +240,18 @@ class ParentCatch : ParentBaseMovementState
             return new ParentIdle(parentData);
         }
 
-        Vector3 sphereCenter = gameObject.transform.position + Vector3.up + (gameObject.transform.forward);
+        Vector3 sphereCenter = gameObject.transform.position + Vector3.up + (gameObject.transform.forward)*0.5f;
 
-        if (Physics.CheckSphere(sphereCenter, 0.5f, 8))
+
+        Collider[] colliders = Physics.OverlapSphere(sphereCenter, 1f);
+
+        for (int i = 0; i < colliders.Length; i++)
         {
-            Debug.Log("Order has been restored");
-            GameScreenManager.EndGame(EndCondition.Catch);
+            if (colliders[i].gameObject.layer == 8)
+            {
+                Debug.Log("Order has been restored");
+                GameScreenManager.EndGame(EndCondition.Catch);
+            }
         }
 
         return this;

@@ -10,6 +10,7 @@ public class CameraManager : MonoBehaviour
 
     private Transform parent;
     private Transform child;
+    private Transform anchor;
 
     private Coroutine coroutine;
 
@@ -29,22 +30,23 @@ public class CameraManager : MonoBehaviour
     {
         this.parent = parent;
         this.child = child;
-        Transform anchor = new GameObject().transform;
+        anchor = new GameObject().transform;
         var tracker = anchor.gameObject.AddComponent<GameCharacterTracker>();
         tracker.Setup(parent, child);
         anchor.parent = transform;
         anchor.localPosition = Vector3.zero;
         anchor.localRotation = Quaternion.identity;
         anchor.parent = null;
-        coroutine = StartCoroutine(_TrackPlayers(anchor));
+        coroutine = StartCoroutine(_TrackPlayers());
     }
     public void EndTrackPlayers()
     {
+        Destroy(anchor);
         StopCoroutine(coroutine);
         coroutine = null;
     }
 
-    private IEnumerator _TrackPlayers(Transform anchor)
+    private IEnumerator _TrackPlayers()
     {
         while (true)
         {

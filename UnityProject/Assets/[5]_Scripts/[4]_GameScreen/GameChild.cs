@@ -82,7 +82,7 @@ class Idle: ChildState
 {
     public override ChildState UpdateState()
     {     
-        Debug.Log ("Idle");
+        //Debug.Log ("Idle");
         //Go to Run
         float horizontal = Input.GetAxis(inputDevice+" Horizontal");
         float vertical = Input.GetAxis(inputDevice+" Vertical");
@@ -122,7 +122,7 @@ class Run: ChildState
 { 
     public override ChildState UpdateState()
     {
-        Debug.Log ("Running");
+        //Debug.Log ("Running");
 
         //LollyPickUp();
 
