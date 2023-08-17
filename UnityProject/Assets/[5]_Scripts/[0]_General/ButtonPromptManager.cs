@@ -39,24 +39,31 @@ public class ButtonPromptManager : MonoBehaviour
       if (hintName!="")
       {
          Sprite hintSprite = GameData.GetData<ButtonPromptAsssets>("ButtonPromptAssets").GetHintSpriteByName(hintName);
-         ShowPrompt(target,buttonName,hintSprite, out canvasHolder,new Vector2(instance.hintOffsetX,instance.hintOffsetY), 3);
+         ShowPrompt(target,buttonName,hintSprite, out canvasHolder,new Vector2(instance.hintOffsetX,instance.hintOffsetY), 3,canvasHolder.transform);
       }
 
    }
 
-   static void ShowPrompt(Transform target,string buttonName,Sprite sprite, out GameObject canvasHolder, Vector2 offset, float scale = 1f)
+   static void ShowPrompt(Transform target,string buttonName,Sprite sprite, out GameObject canvasHolder, Vector2 offset, float scale = 1f,Transform canvasParent = null)
    {
       
-      //Set up Canvas
-      canvasHolder = new GameObject("ButtonPromptCanvas: "+ buttonName);
-      Canvas canvas =canvasHolder.AddComponent<Canvas>();
-      canvas.renderMode  = RenderMode.ScreenSpaceOverlay;
-      CanvasScaler canvasScaler  = canvasHolder.AddComponent<CanvasScaler>();
-      canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-      canvasScaler.referenceResolution =new Vector2(3840,2160);
+      if (canvasParent==null){
+         //Set up Canvas
+         canvasHolder = new GameObject("ButtonPromptCanvas: "+ buttonName);
+         Canvas canvas =canvasHolder.AddComponent<Canvas>();
+         canvas.renderMode  = RenderMode.ScreenSpaceOverlay;
+         CanvasScaler canvasScaler  = canvasHolder.AddComponent<CanvasScaler>();
+         canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+         canvasScaler.referenceResolution =new Vector2(3840,2160);
 
-      //Set Up Rect Transform
-      RectTransform rectTransform = canvasHolder.GetComponent<RectTransform>();
+
+         //Set Up Rect Transform
+         RectTransform rectTransform = canvasHolder.GetComponent<RectTransform>();
+      }
+      else
+      {
+         canvasHolder = canvasParent.gameObject;
+      }
 
       //Add Sprite
       GameObject spriteHolder = new GameObject(buttonName);

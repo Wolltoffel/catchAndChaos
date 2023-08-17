@@ -12,9 +12,8 @@ enum Bumper
 
 public class CharacterCustomSelectable: CustomSelectable
 {
-    [Header ("Buttons")]
-    [SerializeField] Button previousButton;
-    [SerializeField] Button nextButton;
+
+    [SerializeField]CharacterSelectButtonSwitcher buttonSwitcher;
 
     string inputDevice;
     bool activeController;
@@ -23,8 +22,12 @@ public class CharacterCustomSelectable: CustomSelectable
 
     protected override void Start()
     {
-        previousButton.onClick.AddListener (()=> Switch(Step.Prev));
-        nextButton.onClick.AddListener (()=> Switch(Step.Next));
+        buttonSwitcher.prev.GetButton(InputDevice.Keyboard).onClick.AddListener (()=> Switch(Step.Prev));
+        buttonSwitcher.prev.GetButton(InputDevice.Controller).onClick.AddListener (()=> Switch(Step.Prev));
+
+        buttonSwitcher.next.GetButton(InputDevice.Keyboard).onClick.AddListener (()=> Switch(Step.Next));
+        buttonSwitcher.next.GetButton(InputDevice.Controller).onClick.AddListener (()=> Switch(Step.Next));
+
         interactable = false;
     }
 

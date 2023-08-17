@@ -9,6 +9,5 @@ public class ButtonAddition : MonoBehaviour, IPointerEnterHandler
     {
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(gameObject);
-        Debug.Log ("Testssesa");
     }
 }

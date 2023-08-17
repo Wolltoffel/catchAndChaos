@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class LastInputDeviceData: Object
 {
-    InputDevice inputDevice;
+    public readonly InputDevice inputDevice;
 
     public LastInputDeviceData(InputDevice inputDevice)
     {
