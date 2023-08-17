@@ -20,7 +20,7 @@ MonoBehaviour:
     PoseToolPivotMode:
       valueInternal: 0
     PoseToolMode:
-      valueInternal: 0
+      valueInternal: 1
     PoseMirrorMode:
       valueInternal: 0
     ConfigMode:
@@ -145,7 +145,7 @@ MonoBehaviour:
     AnimWindowSyncFrameOffset:
       valueInternal: 0
     RotationToolAssistantMode:
-      valueInternal: 0
+      valueInternal: 1
   Settings:
     RigType:
       valueInternal: 1
@@ -348,34 +348,34 @@ MonoBehaviour:
       valueInternal: 0
     LocalScaleChannelList:
     - CurrentValue:
-        valueInternal: 3.5
+        valueInternal: 1
       ReferencePoseValue:
-        valueInternal: 3.5
+        valueInternal: 1
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: 3.5
+            valueInternal: 1
           newKeyListSerialized: 00000000
     - CurrentValue:
-        valueInternal: 3.5
+        valueInternal: 1
       ReferencePoseValue:
-        valueInternal: 3.5
+        valueInternal: 1
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: 3.5
+            valueInternal: 1
           newKeyListSerialized: 00000000
     - CurrentValue:
-        valueInternal: 3.5
+        valueInternal: 1
       ReferencePoseValue:
-        valueInternal: 3.5
+        valueInternal: 1
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: 3.5
+            valueInternal: 1
           newKeyListSerialized: 00000000
     IkEnable:
       valueInternal: 0
@@ -715,45 +715,45 @@ MonoBehaviour:
     - valueInternal: 0
     LocalRotationChannelList:
     - CurrentValue:
-        valueInternal: 0.7071068
+        valueInternal: -0.00000019424023
       ReferencePoseValue:
         valueInternal: 0.7071068
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: 0.7071068
-          newKeyListSerialized: 03000000000000000000f404353f0000000000000000abaaaa3eabaaaa3e44010000008d00000000f404353f0000000000000000abaaaa3eabaaaa3e44010000001701000000f404353f0000000000000000abaaaa3eabaaaa3e44010000
+            valueInternal: -0.00000019424023
+          newKeyListSerialized: 02000000000000000000599050b40000000000000000abaaaa3eabaaaa3e44010000001701000000599050b40000000000000000abaaaa3eabaaaa3e44010000
     - CurrentValue:
-        valueInternal: -0.00000008429367
+        valueInternal: -0.7071072
       ReferencePoseValue:
         valueInternal: -0.00000008429367
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: -0.00000008429367
-          newKeyListSerialized: 03000000000000000000ef04b5b30000000000000000abaaaa3eabaaaa3e44010000008d00000000ef04b5b30000000000000000abaaaa3eabaaaa3e44010000001701000000ef04b5b30000000000000000abaaaa3eabaaaa3e44010000
+            valueInternal: -0.7071072
+          newKeyListSerialized: 02000000000000000000fa0435bf0000000000000000abaaaa3eabaaaa3e44010000001701000000fa0435bf0000000000000000abaaaa3eabaaaa3e44010000
     - CurrentValue:
-        valueInternal: -0.0000000842937
+        valueInternal: -0.7071073
       ReferencePoseValue:
         valueInternal: -0.0000000842937
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: -0.0000000842937
-          newKeyListSerialized: 03000000000000000000f404b5b30000000000000000abaaaa3eabaaaa3e44010000008d00000000f404b5b30000000000000000abaaaa3eabaaaa3e44010000001701000000f404b5b30000000000000000abaaaa3eabaaaa3e44010000
+            valueInternal: -0.7071073
+          newKeyListSerialized: 02000000000000000000fc0435bf0000000000000000abaaaa3eabaaaa3e44010000001701000000fc0435bf0000000000000000abaaaa3eabaaaa3e44010000
     - CurrentValue:
-        valueInternal: 0.7071067
+        valueInternal: -0.00000018916332
       ReferencePoseValue:
         valueInternal: 0.7071067
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: 0.7071067
-          newKeyListSerialized: 03000000000000000000f204353f0000000000000000abaaaa3eabaaaa3e44010000008d00000000f204353f0000000000000000abaaaa3eabaaaa3e44010000001701000000f204353f0000000000000000abaaaa3eabaaaa3e44010000
+            valueInternal: -0.00000018916332
+          newKeyListSerialized: 02000000000000000000d11c4bb40000000000000000abaaaa3eabaaaa3e44010000001701000000d11c4bb40000000000000000abaaaa3eabaaaa3e44010000
     - CurrentValue:
         valueInternal: 0
       ReferencePoseValue:
@@ -763,7 +763,7 @@ MonoBehaviour:
       - LayerList:
         - CurrentOriginalValue:
             valueInternal: 0
-          newKeyListSerialized: 03000000000000000000000000000000000000000000abaaaa3eabaaaa3e00000000008d00000000000000000000000000000000abaaaa3eabaaaa3e00000000001701000000000000000000000000000000abaaaa3eabaaaa3e00000000
+          newKeyListSerialized: 02000000000000000000000000000000000000000000abaaaa3eabaaaa3e00000000001701000000000000000000000000000000abaaaa3eabaaaa3e00000000
     LocalScaleSelected:
       valueInternal: 0
     LocalScaleChannelList:
@@ -15510,7 +15510,7 @@ MonoBehaviour:
   ClipList:
   - Settings:
       Name:
-        valueInternal: animMomIdle
+        valueInternal: animMomIdle2
       Framerate:
         valueInternal: 60
       Loop:
