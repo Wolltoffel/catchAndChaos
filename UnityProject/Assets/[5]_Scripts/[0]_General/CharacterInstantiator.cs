@@ -29,17 +29,18 @@ public class CharacterInstantiator : MonoBehaviour
             Destroy(child);
             characterData = childData;
             character = child = Instantiate(characterData.characterAssets.prefab);
+            character.transform.localScale = Vector3.one * _initialScale / 1.4f;
         }
         else
         {
             Destroy(parent);
             characterData = parentData;
             character = parent = Instantiate(characterData.characterAssets.prefab);
+            character.transform.localScale = Vector3.one * _initialScale;
 
         }
 
         character.transform.position = position;
-        character.transform.localScale = Vector3.one * _initialScale;
     }
 
     public static void InstantiateCharacter(Characters characterType, out GameObject character, Transform parentOfCharacter, bool addParentConstraint = false)

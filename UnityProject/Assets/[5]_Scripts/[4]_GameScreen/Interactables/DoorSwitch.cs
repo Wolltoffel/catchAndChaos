@@ -28,11 +28,13 @@ public class DoorSwitch : MonoBehaviour
 
         if (!isOpen)
         {
-            lTarget = leftDoorOrigin + Vector3.left * 1;
-            rTarget = rightDoorOrigin + Vector3.right * 1;
+            lTarget = leftDoorOrigin - transform.right * 1;
+            rTarget = rightDoorOrigin + transform.right * 1;
         }
 
         coroutine = StartCoroutine(ToggleDoor(leftDoor.transform.position,lTarget,rightDoor.transform.position,rTarget));
+
+        isOpen = !isOpen;
     }
 
     private IEnumerator ToggleDoor(Vector3 lStart, Vector3 lTarget, Vector3 rStart, Vector3 rTarget)
