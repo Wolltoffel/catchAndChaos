@@ -96,10 +96,18 @@ public class WaitForKeyInput: MenuState
                     dataPack.setInputDevices.Add (inputDevice);
                     //Set Input Device for Player
                     GameData.GetData<PlayerData>(dataPack.key).tempInputDevice = inputDevice; 
-                    dataPack.inputSelectUI.HideUI(dataPack.character);
+                    dataPack.inputSelectUI.HideAll(dataPack.character);
                     dataPack.characterSelectNavigation.ActivateCharacterSelection();
                     dataPack.backButton.SetScreenScreenToJumpTo(ScreenType.CharacterInputSelect);
                     return new CustomiseCharacter(dataPack);
+                }
+
+                for (int i = 0; i<dataPack.setInputDevices.Count;i++)
+                {
+                    if (dataPack.setInputDevices[i] == "K1")
+                        dataPack.inputSelectUI.Hide(InputSelectPrompt.K1,dataPack.character);
+                    else if (dataPack.setInputDevices[i] == "K2")
+                        dataPack.inputSelectUI.Hide(InputSelectPrompt.K2,dataPack.character);
                 }
 
             return this;

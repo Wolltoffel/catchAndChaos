@@ -45,8 +45,7 @@ public class ButtonPromptManager : MonoBehaviour
    }
 
    static void ShowPrompt(Transform target,string buttonName,Sprite sprite, out GameObject canvasHolder, Vector2 offset, float scale = 1f,Transform canvasParent = null)
-   {
-      
+   { 
       if (canvasParent==null)
       {
          //Set up Canvas
@@ -80,7 +79,6 @@ public class ButtonPromptManager : MonoBehaviour
       ButtonPrompt buttonPrompt = new ButtonPrompt(canvasHolder,coroutine,target);
       buttonPrompts.Add (buttonPrompt);
    }
-
    
    public static void RemoveButtonPrompt(GameObject spawnedObjet)
    {
@@ -89,8 +87,7 @@ public class ButtonPromptManager : MonoBehaviour
          if (buttonPrompts[i].instance == spawnedObjet)
          {
             DestroyButtonPrompt(buttonPrompts[i]);
-         }
-            
+         } 
       }
    }
 
