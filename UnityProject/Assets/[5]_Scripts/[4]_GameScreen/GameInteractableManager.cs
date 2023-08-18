@@ -68,7 +68,9 @@ public class InteractableContainer : Object
         for (int i = 1; i < interactable.objects.Count; i++)
         {
             Transform currentObj = interactable.objects[i].transform;
-            closestObject = Vector3.Distance(currentObj.position, position) < currentDistance ? interactable.objects[i] : closestObject;
+            float newDistance = Vector3.Distance(currentObj.position, position);
+            closestObject = newDistance < currentDistance ? interactable.objects[i] : closestObject;
+            currentDistance = newDistance < currentDistance ? newDistance : currentDistance;
         }
 
         return currentDistance > interactable.interactRange ? null : closestObject;
