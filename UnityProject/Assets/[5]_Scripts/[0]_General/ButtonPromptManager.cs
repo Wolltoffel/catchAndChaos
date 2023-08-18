@@ -32,9 +32,9 @@ public class ButtonPromptManager : MonoBehaviour
             Destroy(instance);
    }
 
-   public static void ShowButtonPrompt(Transform target,string buttonName,InputDevice inputDevice, out GameObject canvasHolder, string hintName = "")
+   public static void ShowButtonPrompt(Transform target,string buttonName, out GameObject canvasHolder, string hintName = "")
    {
-      Sprite buttonSprite = GameData.GetData<ButtonPromptAsssets>("ButtonPromptAssets").GetButtonSpriteByName(buttonName, inputDevice);
+      Sprite buttonSprite = GameData.GetData<ButtonPromptAsssets>("ButtonPromptAssets").GetButtonSpriteByName(buttonName);
       ShowPrompt(target,buttonName,buttonSprite, out canvasHolder,Vector2.zero, 1.5f);
       if (hintName!="")
       {
@@ -47,7 +47,8 @@ public class ButtonPromptManager : MonoBehaviour
    static void ShowPrompt(Transform target,string buttonName,Sprite sprite, out GameObject canvasHolder, Vector2 offset, float scale = 1f,Transform canvasParent = null)
    {
       
-      if (canvasParent==null){
+      if (canvasParent==null)
+      {
          //Set up Canvas
          canvasHolder = new GameObject("ButtonPromptCanvas: "+ buttonName);
          Canvas canvas =canvasHolder.AddComponent<Canvas>();
@@ -55,7 +56,6 @@ public class ButtonPromptManager : MonoBehaviour
          CanvasScaler canvasScaler  = canvasHolder.AddComponent<CanvasScaler>();
          canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
          canvasScaler.referenceResolution =new Vector2(3840,2160);
-
 
          //Set Up Rect Transform
          RectTransform rectTransform = canvasHolder.GetComponent<RectTransform>();
@@ -72,8 +72,9 @@ public class ButtonPromptManager : MonoBehaviour
       RectTransform spriteHolderRectTransform = spriteHolder.GetComponent<RectTransform>();
       spriteHolderRectTransform .SetParent(canvasHolder.transform);
       spriteHolderRectTransform.localScale = new Vector2(0.3f,0.3f);
+      if (canvasParent !=null)
+         spriteHolderRectTransform.rotation = Quaternion.Euler(0,0,8);
 
-      
       Coroutine coroutine = instance.StartCoroutine(AdjustPosition(spriteHolder,target,offset,scale));
       
       ButtonPrompt buttonPrompt = new ButtonPrompt(canvasHolder,coroutine,target);

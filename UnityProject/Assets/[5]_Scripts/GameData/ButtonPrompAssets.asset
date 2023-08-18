@@ -15,8 +15,30 @@ MonoBehaviour:
   key: ButtonPromptAssets
   controller:
   - buttonAsset: {fileID: 21300000, guid: bb2c91e85c086d240bb55f72b8f2fcc8, type: 3}
-    buttonName: A
-  keyboard: []
+    buttonName: JA
+  - buttonAsset: {fileID: 21300000, guid: 28b8794456912e94b96b1378c0c265aa, type: 3}
+    buttonName: JB
+  - buttonAsset: {fileID: 21300000, guid: 23320c9a16a41254bae64bc6ac5dc4f4, type: 3}
+    buttonName: JX
+  - buttonAsset: {fileID: 21300000, guid: c8b3667fe5ee7fa44ab51c66af506ec6, type: 3}
+    buttonName: JY
+  keyboard:
+  - buttonAsset: {fileID: 21300000, guid: fb974ec9ab83eb847838e890debbb572, type: 3}
+    buttonName: K1A
+  - buttonAsset: {fileID: 21300000, guid: c4ff66bba8b6c1a4cbb78448ffb0fe6d, type: 3}
+    buttonName: K1B
+  - buttonAsset: {fileID: 21300000, guid: ab22ed0cb2ad0b049bb8efec6de702f4, type: 3}
+    buttonName: K2X
+  - buttonAsset: {fileID: 0}
+    buttonName: K1Y
+  - buttonAsset: {fileID: 0}
+    buttonName: K2A
+  - buttonAsset: {fileID: 21300000, guid: f9a935c2c24607942a29380cfc1bfa25, type: 3}
+    buttonName: K2B
+  - buttonAsset: {fileID: 21300000, guid: c4a9aeb4032f1b44a8704b2939669ae9, type: 3}
+    buttonName: K2X
+  - buttonAsset: {fileID: 0}
+    buttonName: K2Y
   hints:
-  - hintSprite: {fileID: 21300000, guid: f52387999808e2f46b0aeb16c0905105, type: 3}
+  - hintSprite: {fileID: 21300000, guid: fe8d23d79f06fff4c8ec36785ffc40c4, type: 3}
     hintName: Vent

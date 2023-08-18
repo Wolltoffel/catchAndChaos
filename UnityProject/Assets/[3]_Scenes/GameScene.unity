@@ -495,7 +495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d154620e97dd25845811f11da7c73468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startScreen: 1
+  startScreen: 3
   mainMenu: {fileID: 8617863531841441982, guid: 90dee2eefa574c145bcd64903fe1bb60, type: 3}
   characterInputSelect: {fileID: 7166359736404755316, guid: 6291a8ad19791f2488cffe1ebcfd1aa9, type: 3}
   game: {fileID: 7166359736404755316, guid: a36fc94c2aeeba54586de3b615960a88, type: 3}
@@ -553,7 +553,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hintOffsetX: 0
-  hintOffsetY: -70
+  hintOffsetY: -60
 --- !u!114 &2128072746
 MonoBehaviour:
   m_ObjectHideFlags: 0

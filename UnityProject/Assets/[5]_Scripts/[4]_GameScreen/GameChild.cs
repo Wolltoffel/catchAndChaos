@@ -35,7 +35,7 @@ abstract class ChildState : State
         {    
           //Show ButtonPrompt  
           if (buttonPrompt==null)
-            ButtonPromptManager.ShowButtonPrompt(interactableObject.transform, "A",InputDevice.Controller,out buttonPrompt, "Vent");
+            ButtonPromptManager.ShowButtonPrompt(interactableObject.transform, inputDevice+ "B",out buttonPrompt, "Vent");
             Debug.Log ("Showing Button Prompt");
             if (Input.GetButtonDown(inputDevice+"B"))
             {
@@ -132,7 +132,6 @@ class Run: ChildState
         float horizontal = Input.GetAxis(inputDevice+" Horizontal");
         float vertical = Input.GetAxis(inputDevice+" Vertical");
         Vector2 inputVector = new Vector2(horizontal,vertical).normalized;
-        Debug.Log (inputDevice);
 
         if (horizontal==0 && vertical==0)
         {
