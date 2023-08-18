@@ -6,13 +6,13 @@ using TMPro;
 
 public class ScoreShower : MonoBehaviour
 {
-   [SerializeField]TextMeshProUGUI scoresTMP;
+   [SerializeField] TextMeshProUGUI scoresTMP;
     
 
     void Start()
     {
         if (scoresTMP== null)
-            scoresTMP.GetComponent<TextMeshProUGUI>();
+            scoresTMP = gameObject.GetComponent<TextMeshProUGUI>();
         ShowScores();
     }
 
