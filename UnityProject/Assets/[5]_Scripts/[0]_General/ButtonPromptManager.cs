@@ -108,7 +108,7 @@ public class ButtonPromptManager : MonoBehaviour
       while (spawnedSprite!=null)
       {
          Vector3 worldToScreenPoint =  Camera.main.WorldToScreenPoint(target.position);
-         Vector2 newPos = new Vector2(worldToScreenPoint.x+offset.x, worldToScreenPoint.y+offset.y);
+         Vector2 newPos = new Vector2(worldToScreenPoint.x+offset.x*Screen.width*0.001f, worldToScreenPoint.y+offset.y*Screen.height*0.001f);
          spawnedSprite.transform.position  = newPos;
          yield return null;
       }
