@@ -11,6 +11,7 @@ public class BetweenRoundsManager : MonoBehaviour
     void Awake()
     {
         GoToEndScreen();
+        nextRoundButton.onClick.AddListener(() => ScreenSwitcher.SwitchScreen(ScreenType.GameScreen));
     }
 
     void Update()
