@@ -32,10 +32,10 @@ abstract class ChildState : State
     protected ChildState Slide()
     {
         if (InteractableInRange("Vent", out GameObject interactableObject) )
-        {    
-          //Show ButtonPrompt  
-          if (buttonPrompt==null)
-            ButtonPromptManager.ShowButtonPrompt(interactableObject.transform, inputDevice+ "B",out buttonPrompt, "Vent");
+        {
+            //Show ButtonPrompt  
+            if (buttonPrompt==null)
+                ButtonPromptManager.ShowButtonPrompt(interactableObject.transform, inputDevice+ "B",out buttonPrompt, "Vent");
             Debug.Log ("Showing Button Prompt");
             if (Input.GetButtonDown(inputDevice+"B"))
             {
