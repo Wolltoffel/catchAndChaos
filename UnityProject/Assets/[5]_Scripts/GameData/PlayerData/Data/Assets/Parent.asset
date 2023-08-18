@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: ParentAssets
   characterPrefab:
-  - {fileID: 5877978423784432053, guid: 3a2cedcef0875a04aaa5128db27a23ca, type: 3}
+  - {fileID: 8718404004952688224, guid: 59783213437801748b4550b1ae7b2187, type: 3}
+  - {fileID: 7254725787889889937, guid: 534f1f679852ff54a915e2942d8eb93c, type: 3}
+  - {fileID: 3399598315241930163, guid: 834bc6cc9ffda154a818c1172f06c3ca, type: 3}

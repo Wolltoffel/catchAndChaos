@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: FrogOutfit
-  m_Shader: {fileID: 4800000, guid: be79950f393cf604aae4dee3590a87c1, type: 3}
+  m_Shader: {fileID: 4800000, guid: 74e6acc84fa10d447a2eacf26990a2a0, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
@@ -39,7 +39,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: c703a23a1d01799458b195183b4766d1, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3777b6f26f2bb3840aa7177cc16ab945, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
