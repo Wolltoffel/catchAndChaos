@@ -30,6 +30,10 @@ public class CameraManager : MonoBehaviour
     {
         this.parent = parent;
         this.child = child;
+        if (anchor != null)
+        {
+            EndTrackPlayers();
+        }
         anchor = new GameObject().transform;
         var tracker = anchor.gameObject.AddComponent<GameCharacterTracker>();
         tracker.Setup(parent, child);
@@ -42,8 +46,11 @@ public class CameraManager : MonoBehaviour
     public void EndTrackPlayers()
     {
         Destroy(anchor);
-        StopCoroutine(coroutine);
-        coroutine = null;
+        if (coroutine!= null)
+        {
+            StopCoroutine(coroutine);
+            coroutine = null;
+        }
     }
 
     private IEnumerator _TrackPlayers()

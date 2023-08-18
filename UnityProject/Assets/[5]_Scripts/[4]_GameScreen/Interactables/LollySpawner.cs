@@ -6,7 +6,7 @@ public class LollySpawner : MonoBehaviour
 {
     [SerializeField]GameObject lollyPrefab;
     [SerializeField]int amountOfLollys;
-    List <Vector3> spawnPositions = new List<Vector3>();
+    List <Transform> spawnPositions = new List<Transform>();
     
     public void Start()
     {
@@ -20,7 +20,7 @@ public class LollySpawner : MonoBehaviour
 
             for (int i = 0; i<spawnDummies.Length; i++)
             {
-                spawnPositions.Add (spawnDummies[i].transform.position);
+                spawnPositions.Add (spawnDummies[i].transform);
                 Destroy(spawnDummies[i]);
             }
     }
@@ -37,10 +37,11 @@ public class LollySpawner : MonoBehaviour
     {    
         //Get random transform
         int random = Random.Range(0,spawnPositions.Count);
-        Vector3 randomPos = spawnPositions[random];
-        spawnPositions.Remove(spawnPositions[random]);
+        Vector3 randomPos = spawnPositions[random].position;
 
         GameObject spawnedLolly =  Instantiate(lollyPrefab,randomPos,Quaternion.identity);
         spawnedLolly.transform.name = "LollyItem";
+        spawnedLolly.transform.parent = spawnPositions[random];
+        spawnPositions.Remove(spawnPositions[random]);
     }
 }
