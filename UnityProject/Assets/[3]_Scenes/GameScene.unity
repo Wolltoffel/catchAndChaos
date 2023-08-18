@@ -553,7 +553,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hintOffsetX: 0
-  hintOffsetY: -70
+  hintOffsetY: -60
 --- !u!114 &2128072746
 MonoBehaviour:
   m_ObjectHideFlags: 0

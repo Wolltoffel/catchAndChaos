@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using System.Text.RegularExpressions;
 
 public enum InputDevice
 {
@@ -34,8 +36,37 @@ public class ButtonPromptAsssets : StaticData
     {
         if (inputDevice == InputDevice.Controller)
             return SearchButtonList(name, controller).buttonAsset;
-        else if (inputDevice == InputDevice.Controller)
+        else if (inputDevice == InputDevice.Keyboard)
+        {   
             return SearchButtonList(name, keyboard).buttonAsset;
+        }
+            
+        else
+            throw new System.Exception ("No input device selected");      
+    }
+
+    public Sprite GetButtonSpriteByName (string inputDeviceAndButton)
+    {
+        char firstLetter = inputDeviceAndButton[0];
+        string searchkey  = "";
+        InputDevice inputDevice = InputDevice.Keyboard;
+
+        if (firstLetter == 'J')
+        {
+             inputDevice = InputDevice.Controller;
+             searchkey = RemoveNumbersFromString(inputDeviceAndButton);
+        }
+           
+        else if (firstLetter == 'K')
+        {
+            inputDevice = InputDevice.Keyboard;
+            searchkey = inputDeviceAndButton;
+        }
+            
+        if (inputDevice == InputDevice.Controller)
+            return SearchButtonList(searchkey, controller).buttonAsset;
+        else if (inputDevice == InputDevice.Keyboard)
+            return SearchButtonList(searchkey, keyboard).buttonAsset;
         else
             throw new System.Exception ("No input device selected");      
     }
@@ -63,6 +94,13 @@ public class ButtonPromptAsssets : StaticData
                 return hints[i];
         }
         return null;
+    }
+
+
+    public string RemoveNumbersFromString(string input)
+    {
+        string result = Regex.Replace(input, @"\d", "");
+        return result;
     }
     
 }
