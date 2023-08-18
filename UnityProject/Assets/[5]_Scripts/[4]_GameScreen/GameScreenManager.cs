@@ -26,9 +26,6 @@ public class GameScreenManager : MonoBehaviour
     private PlayTimeRemaining timeData;
     private GameInteractableManager interactableManager;
 
-    ////EndGame
-    //public static bool hasEnded;
-
     void Awake()
     {
         interactableManager = GetComponent<GameInteractableManager>();
@@ -58,9 +55,6 @@ public class GameScreenManager : MonoBehaviour
 
         //Set up time counter
         SetupTimeCounter();
-
-        //Time.timeScale = 1;
-        //hasEnded = false;
     }
 
     private void SpawnCharacters()
@@ -79,9 +73,10 @@ public class GameScreenManager : MonoBehaviour
 
     public static void EndGame(EndCondition condition)
     {
+
         switch (condition)
         {
-            case EndCondition.Catch | EndCondition.Time:
+            case EndCondition.Catch |EndCondition.Time:
                 GameData.GetData<PlayerData>("Parent").tempScore++;
                 break;
             case EndCondition.Chaos:
@@ -89,9 +84,9 @@ public class GameScreenManager : MonoBehaviour
                 break;
         }
 
-        ScreenSwitcher.AddScreen(ScreenType.ScoreInterim);
+        ScreenSwitcher.SwitchScreen(ScreenType.ScoreInterim);
 
-        //Time.timeScale = 0;
+
     }
 
     #region Timecounter

@@ -32,11 +32,14 @@ abstract class ChildState : State
     protected ChildState Slide()
     {
         if (InteractableInRange("Vent", out GameObject interactableObject) )
-        {
-            //Show ButtonPrompt  
-            if (buttonPrompt==null)
-                ButtonPromptManager.ShowButtonPrompt(interactableObject.transform, inputDevice+ "B",out buttonPrompt, "Vent");
-            Debug.Log ("Showing Button Prompt");
+        {    
+          //Show ButtonPrompt  
+          if (buttonPrompt==null)
+            ButtonPromptManager.ShowButtonPrompt(interactableObject.transform, inputDevice+ "B",out buttonPrompt, "Vent");
+            //Open Vent
+            float ventValue = interactableObject.GetComponentInChildren<SkinnedMeshRenderer>().GetBlendShapeWeight(0);
+            
+            
             if (Input.GetButtonDown(inputDevice+"B"))
             {
                 //Remove Button Prompt
@@ -58,6 +61,22 @@ abstract class ChildState : State
         }
         return null;
     }
+
+  
+     protected IEnumerator SetVentValue(float currentScale, float targetScale, GameObject interactableObject)
+     {
+        // Smoothly scales the Button
+        float startScale = currentScale;
+        float startTime = Time.time;
+
+        while (Mathf.Abs(currentScale-targetScale) > 0.01f)
+        {
+            float t = (Time.time - startTime) / 0.4f;
+            currentScale = Mathf.Lerp(currentScale, targetScale, t);
+            interactableObject.GetComponentInChildren<SkinnedMeshRenderer>().SetBlendShapeWeight(0, currentScale);
+            yield return null;
+        }
+      }
 
     protected void LollyPickUp()
     {

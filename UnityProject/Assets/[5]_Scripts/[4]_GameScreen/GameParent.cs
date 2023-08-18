@@ -236,14 +236,15 @@ class ParentCatch : ParentBaseMovementState
 
         Vector3 sphereCenter = gameObject.transform.position + Vector3.up + (gameObject.transform.forward)*0.5f;
 
+
         Collider[] colliders = Physics.OverlapSphere(sphereCenter, 1f);
 
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].gameObject.layer == 8)
             {
-                movement.StopCatch();
-                return new ParentWin(parentData);
+                Debug.Log("Order has been restored");
+                GameScreenManager.EndGame(EndCondition.Catch);
             }
         }
 
@@ -270,23 +271,6 @@ class ParentThrow : ParentBaseMovementState
             parentData.plushie = null;
             return new ParentIdle(parentData);
         }
-        return this;
-    }
-}
-
-class ParentWin : ParentBaseMovementState
-{
-    public ParentWin(ParentData data) : base(data)
-    {
-        gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Parent);
-        gameObject.GetComponent<Animator>().SetInteger("MomIndex", 7);
-
-        Debug.Log("Order has been restored");
-        GameScreenManager.EndGame(EndCondition.Catch);
-    }
-
-    public override ParentBaseMovementState UpdateState()
-    {
         return this;
     }
 }
