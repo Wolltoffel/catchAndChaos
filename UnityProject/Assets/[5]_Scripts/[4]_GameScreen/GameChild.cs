@@ -10,15 +10,15 @@ public class GameChild : MonoBehaviour
         childState = new Idle();
     }
 
-    void  Update()
+    void Update()
     {
-        if (Time.timeScale!=0)
+        if (Time.timeScale != 0)
             childState = childState.UpdateState();
     }
 }
 
 abstract class ChildState : State
-{   
+{
     protected string inputDevice = GameData.GetData<ChildData>("Child").tempInputDevice;
     public abstract ChildState UpdateState();
 
@@ -31,28 +31,27 @@ abstract class ChildState : State
 
     protected ChildState Slide()
     {
-        if (InteractableInRange("Vent", out GameObject interactableObject) )
-        {    
-          //Show ButtonPrompt  
-          if (buttonPrompt==null)
-            ButtonPromptManager.ShowButtonPrompt(interactableObject.transform, inputDevice+ "B",out buttonPrompt, "Vent");
+        if (InteractableInRange("Vent", out GameObject interactableObject))
+        {
+            //Show ButtonPrompt  
+            if (buttonPrompt == null)
+                ButtonPromptManager.ShowButtonPrompt(interactableObject.transform, inputDevice + "B", out buttonPrompt, "Vent");
             //Open Vent
             float ventValue = interactableObject.GetComponentInChildren<SkinnedMeshRenderer>().GetBlendShapeWeight(0);
             
-            
-            if (Input.GetButtonDown(inputDevice+"B"))
-            {
+             if (Input.GetButtonDown(inputDevice + "B"))
+             {
                 //Remove Button Prompt
                 ButtonPromptManager.RemoveButtonPrompt(buttonPrompt);
                 buttonPrompt = null;
 
                 //Handle Animations & Movement
-                Debug.Log ("Going through vent");
+                Debug.Log("Going through vent");
                 gameObject.GetComponent<MovementScript>().DoSlide(interactableObject);
-                gameObject.GetComponent<Animator>().SetInteger("ChildIndex",4);
-                
+                gameObject.GetComponent<Animator>().SetInteger("ChildIndex", 4);
+
                 return new Slide();
-            }    
+            }
         }
         else
         {
@@ -62,25 +61,9 @@ abstract class ChildState : State
         return null;
     }
 
-  
-     protected IEnumerator SetVentValue(float currentScale, float targetScale, GameObject interactableObject)
-     {
-        // Smoothly scales the Button
-        float startScale = currentScale;
-        float startTime = Time.time;
-
-        while (Mathf.Abs(currentScale-targetScale) > 0.01f)
-        {
-            float t = (Time.time - startTime) / 0.4f;
-            currentScale = Mathf.Lerp(currentScale, targetScale, t);
-            interactableObject.GetComponentInChildren<SkinnedMeshRenderer>().SetBlendShapeWeight(0, currentScale);
-            yield return null;
-        }
-      }
-
     protected void LollyPickUp()
     {
-         //Lolly PickUp
+        //Lolly PickUp
         /*if (InteractableInRange("Lolly", out GameObject interactableObject) )
         {   
             //Show Buttonprompt
@@ -99,19 +82,19 @@ abstract class ChildState : State
             return null;
     }
 
-    
+
 }
 
-class Idle: ChildState
+class Idle : ChildState
 {
     public override ChildState UpdateState()
-    {     
+    {
         //Debug.Log ("Idle");
         //Go to Run
-        float horizontal = Input.GetAxis(inputDevice+" Horizontal");
-        float vertical = Input.GetAxis(inputDevice+" Vertical");
-        
-        if (horizontal!=0 || vertical!=0)
+        float horizontal = Input.GetAxis(inputDevice + " Horizontal");
+        float vertical = Input.GetAxis(inputDevice + " Vertical");
+
+        if (horizontal != 0 || vertical != 0)
         {
             return new Run();
         }
@@ -120,54 +103,54 @@ class Idle: ChildState
 
         //Slide
         ChildState slide = Slide();
-        if (slide!=null)
+        if (slide != null)
             return slide;
 
         //Stunned
         ChildState stunned = Stunned();
-        if (stunned!=null)
+        if (stunned != null)
             return stunned;
 
         //Destroy Object
-/*        if (InteractableInRange("Slidable", out GameObject interactableObject) )
-        {   
-            //Show Buttonprompt
-            if (Input.GetButtonDown(inputDevice+"X"))
-                return new Destroy();
-        }*/
+        /*        if (InteractableInRange("Slidable", out GameObject interactableObject) )
+                {   
+                    //Show Buttonprompt
+                    if (Input.GetButtonDown(inputDevice+"X"))
+                        return new Destroy();
+                }*/
 
-        gameObject.GetComponent<Animator>().SetInteger("ChildIndex",0);
+        gameObject.GetComponent<Animator>().SetInteger("ChildIndex", 0);
         return this;
-        
+
     }
 }
 
-class Run: ChildState
-{ 
+class Run : ChildState
+{
     public override ChildState UpdateState()
     {
         //LollyPickUp();
 
-        float horizontal = Input.GetAxis(inputDevice+" Horizontal");
-        float vertical = Input.GetAxis(inputDevice+" Vertical");
-        Vector2 inputVector = new Vector2(horizontal,vertical).normalized;
+        float horizontal = Input.GetAxis(inputDevice + " Horizontal");
+        float vertical = Input.GetAxis(inputDevice + " Vertical");
+        Vector2 inputVector = new Vector2(horizontal, vertical).normalized;
 
-        if (horizontal==0 && vertical==0)
+        if (horizontal == 0 && vertical == 0)
         {
             return new Idle();
         }
-        
+
 
         GameObject gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Child);
         gameObject.GetComponent<MovementScript>().MovePlayer(inputVector.x, inputVector.y);
-        gameObject.GetComponent<Animator>().SetInteger("ChildIndex",1);
+        gameObject.GetComponent<Animator>().SetInteger("ChildIndex", 1);
 
         //Slide
         ChildState slide = Slide();
-        if (slide!=null)
+        if (slide != null)
             return slide;
 
-        
+
         //Stunned
         /*ChildState stunned = Stunned();
         if (stunned!=null)
@@ -178,7 +161,7 @@ class Run: ChildState
     }
 }
 
-class Slide: ChildState
+class Slide : ChildState
 {
     private MovementScript movement;
 
@@ -191,38 +174,38 @@ class Slide: ChildState
     {
         if (movement.IsCoroutineDone)
             return new Idle();
-       
+
         return this;
     }
 }
 
-class Destroy: ChildState
+class Destroy : ChildState
 {
     public override ChildState UpdateState()
     {
-        bool destroyOver= false; //ask from movement whether slide is over
+        bool destroyOver = false; //ask from movement whether slide is over
         if (destroyOver)
             return new Idle();
-    
+
         //Stunned
         ChildState stunned = Stunned();
-        if (stunned!=null)
+        if (stunned != null)
             return stunned;
-        
+
         return this;
-    } 
+    }
 }
 
-class Stunned: ChildState
+class Stunned : ChildState
 {
     public override ChildState UpdateState()
     {
         float stunTime = GameData.GetData<ChildData>("ChildData").stunTime;
         float timer = Time.time;
 
-        if (Time.time-timer >= stunTime)
+        if (Time.time - timer >= stunTime)
             return new Idle();
-        
+
         return this;
     }
 }
