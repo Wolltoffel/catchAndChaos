@@ -23,6 +23,7 @@ abstract class ChildState : State
     public abstract ChildState UpdateState();
 
     static GameObject buttonPrompt;
+    protected static GameObject lastVentInRange;
 
     public ChildState()
     {
@@ -31,13 +32,20 @@ abstract class ChildState : State
 
     protected ChildState Slide()
     {
-        if (InteractableInRange("Vent", out GameObject interactableObject))
+        bool interactableInRange = InteractableInRange("Vent", out GameObject interactableObject);
+        if (interactableInRange)
         {
+            lastVentInRange = interactableObject;
+
             //Show ButtonPrompt  
             if (buttonPrompt == null)
                 ButtonPromptManager.ShowButtonPrompt(interactableObject.transform, inputDevice + "B", out buttonPrompt, "Vent");
-            //Open Vent
-            float ventValue = interactableObject.GetComponentInChildren<SkinnedMeshRenderer>().GetBlendShapeWeight(0);
+            //Toogle Vent
+            VentRollup ventRollup = interactableObject.GetComponent<VentRollup>();
+            if (ventRollup == null)
+                ventRollup = interactableObject.AddComponent<VentRollup>();
+            Debug.Log("Opening Vent");
+            ventRollup.OpenVent();
             
              if (Input.GetButtonDown(inputDevice + "B"))
              {
@@ -51,10 +59,15 @@ abstract class ChildState : State
                 gameObject.GetComponent<Animator>().SetInteger("ChildIndex", 4);
 
                 return new Slide();
-            }
+               }
         }
         else
         {
+            if (lastVentInRange!=null)
+            {
+                lastVentInRange.GetComponent<VentRollup>().CloseVent();
+            }
+            
             ButtonPromptManager.RemoveButtonPrompt(buttonPrompt);
             buttonPrompt = null;
         }
@@ -168,13 +181,19 @@ class Slide : ChildState
     public Slide()
     {
         movement = CharacterInstantiator.GetActiveCharacter(Characters.Child).GetComponent<MovementScript>();
+
     }
 
     public override ChildState UpdateState()
     {
         if (movement.IsCoroutineDone)
+        {
+            VentRollup ventRollUp = lastVentInRange.GetComponent<VentRollup>();
+            ventRollUp.CloseVent();
+            GameObject.Destroy(ventRollUp);
             return new Idle();
-
+        }
+            
         return this;
     }
 }

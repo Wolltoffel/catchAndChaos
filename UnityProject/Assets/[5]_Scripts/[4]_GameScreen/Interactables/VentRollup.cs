@@ -7,23 +7,17 @@ public class VentRollup : MonoBehaviour
 {
 
     SkinnedMeshRenderer skinnedMeshRenderer;
-    bool isOpen;
+    public bool isOpen;
     Coroutine coroutine;
     private void Awake()
     {
         skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
-    }
-
-    void SetUpObjects() 
-    {
-        float ventValue = skinnedMeshRenderer.GetBlendShapeWeight(0);
+        if (skinnedMeshRenderer.GetBlendShapeWeight(0) >= 100)
+            isOpen = true;
     }
 
     IEnumerator SetVentValue(float currentScale, float targetScale)
     {
-        if (coroutine != null)
-            StopCoroutine(coroutine);
-
         float startScale = currentScale;
         float startTime = Time.time;
 
@@ -34,19 +28,33 @@ public class VentRollup : MonoBehaviour
             skinnedMeshRenderer.SetBlendShapeWeight(0, currentScale);
             yield return null;
         }
+        coroutine = null;
+        yield return null;
     }
 
-    public void Toogle() 
-    { 
+    public void CloseVent()
+    {
         if (isOpen)
         {
-            coroutine = StartCoroutine(SetVentValue(skinnedMeshRenderer.GetBlendShapeWeight(0), 100));
-        }
-        else
-        {
+            if (coroutine != null)
+                StopCoroutine(coroutine);
             coroutine = StartCoroutine(SetVentValue(skinnedMeshRenderer.GetBlendShapeWeight(0), 0));
         }
+            
+        isOpen = false;
+    }
 
-        isOpen = !isOpen;
+    public void OpenVent()
+    {
+
+        if (!isOpen)
+        {
+            if (coroutine != null)
+                StopCoroutine(coroutine);
+
+            coroutine = StartCoroutine(SetVentValue(skinnedMeshRenderer.GetBlendShapeWeight(0), 100));
+        }
+            
+        isOpen = true;
     }
 }
