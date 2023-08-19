@@ -12,13 +12,13 @@ public class GameUIManager : MonoBehaviour
     [SerializeField] private ChaosMeterUI chaosMeter;
     [SerializeField] private TimeCounterUI timeCounter;
 
-    private PlayTimeRemaining timeData;
+    private PlayTimeData timeData;
     private ChaosData chaosData;
     private ChildData childData;
 
     private void Awake()
     {
-        timeData = GameData.GetData<PlayTimeRemaining>("PlayTimeRemaining");
+        timeData = GameData.GetData<PlayTimeData>("PlayTimeData");
         chaosData = GameData.GetData<ChaosData>("ChaosData");
         childData = GameData.GetData<ChildData>("Child");
     }

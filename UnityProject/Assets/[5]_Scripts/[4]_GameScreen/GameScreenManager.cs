@@ -23,7 +23,7 @@ public class GameScreenManager : MonoBehaviour
 
     //Data
     private ChaosData chaosData;
-    private PlayTimeRemaining timeData;
+    private PlayTimeData timeData;
     private GameInteractableManager interactableManager;
 
     void Awake()
@@ -50,7 +50,7 @@ public class GameScreenManager : MonoBehaviour
 
         //Gets data needed for game
         chaosData = GameData.GetData<ChaosData>("ChaosData");
-        timeData = GameData.GetData<PlayTimeRemaining>("PlayTimeRemaining");
+        timeData = GameData.GetData<PlayTimeData>("PlayTimeData");
         chaosData.ResetValues();
 
         //Set up time counter
@@ -84,7 +84,9 @@ public class GameScreenManager : MonoBehaviour
                 break;
         }
 
-        ScreenSwitcher.SwitchScreen(ScreenType.ScoreInterim);
+        //stopTime
+
+        ScreenSwitcher.AddScreen(ScreenType.ScoreInterim);
 
 
     }

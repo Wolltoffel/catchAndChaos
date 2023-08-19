@@ -34,6 +34,23 @@ abstract class ParentBaseMovementState : State
 
     public abstract ParentBaseMovementState UpdateState();
 
+    protected bool CheckIfGameOver(out ParentBaseMovementState state)
+    {
+        PlayTimeData data = GameData.GetData<PlayTimeData>("PlayTimeData");
+        if (data.HasGameEnded)
+        {
+            if (data.hasChildWon)
+            {
+                state = new ParentLose(parentData);
+                return true;
+            }
+            state = new ParentWin(parentData);
+            return true;
+        }
+        state = this;
+        return false;
+    }
+
     protected void CheckDoorToggle(string inputDevice)
     {
         GameObject interactable;
@@ -130,6 +147,9 @@ class ParentIdle : ParentBaseMovementState
 
     public override ParentBaseMovementState UpdateState()
     {
+        if (CheckIfGameOver(out ParentBaseMovementState state))
+            return state;
+
         string inputDevice = parentData.tempInputDevice;
         float xAxis;
         float yAxis;
@@ -179,6 +199,9 @@ class ParentMovement : ParentBaseMovementState
 
     public override ParentBaseMovementState UpdateState()
     {
+        if (CheckIfGameOver(out ParentBaseMovementState state))
+            return state;
+
         string inputDevice = parentData.tempInputDevice;
         float xAxis;
         float yAxis;
@@ -243,8 +266,8 @@ class ParentCatch : ParentBaseMovementState
         {
             if (colliders[i].gameObject.layer == 8)
             {
-                Debug.Log("Order has been restored");
-                GameScreenManager.EndGame(EndCondition.Catch);
+                movement.StopCatch();
+                return new ParentWin(parentData);
             }
         }
 
@@ -271,6 +294,34 @@ class ParentThrow : ParentBaseMovementState
             parentData.plushie = null;
             return new ParentIdle(parentData);
         }
+        return this;
+    }
+}
+
+class ParentWin : ParentBaseMovementState
+{
+    public ParentWin(ParentData data) : base(data)
+    {
+        gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Parent);
+        gameObject.GetComponent<Animator>().SetInteger("MomIndex", 7);
+    }
+
+    public override ParentBaseMovementState UpdateState()
+    {
+        return this;
+    }
+}
+
+class ParentLose : ParentBaseMovementState
+{
+    public ParentLose(ParentData data) : base(data)
+    {
+        gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Parent);
+        gameObject.GetComponent<Animator>().SetInteger("MomIndex", 6);
+    }
+
+    public override ParentBaseMovementState UpdateState()
+    {
         return this;
     }
 }
