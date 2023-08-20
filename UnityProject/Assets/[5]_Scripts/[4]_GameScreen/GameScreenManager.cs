@@ -83,7 +83,6 @@ public class GameScreenManager : MonoBehaviour
                 GameData.GetData<PlayerData>("Child").tempScore++;
                 break;
         }
-
         ScreenSwitcher.AddScreen(ScreenType.ScoreInterim);
 
 

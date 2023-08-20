@@ -33,6 +33,5 @@ public class BetweenRoundsManager : MonoBehaviour
         {
             //Activate Endscreen
         }
-        
     }
 }
