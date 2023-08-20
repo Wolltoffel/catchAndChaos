@@ -11,6 +11,7 @@ public class CharacterSelectButtonSwitcher : ButtonSwitcher
     {
         buttons.Add (prev);
         buttons.Add(next);
+        SwitchButtons();
     }
 
     Button GetActiveSelector(Bumper bumper)

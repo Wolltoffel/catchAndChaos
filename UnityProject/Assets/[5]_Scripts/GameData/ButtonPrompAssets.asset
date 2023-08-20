@@ -42,3 +42,5 @@ MonoBehaviour:
   hints:
   - hintSprite: {fileID: 21300000, guid: fe8d23d79f06fff4c8ec36785ffc40c4, type: 3}
     hintName: Vent
+  - hintSprite: {fileID: 21300000, guid: ed0884f16145a8345aa25ac42c3903f3, type: 3}
+    hintName: Lolly

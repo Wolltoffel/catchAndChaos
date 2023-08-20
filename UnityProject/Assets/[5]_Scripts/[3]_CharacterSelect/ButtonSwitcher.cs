@@ -69,7 +69,7 @@ public class ButtonSwitcher : MonoBehaviour
         }
     }
 
-    void SwitchButtons()
+    protected void SwitchButtons()
     {
         for (int i = 0; i < buttons.Count; i++)
         {

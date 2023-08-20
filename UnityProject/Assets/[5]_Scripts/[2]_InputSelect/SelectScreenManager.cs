@@ -92,7 +92,7 @@ public class WaitForKeyInput: MenuState
                 inputDevice = GetInputDevice("Y");
             
                 if (inputDevice!="")
-                {   
+                {
                     dataPack.setInputDevices.Add (inputDevice);
                     //Set Input Device for Player
                     GameData.GetData<PlayerData>(dataPack.key).tempInputDevice = inputDevice;
@@ -116,11 +116,11 @@ public class WaitForKeyInput: MenuState
                     inputDevice=  "J3";
                 else if (Input.GetButtonDown("J4"+buttton)) //Controller 4
                     inputDevice= "J4";
-                else if (Input.GetButtonDown("K1 Horizontal") && dataPack.character == Characters.Child|
-                        Input.GetButtonDown("K1 Vertical") && dataPack.character == Characters.Child) // First Keyboard Layout
+                else if (Input.GetAxis("K1 Horizontal")!=0 && dataPack.character == Characters.Child||
+                        Input.GetAxis("K1 Vertical")!=0 && dataPack.character == Characters.Child) // First Keyboard Layout
                     inputDevice=  "K1";
-                else if (Input.GetButtonDown("K2 Horizontal") && dataPack.character == Characters.Parent | 
-                        Input.GetButtonDown("K2 Vertical") && dataPack.character == Characters.Parent) // Second Keyboard Layout
+                else if (Input.GetAxis("K2 Horizontal")!=0 && dataPack.character == Characters.Parent ||
+                        Input.GetAxis("K2 Vertical")!=0 && dataPack.character == Characters.Parent) // Second Keyboard Layout
                     inputDevice=  "K2";
 
                 //Check if input device is already set

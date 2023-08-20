@@ -5,9 +5,7 @@ using UnityEngine.UI;
 
 public class ConfirmSelectable : CustomSelectable
 {
-   [SerializeField]Button confirmButton;
-
-    [SerializeField]Sprite confirmLeftSprite, confirmRightSprite, bothConfirmedSprite;
+    [SerializeField] Button left, right;
 
     string inputDeviceChild, inputDeviceParent;
     bool activeControllerChild, activeControllerParent;
@@ -42,7 +40,23 @@ public class ConfirmSelectable : CustomSelectable
 
     protected override void Awake() 
     {
-        confirmButton.onClick.AddListener(()=>ConfirmBoth());
+        left.onClick.AddListener(()=>ConfirmBoth());
+        right.onClick.AddListener(() => ConfirmBoth());
+    }
+
+    void Confirm (Characters characters)
+    {
+        if (characters == Characters.Child)
+        {
+            childConfirmed = true;
+            left.GetComponent<Image>().sprite = left.spriteState.pressedSprite;
+        }
+        else if (characters == Characters.Parent)
+        {
+            parentConfirmed = true;
+            right.GetComponent<Image>().sprite = right.spriteState.pressedSprite;
+        }
+        //throw new System.Exception("No such character existent");
     }
 
    void  Update()
@@ -51,22 +65,23 @@ public class ConfirmSelectable : CustomSelectable
    }
    void ConfirmBoth()
    {
-        childConfirmed = true;
-        parentConfirmed = true;
+        Confirm(Characters.Child);
+        Confirm(Characters.Parent);
    }
 
    void WaitForConfirm()
    {
-
-            if (activeControllerChild && Input.GetButtonDown(inputDeviceChild+"A") && childDataSet)
-            {
-                childConfirmed = true;
-            }
-            else if (activeControllerParent &&Input.GetButtonDown(inputDeviceParent+"A") && parentDataSet)
-            {
-                parentConfirmed = true;
-            }
+        if (activeControllerChild && Input.GetButtonDown(inputDeviceChild+"A") && childDataSet)
+        {
+            left.onClick.Invoke();
+        }
+        else if (activeControllerParent &&Input.GetButtonDown(inputDeviceParent+"A") && parentDataSet)
+        {
+            right.onClick.Invoke();
+        }
    }
+
+
 
    public bool GetConfirmed (Characters characters)
    {
@@ -84,6 +99,8 @@ public class ConfirmSelectable : CustomSelectable
             return true;
         return false;
    }
+
+    public void HandleAssets() { }
 
 
 }

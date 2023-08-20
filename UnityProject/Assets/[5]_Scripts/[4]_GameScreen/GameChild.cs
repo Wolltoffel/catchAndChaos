@@ -77,14 +77,15 @@ abstract class ChildState : State
     protected void LollyPickUp()
     {
         //Lolly PickUp
-        /*if (InteractableInRange("Lolly", out GameObject interactableObject) )
-        {   
-            //Show Buttonprompt
+        if (InteractableInRange("Lolly", out GameObject interactableObject) )
+        {
+            ButtonPromptManager.ShowButtonPrompt(interactableObject.transform, "A", out GameObject canvasHolder, "Lolly");
             if (Input.GetButtonDown(inputDevice+"A"))
             {
                 //Lollyspeed
-            };    
-        }*/
+                Debug.Log("PickedUpLolly");
+            };     
+        }
     }
 
     protected ChildState Stunned()

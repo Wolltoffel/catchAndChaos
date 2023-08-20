@@ -30,13 +30,15 @@ public class LastInputDevice : MonoBehaviour
     public void RegisterLastDevice()
     {
          if (Input.anyKeyDown)
-        {
+         {
+            Debug.Log("anykey");
             // Get the last input device used
             string lastInputDevice = Input.inputString;
             
             LastInputDeviceData lastInputDeviceData =new LastInputDeviceData(InputDevice.Keyboard);
 
-            if (lastInputDevice!= ""|Input.GetMouseButtonDown(0)|Input.GetMouseButtonDown(1)|Input.GetMouseButtonDown(2))
+            if (lastInputDevice!= ""||Input.GetMouseButtonDown(0)||Input.GetMouseButtonDown(1)||Input.GetMouseButtonDown(2)
+                || Input.GetAxis ("K2 Horizontal")!=0|| Input.GetAxis("K2 Vertical") !=0)
             {
                 lastInputDeviceData = new LastInputDeviceData(InputDevice.Keyboard);
             }

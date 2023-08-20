@@ -60,7 +60,7 @@ public class GameData : MonoBehaviour
         if (dataBase.ContainsKey(key))
         {
             dataBase.Remove(key);
-            Debug.Log($"Key \"{key}\" was Overwritten");
+            //Debug.Log($"Key \"{key}\" was Overwritten");
         }
         dataBase.Add(key,newData);
     }
