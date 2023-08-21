@@ -31,7 +31,6 @@ public class LastInputDevice : MonoBehaviour
     {
          if (Input.anyKeyDown)
          {
-            Debug.Log("anykey");
             // Get the last input device used
             string lastInputDevice = Input.inputString;
             

@@ -13,8 +13,14 @@ MonoBehaviour:
   m_Name: child
   m_EditorClassIdentifier: 
   key: Child
-  tempScore: 
+  tempScore: 0
   tempInputDevice: K1
-  gameObject: {fileID: 6515412663111107442, guid: 0fd699db01e14fa45869d2266d57653f, type: 3}
   characterAssets: {fileID: 11400000, guid: e14adfe80b0e29745a2d7ae43e53559c, type: 2}
   tempSlideCoolDown: 0
+  stunned: 0
+  slideCoolDown: 5
+  stunTime: 5
+  lollyDuration: 1000
+  lollySpeed: 2
+  defaultSpeed: 1
+  tempSpeed: 10

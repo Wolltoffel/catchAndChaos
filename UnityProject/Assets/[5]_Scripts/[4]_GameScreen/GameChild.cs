@@ -22,12 +22,15 @@ abstract class ChildState : State
     protected string inputDevice = GameData.GetData<ChildData>("Child").tempInputDevice;
     public abstract ChildState UpdateState();
 
-    static GameObject buttonPrompt;
+    static GameObject buttonPromptSlide, buttonPromptLolly;
     protected static GameObject lastVentInRange;
+    static float startTimeLolly;
+    static bool lollyPickedUp;
 
     public ChildState()
     {
         gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Child);
+        GameData.GetData<ChildData>("Child").tempSpeed = GameData.GetData<ChildData>("Child").defaultSpeed;
     }
 
     protected ChildState Slide()
@@ -38,20 +41,20 @@ abstract class ChildState : State
             lastVentInRange = interactableObject;
 
             //Show ButtonPrompt  
-            if (buttonPrompt == null)
-                ButtonPromptManager.ShowButtonPrompt(interactableObject.transform, inputDevice + "B", out buttonPrompt, "Vent");
+            if (buttonPromptSlide == null)
+                ButtonPromptManager.ShowButtonPrompt(interactableObject.transform, inputDevice + "B", out buttonPromptSlide, "Vent");
             //Toogle Vent
             VentRollup ventRollup = interactableObject.GetComponent<VentRollup>();
             if (ventRollup == null)
                 ventRollup = interactableObject.AddComponent<VentRollup>();
-            Debug.Log("Opening Vent");
+
             ventRollup.OpenVent();
             
              if (Input.GetButtonDown(inputDevice + "B"))
              {
                 //Remove Button Prompt
-                ButtonPromptManager.RemoveButtonPrompt(buttonPrompt);
-                buttonPrompt = null;
+                ButtonPromptManager.RemoveButtonPrompt(buttonPromptSlide);
+                buttonPromptSlide = null;
 
                 //Handle Animations & Movement
                 Debug.Log("Going through vent");
@@ -68,8 +71,8 @@ abstract class ChildState : State
                 lastVentInRange.GetComponent<VentRollup>().CloseVent();
             }
             
-            ButtonPromptManager.RemoveButtonPrompt(buttonPrompt);
-            buttonPrompt = null;
+            ButtonPromptManager.RemoveButtonPrompt(buttonPromptSlide);
+            buttonPromptSlide = null;
         }
         return null;
     }
@@ -79,12 +82,45 @@ abstract class ChildState : State
         //Lolly PickUp
         if (InteractableInRange("Lolly", out GameObject interactableObject) )
         {
-            ButtonPromptManager.ShowButtonPrompt(interactableObject.transform, "A", out GameObject canvasHolder, "Lolly");
+            if (buttonPromptLolly == null)
+            {
+                ButtonPromptManager.ShowButtonPrompt(interactableObject.transform, inputDevice + "A", out buttonPromptLolly, "Lolly");
+            }
+            
             if (Input.GetButtonDown(inputDevice+"A"))
             {
                 //Lollyspeed
-                Debug.Log("PickedUpLolly");
+                lollyPickedUp = true;
+                ButtonPromptManager.RemoveButtonPrompt(buttonPromptLolly);
+                buttonPromptLolly = null;
+                GameData.GetData<InteractableContainer>("InteractableContainer").RemoveObjectFromCategory("Lolly", interactableObject);
+                GameObject.Destroy(interactableObject);
+                
             };     
+        }
+        else
+        {
+            ButtonPromptManager.RemoveButtonPrompt(buttonPromptLolly);
+            buttonPromptLolly = null;
+        }
+
+        //Apply speed boost
+        if (lollyPickedUp)
+        {
+            startTimeLolly = Time.time;
+            ChildData childData = GameData.GetData<ChildData>("Child");
+
+            if (Time.time - startTimeLolly <= childData.lollyDuration)
+            {
+                childData.tempSpeed = childData.lollySpeed;
+            }
+                
+            else
+            {
+                childData.tempSpeed = childData.defaultSpeed;
+                lollyPickedUp = false;
+            }
+                
         }
     }
 
@@ -143,7 +179,7 @@ class Run : ChildState
 {
     public override ChildState UpdateState()
     {
-        //LollyPickUp();
+        LollyPickUp();
 
         float horizontal = Input.GetAxis(inputDevice + " Horizontal");
         float vertical = Input.GetAxis(inputDevice + " Vertical");
@@ -156,7 +192,7 @@ class Run : ChildState
 
 
         GameObject gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Child);
-        gameObject.GetComponent<MovementScript>().MovePlayer(inputVector.x, inputVector.y);
+        gameObject.GetComponent<MovementScript>().MovePlayer(inputVector.x, inputVector.y, GameData.GetData<ChildData>("Child").tempSpeed);
         gameObject.GetComponent<Animator>().SetInteger("ChildIndex", 1);
 
         //Slide
@@ -203,8 +239,7 @@ class Destroy : ChildState
 {
     public override ChildState UpdateState()
     {
-        bool destroyOver = false; //ask from movement whether slide is over
-        if (destroyOver)
+        if (Input.GetButtonUp(inputDevice+"X"))
             return new Idle();
 
         //Stunned

@@ -9,7 +9,7 @@ public class LollySpawner : MonoBehaviour
     [SerializeField] GameObject parentObject;
     List <Transform> spawnPositions = new List<Transform>();
     
-    public void Start()
+    public void Awake()
     {
         GetAllPotentialLollyPos();
         SpawnLollys();
@@ -43,6 +43,7 @@ public class LollySpawner : MonoBehaviour
         GameObject spawnedLolly =  Instantiate(lollyPrefab,randomPos,Quaternion.identity);
         spawnedLolly.transform.name = "LollyItem";
         spawnedLolly.transform.parent = parentObject.transform;
+        //spawnedLolly.tag = "Lolly";
         spawnPositions.Remove(spawnPositions[random]);
     }
 }
