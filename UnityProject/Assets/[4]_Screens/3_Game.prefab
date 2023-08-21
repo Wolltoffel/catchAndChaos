@@ -831,6 +831,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lollyPrefab: {fileID: 839221885832150117, guid: 8b713f31acc9c774fbbb7842d9888299, type: 3}
   amountOfLollys: 5
+  parentObject: {fileID: 3004193617002050218}
 --- !u!1 &6524864941952429753
 GameObject:
   m_ObjectHideFlags: 0
@@ -1427,5 +1428,10 @@ MonoBehaviour:
 --- !u!4 &2026269506269621447 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4892528438904374978, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+  m_PrefabInstance: {fileID: 6916123649280600581}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3004193617002050218 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8523638427548866735, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
   m_PrefabInstance: {fileID: 6916123649280600581}
   m_PrefabAsset: {fileID: 0}
