@@ -829,7 +829,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65075cd8ac6642341b602408820ad27c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lollyPrefab: {fileID: 839221885832150117, guid: 8b713f31acc9c774fbbb7842d9888299, type: 3}
+  lollyPrefab: {fileID: 4277073679142548971, guid: d1454aebd4e7b42478b68f472d5d29a8, type: 3}
   amountOfLollys: 5
   parentObject: {fileID: 3004193617002050218}
 --- !u!1 &6524864941952429753
@@ -1265,6 +1265,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Vent
       objectReference: {fileID: 0}
+    - target: {fileID: 349150308248656549, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -11.012
+      objectReference: {fileID: 0}
     - target: {fileID: 599620136677800842, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
       value: LollySpawnPoint
@@ -1300,6 +1304,10 @@ PrefabInstance:
     - target: {fileID: 4038974775866086890, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
       value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 4561305119044150367, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -11.012
       objectReference: {fileID: 0}
     - target: {fileID: 4855181143334485436, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
@@ -1349,6 +1357,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5284379414196614391, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -11.012
+      objectReference: {fileID: 0}
     - target: {fileID: 5470222813670645240, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
       value: LollySpawnPoint
@@ -1360,6 +1372,10 @@ PrefabInstance:
     - target: {fileID: 5844427821161548743, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
       value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 6139757617748406722, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -11.012
       objectReference: {fileID: 0}
     - target: {fileID: 6714984567277880643, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
@@ -1377,6 +1393,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Vent
       objectReference: {fileID: 0}
+    - target: {fileID: 7402901438118233797, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -11.012
+      objectReference: {fileID: 0}
     - target: {fileID: 7711040619110599165, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
       value: LollySpawnPoint
@@ -1388,6 +1408,10 @@ PrefabInstance:
     - target: {fileID: 8728228773147878455, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
       value: Vent
+      objectReference: {fileID: 0}
+    - target: {fileID: 8906647264600065366, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -11.012
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
