@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 5705031159288320135}
   m_Layer: 0
   m_Name: desk
-  m_TagString: Untagged
+  m_TagString: Chaos
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 5223237141866098448, guid: 9757cf5167db34248b2ca774a8146be7, type: 3}
+  - {fileID: 2100000, guid: a5310a1369752804caa386f3e5cfbe46, type: 2}
   - {fileID: -696215200512088600, guid: 9757cf5167db34248b2ca774a8146be7, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
