@@ -51,8 +51,10 @@ abstract class ParentBaseMovementState : State
 
                 Debug.Log (interactable.name);
                 DoorSwitch toggle = interactable.GetComponent<DoorSwitch>();
-                 
-                toggle.Toggle();
+                if (toggle != null)
+                {
+                    toggle.Toggle();
+                }
             }
         }
         else

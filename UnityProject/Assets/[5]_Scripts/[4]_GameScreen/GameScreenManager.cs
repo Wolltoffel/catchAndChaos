@@ -84,7 +84,7 @@ public class GameScreenManager : MonoBehaviour
                 break;
         }
 
-        ScreenSwitcher.SwitchScreen(ScreenType.ScoreInterim);
+        ScreenSwitcher.AddScreen(ScreenType.ScoreInterim);
 
 
     }
