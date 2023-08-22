@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: OutlineMaterial
-  m_Shader: {fileID: -6465566751694194690, guid: ac76b9a36f511f24bb998a6d1fa4c66c, type: 3}
+  m_Shader: {fileID: 4800000, guid: b527da74c6f0c524da3e7f15e41f0e30, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -129,11 +129,13 @@ Material:
     - _ZTest: 4
     - _ZWrite: 1
     - _ZWriteControl: 0
+    - _outlineThickness: 1.19
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.5965824, g: 0.80766857, b: 0.9245283, a: 1}
+    - _BaseColor: {r: 1, g: 0.14528298, b: 0.14528298, a: 1}
+    - _Color: {r: 1, g: 0.14528295, b: 0.14528295, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _OutlineColor: {r: 1, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _XRayColor: {r: 1, g: 0.0037735105, b: 0.0037735105, a: 1}
+    - _outlineColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
