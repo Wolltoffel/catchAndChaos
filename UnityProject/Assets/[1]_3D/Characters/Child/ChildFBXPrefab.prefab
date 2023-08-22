@@ -210,7 +210,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChildFbx
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5866666021909216657, guid: 104af84e877288c45890ae6c968b7db0, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 104af84e877288c45890ae6c968b7db0, type: 3}
