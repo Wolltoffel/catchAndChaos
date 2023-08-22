@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ADataObject", menuName = "Custom/AData/PlayTimeRemaining")]
-public class PlayTimeRemaining : StaticData
+public class PlayTimeData : StaticData
 {
+    public bool hasMotherWon { get => hasGameEnded && !hasChildWon; }
+    public bool hasChildWon;
+    public bool hasGameEnded;
+
     [SerializeField] private int playTime; 
     private float tempRemainingPlayTime;
 

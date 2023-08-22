@@ -45,7 +45,7 @@ public class CameraManager : MonoBehaviour
     }
     public void EndTrackPlayers()
     {
-        Destroy(anchor);
+        Destroy(anchor.gameObject);
         if (coroutine!= null)
         {
             StopCoroutine(coroutine);

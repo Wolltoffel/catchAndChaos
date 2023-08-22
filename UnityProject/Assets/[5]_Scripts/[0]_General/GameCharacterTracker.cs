@@ -19,15 +19,18 @@ public class GameCharacterTracker : MonoBehaviour
 
     private void LateUpdate()
     {
-        float worldDistance = Vector3.Distance(parent.position, child.position);
-        float distanceToMidpoint = (worldDistance * 0.5f) / Mathf.Tan(Mathf.Deg2Rad * 15);
-        Vector3 midpoint = (parent.position + child.position) / 2f ;
+        if (parent != null && child != null)
+        {
+            float worldDistance = Vector3.Distance(parent.position, child.position);
+            float distanceToMidpoint = (worldDistance * 0.5f) / Mathf.Tan(Mathf.Deg2Rad * 15);
+            Vector3 midpoint = (parent.position + child.position) / 2f;
 
-        float value = (worldDistance - minDistance) / (maxDistance - minDistance);
-        float distance = ((maxZoom - minZoom)*value) + minZoom;
+            float value = (worldDistance - minDistance) / (maxDistance - minDistance);
+            float distance = ((maxZoom - minZoom) * value) + minZoom;
 
-        Vector3 targetPosition = midpoint - transform.forward * Mathf.Clamp(distance, minZoom, maxZoom);
-        transform.position = targetPosition;
+            Vector3 targetPosition = midpoint - transform.forward * Mathf.Clamp(distance, minZoom, maxZoom);
+            transform.position = targetPosition;
+        }
     }
 
     /*Vector3 parentScreenPoint = Camera.main.WorldToScreenPoint(parent.position);

@@ -164,6 +164,14 @@ public class MovementScript : MonoBehaviour
 
         coroutine = null;
     }
+    public void StopCatch()
+    {
+        if (coroutine != null)
+        {
+            StopCoroutine(coroutine);
+        }
+        coroutine = null;
+    }
     #endregion
 }
 

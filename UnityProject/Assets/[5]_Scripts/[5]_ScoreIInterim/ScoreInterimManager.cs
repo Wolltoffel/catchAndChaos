@@ -11,6 +11,10 @@ public class BetweenRoundsManager : MonoBehaviour
     void Awake()
     {
         GoToEndScreen();
+        if (nextRoundButton== null)
+        {
+            nextRoundButton = gameObject.AddComponent<Button>();
+        }
         nextRoundButton.onClick.AddListener(() => ScreenSwitcher.SwitchScreen(ScreenType.GameScreen));
     }
 
