@@ -14,6 +14,7 @@ public class DoorSwitch : MonoBehaviour
     {
         leftDoorOrigin = leftDoor.transform.position;
         rightDoorOrigin = rightDoor.transform.position;
+        Toggle();
     }
 
     public void Toggle()

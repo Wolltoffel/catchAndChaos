@@ -13,7 +13,9 @@ public abstract class State
         if (interactableObject != null)
         {
             bool hit = Physics.Linecast(gameObject.transform.position+ Vector3.up*1, interactableObject.transform.position, out RaycastHit hitInfo);
-            if (hitInfo.collider !=null && hitInfo.collider.gameObject.tag != interactableTag)
+            if (hitInfo.collider != null && hitInfo.collider.gameObject.tag != interactableTag)
+                return false;
+            else if (hitInfo.collider == null)
                 return false;
         }
 

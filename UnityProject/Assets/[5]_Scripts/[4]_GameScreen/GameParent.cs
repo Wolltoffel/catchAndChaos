@@ -49,7 +49,9 @@ abstract class ParentBaseMovementState : State
 
                 //Sound
 
+                Debug.Log (interactable.name);
                 DoorSwitch toggle = interactable.GetComponent<DoorSwitch>();
+                 
                 toggle.Toggle();
             }
         }
