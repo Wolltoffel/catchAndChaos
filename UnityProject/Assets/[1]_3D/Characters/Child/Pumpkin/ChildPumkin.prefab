@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5409604688557674026}
   - component: {fileID: 9089563289266236323}
   m_Layer: 8
-  m_Name: ChildMonokel
+  m_Name: ChildPumkin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -181,11 +181,11 @@ PrefabInstance:
     - target: {fileID: 693819629987513726, guid: d7bff83fea660244e8eee8f373b87954, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 5b687ee14793f424580dc5812271fcac, type: 2}
+      objectReference: {fileID: 2100000, guid: 5cb554c7b24ba3f4b924d65b3b9f52fc, type: 2}
     - target: {fileID: 693819629987513726, guid: d7bff83fea660244e8eee8f373b87954, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 2100000, guid: f875c448cacd70744ac8d720b938f16a, type: 2}
+      objectReference: {fileID: 2100000, guid: eab26235b89c20a4b8c71b6c54b2499d, type: 2}
     - target: {fileID: 815220289071504802, guid: d7bff83fea660244e8eee8f373b87954, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -200,7 +200,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 852948712036548152, guid: d7bff83fea660244e8eee8f373b87954, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 887804426993599937, guid: d7bff83fea660244e8eee8f373b87954, type: 3}
       propertyPath: m_Layer
@@ -250,6 +250,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 2251703771249507599, guid: d7bff83fea660244e8eee8f373b87954, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 452b967749cc7464c9b4103d97bcb846, type: 2}
     - target: {fileID: 2294427614336523327, guid: d7bff83fea660244e8eee8f373b87954, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -544,7 +548,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9001191101278296213, guid: d7bff83fea660244e8eee8f373b87954, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9061020203812501779, guid: d7bff83fea660244e8eee8f373b87954, type: 3}
       propertyPath: m_Layer
