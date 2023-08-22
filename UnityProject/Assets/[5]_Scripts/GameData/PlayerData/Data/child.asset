@@ -20,7 +20,9 @@ MonoBehaviour:
   stunned: 0
   slideCoolDown: 5
   stunTime: 5
-  lollyDuration: 1000
+  lollyDuration: 5
   lollySpeed: 2
   defaultSpeed: 1
-  tempSpeed: 10
+  tempSpeed: 1
+  timeToDestroy: 5
+  chaosScorePerChaosObject: 30

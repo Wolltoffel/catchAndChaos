@@ -16,5 +16,7 @@ public class ChildData : PlayerData
     public float lollySpeed;
     public float defaultSpeed;
     [HideInInspector] public float tempSpeed;
+    public float timeToDestroy;
+    public int chaosScorePerChaosObject;
 
 }

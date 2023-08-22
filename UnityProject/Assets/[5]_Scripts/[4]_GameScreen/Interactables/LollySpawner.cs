@@ -24,7 +24,7 @@ public class LollySpawner : MonoBehaviour
             spawnPositions.Add (spawnDummies[i].transform);
             Destroy(spawnDummies[i]);
         }
-}
+    }
 
     public void SpawnLollys()
     {       

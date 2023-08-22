@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentValue: 0
-  targetValue: 0
+  targetValue: 0.075
   maskTranfrom: {fileID: 4605679320536403438}
 --- !u!1 &1160182689852649332
 GameObject:
@@ -372,6 +372,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseScreenPrefab: {fileID: 8617863531841441982, guid: 23e083213a2136c40a6986c0c8ca4526, type: 3}
+--- !u!1 &2994332413847329966
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5119683781120189925}
+  - component: {fileID: 4498396295380878377}
+  m_Layer: 0
+  m_Name: ChaosObjectSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5119683781120189925
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2994332413847329966}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8859055359586037656}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4498396295380878377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2994332413847329966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3fecd5f7cb81be48bbcaba722e2acfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amountOfDestructables: 3
+  outlineMaterial: {fileID: 2100000, guid: 6e79f115bf387aa419f94a4aff87cdf9, type: 2}
 --- !u!1 &3226880609466124650
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,6 +454,7 @@ Transform:
   - {fileID: 2067557895936292303}
   - {fileID: 5423461511303511578}
   - {fileID: 6341452523033954004}
+  - {fileID: 5119683781120189925}
   m_Father: {fileID: 3829821342936219660}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7275115341930146678
@@ -466,9 +513,9 @@ MonoBehaviour:
   - tag: Lolly
     interactionRange: 2
   - tag: Vent
-    interactionRange: 5
+    interactionRange: 3
   - tag: Chaos
-    interactionRange: 2
+    interactionRange: 5
 --- !u!1 &4185518816038439600
 GameObject:
   m_ObjectHideFlags: 0
@@ -1300,6 +1347,10 @@ PrefabInstance:
     - target: {fileID: 3479806580428374388, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
       value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 3664662334962007442, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Chaos
       objectReference: {fileID: 0}
     - target: {fileID: 4038974775866086890, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString

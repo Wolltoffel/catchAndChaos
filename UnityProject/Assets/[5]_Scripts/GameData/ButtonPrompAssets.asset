@@ -28,7 +28,7 @@ MonoBehaviour:
   - buttonAsset: {fileID: 21300000, guid: c4ff66bba8b6c1a4cbb78448ffb0fe6d, type: 3}
     buttonName: K1B
   - buttonAsset: {fileID: 21300000, guid: ab22ed0cb2ad0b049bb8efec6de702f4, type: 3}
-    buttonName: K2X
+    buttonName: K1X
   - buttonAsset: {fileID: 0}
     buttonName: K1Y
   - buttonAsset: {fileID: 0}
@@ -44,3 +44,13 @@ MonoBehaviour:
     hintName: Vent
   - hintSprite: {fileID: 21300000, guid: ed0884f16145a8345aa25ac42c3903f3, type: 3}
     hintName: Lolly
+  - hintSprite: {fileID: 21300000, guid: 3ba3cae0425a82a40829091e782cf258, type: 3}
+    hintName: Catch
+  - hintSprite: {fileID: 21300000, guid: 439ab85ec54b5a94cab0c724f6878df5, type: 3}
+    hintName: Door
+  - hintSprite: {fileID: 21300000, guid: 29d0fdddedad83b438369d9c2fa564d4, type: 3}
+    hintName: PlushiePickUp
+  - hintSprite: {fileID: 21300000, guid: ab0956e098eeac34aa1a760379af21d5, type: 3}
+    hintName: PlushieTrow
+  - hintSprite: {fileID: 21300000, guid: efb7521a445059a4e9f382d069cc4581, type: 3}
+    hintName: Chaos

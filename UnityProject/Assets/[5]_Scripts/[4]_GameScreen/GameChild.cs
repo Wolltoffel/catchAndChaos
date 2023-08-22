@@ -22,9 +22,9 @@ abstract class ChildState : State
     protected string inputDevice = GameData.GetData<ChildData>("Child").tempInputDevice;
     public abstract ChildState UpdateState();
 
-    static GameObject buttonPromptSlide, buttonPromptLolly;
+    static GameObject buttonPromptSlide, buttonPromptLolly, buttonPromptDestroy;
     protected static GameObject lastVentInRange;
-    static float startTimeLolly;
+    static float timerLolly;
     static bool lollyPickedUp;
 
     public ChildState()
@@ -95,7 +95,8 @@ abstract class ChildState : State
                 buttonPromptLolly = null;
                 GameData.GetData<InteractableContainer>("InteractableContainer").RemoveObjectFromCategory("Lolly", interactableObject);
                 GameObject.Destroy(interactableObject);
-                
+                timerLolly = GameData.GetData<ChildData>("Child").lollyDuration;
+
             };     
         }
         else
@@ -107,10 +108,10 @@ abstract class ChildState : State
         //Apply speed boost
         if (lollyPickedUp)
         {
-            startTimeLolly = Time.time;
             ChildData childData = GameData.GetData<ChildData>("Child");
+            timerLolly -= Time.deltaTime;
 
-            if (Time.time - startTimeLolly <= childData.lollyDuration)
+            if (timerLolly>0)
             {
                 childData.tempSpeed = childData.lollySpeed;
             }
@@ -119,8 +120,7 @@ abstract class ChildState : State
             {
                 childData.tempSpeed = childData.defaultSpeed;
                 lollyPickedUp = false;
-            }
-                
+            }        
         }
     }
 
@@ -130,6 +130,30 @@ abstract class ChildState : State
             return new Stunned();
         else
             return null;
+    }
+
+    protected ChildState Destroy()
+    {
+        if (InteractableInRange("Chaos", out GameObject interactableObject))
+        {
+            if (buttonPromptDestroy == null)
+            {
+                ButtonPromptManager.ShowButtonPrompt(interactableObject.transform, inputDevice + "X", out buttonPromptDestroy, "Chaos");
+            }
+
+            if (Input.GetButtonDown(inputDevice + "X"))
+            {
+                ButtonPromptManager.RemoveButtonPrompt(buttonPromptDestroy);
+                buttonPromptDestroy = null;
+                return new Destroy(interactableObject.GetComponent<Destructable>());
+            }
+        }
+        else
+        {
+            ButtonPromptManager.RemoveButtonPrompt(buttonPromptDestroy);
+            buttonPromptDestroy = null;
+        }
+        return null;
     }
 
 
@@ -160,6 +184,11 @@ class Idle : ChildState
         ChildState stunned = Stunned();
         if (stunned != null)
             return stunned;
+
+        //Destroy
+        ChildState destroy = Destroy();
+        if (destroy != null)
+            return destroy;
 
         //Destroy Object
         /*        if (InteractableInRange("Slidable", out GameObject interactableObject) )
@@ -201,10 +230,15 @@ class Run : ChildState
             return slide;
 
 
+        //Destroy
+        ChildState destroy = Destroy();
+        if (destroy != null)
+            return destroy;
+
         //Stunned
-        /*ChildState stunned = Stunned();
+        ChildState stunned = Stunned();
         if (stunned!=null)
-            return stunned;*/
+            return stunned;
 
         return this;
 
@@ -237,10 +271,33 @@ class Slide : ChildState
 
 class Destroy : ChildState
 {
+    float destroyTime;
+    static float startDestroyTime;
+    Destructable destructable;
+    public Destroy (Destructable destructable)
+    {
+        this.destroyTime = destructable.destroyTimeLeft;
+        startDestroyTime = Time.time;
+        this.destructable = destructable;
+    }
     public override ChildState UpdateState()
     {
         if (Input.GetButtonUp(inputDevice+"X"))
             return new Idle();
+
+        destroyTime -= Time.deltaTime;
+        
+        if (destroyTime <= 0)
+        {
+            GameData.GetData<InteractableContainer>("InteractableContainer").RemoveObjectFromCategory("Chaos", destructable.gameObject);
+            GameObject.Destroy(destructable.gameObject);
+            destructable = null;
+            GameData.GetData<ChaosData>("ChaosData").ModifyChaos(GameData.GetData<ChildData>("Child").chaosScorePerChaosObject);
+            return new Idle();
+        }
+        //GameData.GetData<InteractableContainer>("InteractableContainer").RemoveObjectFromCategory("Destroy", interactableObject);
+       
+        CharacterInstantiator.GetActiveCharacter(Characters.Child).GetComponent<Animator>().SetInteger("ChildIndex", 3);
 
         //Stunned
         ChildState stunned = Stunned();
@@ -258,7 +315,7 @@ class Stunned : ChildState
         float stunTime = GameData.GetData<ChildData>("ChildData").stunTime;
         float timer = Time.time;
 
-        if (Time.time - timer >= stunTime)
+        if (Time.time - timer <= stunTime)
             return new Idle();
 
         return this;

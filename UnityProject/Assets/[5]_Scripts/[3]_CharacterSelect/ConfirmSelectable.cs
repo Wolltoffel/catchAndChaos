@@ -56,7 +56,6 @@ public class ConfirmSelectable : CustomSelectable
             parentConfirmed = true;
             right.GetComponent<Image>().sprite = right.spriteState.pressedSprite;
         }
-        //throw new System.Exception("No such character existent");
     }
 
    void  Update()

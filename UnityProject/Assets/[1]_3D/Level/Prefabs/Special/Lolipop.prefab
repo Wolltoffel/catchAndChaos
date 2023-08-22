@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6791285881726360607}
   - component: {fileID: 1079068555160486422}
-  m_Layer: 0
+  - component: {fileID: 4382149908019682469}
+  m_Layer: 9
   m_Name: Lolipop
-  m_TagString: Untagged
+  m_TagString: Lolly
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55,6 +56,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &4382149908019682469
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4277073679142548971}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 384
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.8935706, y: 1.9958134, z: 0.22596392}
+  m_Center: {x: -0.0532147, y: 0.49790668, z: -0.033491835}
 --- !u!1001 &3876273768292527181
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -63,6 +85,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6791285881726360607}
     m_Modifications:
+    - target: {fileID: 1527824712460574816, guid: 23a88e3c242817147a99503eca7a210a, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1527824713291350143, guid: 23a88e3c242817147a99503eca7a210a, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 1527824713684930282, guid: 23a88e3c242817147a99503eca7a210a, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -118,6 +148,10 @@ PrefabInstance:
     - target: {fileID: 1527824713684930283, guid: 23a88e3c242817147a99503eca7a210a, type: 3}
       propertyPath: m_Name
       value: Particle (sparcle)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1527824713684930283, guid: 23a88e3c242817147a99503eca7a210a, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -196,6 +230,14 @@ PrefabInstance:
     - target: {fileID: 839221885832150117, guid: 8b713f31acc9c774fbbb7842d9888299, type: 3}
       propertyPath: m_Name
       value: lollipop
+      objectReference: {fileID: 0}
+    - target: {fileID: 839221885832150117, guid: 8b713f31acc9c774fbbb7842d9888299, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 839221885832150117, guid: 8b713f31acc9c774fbbb7842d9888299, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8305287729406835176, guid: 8b713f31acc9c774fbbb7842d9888299, type: 3}
