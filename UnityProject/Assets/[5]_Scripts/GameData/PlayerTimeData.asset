@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3133e1d1c47d478fa27893e8865a575, type: 3}
   m_Name: PlayerTimeData
   m_EditorClassIdentifier: 
-  key: PlayTimeRemaining
+  key: PlayTimeData
+  hasChildWon: 0
+  hasGameEnded: 0
   playTime: 100
