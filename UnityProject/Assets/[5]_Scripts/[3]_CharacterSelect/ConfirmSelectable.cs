@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class ConfirmSelectable : CustomSelectable
+public class ConfirmSelectable : CustomSelectable, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
     [SerializeField] Button left, right;
+    Sprite leftDefault, rightDefault;
 
     string inputDeviceChild, inputDeviceParent;
     bool activeControllerChild, activeControllerParent;
@@ -42,6 +44,9 @@ public class ConfirmSelectable : CustomSelectable
     {
         left.onClick.AddListener(()=>ConfirmBoth());
         right.onClick.AddListener(() => ConfirmBoth());
+
+        leftDefault = left.GetComponent<Image>().sprite;
+        rightDefault = right.GetComponent<Image>().sprite;
     }
 
     void Confirm (Characters characters)
@@ -99,7 +104,22 @@ public class ConfirmSelectable : CustomSelectable
         return false;
    }
 
-    public void HandleAssets() { }
 
+    public override void OnPointerEnter(PointerEventData eventData) 
+    {
+        left.GetComponent<Image>().sprite = left.spriteState.highlightedSprite;
+        right.GetComponent<Image>().sprite = right.spriteState.highlightedSprite;
+    }
+
+    public override void OnPointerExit(PointerEventData eventData)
+    {
+        left.GetComponent<Image>().sprite = leftDefault;
+        right.GetComponent<Image>().sprite = rightDefault;
+    }
+
+    public override void OnPointerDown(PointerEventData eventData)
+    {
+        ConfirmBoth();
+    }
 
 }

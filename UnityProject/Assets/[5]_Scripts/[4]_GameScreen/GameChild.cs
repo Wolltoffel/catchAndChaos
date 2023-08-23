@@ -97,7 +97,7 @@ abstract class ChildState : State
                 GameObject.Destroy(interactableObject);
                 timerLolly = GameData.GetData<ChildData>("Child").lollyDuration;
 
-            };     
+            }     
         }
         else
         {
@@ -295,7 +295,6 @@ class Destroy : ChildState
             GameData.GetData<ChaosData>("ChaosData").ModifyChaos(GameData.GetData<ChildData>("Child").chaosScorePerChaosObject);
             return new Idle();
         }
-        //GameData.GetData<InteractableContainer>("InteractableContainer").RemoveObjectFromCategory("Destroy", interactableObject);
        
         CharacterInstantiator.GetActiveCharacter(Characters.Child).GetComponent<Animator>().SetInteger("ChildIndex", 3);
 
@@ -310,12 +309,21 @@ class Destroy : ChildState
 
 class Stunned : ChildState
 {
-    public override ChildState UpdateState()
+    float timer;
+
+    public Stunned()
     {
         float stunTime = GameData.GetData<ChildData>("ChildData").stunTime;
-        float timer = Time.time;
+        timer = stunTime;
+    }
+    public override ChildState UpdateState()
+    {
+        timer-= Time.deltaTime;
 
-        if (Time.time - timer <= stunTime)
+        GameObject gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Child);
+        gameObject.GetComponent<Animator>().SetInteger("ChildIndex", 2);
+
+        if (timer<=0)
             return new Idle();
 
         return this;

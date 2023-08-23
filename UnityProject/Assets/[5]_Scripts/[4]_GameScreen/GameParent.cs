@@ -26,7 +26,7 @@ public class GameParent : MonoBehaviour
 abstract class ParentBaseState : State
 {
     protected ParentData parentData;
-    static GameObject buttonPromptDoor;
+    static GameObject buttonPromptDoor,buttonPromptPlushiePickUp, buttonPromptPlushieThrow;
 
     public ParentBaseState(ParentData data)
     {
@@ -74,11 +74,15 @@ abstract class ParentBaseState : State
         GameObject interactable;
         if (InteractableInRange("Plushie", out interactable))
         {
-            //show prompt
+            if (buttonPromptPlushiePickUp == null)
+            {
+                ButtonPromptManager.ShowButtonPrompt(interactable.transform, inputDevice + "X", out buttonPromptPlushiePickUp, "PlushiePickUp");
+            }
 
             if (Input.GetButtonDown($"{inputDevice}X"))
             {
-                //hideprompt
+                ButtonPromptManager.RemoveButtonPrompt(buttonPromptPlushiePickUp);
+                buttonPromptPlushiePickUp = null;
 
                 Plushie plushie = interactable.GetComponent<Plushie>();
 
@@ -87,7 +91,8 @@ abstract class ParentBaseState : State
         }
         else
         {
-            //hideprompt
+            ButtonPromptManager.RemoveButtonPrompt(buttonPromptPlushiePickUp);
+            buttonPromptPlushiePickUp = null;
         }
         return null;
     }
@@ -101,17 +106,23 @@ abstract class ParentBaseState : State
             {
                 if (parentData.plushie != null)
                 {
-                    //Do Antimator
                     gameObject.GetComponent<Animator>().SetInteger("MomIndex", 5);
-
                     parentData.plushie.AttachToTarget(gameObject.transform);
                 }
             }
         }
         else
         {
+            if (buttonPromptPlushieThrow == null)
+            {
+                Transform characterTransform = CharacterInstantiator.GetActiveCharacter(Characters.Parent).transform;
+                ButtonPromptManager.ShowButtonPrompt(characterTransform, inputDevice + "X", out buttonPromptPlushieThrow, "PlushieThrow");
+            }
+
             if (Input.GetButtonDown($"{inputDevice}X"))
             {
+                ButtonPromptManager.RemoveButtonPrompt(buttonPromptPlushieThrow);
+                buttonPromptPlushieThrow = null;
                 return true;
             }
         }
