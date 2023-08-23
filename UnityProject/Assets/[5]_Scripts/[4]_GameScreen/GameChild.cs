@@ -156,13 +156,47 @@ abstract class ChildState : State
         return null;
     }
 
+    protected bool IsGameOver(out ChildState state)
+    {
+        PlayTimeData data = GameData.GetData<PlayTimeData>("PlayTimeData");
+        state = this;
 
+        if (data.hasGameEnded)
+        {
+            if (data.hasChildWon)
+                state = new Win();
+            else
+                state = new Lose();
+            return true;
+        }
+
+        return false;
+    }
+}
+
+class Win : ChildState
+{
+    public override ChildState UpdateState()
+    {
+        return this;
+    }
+}
+
+class Lose : ChildState
+{
+    public override ChildState UpdateState()
+    {
+        return this;
+    }
 }
 
 class Idle : ChildState
 {
     public override ChildState UpdateState()
     {
+        if (IsGameOver(out ChildState state))
+            return state;
+
         //Debug.Log ("Idle");
         //Go to Run
         float horizontal = Input.GetAxis(inputDevice + " Horizontal");
@@ -208,6 +242,9 @@ class Run : ChildState
 {
     public override ChildState UpdateState()
     {
+        if (IsGameOver(out ChildState state))
+            return state;
+
         LollyPickUp();
 
         float horizontal = Input.GetAxis(inputDevice + " Horizontal");
