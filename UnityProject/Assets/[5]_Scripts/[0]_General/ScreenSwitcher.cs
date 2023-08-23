@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 public enum ScreenType
 {
-    Empty,MainMenu,CharacterInputSelect, GameScreen, ScoreInterim
+    Empty,MainMenu,CharacterInputSelect, GameScreen, ScoreInterim, EndScreen
 }
 
 
@@ -19,6 +19,7 @@ public class ScreenSwitcher : MonoBehaviour
     [SerializeField] GameObject characterInputSelect;
     [SerializeField] GameObject game;
     [SerializeField] GameObject scoreInterim;
+    [SerializeField] GameObject endScreen;
     private static ScreenSwitcher instance;
     static Dictionary<ScreenType, GameObject> activeScreenDataBase = new Dictionary<ScreenType, GameObject>();
 
@@ -97,6 +98,8 @@ public class ScreenSwitcher : MonoBehaviour
                 return game;
             case ScreenType.ScoreInterim:
                 return scoreInterim;
+            case ScreenType.EndScreen:
+                return endScreen;
         }
 
         throw new SystemException ($"No screen with the name {screen} existent.");
