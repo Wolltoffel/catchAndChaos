@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: OutlineMaterial
-  m_Shader: {fileID: 4800000, guid: b527da74c6f0c524da3e7f15e41f0e30, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: ac76b9a36f511f24bb998a6d1fa4c66c, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -114,11 +114,13 @@ Material:
     - _GlossyReflections: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
+    - _OutlineThickness: 0.2
     - _Parallax: 0.005
+    - _PulsateSpeed: 1
     - _QueueControl: 1
     - _QueueOffset: -25
     - _ReceiveShadows: 1
-    - _Scale: 1.04
+    - _Scale: 0.01
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -129,10 +131,10 @@ Material:
     - _ZTest: 4
     - _ZWrite: 1
     - _ZWriteControl: 0
-    - _outlineThickness: 1.19
+    - _outlineThickness: 1.05
     m_Colors:
-    - _BaseColor: {r: 1, g: 0.14528298, b: 0.14528298, a: 1}
-    - _Color: {r: 1, g: 0.14528295, b: 0.14528295, a: 1}
+    - _BaseColor: {r: 1, g: 0, b: 0, a: 1}
+    - _Color: {r: 0.9150943, g: 0.3833036, b: 0.3833036, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _OutlineColor: {r: 1, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}

@@ -95,15 +95,20 @@ Shader "Custom/OutLineShaderLit"
         //  Forward pass. Shades all light in a single pass. GI + emission + Fog
         Pass
         {
-            ZTest Always
+            ZTest LEqual
             // Lightmode matches the ShaderPassName set in UniversalRenderPipeline.cs. SRPDefaultUnlit and passes with
             // no LightMode tag are also rendered by Universal Render Pipeline
             Name "ForwardLit"
             Tags
             {
                 "LightMode" = "UniversalForward"
-                 "Queue" = "Opaque"
             }
+
+                    Stencil {
+                Ref 1       // Set the reference value for the stencil test
+                Comp Always // Always pass the stencil test (to write the reference value)
+                Pass Replace // Replace the stencil value with the reference value
+        }
 
             // -------------------------------------
             // Render State Commands
@@ -481,7 +486,14 @@ Shader "Custom/OutLineShaderLit"
         Pass {
               Name "Outline"
              Tags {"Queue" = "Opaque-2" }
- 
+
+
+                     Stencil {
+                Ref 1       // Set the reference value for the stencil test
+                Comp Always // Always pass the stencil test (to write the reference value)
+                Pass Replace // Replace the stencil value with the reference value
+        }
+
             HLSLPROGRAM
 
             #pragma multi_compile_instancing

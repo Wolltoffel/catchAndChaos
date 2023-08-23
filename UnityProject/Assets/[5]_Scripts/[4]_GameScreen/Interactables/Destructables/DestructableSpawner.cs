@@ -48,20 +48,23 @@ public class DestructableSpawner : MonoBehaviour
 
     public void ActivateOutline(GameObject target)
     {
-        Renderer renderer = target.GetComponent<Renderer>();
-        Material[] oldMaterials = renderer.materials;
-        Material[] newMaterials = new Material[2];
-        newMaterials[0] = renderer.materials[0];
-        newMaterials[1] = outlineMaterial;
-        renderer.materials = newMaterials;
+        target.layer = 10;
+        //Set Children
+        Transform [] children = target.GetComponentsInChildren<Transform>();
+        for (int i = 0; i < children.Length; i++) 
+        {
+            children[i].gameObject.layer = 10;
+        }
     }
 
     public void DeactivateOutline(GameObject target)
     {
-        Renderer renderer = target.GetComponent<Renderer>();
-        Material[] oldMaterials = renderer.materials;
-        Material[] newMaterials = new Material[1];
-        newMaterials[0] = renderer.materials[0];
-        renderer.materials = newMaterials;
+        target.layer = 0;
+        //Set Children
+        Transform[] children = target.GetComponentsInChildren<Transform>();
+        for (int i = 0; i < children.Length; i++)
+        {
+            children[i].gameObject.layer = 0;
+        }
     }
 }
