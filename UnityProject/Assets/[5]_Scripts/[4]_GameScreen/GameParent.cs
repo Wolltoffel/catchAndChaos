@@ -26,6 +26,7 @@ public class GameParent : MonoBehaviour
 abstract class ParentBaseState : State
 {
     protected ParentData parentData;
+    static GameObject buttonPromptDoor;
 
     public ParentBaseState(ParentData data)
     {
@@ -39,18 +40,21 @@ abstract class ParentBaseState : State
         GameObject interactable;
         if (InteractableInRange("Door", out interactable))
         {
-            //show prompt
-            Debug.Log("in range");
+            if (buttonPromptDoor == null)
+            {
+                ButtonPromptManager.ShowButtonPrompt(interactable.transform, inputDevice + "B", out buttonPromptDoor, "Door");
+            }
 
             if (Input.GetButtonDown($"{inputDevice}B"))
             {
-                //Do Antimator
                 gameObject.GetComponent<Animator>().SetInteger("MomIndex", 5);
 
-                //Sound
+                ButtonPromptManager.RemoveButtonPrompt(buttonPromptDoor);
+                buttonPromptDoor = null;
 
-                Debug.Log (interactable.name);
                 DoorSwitch toggle = interactable.GetComponent<DoorSwitch>();
+                if (toggle == null)
+                    toggle = interactable.GetComponentInParent<DoorSwitch>();
                 if (toggle != null)
                 {
                     toggle.Toggle();
@@ -59,7 +63,8 @@ abstract class ParentBaseState : State
         }
         else
         {
-            //hideprompt
+            ButtonPromptManager.RemoveButtonPrompt(buttonPromptDoor);
+            buttonPromptDoor = null;
         }
     }
 
@@ -151,8 +156,8 @@ class ParentIdle : ParentBaseState
 
     public override ParentBaseState UpdateState()
     {
-        if (IsGameOver(out ParentBaseState state))
-            return state;
+        /*if (IsGameOver(out ParentBaseState state))
+            return state;*/
 
         string inputDevice = parentData.tempInputDevice;
         float xAxis;
