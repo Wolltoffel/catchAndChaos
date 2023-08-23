@@ -119,7 +119,10 @@ public class GameInteractableManager : MonoBehaviour
             if (objectsWithTag.Length == 0 || objectsWithTag == null)
                 Debug.Log($"No Objects Found \nTag: {tag}");
             else
-                allInteractables.AddObjectsToCategory(tag,objectsWithTag);
+            {
+                allInteractables.RemoveAllObjectsFromCategory(tag);
+                allInteractables.AddObjectsToCategory(tag, objectsWithTag);
+            }
         }
         GameData.SetData(allInteractables, "InteractableContainer");
     }

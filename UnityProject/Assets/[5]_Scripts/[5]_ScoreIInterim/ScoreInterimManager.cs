@@ -8,8 +8,8 @@ using TMPro;
 public class BetweenRoundsManager : MonoBehaviour
 {
     [SerializeField] Button nextRoundButton;
-    [SerializeField] TextMeshPro parentText;
-    [SerializeField] TextMeshPro childText;
+    [SerializeField] TextMeshProUGUI parentText;
+    [SerializeField] TextMeshProUGUI childText;
 
     IEnumerator Start()
     {
@@ -37,7 +37,7 @@ public class BetweenRoundsManager : MonoBehaviour
         parentText.text = parent.tempScore.ToString();
         childText.text = child.tempScore.ToString();
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
 
         if (child.tempScore >= 3 || parent.tempScore >= 3)
         {

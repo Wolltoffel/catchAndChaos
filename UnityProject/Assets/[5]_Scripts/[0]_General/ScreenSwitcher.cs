@@ -46,8 +46,19 @@ public class ScreenSwitcher : MonoBehaviour
 
     public static void SwitchScreen(ScreenType screen)
     {
-        instance.DeactivateAllScreens ();
+        instance.StartCoroutine(_SwitchScreen(screen));
+    }
+
+    public static IEnumerator _SwitchScreen(ScreenType screen)
+    {
+        instance.DeactivateAllScreens();
+        yield return null;
         instance.ActivateScreen(screen);
+    }
+
+    public static void OutsourceCoroutine(IEnumerator enumerator)
+    {
+        instance.StartCoroutine(enumerator);
     }
 
     public static void AddScreen(ScreenType screen)

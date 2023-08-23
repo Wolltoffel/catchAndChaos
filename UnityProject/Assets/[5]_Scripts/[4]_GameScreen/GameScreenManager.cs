@@ -74,20 +74,33 @@ public class GameScreenManager : MonoBehaviour
     public static void EndGame(EndCondition condition)
     {
 
+        ScreenSwitcher.OutsourceCoroutine(_EndGame(condition));
+    }
+
+    private static IEnumerator _EndGame(EndCondition condition)
+    {
+        PlayTimeData data = GameData.GetData<PlayTimeData>("PlayTimeData");
+        data.hasGameEnded = true;
+
+
+        PlayerData child = GameData.GetData<PlayerData>("Child");
+        PlayerData parent = GameData.GetData<PlayerData>("Parent");
+
         switch (condition)
         {
-            case EndCondition.Catch |EndCondition.Time:
-                GameData.GetData<PlayerData>("Parent").tempScore++;
+            case EndCondition.Catch | EndCondition.Time:
                 break;
             case EndCondition.Chaos:
-                GameData.GetData<PlayerData>("Child").tempScore++;
+                data.hasChildWon = true;
                 break;
         }
 
+        yield return new WaitForSeconds(1);
+
         ScreenSwitcher.AddScreen(ScreenType.ScoreInterim);
-
-
     }
+
+
 
     #region Timecounter
     private void SetupTimeCounter()

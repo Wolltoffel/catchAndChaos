@@ -22,5 +22,7 @@ public class PlayTimeData : StaticData
     public void ResetValues()
     {
         tempRemainingPlayTime = playTime;
+        hasChildWon = false;
+        hasGameEnded = false;
     }
 }
