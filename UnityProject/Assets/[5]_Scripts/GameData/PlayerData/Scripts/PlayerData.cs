@@ -6,8 +6,9 @@ using UnityEngine;
 
 public abstract class PlayerData : StaticData
 {
-    [HideInInspector] public int tempScore;
+     public int tempScore;
     [HideInInspector] public string tempInputDevice = "K1";
+    [HideInInspector] public bool hasWon = false;
 
     public CharacterAssets characterAssets;
 

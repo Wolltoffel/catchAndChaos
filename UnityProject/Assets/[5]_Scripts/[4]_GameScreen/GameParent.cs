@@ -156,8 +156,8 @@ class ParentIdle : ParentBaseState
 
     public override ParentBaseState UpdateState()
     {
-        /*if (IsGameOver(out ParentBaseState state))
-            return state;*/
+        if (IsGameOver(out ParentBaseState state))
+            return state;
 
         string inputDevice = parentData.tempInputDevice;
         float xAxis;
@@ -208,6 +208,9 @@ class ParentMovement : ParentBaseState
 
     public override ParentBaseState UpdateState()
     {
+        if (IsGameOver(out ParentBaseState state))
+            return state;
+
         string inputDevice = parentData.tempInputDevice;
         float xAxis;
         float yAxis;
@@ -275,6 +278,9 @@ class ParentCatch : ParentBaseState
                 movement.StopCatch();
 
                 GameScreenManager.EndGame(EndCondition.Catch);
+
+                PlayTimeData data = GameData.GetData<PlayTimeData>("PlayTimeData");
+                data.hasGameEnded = true;
 
                 return new ParentWin(parentData);
             }

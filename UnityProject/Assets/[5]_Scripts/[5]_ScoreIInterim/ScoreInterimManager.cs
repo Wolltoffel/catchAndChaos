@@ -1,24 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 
 public class BetweenRoundsManager : MonoBehaviour
 {
     [SerializeField] Button nextRoundButton;
+    [SerializeField] TextMeshProUGUI parentText;
+    [SerializeField] TextMeshProUGUI childText;
 
-    void Awake()
+    private IEnumerator Start()
     {
-        GoToEndScreen();
+        PlayerData child = GameData.GetData<PlayerData>("Child");
+        PlayerData parent = GameData.GetData<PlayerData>("Parent");
+        PlayTimeData data = GameData.GetData<PlayTimeData>("PlayTimeData");
+
         if (nextRoundButton== null)
         {
             nextRoundButton = gameObject.AddComponent<Button>();
         }
         nextRoundButton.onClick.AddListener(() => ScreenSwitcher.SwitchScreen(ScreenType.GameScreen));
+
+        parentText.text = parent.tempScore.ToString();
+        childText.text = child.tempScore.ToString();
+
+        if (data.hasChildWon)
+            child.tempScore++;
+        else
+            parent.tempScore++;
+
+        yield return new WaitForSeconds(1);
+
+        parentText.text = parent.tempScore.ToString();
+        childText.text = child.tempScore.ToString();
+
+        yield return new WaitForSeconds(1);
+
+        if (child.tempScore >= 3 || parent.tempScore >= 3)
+        {
+            ScreenSwitcher.SwitchScreen(ScreenType.EndScreen);
+        }
+
+        ScreenSwitcher.SwitchScreen(ScreenType.GameScreen);
     }
 
-    void Update()
+    /*void Update()
     {
         WaitForKeyInput();
     }
@@ -38,5 +67,5 @@ public class BetweenRoundsManager : MonoBehaviour
             //Activate Endscreen
         }
         
-    }
+    }*/
 }
