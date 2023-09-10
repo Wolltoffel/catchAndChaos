@@ -13,6 +13,7 @@ TagManager:
   - LollySpawnPoint
   - Item
   - Hand
+  - Recorder
   layers:
   - Default
   - TransparentFX

@@ -14,6 +14,13 @@ public class CameraManager : MonoBehaviour
 
     private Coroutine coroutine;
 
+
+    public void SetCameraAsMain()
+    {
+        Camera.SetupCurrent(GetComponent<Camera>());
+        GetComponent<Camera>().depth = -1;
+    }
+
     public void SetCameraPosition(Transform transform)
     {
         gameObject.transform.rotation = transform.rotation;

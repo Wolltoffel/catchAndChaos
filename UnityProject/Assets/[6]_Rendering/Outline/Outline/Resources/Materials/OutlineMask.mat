@@ -20,15 +20,15 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: OutlineMaterial
-  m_Shader: {fileID: -6465566751694194690, guid: ac76b9a36f511f24bb998a6d1fa4c66c, type: 3}
+  m_Name: OutlineMask
+  m_Shader: {fileID: 4800000, guid: 0a866d4b5ac19114ca66c572bb691bf9, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
+  m_DoubleSidedGI: 1
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
@@ -113,13 +113,19 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
+    - _Mode: 0
     - _OcclusionStrength: 1
+    - _Outline: 7.51
     - _OutlineThickness: 0.2
+    - _OutlineWidth: 5.24
     - _Parallax: 0.005
     - _PulsateSpeed: 1
     - _QueueControl: 1
     - _QueueOffset: -25
     - _ReceiveShadows: 1
+    - _RimIntensity: 6.62
+    - _RimPower: 0.937
+    - _RimSmooth: 1
     - _Scale: 0.01
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
@@ -127,16 +133,18 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
+    - _UVSec: 0
     - _WorkflowMode: 1
-    - _ZTest: 4
+    - _ZTest: 8
     - _ZWrite: 1
     - _ZWriteControl: 0
     - _outlineThickness: 1.05
     m_Colors:
-    - _BaseColor: {r: 1, g: 0, b: 0, a: 1}
-    - _Color: {r: 0.9150943, g: 0.3833036, b: 0.3833036, a: 1}
+    - _BaseColor: {r: 0.23584908, g: 0.2106325, b: 0.2106325, a: 1}
+    - _Color: {r: 0.23584905, g: 0.21063247, b: 0.21063247, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _OutlineColor: {r: 1, g: 0, b: 0, a: 0}
+    - _OutlineColor: {r: 222.86098, g: 0, b: 0, a: 0}
+    - _RimColor: {r: 0.7264151, g: 0.6144832, b: 0.6144832, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _XRayColor: {r: 1, g: 0.0037735105, b: 0.0037735105, a: 1}
     - _outlineColor: {r: 1, g: 1, b: 1, a: 1}

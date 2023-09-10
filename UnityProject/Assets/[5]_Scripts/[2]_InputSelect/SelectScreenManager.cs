@@ -48,6 +48,7 @@ public class SelectScreenManager : MonoBehaviour
         //Spawn Characters and ajdust Camera
         CharacterInstantiator.InstantiateCharacter(Characters.Child, out GameObject characterChild, spawnPositionChild.transform, true);
         CharacterInstantiator.InstantiateCharacter(Characters.Parent, out GameObject characterParent, spawnPositionParent.transform,true);
+        Camera.main.GetComponent<CameraManager>().SetCameraAsMain();
         Camera.main.GetComponent<CameraManager>().SetCameraPosition(cameraPosition);
 
         //Initialise StateMachine
