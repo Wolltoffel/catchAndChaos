@@ -107,6 +107,21 @@ public class CustomOutline : MonoBehaviour
         }
     } 
   }
+
+  [HideInInspector] public bool _seeThroughWalls;
+  public bool seeThroughWalls
+  {
+     get{return  _seeThroughWalls;}
+    
+    set
+    {
+      if (value != _seeThroughWalls)
+      {
+            _seeThroughWalls = value;
+            SetSeeThroughWalls(value);
+        }
+    } 
+  }
   # endregion
 
 #region  Normals
@@ -178,6 +193,7 @@ public class CustomOutline : MonoBehaviour
 
       SetOutlineColor(outlineColor);
       SetOutlineWidth(outlineWidth);
+      SetSeeThroughWalls(seeThroughWalls);
       
       if (activeOutline &&!CheckOutlineMaterials(materials))
       {
@@ -296,10 +312,22 @@ public class CustomOutline : MonoBehaviour
     }    
   }
 
-    void SetCutOffTex(bool active)
+  void SetCutOffTex(bool active)
   {
     if (outLineFill!=null)
         outLineFill.SetTexture("_cutoffTex",cutoffTex);  
+  }
+
+  void SetSeeThroughWalls(bool active)
+  {
+    if (outLineFill!=null)
+    {
+      if (seeThroughWalls)
+        outLineFill.SetFloat("_zTest",(float)UnityEngine.Rendering.CompareFunction.Always);
+      else
+        outLineFill.SetFloat("_zTest",(float)UnityEngine.Rendering.CompareFunction.LessEqual);
+    }
+        
   }
 
 #endregion

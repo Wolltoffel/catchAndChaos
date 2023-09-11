@@ -14,6 +14,7 @@ public class OutlineScriptEditor : Editor
 
         outline.outlineColor = EditorGUILayout.ColorField(new GUIContent("Outline Color"), outline.outlineColor, true, true, true, new ColorPickerHDRConfig(0, 1, 0, 3), GUILayout.MaxWidth(100f));
         outline.outlineWidth = EditorGUILayout.Slider("Outline Width",outline.outlineWidth,0,20);
+        outline.seeThroughWalls = EditorGUILayout.Toggle("See Outlines through Walls",outline.seeThroughWalls);
         
         if (GUILayout.Button("Recalculate Normals"))
             outline.RecalculateNormals();

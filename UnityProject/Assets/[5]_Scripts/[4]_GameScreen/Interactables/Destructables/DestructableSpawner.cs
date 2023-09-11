@@ -48,13 +48,13 @@ public class DestructableSpawner : MonoBehaviour
 
     public void ActivateOutline(GameObject target)
     {
-        target.layer = 10;
-        //Set Children
-        Transform [] children = target.GetComponentsInChildren<Transform>();
-        for (int i = 0; i < children.Length; i++) 
-        {
-            children[i].gameObject.layer = 10;
-        }
+        CustomOutline customOutline = target.GetComponent<CustomOutline>();
+        if (customOutline==null)
+            customOutline = target.AddComponent<CustomOutline>();
+
+        customOutline.activeOutline = true;
+        customOutline.outlineColor = Color.green;
+        customOutline.outlineWidth = 10f;
     }
 
     public void DeactivateOutline(GameObject target)

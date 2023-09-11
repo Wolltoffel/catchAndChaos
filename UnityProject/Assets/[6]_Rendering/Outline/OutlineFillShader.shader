@@ -7,6 +7,7 @@ Shader "CustomOutline/OutlineFillShader"
         _cutoffTex ("Cuttoff Alpha Tex",2D) = "white" {}
         [Toggle(ActivateCutoffMap)]
         _activeAlphaMap ("Activate Cutoff Map", Float) = 0
+        [Enum(UnityEngine.Rendering.CompareFunction)] _zTest("Z Test", Float) = 0
     }
 
     SubShader
@@ -16,7 +17,7 @@ Shader "CustomOutline/OutlineFillShader"
         Tags { "RenderType"="Transparent"
         "Queue" = "Transparent"}
         LOD 100
-        ZTest Always
+        ZTest [_zTest]
         Cull Off
 
         
@@ -56,7 +57,7 @@ Shader "CustomOutline/OutlineFillShader"
                 float3 viewNormal = mul(UNITY_MATRIX_IT_MV,normal);
                 viewNormal = normalize(viewNormal);
                 
-                o.vertex = UnityViewToClipPos(viewPos+viewNormal*_Outline*clipPos.w);
+                o.vertex = UnityViewToClipPos(viewPos+viewNormal*_Outline/100);
                 o.uv = TRANSFORM_TEX (uv,_cutoffTex);
 
                 return  o;
