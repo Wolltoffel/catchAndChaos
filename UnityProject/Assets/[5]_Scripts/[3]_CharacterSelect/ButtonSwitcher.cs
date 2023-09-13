@@ -61,7 +61,6 @@ public class ButtonSwitcher : MonoBehaviour
     void  Update()
     {
         InputDevice currentInputDevice = GameData.GetData<LastInputDeviceData>("LastInputDeviceData").inputDevice;
-        Debug.Log (currentInputDevice);
         if (recentInputDevice !=currentInputDevice)
         {
             recentInputDevice = currentInputDevice;
