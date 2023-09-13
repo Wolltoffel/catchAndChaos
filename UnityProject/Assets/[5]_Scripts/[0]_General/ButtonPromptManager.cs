@@ -20,9 +20,11 @@ public class ButtonPrompt
 
 public class ButtonPromptManager : MonoBehaviour
 {
+
    public float hintOffsetX, hintOffsetY;
    static ButtonPromptManager instance;
    static List<ButtonPrompt> buttonPrompts = new List<ButtonPrompt>();
+
 
    void Awake()
    {
@@ -32,13 +34,16 @@ public class ButtonPromptManager : MonoBehaviour
             Destroy(instance);
    }
 
+ 
+
    public static void ShowButtonPrompt(Transform target,string buttonName, out GameObject canvasHolder, string hintName = "")
    {
       Sprite buttonSprite = GameData.GetData<ButtonPromptAsssets>("ButtonPromptAssets").GetButtonSpriteByName(buttonName);
       ShowPrompt(target,buttonName,buttonSprite, out canvasHolder,Vector2.zero, 1.5f);
-      if (hintName!="")
+      if (hintName!="" &&  !GameData.GetData<ButtonPromptAsssets>("ButtonPromptAssets").WasHintAlreadyShown(hintName))
       {
          Sprite hintSprite = GameData.GetData<ButtonPromptAsssets>("ButtonPromptAssets").GetHintSpriteByName(hintName);
+         GameData.GetData<ButtonPromptAsssets>("ButtonPromptAssets").AddToShownHints(hintName);
          ShowPrompt(target,buttonName,hintSprite, out canvasHolder,new Vector2(instance.hintOffsetX,instance.hintOffsetY), 3,canvasHolder.transform);
       }
 

@@ -38,8 +38,11 @@ public class ButtonAddition : MonoBehaviour, IPointerEnterHandler,ISelectHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(gameObject);
+        if (EventSystem.current!=null)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(gameObject);
+        }
     }
 
     IEnumerator ScaleUp(Vector2 currentScale, Vector2 targetScale)

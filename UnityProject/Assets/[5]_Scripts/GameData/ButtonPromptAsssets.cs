@@ -26,11 +26,23 @@ public class HintData
 [CreateAssetMenu(fileName = "ADataObject", menuName = "Custom/AData/ButtonPromptAssets")]
 public class ButtonPromptAsssets : StaticData
 {
+
+   [SerializeField] bool clearShownHints;
    public ButtonPromptData[] controller;
    public ButtonPromptData[] keyboard;
 
    public HintData [] hints;
 
+   readonly List<string>  shownHints = new List<string>();
+
+    void OnValidate()
+   {
+      if (clearShownHints==true)
+      {
+         clearShownHints = false;
+         ClearShownHints();
+      }
+   }
 
     public Sprite GetButtonSpriteByName (string name, InputDevice inputDevice)
     {
@@ -101,6 +113,21 @@ public class ButtonPromptAsssets : StaticData
     {
         string result = Regex.Replace(input, @"\d", "");
         return result;
+    }
+
+    public void AddToShownHints(string newHint)
+    {
+        shownHints.Add(newHint);
+    }
+
+    public void ClearShownHints()
+    {
+        shownHints.Clear();
+    }
+
+    public bool WasHintAlreadyShown(string hintToCheck)
+    {
+        return shownHints.Contains(hintToCheck);
     }
     
 }
