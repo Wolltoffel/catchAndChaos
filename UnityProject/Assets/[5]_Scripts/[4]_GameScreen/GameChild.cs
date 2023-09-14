@@ -42,7 +42,7 @@ abstract class ChildState : State
 
             //Show ButtonPrompt  
             if (buttonPromptSlide == null)
-                ButtonPromptManager.ShowButtonPrompt(interactableObject.transform, inputDevice + "B", out buttonPromptSlide, "Vent");
+                WorldSpaceUI.ShowButtonPrompt(interactableObject.transform, inputDevice + "B", out buttonPromptSlide, "Vent");
             //Toogle Vent
             VentRollup ventRollup = interactableObject.GetComponent<VentRollup>();
             if (ventRollup == null)
@@ -53,7 +53,7 @@ abstract class ChildState : State
              if (Input.GetButtonDown(inputDevice + "B"))
              {
                 //Remove Button Prompt
-                ButtonPromptManager.RemoveButtonPrompt(buttonPromptSlide);
+                WorldSpaceUI.RemovePrompt(buttonPromptSlide);
                 buttonPromptSlide = null;
 
                 //Handle Animations & Movement
@@ -71,7 +71,7 @@ abstract class ChildState : State
                 lastVentInRange.GetComponent<VentRollup>().CloseVent();
             }
             
-            ButtonPromptManager.RemoveButtonPrompt(buttonPromptSlide);
+            WorldSpaceUI.RemovePrompt(buttonPromptSlide);
             buttonPromptSlide = null;
         }
         return null;
@@ -84,14 +84,14 @@ abstract class ChildState : State
         {
             if (buttonPromptLolly == null)
             {
-                ButtonPromptManager.ShowButtonPrompt(interactableObject.transform, inputDevice + "A", out buttonPromptLolly, "Lolly");
+                WorldSpaceUI.ShowButtonPrompt(interactableObject.transform, inputDevice + "A", out buttonPromptLolly, "Lolly");
             }
             
             if (Input.GetButtonDown(inputDevice+"A"))
             {
                 //Lollyspeed
                 lollyPickedUp = true;
-                ButtonPromptManager.RemoveButtonPrompt(buttonPromptLolly);
+                WorldSpaceUI.RemovePrompt(buttonPromptLolly);
                 buttonPromptLolly = null;
                 GameData.GetData<InteractableContainer>("InteractableContainer").RemoveObjectFromCategory("Lolly", interactableObject);
                 GameObject.Destroy(interactableObject);
@@ -101,7 +101,7 @@ abstract class ChildState : State
         }
         else
         {
-            ButtonPromptManager.RemoveButtonPrompt(buttonPromptLolly);
+            WorldSpaceUI.RemovePrompt(buttonPromptLolly);
             buttonPromptLolly = null;
         }
 
@@ -138,19 +138,19 @@ abstract class ChildState : State
         {
             if (buttonPromptDestroy == null)
             {
-                ButtonPromptManager.ShowButtonPrompt(interactableObject.transform, inputDevice + "X", out buttonPromptDestroy, "Chaos");
+                WorldSpaceUI.ShowButtonPrompt(interactableObject.transform, inputDevice + "X", out buttonPromptDestroy, "Chaos");
             }
 
             if (Input.GetButtonDown(inputDevice + "X"))
             {
-                ButtonPromptManager.RemoveButtonPrompt(buttonPromptDestroy);
+                WorldSpaceUI.RemovePrompt(buttonPromptDestroy);
                 buttonPromptDestroy = null;
                 return new Destroy(interactableObject.GetComponent<Destructable>());
             }
         }
         else
         {
-            ButtonPromptManager.RemoveButtonPrompt(buttonPromptDestroy);
+            WorldSpaceUI.RemovePrompt(buttonPromptDestroy);
             buttonPromptDestroy = null;
         }
         return null;
@@ -311,6 +311,9 @@ class Destroy : ChildState
     float destroyTime;
     static float startDestroyTime;
     Destructable destructable;
+
+    GameObject destroyPrompt;
+    GameObject promptHolder;
     public Destroy (Destructable destructable)
     {
         this.destroyTime = destructable.destroyTimeLeft;
@@ -323,13 +326,25 @@ class Destroy : ChildState
             return new Idle();
 
         destroyTime -= Time.deltaTime;
+
+
+        //Show Prompt
+        if (destroyPrompt==null)
+            WorldSpaceUI.ShowPrompt(GameData.GetData<PromptAssets>("PromptAssets").GetPromptAssetByName("DestroyMeter"),
+            destructable.transform,"DestroyMeter",out promptHolder,out destroyPrompt);
+        else
+        {
+            DestroyMeter destroyMeter = destroyPrompt.GetComponent <DestroyMeter>();
+            if (destroyMeter!=null)
+                destroyMeter.UpdateProgress(destroyTime,GameData.GetData<ChildData>("Child").timeToDestroy);
+        }      
         
         if (destroyTime <= 0)
         {
-            GameData.GetData<InteractableContainer>("InteractableContainer").RemoveObjectFromCategory("Chaos", destructable.gameObject);
-            GameObject.Destroy(destructable.gameObject);
+            WorldSpaceUI.RemovePrompt(promptHolder);
+
+            destructable.DestroyObject();
             destructable = null;
-            GameData.GetData<ChaosData>("ChaosData").ModifyChaos(GameData.GetData<ChildData>("Child").chaosScorePerChaosObject);
             return new Idle();
         }
        

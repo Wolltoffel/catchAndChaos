@@ -12,4 +12,11 @@ public class Destructable : MonoBehaviour
         destroyTimeLeft = GameData.GetData<ChildData>("Child").timeToDestroy;
     }
 
+    public void DestroyObject()
+    {
+        GameData.GetData<InteractableContainer>("InteractableContainer").RemoveObjectFromCategory("Chaos", gameObject);
+        GameData.GetData<ChaosData>("ChaosData").ModifyChaos(GameData.GetData<ChildData>("Child").chaosScorePerChaosObject);
+        Destroy(gameObject);
+    }
+
 }

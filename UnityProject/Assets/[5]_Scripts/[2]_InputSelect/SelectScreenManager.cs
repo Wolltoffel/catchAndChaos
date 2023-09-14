@@ -2,60 +2,63 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CustomisationData
+public class SelectScreenData
 {
-    public InputSelectUIManager inputSelectUI;
-    public CharacterSelectNavigation characterSelectNavigation;
     public string key;
     public Characters character;
     public List<string> setInputDevices;
+    public CharacterSelect characterSelect;
+    public GameObject inputSelectToHide;
 
-    public BackButton backButton;
-
-
-    public CustomisationData(Characters character,InputSelectUIManager inputSelectUI,
-    CharacterSelectNavigation characterSelectNavigation,List<string> setInputDevices,
-    BackButton backButton)
+    public SelectScreenData(Characters character, List<string> setInputDevices, CharacterSelect characterSelect,GameObject inputSelectToHide)
     {
         this.character = character;
+        this.setInputDevices = setInputDevices;
+        this.characterSelect = characterSelect;
+        this.inputSelectToHide = inputSelectToHide;
+
         if (character == Characters.Child)
             key = "Child";
         else
             key = "Parent";
-        this.inputSelectUI = inputSelectUI;
-        this.setInputDevices = setInputDevices;
-
-        this.characterSelectNavigation = characterSelectNavigation;
-        this.backButton = backButton;
     }
 }
 
 public class SelectScreenManager : MonoBehaviour
 {
     
-    [SerializeField]InputSelectUIManager inputSelectUI;
-    [SerializeField] CharacterSelectNavigation childUI, parentUI;
+    [SerializeField] CharacterSelect characterSelectChild, characterSelectParent;
     [SerializeField] GameObject spawnPositionChild, spawnPositionParent;
     [SerializeField] Transform cameraPosition;
     [SerializeField] BackButton backButton;
+    [SerializeField] GameObject inputSelectToHideChild, inputSelectToHideParent;
 
     List<string> setInputDevices = new List<string>();
     MenuState child,parent;
-    CustomisationData parent_CustomisationData, child_CustomisationData;
-
+    SelectScreenData parent_selectScreenData, child_SelectScreenData;
     void Awake()
     {   
+
         //Spawn Characters and ajdust Camera
         CharacterInstantiator.InstantiateCharacter(Characters.Child, out GameObject characterChild, spawnPositionChild.transform, true);
         CharacterInstantiator.InstantiateCharacter(Characters.Parent, out GameObject characterParent, spawnPositionParent.transform,true);
+        CharacterInstantiator.GetActiveCharacter(Characters.Child).GetComponent<Animator>().SetInteger("ChildIndex",0);
         Camera.main.GetComponent<CameraManager>().SetCameraAsMain();
         Camera.main.GetComponent<CameraManager>().SetCameraPosition(cameraPosition);
 
         //Initialise StateMachine
-        parent_CustomisationData = new CustomisationData(Characters.Parent,inputSelectUI,parentUI,setInputDevices,backButton);
-        child_CustomisationData = new CustomisationData(Characters.Child,inputSelectUI,childUI,setInputDevices,backButton);
-        child = new WaitForKeyInput(child_CustomisationData);
-        parent = new WaitForKeyInput(parent_CustomisationData);
+        parent_selectScreenData = new SelectScreenData(Characters.Parent,setInputDevices,characterSelectParent,inputSelectToHideParent);
+        child_SelectScreenData = new SelectScreenData(Characters.Child,setInputDevices,characterSelectChild,inputSelectToHideChild);
+        child = new WaitForKeyInput(child_SelectScreenData);
+        parent = new WaitForKeyInput(parent_selectScreenData);
+
+        //Deactivate characterSelect overlay
+        characterSelectChild.gameObject.SetActive(false);
+        characterSelectParent.gameObject.SetActive(false);
+
+        //Add Listeners to buttons
+        parent_selectScreenData.characterSelect.readyButtonHalf.onClick.AddListener(()=>SetReady(Characters.Parent));
+        child_SelectScreenData.characterSelect.readyButtonHalf.onClick.AddListener(()=>SetReady(Characters.Child));
     }
 
    void Update()
@@ -64,17 +67,28 @@ public class SelectScreenManager : MonoBehaviour
         parent = parent.UpdateMenu();
 
         if (child is Ready && parent is Ready)
+        {
             ScreenSwitcher.SwitchScreen(ScreenType.GameScreen);
+        }
+ 
+   }
+
+   void SetReady (Characters characters)
+   {
+        if (characters == Characters.Child)
+            child = new Ready(child_SelectScreenData);
+        else
+            parent = new Ready(parent_selectScreenData);
    }
     
 }
 
 public abstract class MenuState
 {   
-    protected CustomisationData dataPack;
+    protected SelectScreenData dataPack;
     public abstract MenuState UpdateMenu();
 
-    public MenuState(CustomisationData dataPack)
+    public MenuState(SelectScreenData dataPack)
     {
         this.dataPack = dataPack;
     }
@@ -82,7 +96,7 @@ public abstract class MenuState
 
 public class WaitForKeyInput: MenuState
 {   
-    public WaitForKeyInput(CustomisationData data) : base(data) {}
+    public WaitForKeyInput(SelectScreenData data) : base(data) {}
         public override MenuState UpdateMenu()
         {
 
@@ -92,16 +106,19 @@ public class WaitForKeyInput: MenuState
             else
                 inputDevice = GetInputDevice("Y");
             
-                if (inputDevice!="")
-                {
+            if (inputDevice!="")
+            {
+                    Debug.Log ("Set Input device to "+inputDevice);
                     dataPack.setInputDevices.Add (inputDevice);
-                    //Set Input Device for Player
                     GameData.GetData<PlayerData>(dataPack.key).tempInputDevice = inputDevice;
-                    dataPack.inputSelectUI.HideUI(dataPack.character);
-                    dataPack.characterSelectNavigation.ActivateCharacterSelection();
-                    dataPack.backButton.SetScreenScreenToJumpTo(ScreenType.CharacterInputSelect);
+
+                    dataPack.inputSelectToHide.SetActive(false);
+                    dataPack.characterSelect.gameObject.SetActive(true);
+
+                    dataPack.characterSelect.SetData(inputDevice,dataPack.character);
+
                     return new CustomiseCharacter(dataPack);
-                }
+            }
 
             return this;
         }
@@ -138,24 +155,25 @@ public class WaitForKeyInput: MenuState
 
 public class CustomiseCharacter: MenuState
 {
-    public CustomiseCharacter(CustomisationData data) : base(data) {}
+    public CustomiseCharacter(SelectScreenData data) : base(data) {}
     public override MenuState UpdateMenu()
     {
-          CharacterSelectNavigation characterSelectNavigation =  dataPack.characterSelectNavigation;
-        if (characterSelectNavigation.isConfirmed)
+        if (Input.GetButtonDown(dataPack.characterSelect.GetInputDevice()+"A"))
+        {
             return new Ready(dataPack);
-            
-            return this;
+        }
+              
+        return this;
     }
 }
 
 public class Ready: MenuState
 {
-    public Ready(CustomisationData data) : base(data) {}
+    public Ready(SelectScreenData data) : base(data) {}
     public override MenuState UpdateMenu()
     {   
-        dataPack.characterSelectNavigation.gameObject.SetActive (false);
-        CharacterInstantiator.GetActiveCharacter(Characters.Child).GetComponent<Animator>().SetInteger("ChildIndex",0);
+        dataPack.characterSelect.SetReadyButtonHalf(true);
+        CharacterInstantiator.GetActiveCharacter(dataPack.character).GetComponent<Animator>().SetInteger("ChildIndex",1);
         return this;
     }
 }

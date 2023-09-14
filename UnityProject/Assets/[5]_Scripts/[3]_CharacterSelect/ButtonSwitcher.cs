@@ -10,6 +10,12 @@ public class ButtonSwitchData
     public Button controller, keyboard;
     Button activeButton;
 
+    public ButtonSwitchData(Button controller, Button keyboard)
+    {
+        this.controller = controller;
+        this.keyboard = keyboard;
+    }
+
     public void Switch (InputDevice inputDevice)
     {
         if (inputDevice == InputDevice.Controller)
@@ -50,8 +56,8 @@ public class ButtonSwitchData
 
 public class ButtonSwitcher : MonoBehaviour
 {
-    [SerializeField] public List<ButtonSwitchData> buttons;
-    private InputDevice recentInputDevice = InputDevice.Keyboard;
+    [SerializeField] public List<ButtonSwitchData> buttons = new List<ButtonSwitchData>();
+    private InputDevice recentInputDevice;
 
     void Start()
     {

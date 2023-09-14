@@ -42,14 +42,14 @@ abstract class ParentBaseState : State
         {
             if (buttonPromptDoor == null)
             {
-                ButtonPromptManager.ShowButtonPrompt(interactable.transform, inputDevice + "B", out buttonPromptDoor, "Door");
+                WorldSpaceUI.ShowButtonPrompt(interactable.transform, inputDevice + "B", out buttonPromptDoor, "Door");
             }
 
             if (Input.GetButtonDown($"{inputDevice}B"))
             {
                 gameObject.GetComponent<Animator>().SetInteger("MomIndex", 5);
 
-                ButtonPromptManager.RemoveButtonPrompt(buttonPromptDoor);
+                WorldSpaceUI.RemovePrompt(buttonPromptDoor);
                 buttonPromptDoor = null;
 
                 DoorSwitch toggle = interactable.GetComponent<DoorSwitch>();
@@ -63,7 +63,7 @@ abstract class ParentBaseState : State
         }
         else
         {
-            ButtonPromptManager.RemoveButtonPrompt(buttonPromptDoor);
+            WorldSpaceUI.RemovePrompt(buttonPromptDoor);
             buttonPromptDoor = null;
         }
     }
@@ -76,12 +76,12 @@ abstract class ParentBaseState : State
         {
             if (buttonPromptPlushiePickUp == null)
             {
-                ButtonPromptManager.ShowButtonPrompt(interactable.transform, inputDevice + "X", out buttonPromptPlushiePickUp, "PlushiePickUp");
+                WorldSpaceUI.ShowButtonPrompt(interactable.transform, inputDevice + "X", out buttonPromptPlushiePickUp, "PlushiePickUp");
             }
 
             if (Input.GetButtonDown($"{inputDevice}X"))
             {
-                ButtonPromptManager.RemoveButtonPrompt(buttonPromptPlushiePickUp);
+                WorldSpaceUI.RemovePrompt(buttonPromptPlushiePickUp);
                 buttonPromptPlushiePickUp = null;
 
                 Plushie plushie = interactable.GetComponent<Plushie>();
@@ -91,7 +91,7 @@ abstract class ParentBaseState : State
         }
         else
         {
-            ButtonPromptManager.RemoveButtonPrompt(buttonPromptPlushiePickUp);
+            WorldSpaceUI.RemovePrompt(buttonPromptPlushiePickUp);
             buttonPromptPlushiePickUp = null;
         }
         return null;
@@ -116,12 +116,12 @@ abstract class ParentBaseState : State
             if (buttonPromptPlushieThrow == null)
             {
                 Transform characterTransform = CharacterInstantiator.GetActiveCharacter(Characters.Parent).transform;
-                ButtonPromptManager.ShowButtonPrompt(characterTransform, inputDevice + "X", out buttonPromptPlushieThrow, "PlushieThrow");
+                WorldSpaceUI.ShowButtonPrompt(characterTransform, inputDevice + "X", out buttonPromptPlushieThrow, "PlushieThrow");
             }
 
             if (Input.GetButtonDown($"{inputDevice}X"))
             {
-                ButtonPromptManager.RemoveButtonPrompt(buttonPromptPlushieThrow);
+                WorldSpaceUI.RemovePrompt(buttonPromptPlushieThrow);
                 buttonPromptPlushieThrow = null;
                 return true;
             }
