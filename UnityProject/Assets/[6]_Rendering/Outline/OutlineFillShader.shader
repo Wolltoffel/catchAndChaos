@@ -3,7 +3,8 @@ Shader "CustomOutline/OutlineFillShader"
     Properties
     {
         _Outline ("Outline", Range (0,20)) = 0.0003
-        [HDR]_OutlineColor ("Outline Color", Color) = (0,0,0,0)
+        _OutlineColor ("Outline Color", Color) = (0,0,0,0)
+        _EmissionIntensity("Emission Intensity",float) = 1
         _cutoffTex ("Cuttoff Alpha Tex",2D) = "white" {}
         [Toggle(ActivateCutoffMap)]
         _activeAlphaMap ("Activate Cutoff Map", Float) = 0
@@ -80,16 +81,18 @@ Shader "CustomOutline/OutlineFillShader"
             }*/
 
             half _activeAlphaMap;
+            float _EmissionIntensity;
 
             fixed4 frag (v2f i)  : SV_Target
             {
                 fixed4 color = _OutlineColor;
+                fixed3 emission  = 50*_EmissionIntensity*color.rgb;
                 if (_activeAlphaMap>0)
                 {
                     half cutoffValue = tex2D(_cutoffTex,i.uv).r;
                     clip(color.a-cutoffValue);
                 }
-                return color;
+                return fixed4(color.rgb+emission,color.a);
 
             }
 

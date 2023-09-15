@@ -19,4 +19,5 @@ public class Destructable : MonoBehaviour
         Destroy(gameObject);
     }
 
+
 }

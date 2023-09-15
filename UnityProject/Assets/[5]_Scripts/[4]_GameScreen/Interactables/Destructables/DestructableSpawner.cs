@@ -53,8 +53,9 @@ public class DestructableSpawner : MonoBehaviour
             customOutline = target.AddComponent<CustomOutline>();
 
         customOutline.activeOutline = true;
-        customOutline.outlineColor = Color.green;
+        customOutline.outlineColor = Color.red;
         customOutline.outlineWidth = 10f;
+        customOutline.StartPulsating(20,30,Effect.OutlineWidth,2f);
     }
 
     public void DeactivateOutline(GameObject target)

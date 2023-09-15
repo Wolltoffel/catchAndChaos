@@ -7,6 +7,11 @@ public enum OutlineMaterial
   fill,mask
 }
 
+public enum Effect {
+  Emission,OutlineWidth
+
+}
+
 [RequireComponent(typeof(MeshFilter))]
 [DisallowMultipleComponent]
 public class CustomOutline : MonoBehaviour
@@ -46,6 +51,22 @@ public class CustomOutline : MonoBehaviour
   }
 
   [Header("Outline Properties")]
+
+  Coroutine pulsating;
+  [HideInInspector]float _emissionStrength=0;
+  public float emissionStrength
+  {
+     get{return _emissionStrength;}
+    
+    set
+    {
+      if (value != _emissionStrength)
+      {
+            _emissionStrength = value;
+            SetEmissionStrength(value);
+        }
+    } 
+  }
 
   [HideInInspector]Color _outlineColor;
   public Color outlineColor
@@ -194,6 +215,7 @@ public class CustomOutline : MonoBehaviour
       SetOutlineColor(outlineColor);
       SetOutlineWidth(outlineWidth);
       SetSeeThroughWalls(seeThroughWalls);
+      SetEmissionStrength(emissionStrength);
       
       if (activeOutline &&!CheckOutlineMaterials(materials))
       {
@@ -294,11 +316,55 @@ public class CustomOutline : MonoBehaviour
       
   }
 
-  void SetOutlineColor(Color color)
+  void SetEmissionStrength(float intensity)
+  {
+        if (outLineFill!=null && pulsating==null)
+        {
+          outLineFill.SetFloat("_EmissionIntensity",intensity);
+        }          
+  }
+
+  public void StartPulsating(float start, float max,Effect effect = Effect.Emission,float speed = 1)
+  {
+    if (pulsating==null)
+      pulsating = StartCoroutine(PulsateEffect(start,max,speed,effect));
+  }
+
+  public void StopPulsatingEmission()
+  {
+    StopCoroutine(pulsating);
+    pulsating = null;
+  }
+  System.Collections.IEnumerator PulsateEffect(float start, float max,float speed, Effect effect)
+  {
+      float lerpValue = 0;
+      float currentValue = emissionStrength;
+      float startTime = Time.time;
+      while (true)
+      {;
+        lerpValue = Mathf.Abs(Mathf.Sin((Time.time-startTime)*speed));
+        
+        currentValue = Mathf.Lerp(start,max,lerpValue);
+        
+        if (outLineFill!=null)
+        {
+          if (effect == Effect.Emission)
+            outLineFill.SetFloat("_EmissionIntensity",currentValue);
+          if (effect == Effect.OutlineWidth)
+            outLineFill.SetFloat("_Outline",currentValue);
+        }
+
+
+        yield return null;
+      }
+  }
+
+    void SetOutlineColor(Color color)
   {
         if (outLineFill!=null)
-        outLineFill.SetColor("_OutlineColor",color);
-      
+        {
+          outLineFill.SetColor("_OutlineColor",color);
+        }          
   }
 
   void SetCutOff(bool active)

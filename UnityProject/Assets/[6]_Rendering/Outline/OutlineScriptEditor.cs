@@ -12,9 +12,11 @@ public class OutlineScriptEditor : Editor
         outline.preRenderOutline = EditorGUILayout.Toggle("Prerender Outline",outline.preRenderOutline);
         outline.activeOutline = EditorGUILayout.Toggle("Activate Outline",outline.activeOutline);
 
-        outline.outlineColor = EditorGUILayout.ColorField(new GUIContent("Outline Color"), outline.outlineColor, true, true, true, new ColorPickerHDRConfig(0, 1, 0, 3), GUILayout.MaxWidth(100f));
+        outline.outlineColor = EditorGUILayout.ColorField(new GUIContent("Outline Color"), outline.outlineColor);
+        outline.emissionStrength = EditorGUILayout.Slider("Emission Strength",outline.emissionStrength,0,10);
         outline.outlineWidth = EditorGUILayout.Slider("Outline Width",outline.outlineWidth,0,20);
         outline.seeThroughWalls = EditorGUILayout.Toggle("See Outlines through Walls",outline.seeThroughWalls);
+
         
         if (GUILayout.Button("Recalculate Normals"))
             outline.RecalculateNormals();
