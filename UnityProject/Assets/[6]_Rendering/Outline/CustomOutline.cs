@@ -421,6 +421,20 @@ public class CustomOutline : MonoBehaviour
           RecalculateNormals();
 
        meshFilter.sharedMesh.SetUVs(2,computedNormals.smoothNormals);
+
+       //Combine Submeshes
+       CombineSubmeshes(mesh);
+
+  }
+
+  void CombineSubmeshes(Mesh mesh)
+  {
+    if (mesh.subMeshCount==1 || mesh.subMeshCount>activeMaterials.Length)
+      return;
+
+    mesh.subMeshCount++;
+    mesh.SetTriangles(mesh.triangles,mesh.subMeshCount-1);
+    
   }
 
   List<Vector3> SmoothNormals(Mesh mesh)
