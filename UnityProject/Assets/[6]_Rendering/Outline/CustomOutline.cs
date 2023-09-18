@@ -68,7 +68,7 @@ public class CustomOutline : MonoBehaviour
     } 
   }
 
-  [HideInInspector]Color _outlineColor;
+  [HideInInspector]public Color _outlineColor;
   public Color outlineColor
   {
      get{return _outlineColor;}
@@ -148,10 +148,10 @@ public class CustomOutline : MonoBehaviour
 #region  Normals
 
   [System.Serializable]
-  private class ComputedNormals{
+  public class ComputedNormals{
     public List<Vector3> smoothNormals;
   }
-  ComputedNormals computedNormals = new ComputedNormals();
+  [HideInInspector]public ComputedNormals computedNormals = new ComputedNormals();
 #endregion
 
 #region Materials
