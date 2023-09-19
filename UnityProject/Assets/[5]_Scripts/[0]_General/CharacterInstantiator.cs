@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 
+public enum Characters{
+    Child, Parent
+}
+
 public class CharacterInstantiator : MonoBehaviour
 {
     [SerializeField] private float initialScale = 4.5f;
