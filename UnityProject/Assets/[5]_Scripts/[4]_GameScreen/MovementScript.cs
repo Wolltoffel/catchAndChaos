@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEngine.Rendering.DebugUI;
 
 public class MovementScript : MonoBehaviour
 {
@@ -148,6 +149,7 @@ public class MovementScript : MonoBehaviour
     }
     private IEnumerator _DoCatch(float catchDuration = 1f)
     {
+        float yValue = transform.position.y;
         float time = 0;
         Vector3 catchDir = transform.forward;
 
@@ -156,6 +158,8 @@ public class MovementScript : MonoBehaviour
             float multiplicator = -Mathf.Pow((time+0.5f), 8) + 1;
             Vector3 movement = catchDir * (Mathf.Clamp01(multiplicator)) / 48;
             characterController.Move(movement * Time.timeScale);
+
+            transform.position = new Vector3(transform.position.x, yValue, transform.position.z);
 
             time += Time.deltaTime;
 

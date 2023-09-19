@@ -19,4 +19,10 @@ public class ChildData : PlayerData
     public float timeToDestroy;
     public int chaosScorePerChaosObject;
 
+    public void ResetData()
+    {
+        tempSlideCoolDown = 0;
+        stunned = false;
+        tempSpeed = defaultSpeed;
+    }
 }

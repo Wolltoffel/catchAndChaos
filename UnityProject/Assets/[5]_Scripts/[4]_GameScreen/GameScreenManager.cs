@@ -40,7 +40,7 @@ public class GameScreenManager : MonoBehaviour
         //Position Camera
         camera = Camera.main.GetComponent<CameraManager>();
         camera.GameCamera();
-        camera.TrackPlayers(parentObj.transform,childObj.transform);
+        camera.TrackPlayers(parentObj.transform, childObj.transform);
 
         //Set up background Sounds
         if (backgroundAudioClips.Length > 0)
@@ -53,8 +53,40 @@ public class GameScreenManager : MonoBehaviour
         playTimeData = GameData.GetData<PlayTimeData>("PlayTimeData");
         chaosData.ResetValues();
 
+        ResetTimeCounter();
+
+        StartCoroutine(_SetupGame());
+    }
+
+    private IEnumerator _SetupGame()
+    {
+        yield return BeforeGameStart();
+
+        StartGame();
+    }
+
+    private IEnumerator BeforeGameStart()
+    {
+        //JUST TEMPORARY
+        GameObject canvas = new GameObject("TempStartUI");
+        canvas.AddComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
+        GameObject image = new GameObject("Image");
+        image.transform.parent = canvas.transform;
+        image.transform.localPosition = Vector3.zero;
+        image.AddComponent<UnityEngine.UI.Image>();
+
+        yield return new WaitForSeconds(1);
+
+        Destroy(canvas);
+    }
+
+    private void StartGame()
+    {
         //Set up time counter
         SetupTimeCounter();
+
+        parent.enabled = true;
+        child.enabled = true;
     }
 
     private void SpawnCharacters()
