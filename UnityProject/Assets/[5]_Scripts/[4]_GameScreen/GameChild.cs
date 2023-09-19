@@ -322,8 +322,11 @@ class Destroy : ChildState
     }
     public override ChildState UpdateState()
     {
-        if (Input.GetButtonUp(inputDevice+"X"))
+        if (Input.GetButtonUp(inputDevice + "X"))
+        {
+            WorldSpaceUI.RemovePrompt(promptHolder);
             return new Idle();
+        }
 
         destroyTime -= Time.deltaTime;
 
@@ -353,7 +356,10 @@ class Destroy : ChildState
         //Stunned
         ChildState stunned = Stunned();
         if (stunned != null)
+        {
+            WorldSpaceUI.RemovePrompt(promptHolder);
             return stunned;
+        }
 
         return this;
     }
