@@ -61,7 +61,6 @@ public class Plushie : MonoBehaviour
         rigidbody.isKinematic = false;
         rigidbody.AddForce(force,ForceMode.Impulse);
 
-        yield return new WaitForSeconds(0.2f);
         Debug.Log("Plushie Thrown");
         isActive = true;
         transform.parent = null;
@@ -109,7 +108,6 @@ public class Plushie : MonoBehaviour
                 data.stunned = true;
             }
         }
-
         isActive = false;
     }
 

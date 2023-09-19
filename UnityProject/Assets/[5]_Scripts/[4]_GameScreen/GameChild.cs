@@ -361,12 +361,13 @@ class Destroy : ChildState
 
 class Stunned : ChildState
 {
+    ChildData data;
     float timer;
 
     public Stunned()
     {
-        float stunTime = GameData.GetData<ChildData>("ChildData").stunTime;
-        timer = stunTime;
+        data = GameData.GetData<ChildData>("Child");
+        timer = data.stunTime;
     }
     public override ChildState UpdateState()
     {
@@ -375,8 +376,11 @@ class Stunned : ChildState
         GameObject gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Child);
         gameObject.GetComponent<Animator>().SetInteger("ChildIndex", 2);
 
-        if (timer<=0)
+        if (timer <= 0)
+        {
+            data.stunned = false;
             return new Idle();
+        }
 
         return this;
     }
