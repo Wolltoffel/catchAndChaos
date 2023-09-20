@@ -45,7 +45,7 @@ public class ButtonAddition : MonoBehaviour, IPointerEnterHandler,ISelectHandler
         }
     }
 
-    IEnumerator ScaleUp(Vector2 currentScale, Vector2 targetScale)
+    public IEnumerator ScaleUp(Vector2 currentScale, Vector2 targetScale)
     {
         // Smoothly scales the Button
         Vector2 startScale = currentScale;;
@@ -64,7 +64,7 @@ public class ButtonAddition : MonoBehaviour, IPointerEnterHandler,ISelectHandler
         scaledUp = true;
     }
 
-    IEnumerator ScaleDown(Vector2 currentScale, Vector2 targetScale)
+    public IEnumerator ScaleDown(Vector2 currentScale, Vector2 targetScale)
     {
         // Smoothly scales the Button
         Vector2 startScale = currentScale;

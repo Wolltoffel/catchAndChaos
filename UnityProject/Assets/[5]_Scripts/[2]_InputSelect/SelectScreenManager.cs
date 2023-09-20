@@ -108,7 +108,6 @@ public class WaitForKeyInput: MenuState
             
             if (inputDevice!="")
             {
-                    Debug.Log ("Set Input device to "+inputDevice);
                     dataPack.setInputDevices.Add (inputDevice);
                     GameData.GetData<PlayerData>(dataPack.key).tempInputDevice = inputDevice;
 
