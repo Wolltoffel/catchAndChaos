@@ -41,9 +41,11 @@ public class WorldSpaceUI : MonoBehaviour
       spawnedPrompt = Instantiate(prompt);
       //Add GameObject to canvas
       spawnedPrompt.GetComponent<RectTransform>().SetParent(canvasHolder.GetComponent<RectTransform>());
-      //Start Coroutine that follows objects
-      Coroutine coroutine = instance.StartCoroutine(AdjustPosition(spawnedPrompt,target,Vector2.zero));
-      
+        //Start Coroutine that follows objects
+        _AdjustPosition(spawnedPrompt, target, Vector2.zero);
+        Coroutine coroutine = instance.StartCoroutine(AdjustPosition(spawnedPrompt,target,Vector2.zero));
+        
+
       //Create newnPrompt file and save Coroutine to list
       Prompt promptData = new Prompt(canvasHolder,coroutine,target);
       buttonPrompts.Add (promptData);
@@ -73,9 +75,10 @@ public class WorldSpaceUI : MonoBehaviour
       //Add Sprite to Canvas
       GameObject spriteHolder = AddSpriteToCanvas(sprite,canvasHolder.GetComponent<RectTransform>(),objectName);
       spriteHolder.GetComponent<RectTransform>().rotation = Quaternion.Euler(0,0,8);
-      
-      //Start Coroutine that follows objects
-      Coroutine coroutine = instance.StartCoroutine(AdjustPosition(spriteHolder,target,offset,scale));
+
+        //Start Coroutine that follows objects
+        _AdjustPosition(spriteHolder, target, offset, scale);
+        Coroutine coroutine = instance.StartCoroutine(AdjustPosition(spriteHolder,target,offset,scale));
       
       //Create new ButtonPrompt file and save Coroutine to lists
       Prompt buttonPrompt = new Prompt(canvasHolder,coroutine,target);
@@ -126,15 +129,31 @@ public class WorldSpaceUI : MonoBehaviour
 
    static IEnumerator AdjustPosition(GameObject spawnedSprite, Transform target,Vector2 offset, float scale = 1)
    {
-      spawnedSprite.transform.localScale = new Vector3(scale,scale,scale);
-      while (spawnedSprite!=null && target!=null)
-      {
-         Vector3 worldToScreenPoint =  Camera.main.WorldToScreenPoint(target.position);
-         Vector2 newPos = new Vector2(worldToScreenPoint.x+offset.x*Screen.width*0.001f, worldToScreenPoint.y+offset.y*Screen.height*0.001f);
-         spawnedSprite.transform.position  = newPos;
-         yield return null;
-      }
+        while (spawnedSprite!=null && target!=null)
+        {
+            _AdjustPosition(spawnedSprite,target,offset,scale);
+            yield return null;
+        }
    }
 
-   
+    //Adjusts Position for first Frame
+    static private void _AdjustPosition(GameObject spawnedSprite, Transform target, Vector2 offset, float scale = 1, CanvasScaler canvasScaler = null)
+    {
+        spawnedSprite.transform.localScale = new Vector3(scale, scale, scale);
+
+        if (canvasScaler == null)
+            canvasScaler = spawnedSprite.GetComponentInParent<CanvasScaler>();
+
+        float xScreenToScaler = canvasScaler.referenceResolution.x / Screen.width;
+        float yScreenToScaler = canvasScaler.referenceResolution.y / Screen.height;
+
+        Vector3 worldToScreenPoint = Camera.main.WorldToScreenPoint(target.position);
+        Vector2 screenMidPoint = new Vector2(Screen.width, Screen.height);
+        Vector2 newPos = new Vector2((worldToScreenPoint.x + offset.x) * xScreenToScaler, (worldToScreenPoint.y + offset.y) * yScreenToScaler) - screenMidPoint;
+        RectTransform rect = spawnedSprite.GetComponent<RectTransform>();
+        rect.anchoredPosition = newPos;
+
+    }
+
+
 }
