@@ -27,6 +27,7 @@ abstract class ParentBaseState : State
 {
     protected ParentData parentData;
     static GameObject buttonPromptDoor,buttonPromptPlushiePickUp, buttonPromptPlushieThrow;
+    static int currentDoorHash;
 
     public ParentBaseState(ParentData data)
     {
@@ -43,6 +44,13 @@ abstract class ParentBaseState : State
             if (buttonPromptDoor == null)
             {
                 WorldSpaceUI.ShowButtonPrompt(interactable.transform, inputDevice + "B", out buttonPromptDoor, "Door");
+                currentDoorHash = interactable.GetHashCode();
+            }
+            else if (currentDoorHash != interactable.GetHashCode())
+            {
+                WorldSpaceUI.RemovePrompt(buttonPromptDoor);
+                WorldSpaceUI.ShowButtonPrompt(interactable.transform, inputDevice + "B", out buttonPromptDoor, "Door");
+                currentDoorHash = interactable.GetHashCode();
             }
 
             if (Input.GetButtonDown($"{inputDevice}B"))
@@ -350,4 +358,11 @@ class ParentLose : ParentBaseState
     {
         return this;
     }
+}
+
+enum MotherInteractables
+{
+    Door,
+    Plushie,
+
 }
