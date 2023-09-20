@@ -3,22 +3,21 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
+    [Header("Anchor Positions")]
     [SerializeField] private Transform gamePosition;
-    [SerializeField] private float minimumZoom;
-    [SerializeField] private float minOffset;
 
-
+    [Header("Internal Data")]
     private Transform parent;
     private Transform child;
-    private Transform anchor;
 
     private Coroutine coroutine;
 
 
     public void SetCameraAsMain()
     {
-        Camera.SetupCurrent(GetComponent<Camera>());
-        GetComponent<Camera>().depth = -1;
+        Camera camera = GetComponent<Camera>();
+        Camera.SetupCurrent(camera);
+        camera.depth = -1;
     }
 
     public void SetCameraPosition(Transform transform)
@@ -37,27 +36,39 @@ public class CameraManager : MonoBehaviour
     {
         this.parent = parent;
         this.child = child;
-        if (anchor != null)
-        {
-            EndTrackPlayers();
-        }
-        anchor = new GameObject().transform;
-        var tracker = anchor.gameObject.AddComponent<GameCharacterTracker>();
-        tracker.Setup(parent, child);
-        anchor.parent = transform;
-        anchor.localPosition = Vector3.zero;
-        anchor.localRotation = Quaternion.identity;
-        anchor.parent = null;
+
         coroutine = StartCoroutine(_TrackPlayers());
     }
     public void EndTrackPlayers()
     {
-        Destroy(anchor.gameObject);
         if (coroutine!= null)
         {
             StopCoroutine(coroutine);
             coroutine = null;
         }
+    }
+
+    private Vector3 CalculateCurrentPosition(Transform parent, Transform child)
+    {
+        float minZoom = 25f;
+        float maxZoom = 70f;
+        float maxDistance = 42;
+        float minDistance = 10;
+
+        if (parent != null && child != null)
+        {
+            float worldDistance = Vector3.Distance(parent.position, child.position);
+            float distanceToMidpoint = (worldDistance * 0.5f) / Mathf.Tan(Mathf.Deg2Rad * 15);
+            Vector3 midpoint = (parent.position + child.position) / 2f;
+
+            float value = (worldDistance - minDistance) / (maxDistance - minDistance);
+            float distance = ((maxZoom - minZoom) * value) + minZoom;
+
+            Vector3 targetPosition = midpoint - transform.forward * Mathf.Clamp(distance, minZoom, maxZoom);
+            return targetPosition;
+        }
+
+        return Vector3.zero;
     }
 
     private IEnumerator _TrackPlayers()
@@ -72,7 +83,8 @@ public class CameraManager : MonoBehaviour
                 yield break;
             }
 
-            transform.position = Vector3.Lerp(transform.position, anchor.position, 0.05f);
+            Vector3 target = CalculateCurrentPosition(parent, child);
+            transform.position = Vector3.Lerp(transform.position, target, 0.05f);
 
             yield return null;
         }
