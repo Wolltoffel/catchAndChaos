@@ -123,6 +123,38 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &167122589
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 167122590}
+  m_Layer: 0
+  m_Name: CameraAnchorPositions
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &167122590
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 167122589}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1223895005}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &910972949
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,8 +390,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gamePosition: {fileID: 1223895005}
-  minimumZoom: 0
-  minOffset: 0
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -477,12 +507,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1223895004}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5735764, y: 0, z: 0, w: 0.8191521}
-  m_LocalPosition: {x: 0, y: 21.19, z: 6.94}
+  m_LocalRotation: {x: 0.5735764, y: -0, z: -0, w: 0.8191521}
+  m_LocalPosition: {x: -0.65499955, y: 12.936832, z: 2.0111783}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 167122590}
   m_LocalEulerAnglesHint: {x: 70, y: 0, z: 0}
 --- !u!1 &2128072739
 GameObject:
@@ -525,6 +555,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7e8cbc954baee4fd194962c789754155, type: 2}
   - {fileID: 11400000, guid: 38e7d43f613dc294bb548cb5fdaecfe2, type: 2}
   - {fileID: 11400000, guid: 14adeda4d4745d64d92ffa6ff2f42e56, type: 2}
+  - {fileID: 11400000, guid: f662c6428bb9e47a8abc94a95ec74296, type: 2}
 --- !u!114 &2128072741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -615,6 +646,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 963194228}
   - {fileID: 2128072742}
-  - {fileID: 1223895005}
+  - {fileID: 167122590}
   - {fileID: 998615825}
   - {fileID: 910972953}

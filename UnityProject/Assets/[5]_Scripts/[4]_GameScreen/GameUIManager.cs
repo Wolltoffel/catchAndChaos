@@ -7,6 +7,8 @@ using TMPro;
 
 public class GameUIManager : MonoBehaviour
 {
+    [SerializeField] private GameObject UICanvas;
+
     [Header("UI Element Managers")]
     [SerializeField] private SlideCooldownUI slideCooldown;
     [SerializeField] private ChaosMeterUI chaosMeter;
@@ -16,8 +18,9 @@ public class GameUIManager : MonoBehaviour
     private ChaosData chaosData;
     private ChildData childData;
 
-    private void Awake()
+    private void Start()
     {
+        UICanvas.SetActive(true);
         timeData = GameData.GetData<PlayTimeData>("PlayTimeData");
         chaosData = GameData.GetData<ChaosData>("ChaosData");
         childData = GameData.GetData<ChildData>("Child");

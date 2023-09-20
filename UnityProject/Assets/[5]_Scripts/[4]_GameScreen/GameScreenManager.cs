@@ -67,26 +67,28 @@ public class GameScreenManager : MonoBehaviour
 
     private IEnumerator BeforeGameStart()
     {
-        //JUST TEMPORARY
-        GameObject canvas = new GameObject("TempStartUI");
-        canvas.AddComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
-        GameObject image = new GameObject("Image");
-        image.transform.parent = canvas.transform;
-        image.transform.localPosition = Vector3.zero;
-        image.AddComponent<UnityEngine.UI.Image>();
+        yield return new WaitForSeconds(0.5f);
 
-        yield return new WaitForSeconds(1);
+        GameObject introAnimation = Instantiate(GameData.GetData<UIAnimations>("UIAnimations").introAnimationPrefab);
 
-        Destroy(canvas);
+        yield return new WaitForSeconds(2);
+
+        Destroy(introAnimation);
     }
 
     private void StartGame()
     {
         //Set up time counter
         SetupTimeCounter();
+        InitializeUI();
 
         parent.enabled = true;
         child.enabled = true;
+    }
+
+    private void InitializeUI()
+    {
+        GetComponent<GameUIManager>().enabled = true;
     }
 
     private void SpawnCharacters()
