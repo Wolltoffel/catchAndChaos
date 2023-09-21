@@ -148,7 +148,7 @@ public class WorldSpaceUI : MonoBehaviour
         float yScreenToScaler = canvasScaler.referenceResolution.y / Screen.height;
 
         Vector3 worldToScreenPoint = Camera.main.WorldToScreenPoint(target.position);
-        Vector2 screenMidPoint = new Vector2(Screen.width, Screen.height);
+        Vector2 screenMidPoint = new Vector2(Screen.width * xScreenToScaler, Screen.height * yScreenToScaler) /2;
         Vector2 newPos = new Vector2((worldToScreenPoint.x + offset.x) * xScreenToScaler, (worldToScreenPoint.y + offset.y) * yScreenToScaler) - screenMidPoint;
         RectTransform rect = spawnedSprite.GetComponent<RectTransform>();
         rect.anchoredPosition = newPos;
