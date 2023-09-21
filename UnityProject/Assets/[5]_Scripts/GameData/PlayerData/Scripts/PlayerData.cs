@@ -11,4 +11,9 @@ public abstract class PlayerData : StaticData
 
     public CharacterAssets characterAssets;
 
+    public void ResetTempScores()
+    {
+        tempScore = 0;
+    }
+
 }

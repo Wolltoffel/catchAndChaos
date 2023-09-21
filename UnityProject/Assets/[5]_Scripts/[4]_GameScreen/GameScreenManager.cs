@@ -107,7 +107,6 @@ public class GameScreenManager : MonoBehaviour
 
     public static void EndGame(EndCondition condition)
     {
-
         ScreenSwitcher.OutsourceCoroutine(_EndGame(condition));
     }
 
@@ -123,6 +122,7 @@ public class GameScreenManager : MonoBehaviour
         switch (condition)
         {
             case EndCondition.Catch | EndCondition.Time:
+                data.hasGameEnded = true;
                 break;
             case EndCondition.Chaos:
                 data.hasChildWon = true;
@@ -145,7 +145,7 @@ public class GameScreenManager : MonoBehaviour
 
     private IEnumerator TimeCounter()
     {
-        while (playTimeData.RemainingPlayTimeInt>=0)
+        while (playTimeData.RemainingPlayTimeInt > 0)
         {
             yield return new WaitForSeconds(1);
             playTimeData.TempRemainingPlayTime--;

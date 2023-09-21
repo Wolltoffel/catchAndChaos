@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Could be removed
 public class WinData: Object
 {
     public readonly Characters winner;
@@ -23,15 +24,30 @@ public class WinscreenManager : MonoBehaviour
         DetermineWinner();
         SpawnCharacters();
         SetCameraPosition();
+        //SetUpUI();
     }
-    
+
+    private void SetUpUI()
+    {
+        Debug.Log("Not set up.");
+    }
+
     void DetermineWinner()
     {
-        if (GameData.GetData<PlayerData>("Child").tempScore>=3)
+        var childData = GameData.GetData<PlayerData>("Child");
+        var parentData = GameData.GetData<PlayerData>("Parent");
+
+        if (childData.tempScore > parentData.tempScore)
             winner = Characters.Child;
-        else if (GameData.GetData<PlayerData>("Parent").tempScore>=3)
+        else if (childData.tempScore == parentData.tempScore)
+            winner = Characters.Child;
+        else 
             winner = Characters.Parent;
 
+        childData.ResetTempScores();
+        parentData.ResetTempScores();
+
+        //Could be removed
         WinData winData = new WinData (winner);
         GameData.SetData(winData, "WinData");
     }
@@ -40,8 +56,6 @@ public class WinscreenManager : MonoBehaviour
     {
         Transform childAnchor = null;
         Transform parentAnchor = null;
-
-        Characters winner = GameData.GetData<WinData>("WinData").winner;
 
         //Spawn Winners at winner positon and loser at loser position
         if (winner == Characters.Child)
