@@ -81,8 +81,28 @@ public class CharacterInstantiator : MonoBehaviour
 
     public static void ReplaceCharacter (Characters characterType, out GameObject character, bool addConstraint)
     {
-        Transform parent  = GetActiveCharacter(characterType).transform.parent;
+        GameObject activeCharacter = GetActiveCharacter(characterType);
+        Transform parent  = activeCharacter.transform.parent;
+        
+        //Copy the animator data
+        Animator activeAnimator = activeCharacter.GetComponent<Animator>();
+        AnimatorStateInfo animatorStateInfo = activeAnimator.GetCurrentAnimatorStateInfo(0);
+        int index;
+        string parameterName="";
+        if (characterType == Characters.Child)
+            parameterName = "ChildIndex";
+        else
+            parameterName = "MomIndex";
+        
+        index = activeAnimator.GetInteger(parameterName);
+
+
         InstantiateCharacter(characterType, out character,parent, addConstraint);
         GetActiveCharacter(characterType).transform.parent = parent;
+
+        //Apply animator data
+        activeAnimator = character.GetComponent<Animator>();
+        activeAnimator.SetInteger(parameterName,index);
+        activeAnimator.Play(animatorStateInfo.fullPathHash, 0, animatorStateInfo.normalizedTime);
     }
 }

@@ -10,10 +10,6 @@ public class CharacterSelect : MonoBehaviour
     [SerializeField] Button prevController,nextController;
     [SerializeField] Button prevKeyboard,nextKeyboard;
 
-    [Header ("ReadyButton")]
-    [SerializeField] public GameObject activatedreadyButtonHalf;
-    [SerializeField] public Button readyButtonHalf;
-
     string inputDevice;
     bool activeController;
     ButtonSwitcher buttonSwitcher;
@@ -33,6 +29,7 @@ public class CharacterSelect : MonoBehaviour
         buttonSwitcher.buttons.Add(next);
 
     }
+
     public void SetData(string inputDevice, Characters characters)
     {
         this.inputDevice = inputDevice;
@@ -90,13 +87,6 @@ public class CharacterSelect : MonoBehaviour
         return false;
 
     }
-
-    public void SetReadyButtonHalf(bool active)
-    {
-        readyButtonHalf.gameObject.SetActive(!active);
-        activatedreadyButtonHalf.SetActive(active);
-    }
-
     IEnumerator ButtonBlink(Button button,Vector2 targetScale)
     {
         button.transform.localScale = new Vector2(1,1);
