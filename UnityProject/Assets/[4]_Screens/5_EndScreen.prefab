@@ -601,7 +601,7 @@ GameObject:
   - component: {fileID: 1072960507608424}
   - component: {fileID: 2933848984206600435}
   m_Layer: 0
-  m_Name: WinScrenManager
+  m_Name: WinScreenManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -663,7 +663,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dfd5c34b907ac0458ce4f436de18c65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textMeshProUGUI: {fileID: 4676065262913051143}
+  scoreTextMeshPro: {fileID: 4676065262913051143}
+  namesTextMeshPro: {fileID: 4878041783210337394}
 --- !u!1 &4493104053066304364
 GameObject:
   m_ObjectHideFlags: 0

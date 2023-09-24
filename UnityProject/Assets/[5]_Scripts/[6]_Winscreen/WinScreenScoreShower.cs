@@ -5,37 +5,37 @@ using TMPro;
 
 public class WinScreenScoreShower : MonoBehaviour
 {
-   [SerializeField]TextMeshProUGUI textMeshProUGUI;
+   [SerializeField]TextMeshProUGUI scoreTextMeshPro;
+   [SerializeField] TextMeshProUGUI namesTextMeshPro;
 
-   void Start()
+    void Start()
    {
-        if (textMeshProUGUI==null)
-            textMeshProUGUI = GetComponent<TextMeshProUGUI>();
+        if (scoreTextMeshPro==null)
+            scoreTextMeshPro = GetComponent<TextMeshProUGUI>();
 
         SetText();
    }
 
    void SetText()
    {
-        Characters winner = GameData.GetData<WinData>("WinData").winner;
-        
-        int childScore = GameData.GetData<PlayerData>("Child").tempScore;
-        int parentScore = GameData.GetData<PlayerData>("Parent").tempScore;
+        WinData data = GameData.GetData<WinData>("WinData");
+        Characters winner = data.winner;
 
         int winnerScore = 0;
         int loserScore = 0;
 
         if (winner== Characters.Child)
         {
-            winnerScore = childScore;
-            loserScore = parentScore;
+            winnerScore = data.childScore;
+            loserScore = data.parentScore;
         }
         else if (winner== Characters.Parent)
         {
-            winnerScore = parentScore;
-            loserScore = childScore;
+            winnerScore = data.parentScore;
+            loserScore = data.childScore;
         }
 
-        textMeshProUGUI.text = winnerScore.ToString()+ " : "+ loserScore.ToString();   
+        namesTextMeshPro.text = "Mother" + " : " + "Child";
+        scoreTextMeshPro.text = winnerScore.ToString()+ " : "+ loserScore.ToString();   
    }
 }

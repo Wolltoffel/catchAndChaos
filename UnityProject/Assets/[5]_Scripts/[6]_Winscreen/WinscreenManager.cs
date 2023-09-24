@@ -2,13 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//Could be removed
 public class WinData: Object
 {
     public readonly Characters winner;
-    public WinData(Characters winner)
+    public readonly int parentScore;
+    public readonly int childScore;
+
+    public WinData(Characters winner, int parentScore, int childScore)
     {
         this.winner = winner;
+        this.parentScore = parentScore;
+        this.childScore = childScore;
     }
 }
 
@@ -44,12 +48,11 @@ public class WinscreenManager : MonoBehaviour
         else 
             winner = Characters.Parent;
 
+        WinData winData = new WinData (winner, parentData.tempScore, childData.tempScore);
+        GameData.SetData(winData, "WinData");
+
         childData.ResetTempScores();
         parentData.ResetTempScores();
-
-        //Could be removed
-        WinData winData = new WinData (winner);
-        GameData.SetData(winData, "WinData");
     }
 
     void SpawnCharacters()
