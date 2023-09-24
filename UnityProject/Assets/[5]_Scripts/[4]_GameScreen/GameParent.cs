@@ -4,17 +4,14 @@ using UnityEngine;
 
 public class GameParent : MonoBehaviour
 {
-    private ParentData parentData;
-
     private ParentBaseState state;
 
     private void Awake()
     {
-        parentData = GameData.GetData<ParentData>("Parent");
         gameObject.layer = 7;
 
         //Spawn 3d model
-        state = new ParentIdle(parentData);
+        state = new ParentIdle();
     }
 
     private void Update()
@@ -29,9 +26,10 @@ abstract class ParentBaseState : State
     static GameObject buttonPromptDoor,buttonPromptPlushiePickUp, buttonPromptPlushieThrow;
     static int currentDoorHash;
 
-    public ParentBaseState(ParentData data)
+    public ParentBaseState()
     {
-        parentData = data;
+        parentData = GameData.GetData<ParentData>("Parent");
+        gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Parent);
     }
 
     public abstract ParentBaseState UpdateState();
@@ -154,9 +152,9 @@ abstract class ParentBaseState : State
         if (data.hasGameEnded)
         {
             if (data.hasChildWon)
-                state = new ParentWin(parentData);
+                state = new ParentLose();
             else
-                state = new ParentLose(parentData);
+                state = new ParentWin();
             return true;
         }
 
@@ -166,9 +164,8 @@ abstract class ParentBaseState : State
 
 class ParentIdle : ParentBaseState
 {
-    public ParentIdle(ParentData data) : base(data)
+    public ParentIdle()
     {
-        gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Parent);
         //Do Antimator
         gameObject.GetComponent<Animator>().SetInteger("MomIndex", 0);
     }
@@ -188,7 +185,7 @@ class ParentIdle : ParentBaseState
         bool hasBeenThrown = CheckForPlushieAction(inputDevice);
         if (hasBeenThrown)
         {
-            return new ParentThrow(parentData);
+            return new ParentThrow();
         }
 
         //CheckForDoors
@@ -199,12 +196,12 @@ class ParentIdle : ParentBaseState
         {
             MovementScript movement = gameObject.GetComponent<MovementScript>();
             movement.DoCatch();
-            return new ParentCatch(parentData, movement);
+            return new ParentCatch();
         }
 
         if (moveInput)
         {
-            return new ParentMovement(parentData);
+            return new ParentMovement();
         }
 
         return this;
@@ -215,10 +212,8 @@ class ParentMovement : ParentBaseState
 {
     private MovementScript movement;
 
-    public ParentMovement(ParentData data) : base(data)
+    public ParentMovement()
     {
-        gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Parent);
-
         movement = gameObject.GetComponent<MovementScript>();
 
         //Do Antimator
@@ -242,18 +237,18 @@ class ParentMovement : ParentBaseState
         if (Input.GetButtonDown($"{inputDevice}A"))
         {
             movement.DoCatch();
-            return new ParentCatch(parentData, movement);
+            return new ParentCatch();
         }
 
         //CheckForPlushie
         bool hasBeenThrown = CheckForPlushieAction(inputDevice);
         if (hasBeenThrown)
-            return new ParentThrow(parentData);
+            return new ParentThrow();
 
         //MovePlayer
         movement.MovePlayer(xAxis, yAxis);
         if (!moveInput)
-            return new ParentIdle(parentData);
+            return new ParentIdle();
 
         return this;
     }
@@ -266,23 +261,20 @@ class ParentCatch : ParentBaseState
     private float catchDistance;
     private MovementScript movement;
 
-    public ParentCatch(ParentData data, MovementScript movement) : base(data)
+    public ParentCatch()
     {
-        time = 0;
-        gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Parent);
-        //movement = parent.GetComponent<MovementScript>();
-        this.movement = movement;
-        movement.DoCatch();
-
-        //Do Antimator
         gameObject.GetComponent<Animator>().SetInteger("MomIndex", 4);
+        this.movement = gameObject.GetComponent<MovementScript>();
+
+        time = 0;
+        movement.DoCatch();
     }
 
     public override ParentBaseState UpdateState()
     {
         if (movement.IsCoroutineDone)
         {
-            return new ParentIdle(parentData);
+            return new ParentIdle();
         }
 
         Vector3 sphereCenter = gameObject.transform.position + Vector3.up + (gameObject.transform.forward)*0.5f;
@@ -301,7 +293,7 @@ class ParentCatch : ParentBaseState
                 PlayTimeData data = GameData.GetData<PlayTimeData>("PlayTimeData");
                 data.hasGameEnded = true;
 
-                return new ParentWin(parentData);
+                return new ParentWin();
             }
         }
 
@@ -311,14 +303,13 @@ class ParentCatch : ParentBaseState
 
 class ParentThrow : ParentBaseState
 {
-    public ParentThrow(ParentData data) : base(data)
+    public ParentThrow()
     {
         //Do Antimator
-        gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Parent);
         gameObject.GetComponent<Animator>().SetInteger("MomIndex", 3);
 
         Vector3 childTarget = CharacterInstantiator.GetActiveCharacter(Characters.Child).transform.position;
-        data.plushie.ThrowPlushie(childTarget);
+        parentData.plushie.ThrowPlushie(childTarget);
     }
 
     public override ParentBaseState UpdateState()
@@ -326,7 +317,7 @@ class ParentThrow : ParentBaseState
         if (parentData.plushie.IsThrowDone)
         {
             parentData.plushie = null;
-            return new ParentIdle(parentData);
+            return new ParentIdle();
         }
         return this;
     }
@@ -334,9 +325,8 @@ class ParentThrow : ParentBaseState
 
 class ParentWin : ParentBaseState
 {
-    public ParentWin(ParentData data) : base(data)
+    public ParentWin()
     {
-        gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Parent);
         gameObject.GetComponent<Animator>().SetInteger("MomIndex", 7);
     }
 
@@ -348,9 +338,8 @@ class ParentWin : ParentBaseState
 
 class ParentLose : ParentBaseState
 {
-    public ParentLose(ParentData data) : base(data)
+    public ParentLose()
     {
-        gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Parent);
         gameObject.GetComponent<Animator>().SetInteger("MomIndex", 6);
     }
 

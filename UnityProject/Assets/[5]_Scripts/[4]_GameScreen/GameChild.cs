@@ -176,6 +176,11 @@ abstract class ChildState : State
 
 class Win : ChildState
 {
+    public Win()
+    {
+        gameObject.GetComponent<Animator>().SetInteger("ChildIndex", 7);
+    }
+
     public override ChildState UpdateState()
     {
         return this;
@@ -184,6 +189,11 @@ class Win : ChildState
 
 class Lose : ChildState
 {
+    public Lose()
+    {
+        gameObject.GetComponent<Animator>().SetInteger("ChildIndex", 6);
+    }
+
     public override ChildState UpdateState()
     {
         return this;
