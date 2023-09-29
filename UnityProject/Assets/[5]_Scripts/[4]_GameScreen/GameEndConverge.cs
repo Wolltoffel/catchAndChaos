@@ -20,6 +20,8 @@ public class GameEndConverge : MonoBehaviour
         material.SetFloat("_Convergence", 0);
         material.SetVector("_Position_1", new Vector2(0.25f,0.25f));
         material.SetVector("_Position_2", new Vector2(0.75f, 0.75f));
+
+        GetComponent<Canvas>().sortingOrder = -100;
     }
 
     public void ConvergeOn(Transform transform1, Transform transform2,float time = 1)

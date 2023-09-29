@@ -10,8 +10,13 @@ public class BetweenRoundsManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI parentText;
     [SerializeField] TextMeshProUGUI childText;
 
+    [SerializeField] private GameObject convergePrefab;
+
     IEnumerator Start()
     {
+        GameEndConverge convergeScript = Instantiate(convergePrefab, CharacterInstantiator.GetActiveCharacter(Characters.Parent).transform).GetComponent<GameEndConverge>();
+        convergeScript.ConvergeOn(CharacterInstantiator.GetActiveCharacter(Characters.Parent).transform, CharacterInstantiator.GetActiveCharacter(Characters.Child).transform);
+
         PlayerData parent = GameData.GetData<PlayerData>("Parent");
         PlayerData child = GameData.GetData<PlayerData>("Child");
         PlayTimeData data = GameData.GetData<PlayTimeData>("PlayTimeData");
