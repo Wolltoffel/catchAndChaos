@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class GameScreenManager : MonoBehaviour
 {
-    [SerializeField] private CameraManager cameraScript;
+    //Camera
+    private CameraManager cameraScript;
 
     //Parent and Child
     [SerializeField] private GameParent parent;
@@ -35,7 +36,6 @@ public class GameScreenManager : MonoBehaviour
     private void SetupGame()
     {
         SpawnCharacters();
-        interactableManager.LoadInteractablesIntoDatabase();
 
         //Position Camera
         cameraScript = Camera.main.GetComponent<CameraManager>();
@@ -61,6 +61,8 @@ public class GameScreenManager : MonoBehaviour
     private IEnumerator _SetupGame()
     {
         yield return BeforeGameStart();
+
+        interactableManager.LoadInteractablesIntoDatabase();
 
         StartGame();
     }
@@ -112,6 +114,8 @@ public class GameScreenManager : MonoBehaviour
 
     private static IEnumerator _EndGame(EndCondition condition)
     {
+        WorldSpaceUI.RemoveAllButtonPrompts();
+
         PlayTimeData data = GameData.GetData<PlayTimeData>("PlayTimeData");
         data.hasGameEnded = true;
 

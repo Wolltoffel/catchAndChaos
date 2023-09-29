@@ -11,6 +11,9 @@ public class GameEndConverge : MonoBehaviour
     private Material material;
     private Coroutine coroutine;
 
+    public Vector2 pos1;
+    public Vector2 pos2;
+
     private void Awake()
     {
         if (image == null)
@@ -40,8 +43,8 @@ public class GameEndConverge : MonoBehaviour
         {
             progress += Time.deltaTime / time;
 
-            Vector2 pos1 = Camera.main.WorldToScreenPoint(transform1.position+ Vector3.up* 1.2f);
-            Vector2 pos2 = Camera.main.WorldToScreenPoint(transform2.position);
+            pos1 = Camera.main.WorldToScreenPoint(transform1.position+ Vector3.up* 1.2f);
+            pos2 = Camera.main.WorldToScreenPoint(transform2.position);
 
             material.SetVector("_Position_1", pos1);
             material.SetVector("_Position_2", pos2);

@@ -245,7 +245,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b46dc4dbe18d5446f92ad37440fee476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraScript: {fileID: 0}
   parent: {fileID: 6564984908202024799}
   child: {fileID: 2972892728402453232}
   parentObj: {fileID: 8799842590841747802}

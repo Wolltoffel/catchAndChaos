@@ -12,7 +12,7 @@ public class BetweenRoundsManager : MonoBehaviour
 
     [SerializeField] private GameObject convergePrefab;
 
-    IEnumerator Start()
+    private IEnumerator Start()
     {
         GameEndConverge convergeScript = Instantiate(convergePrefab, CharacterInstantiator.GetActiveCharacter(Characters.Parent).transform).GetComponent<GameEndConverge>();
         convergeScript.ConvergeOn(CharacterInstantiator.GetActiveCharacter(Characters.Parent).transform, CharacterInstantiator.GetActiveCharacter(Characters.Child).transform);
