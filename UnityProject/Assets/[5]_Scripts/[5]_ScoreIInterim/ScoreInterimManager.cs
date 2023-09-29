@@ -7,7 +7,6 @@ using TMPro;
 
 public class BetweenRoundsManager : MonoBehaviour
 {
-    [SerializeField] Button nextRoundButton;
     [SerializeField] TextMeshProUGUI parentText;
     [SerializeField] TextMeshProUGUI childText;
 
@@ -16,13 +15,6 @@ public class BetweenRoundsManager : MonoBehaviour
         PlayerData parent = GameData.GetData<PlayerData>("Parent");
         PlayerData child = GameData.GetData<PlayerData>("Child");
         PlayTimeData data = GameData.GetData<PlayTimeData>("PlayTimeData");
-
-
-        if (nextRoundButton== null)
-        {
-            nextRoundButton = gameObject.AddComponent<Button>();
-        }
-        nextRoundButton.onClick.AddListener(() => ScreenSwitcher.SwitchScreen(ScreenType.GameScreen));
 
         parentText.text = parent.tempScore.ToString();
         childText.text = child.tempScore.ToString();
@@ -48,26 +40,4 @@ public class BetweenRoundsManager : MonoBehaviour
             ScreenSwitcher.SwitchScreen(ScreenType.GameScreen);
         }
     }
-
-    /*void Update()
-    {
-        WaitForKeyInput();
-    }
-
-    public void WaitForKeyInput()
-    {
-        string parentInputDevice = GameData.GetData<PlayerData>("Parent").tempInputDevice;
-        string childInputDevice = GameData.GetData<PlayerData>("Child").tempInputDevice;
-        if (Input.GetButtonDown(parentInputDevice + "A")|Input.GetButtonDown(childInputDevice + "A"))
-            ScreenSwitcher.SwitchScreen (ScreenType.GameScreen);
-    }
-
-    public void GoToEndScreen()
-    {
-        if (GameData.GetData<PlayerData>("Child").tempScore>=3 |GameData.GetData<PlayerData>("Parent").tempScore>=3)
-        {
-            //Activate Endscreen
-        }
-        
-    }*/
 }

@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class GameScreenManager : MonoBehaviour
 {
-    [SerializeField] private CameraManager camera;
+    [SerializeField] private CameraManager cameraScript;
+    [SerializeField] private GameObject convergePrefab;
+    private static GameObject _convergePrefab;
 
     //Parent and Child
     [SerializeField] private GameParent parent;
@@ -29,6 +31,7 @@ public class GameScreenManager : MonoBehaviour
     void Awake()
     {
         interactableManager = GetComponent<GameInteractableManager>();
+        _convergePrefab = convergePrefab;
         SetupGame();
     }
 
@@ -38,9 +41,9 @@ public class GameScreenManager : MonoBehaviour
         interactableManager.LoadInteractablesIntoDatabase();
 
         //Position Camera
-        camera = Camera.main.GetComponent<CameraManager>();
-        camera.GameCamera();
-        camera.TrackPlayers(parentObj.transform, childObj.transform);
+        cameraScript = Camera.main.GetComponent<CameraManager>();
+        cameraScript.GameCamera();
+        cameraScript.TrackPlayers(parentObj.transform, childObj.transform);
 
         //Set up background Sounds
         if (backgroundAudioClips.Length > 0)
@@ -115,14 +118,9 @@ public class GameScreenManager : MonoBehaviour
         PlayTimeData data = GameData.GetData<PlayTimeData>("PlayTimeData");
         data.hasGameEnded = true;
 
-
-        PlayerData child = GameData.GetData<PlayerData>("Child");
-        PlayerData parent = GameData.GetData<PlayerData>("Parent");
-
         switch (condition)
         {
             case EndCondition.Catch | EndCondition.Time:
-                data.hasGameEnded = true;
                 break;
             case EndCondition.Chaos:
                 data.hasChildWon = true;
@@ -130,6 +128,10 @@ public class GameScreenManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(1);
+
+        GameEndConverge convergeScript = Instantiate(_convergePrefab, CharacterInstantiator.GetActiveCharacter(Characters.Parent).transform).GetComponent<GameEndConverge>();
+
+        convergeScript.ConvergeOn(CharacterInstantiator.GetActiveCharacter(Characters.Parent).transform, CharacterInstantiator.GetActiveCharacter(Characters.Child).transform);
 
         ScreenSwitcher.AddScreen(ScreenType.ScoreInterim);
     }
