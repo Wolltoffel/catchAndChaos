@@ -119,6 +119,14 @@ public class WorldSpaceUI : MonoBehaviour
       }
    }
 
+    public static void RemoveAllButtonPrompts()
+    {
+        for (int i = buttonPrompts.Count - 1; i >= 0 ; i--)
+        {
+            DestroyPrompt(buttonPrompts[i]);
+        }
+    }
+
    static void DestroyPrompt(Prompt buttonPrompt)
    {
       instance.StopCoroutine(buttonPrompt.coroutine);
