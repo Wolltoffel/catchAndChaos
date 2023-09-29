@@ -246,7 +246,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraScript: {fileID: 0}
-  convergePrefab: {fileID: 4725508866424478200, guid: cb8e16d8729e44fdba36ad76d1aee8e4, type: 3}
   parent: {fileID: 6564984908202024799}
   child: {fileID: 2972892728402453232}
   parentObj: {fileID: 8799842590841747802}
