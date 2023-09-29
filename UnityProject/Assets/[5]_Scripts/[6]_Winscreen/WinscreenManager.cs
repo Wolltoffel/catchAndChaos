@@ -19,21 +19,25 @@ public class WinData: Object
 
 public class WinscreenManager : MonoBehaviour
 {
-    [SerializeField] Transform winnerAnchor, loserAnchor, cameraAnchor;
+    [SerializeField] Transform parentAnchor, childAnchor, cameraAnchor;
     Characters winner;
     GameObject childInstance, parentInstance;
 
-    void Awake()
+    //WinScreenStuff
+    [SerializeField] private GameObject UIstuff;
+
+    private IEnumerator Start()
     {
         DetermineWinner();
         SpawnCharacters();
-        SetCameraPosition();
-        //SetUpUI();
+        //SetCameraPosition();
+        SetUpUI();
+        yield return null;
     }
 
     private void SetUpUI()
     {
-        Debug.Log("Not set up.");
+        UIstuff.SetActive(true);
     }
 
     void DetermineWinner()
@@ -57,28 +61,30 @@ public class WinscreenManager : MonoBehaviour
 
     void SpawnCharacters()
     {
-        Transform childAnchor = null;
-        Transform parentAnchor = null;
+        //Transform childAnchor = null;
+        //Transform parentAnchor = null;
 
         //Spawn Winners at winner positon and loser at loser position
-        if (winner == Characters.Child)
-        {
-            childAnchor = winnerAnchor;
-            parentAnchor = loserAnchor;
-        }
-        else if (winner == Characters.Parent)
-        {
-            parentAnchor = winnerAnchor;
-            childAnchor = loserAnchor;
-        }
+        //if (winner == Characters.Child)
+        //{
+        //    childAnchor = this.parentAnchor;
+        //    parentAnchor = this.childAnchor;
+        //}
+        //else if (winner == Characters.Parent)
+        //{
+        //    parentAnchor = this.parentAnchor;
+        //    childAnchor = this.childAnchor;
+        //}
 
-        CharacterInstantiator.InstantiateCharacter(Characters.Child, out childInstance,childAnchor);
-        CharacterInstantiator.InstantiateCharacter (Characters.Parent, out parentInstance,parentAnchor);
+        CharacterInstantiator.InstantiateCharacter(Characters.Child, out childInstance,childAnchor,true);
+        CharacterInstantiator.InstantiateCharacter (Characters.Parent, out parentInstance,parentAnchor,true);
+        CharacterInstantiator.GetActiveCharacter(Characters.Child).GetComponent<Animator>().SetInteger("ChildIndex", 0);
+        CharacterInstantiator.GetActiveCharacter(Characters.Parent).GetComponent<Animator>().SetInteger("MomIndex", 0);
     }
 
     void SetCameraPosition()
     {
-        Camera.main.transform.position = cameraAnchor.position;
-        Camera.main.transform.rotation = cameraAnchor.rotation;
+        Camera.main.GetComponent<CameraManager>().SetCameraAsMain();
+        Camera.main.GetComponent<CameraManager>().SetCameraPosition(cameraAnchor);
     }
 }
