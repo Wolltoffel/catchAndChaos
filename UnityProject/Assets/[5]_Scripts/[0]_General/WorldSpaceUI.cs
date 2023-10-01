@@ -59,7 +59,7 @@ public class WorldSpaceUI : MonoBehaviour
       {
          Sprite hintSprite = GameData.GetData<ButtonPromptAsssets>("ButtonPromptAssets").GetHintSpriteByName(hintName);
          GameData.GetData<ButtonPromptAsssets>("ButtonPromptAssets").AddToShownHints(hintName);
-         SpawnButtonPrompt(target,buttonName,hintSprite, out canvasHolder,new Vector2(instance.hintOffsetX,instance.hintOffsetY), 3,canvasHolder.transform);
+         SpawnButtonPrompt(target,buttonName,hintSprite, out canvasHolder,new Vector2(instance.hintOffsetX,instance.hintOffsetY), 1,canvasHolder.transform);
       }
 
    }
@@ -76,9 +76,14 @@ public class WorldSpaceUI : MonoBehaviour
       GameObject spriteHolder = AddSpriteToCanvas(sprite,canvasHolder.GetComponent<RectTransform>(),objectName);
       spriteHolder.GetComponent<RectTransform>().rotation = Quaternion.Euler(0,0,8);
 
-        //Start Coroutine that follows objects
-        _AdjustPosition(spriteHolder, target, offset, scale);
-        Coroutine coroutine = instance.StartCoroutine(AdjustPosition(spriteHolder,target,offset,scale));
+      //Set Scale
+      spriteHolder.GetComponent<Image>().SetNativeSize();
+      Vector3 currentScale = spriteHolder.transform.localScale;
+      spriteHolder.transform.localScale = currentScale*scale;
+
+      //Start Coroutine that follows objects
+      _AdjustPosition(spriteHolder, target, offset);
+      Coroutine coroutine = instance.StartCoroutine(AdjustPosition(spriteHolder,target,offset));
       
       //Create new ButtonPrompt file and save Coroutine to lists
       Prompt buttonPrompt = new Prompt(canvasHolder,coroutine,target);
@@ -135,20 +140,18 @@ public class WorldSpaceUI : MonoBehaviour
    }
 
 
-   static IEnumerator AdjustPosition(GameObject spawnedSprite, Transform target,Vector2 offset, float scale = 1)
+   static IEnumerator AdjustPosition(GameObject spawnedSprite, Transform target,Vector2 offset)
    {
         while (spawnedSprite!=null && target!=null)
         {
-            _AdjustPosition(spawnedSprite,target,offset,scale);
+            _AdjustPosition(spawnedSprite,target,offset);
             yield return null;
         }
    }
 
     //Adjusts Position for first Frame
-    static private void _AdjustPosition(GameObject spawnedSprite, Transform target, Vector2 offset, float scale = 1, CanvasScaler canvasScaler = null)
+    static private void _AdjustPosition(GameObject spawnedSprite, Transform target, Vector2 offset, CanvasScaler canvasScaler = null)
     {
-        spawnedSprite.transform.localScale = new Vector3(scale, scale, scale);
-
         if (canvasScaler == null)
             canvasScaler = spawnedSprite.GetComponentInParent<CanvasScaler>();
 
