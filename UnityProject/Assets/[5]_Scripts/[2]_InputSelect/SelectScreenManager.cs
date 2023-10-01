@@ -62,6 +62,11 @@ public class ReadyButton
             SetReady(Characters.Parent);
         });
 
+        keyboardButton.onClick.AddListener(()=>{
+            SetReady(Characters.Child);
+            SetReady(Characters.Parent);
+        });
+
         ButtonSwitchData buttonSwitchData = new ButtonSwitchData(controllerButton,keyboardButton);
         readdyButtonContainer.AddComponent<ButtonSwitcher>().buttons.Add(buttonSwitchData);
         
@@ -123,6 +128,12 @@ public class SelectScreenManager : MonoBehaviour
 
         if (child is CustomiseCharacterSingle && parent is CustomiseCharacterSingle)
             readyButton.Activate();
+
+        if (readyButton.GetReady(Characters.Child)&&readyButton.GetReady(Characters.Parent))
+        {
+            SetReady(Characters.Child);
+            SetReady(Characters.Parent);
+        }
  
    }
 
