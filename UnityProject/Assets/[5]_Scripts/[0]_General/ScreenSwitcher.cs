@@ -13,6 +13,7 @@ public class ScreenSwitcher : MonoBehaviour
 {
     [SerializeField] ScreenType startScreen;
 
+
     [Header ("Screen Prefabs")]
 
     [SerializeField] GameObject mainMenu;

@@ -13,13 +13,16 @@ public class SelectScreenData
 
     public ReadyButton readyButton;
 
-    public SelectScreenData(Characters character, List<string> setInputDevices, CharacterSelect characterSelect,GameObject inputSelectToHide,ReadyButton readyButton)
+    public BackButton backButton;
+
+    public SelectScreenData(Characters character, List<string> setInputDevices, CharacterSelect characterSelect,GameObject inputSelectToHide,ReadyButton readyButton,BackButton backButton)
     {
         this.character = character;
         this.setInputDevices = setInputDevices;
         this.characterSelect = characterSelect;
         this.inputSelectToHide = inputSelectToHide;
         this.readyButton = readyButton;
+        this.backButton = backButton;
 
         if (character == Characters.Child)
             key = "Child";
@@ -104,8 +107,8 @@ public class SelectScreenManager : MonoBehaviour
         Camera.main.GetComponent<CameraManager>().SetCameraPosition(cameraPosition);
 
         //Initialise StateMachine
-        parent_selectScreenData = new SelectScreenData(Characters.Parent,setInputDevices,characterSelectParent,inputSelectToHideParent,readyButton);
-        child_SelectScreenData = new SelectScreenData(Characters.Child,setInputDevices,characterSelectChild,inputSelectToHideChild,readyButton);
+        parent_selectScreenData = new SelectScreenData(Characters.Parent,setInputDevices,characterSelectParent,inputSelectToHideParent,readyButton,backButton);
+        child_SelectScreenData = new SelectScreenData(Characters.Child,setInputDevices,characterSelectChild,inputSelectToHideChild,readyButton,backButton);
         child = new WaitForKeyInput(child_SelectScreenData);
         parent = new WaitForKeyInput(parent_selectScreenData);
 
@@ -228,8 +231,11 @@ public class CustomiseCharacterSingle: MenuState
             otherCharacter = Characters.Child;
         
         if (dataPack.readyButton.readdyButtonContainer.activeInHierarchy)
+        {
+            dataPack.backButton.SetScreenScreenToJumpTo(ScreenType.CharacterInputSelect);
             return new CustomiseCharacterTogether(dataPack);
-              
+        }
+                    
         return this;
     }
 

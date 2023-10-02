@@ -6,10 +6,10 @@ using UnityEngine.UI;
 using TMPro;
 
 
-public class ButtonAddition : MonoBehaviour, IPointerEnterHandler,ISelectHandler, IDeselectHandler
+public class ButtonAddition : MonoBehaviour,ISelectHandler, IDeselectHandler, IPointerEnterHandler,IPointerExitHandler
 {
     private Vector2 originalScaleButton;
-    bool scaledUp;
+    bool scaledUp=false;
     TextMeshProUGUI textMeshPro;
     float origninalSizeText;
 
@@ -19,6 +19,17 @@ public class ButtonAddition : MonoBehaviour, IPointerEnterHandler,ISelectHandler
         textMeshPro = GetComponentInChildren<TextMeshProUGUI>();
         if (textMeshPro!=null)
             origninalSizeText = textMeshPro.fontSize;
+    }
+
+    void Update()
+    {
+       /* InputDevice inputDevice = GameData.GetData<LastInputDeviceData>("LastInputDeviceData").inputDevice;
+        if (inputDevice==InputDevice.Keyboard)
+            if (EventSystem.current!=null)
+                EventSystem.current.SetSelectedGameObject(null);
+        if (inputDevice==InputDevice.Controller)
+            if (EventSystem.current!=null && EventSystem.current.currentSelectedGameObject==null)
+                    EventSystem.current.SetSelectedGameObject(EventSystem.current.firstSelectedGameObject);*/
     }
 
     public void OnSelect (BaseEventData baseEventData)
@@ -32,16 +43,23 @@ public class ButtonAddition : MonoBehaviour, IPointerEnterHandler,ISelectHandler
 
     public void OnDeselect (BaseEventData baseEventData)
     {
-        StopAllCoroutines();
-        StartCoroutine(ScaleDown(transform.localScale,originalScaleButton));
+            StopAllCoroutines();
+            StartCoroutine(ScaleDown(transform.localScale,originalScaleButton));
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (EventSystem.current!=null)
         {
-            EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(gameObject);
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (EventSystem.current!=null)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
         }
     }
 

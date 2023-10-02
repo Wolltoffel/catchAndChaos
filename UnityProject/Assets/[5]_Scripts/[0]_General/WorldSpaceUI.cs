@@ -53,27 +53,47 @@ public class WorldSpaceUI : MonoBehaviour
  
    public static void ShowButtonPrompt(Transform target,string buttonName, out GameObject canvasHolder, string hintName = "")
    {
+      GameObject spriteHolder;
       Sprite buttonSprite = GameData.GetData<ButtonPromptAsssets>("ButtonPromptAssets").GetButtonSpriteByName(buttonName);
-      SpawnButtonPrompt(target,buttonName,buttonSprite, out canvasHolder,Vector2.zero, 1.5f);
+      SpawnPrompt(target,buttonName,buttonSprite, out canvasHolder,out spriteHolder,Vector2.zero, 1.5f);
       if (hintName!="" &&  !GameData.GetData<ButtonPromptAsssets>("ButtonPromptAssets").WasHintAlreadyShown(hintName))
       {
          Sprite hintSprite = GameData.GetData<ButtonPromptAsssets>("ButtonPromptAssets").GetHintSpriteByName(hintName);
          GameData.GetData<ButtonPromptAsssets>("ButtonPromptAssets").AddToShownHints(hintName);
-         SpawnButtonPrompt(target,buttonName,hintSprite, out canvasHolder,new Vector2(instance.hintOffsetX,instance.hintOffsetY), 1,canvasHolder.transform);
+         SpawnHint(buttonName+"_hint",hintSprite,canvasHolder,new Vector2(instance.hintOffsetX,instance.hintOffsetY),spriteHolder.transform);
       }
 
    }
 
-   static void SpawnButtonPrompt(Transform target,string objectName,Sprite sprite, out GameObject canvasHolder, Vector2 offset, float scale = 1f,Transform canvasParent = null)
-   { 
-      //Add Canvas if neccessary
-      if (canvasParent==null)
-         canvasHolder = SetUpCanvas(objectName);
-      else
-         canvasHolder = canvasParent.gameObject;
-
+   static void SpawnHint(string objectName,Sprite sprite,GameObject canvasHolder,Vector2 offset,Transform parent,float scale = 1)
+   {
+      
       //Add Sprite to Canvas
       GameObject spriteHolder = AddSpriteToCanvas(sprite,canvasHolder.GetComponent<RectTransform>(),objectName);
+      spriteHolder.GetComponent<RectTransform>().rotation = Quaternion.Euler(0,0,8);
+
+      //Set Scale
+      spriteHolder.GetComponent<Image>().SetNativeSize();
+      Vector3 currentScale = spriteHolder.transform.localScale;
+      spriteHolder.transform.localScale = currentScale*scale;
+
+      //Set Parent
+      spriteHolder.transform.parent = parent;
+
+      //Set Offset
+      spriteHolder.transform.localPosition = new Vector3(offset.x,offset.y,0);
+   }  
+
+   static void SpawnPrompt(Transform target,string objectName,Sprite sprite, out GameObject canvasHolder,out GameObject spriteHolder, Vector2 offset, float scale = 1f,Transform canvas = null)
+   { 
+      //Add Canvas if neccessary
+      if (canvas==null)
+         canvasHolder = SetUpCanvas(objectName);
+      else
+         canvasHolder = canvas.gameObject;
+
+      //Add Sprite to Canvas
+      spriteHolder = AddSpriteToCanvas(sprite,canvasHolder.GetComponent<RectTransform>(),objectName);
       spriteHolder.GetComponent<RectTransform>().rotation = Quaternion.Euler(0,0,8);
 
       //Set Scale
