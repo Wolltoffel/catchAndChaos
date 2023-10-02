@@ -3346,7 +3346,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4576955611715178761}
   - component: {fileID: 5627547124762811932}
-  - component: {fileID: 7179345397118085446}
+  - component: {fileID: 6908211239202652656}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -3384,7 +3384,7 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
---- !u!114 &7179345397118085446
+--- !u!114 &6908211239202652656
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3393,17 +3393,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 7481747524169462358}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Script: {fileID: 11500000, guid: 225bae2792086444ebc5857a65e5d37a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_SendPointerHoverToParent: 1
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
+  horizontalAxis_Keyboard: K Horizontal
+  horizontalAxis_Gamepad: J Horizontal
+  verticalAxis_Keyboard: K Vertical
+  verticalAxis_Gamepad: J Vertical
+  m_SubmitButton: AA
+  m_CancelButton: AB
+  m_InputActionsPerSecond: 100
+  m_RepeatDelay: 0.001
 --- !u!1 &7492640378782545611
 GameObject:
   m_ObjectHideFlags: 0
