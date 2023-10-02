@@ -78,7 +78,7 @@ public class WorldSpaceUI : MonoBehaviour
       spriteHolder.transform.localScale = currentScale*scale;
 
       //Set Parent
-      spriteHolder.transform.parent = parent;
+      spriteHolder.transform.SetParent(parent);
 
       //Set Offset
       spriteHolder.transform.localPosition = new Vector3(offset.x,offset.y,0);

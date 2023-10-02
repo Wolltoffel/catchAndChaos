@@ -6,7 +6,7 @@ public class DestructableSpawner : MonoBehaviour
 {
     List<GameObject> potentialDestructables  = new List<GameObject>();
     [SerializeField] int amountOfDestructables;
-    [SerializeField] Material outlineMaterial;
+    [SerializeField]Color outlineColor;
     GameObject randomDestructable;
 
     public void Awake()
@@ -53,9 +53,10 @@ public class DestructableSpawner : MonoBehaviour
             customOutline = target.AddComponent<CustomOutline>();
 
         customOutline.activeOutline = true;
-        customOutline.outlineColor = Color.red;
-        customOutline.outlineWidth = 10f;
+        customOutline.outlineColor = outlineColor;
+        customOutline.outlineWidth = 3f;
         customOutline.StartPulsating(20,30,Effect.OutlineWidth,2f);
+        customOutline.seeThroughWalls = true;
     }
 
     public void DeactivateOutline(GameObject target)

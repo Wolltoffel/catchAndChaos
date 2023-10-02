@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lollyPrefab: {fileID: 4277073679142548971, guid: d1454aebd4e7b42478b68f472d5d29a8, type: 3}
-  amountOfLollys: 5
+  amountOfLollys: 3
   parentObject: {fileID: 1493361585049889100}
 --- !u!1 &1305096530984796727
 GameObject:
@@ -729,7 +729,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amountOfDestructables: 3
-  outlineMaterial: {fileID: 2100000, guid: 6e79f115bf387aa419f94a4aff87cdf9, type: 2}
+  outlineColor: {r: 0.647016, g: 0.8396226, b: 0.46469676, a: 0}
 --- !u!1 &6201297028952434192
 GameObject:
   m_ObjectHideFlags: 0
