@@ -122,11 +122,11 @@ public class ScrollSelection : MonoBehaviour
         {
             float t = (Time.time - startTime) / 0.4f;
             currentPos = Mathf.Lerp(currentPos, targetPos, t);
-            //AdjustPositionOfAllElements(currentPos);
+            AdjustPositionOfAllElements(currentPos);
             yield return null;
         }
 
-        AdjustPositionOfAllElements(currentPos);
+        //AdjustPositionOfAllElements(currentPos);
         
         spawnedElements[selectedElementIndex].transform.localScale = Vector3.one;
 
@@ -137,9 +137,7 @@ public class ScrollSelection : MonoBehaviour
         
        //Add first item
         int numberOfAssets = characterAssets.GetCharacterAssetItems().Length;
-        int index = (selectedIndex-1)%numberOfAssets;
-        if (index<0)
-            index+=numberOfAssets;
+        int index = (selectedIndex-3 + numberOfAssets*3) %numberOfAssets;
 
         GameObject firstElement = SpawnElement(index);
         spawnedElements.Insert(0,firstElement);
