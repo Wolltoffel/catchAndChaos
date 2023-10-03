@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: Parent
   m_EditorClassIdentifier: 
   key: ParentAssets
-  characterPrefab:
-  - {fileID: 3632912499859001892, guid: 86e2705f56f7eb44bb061df5ae884899, type: 3}
-  - {fileID: 3632912499859001892, guid: 425c40863e8a96042bbbcddb13307ecc, type: 3}
-  - {fileID: 3632912499859001892, guid: 6486824b933aaf245a53ae2a614ed9c2, type: 3}
+  characterAssetItems:
+  - characterPrefab: {fileID: 3632912499859001892, guid: 86e2705f56f7eb44bb061df5ae884899, type: 3}
+    characterPortrait: {fileID: 21300000, guid: 91de82eeffd02a84a853ef6dee32777d, type: 3}
+  - characterPrefab: {fileID: 3632912499859001892, guid: 425c40863e8a96042bbbcddb13307ecc, type: 3}
+    characterPortrait: {fileID: 21300000, guid: 3da93602929ab904fb269155abae9b66, type: 3}
+  - characterPrefab: {fileID: 3632912499859001892, guid: 6486824b933aaf245a53ae2a614ed9c2, type: 3}
+    characterPortrait: {fileID: 21300000, guid: d7fb1f16e6a0f1a4a844f3bbc8ee223e, type: 3}

@@ -10,6 +10,8 @@ public class CharacterSelect : MonoBehaviour
     [SerializeField] Button prevController,nextController;
     [SerializeField] Button prevKeyboard,nextKeyboard;
 
+    [SerializeField] ScrollSelection scrollSelection;
+
     string inputDevice;
     bool activeController;
     ButtonSwitcher buttonSwitcher;
@@ -75,6 +77,12 @@ public class CharacterSelect : MonoBehaviour
             GameData.GetData<PlayerData>("Parent").characterAssets.UpdateCharacterPrefab(step);
 
         CharacterInstantiator.ReplaceCharacter(characters, out GameObject character, true);
+
+        if (scrollSelection!=null)
+            if (step == Step.Prev)
+            scrollSelection.SlideLeft();
+            else
+                scrollSelection.SlideRight();
     }
 
     bool CheckForController()
