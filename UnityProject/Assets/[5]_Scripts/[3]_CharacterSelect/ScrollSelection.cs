@@ -7,10 +7,14 @@ using UnityEngine.UI;
 public class ScrollSelection : MonoBehaviour
 {
     [SerializeField] int maxElementsInARow;
-    [SerializeField] GameObject portraitTemplate;
+    [SerializeField] int paddingSide;
+    [SerializeField] GameObject template;
+    
+    Rect templateRect;
+    
     List <Sprite> sprites = new List<Sprite>();
-    CharacterAssets characterAssets;
     List<GameObject> spawnedElements = new List<GameObject>();
+    CharacterAssets characterAssets;
 
     int selectedIndex;
     int selectedElementIndex;
@@ -18,11 +22,12 @@ public class ScrollSelection : MonoBehaviour
 
     private void Start() 
     {
+        templateRect = template.GetComponent<RectTransform>().rect;
+
         LoadSprites();
-        //SpawnSprites();
-        //UpdateShownElements();
         SpawnElements();
         AdjustPositionOfAllElements();
+        SetStartValue();
     }
 
     void LoadSprites()
@@ -50,73 +55,124 @@ public class ScrollSelection : MonoBehaviour
             if (amountOfElements==selectedElementIndex)
             {
                 selectedIndex = index;
-                //spawnedElement.transform.localScale = Vector3.one*1.5f;
+                spawnedElement.transform.localScale = Vector3.one*1.2f;
             }
                 
             amountOfElements++;
             index = amountOfElements % (characterAssets.GetCharacterAssetItems().Length);
          }
 
-         portraitTemplate.SetActive(false);
+         template.SetActive(false);
         
     }
 
     void SetStartValue()
     {
         int distance = selectedIndex-characterAssets.GetActivePrefabIndex();
+        while (selectedIndex!=characterAssets.GetActivePrefabIndex())
+        {   
+            Slide(templateRect.width);
+            spawnedElements[selectedElementIndex].transform.localScale = Vector3.one; 
+            SlideRightOperations();
+            AdjustPositionOfAllElements();
+        }
     }
 
     GameObject SpawnElement(int index)
     {
-        GameObject spawnedElement = Instantiate(portraitTemplate); 
+        GameObject spawnedElement = Instantiate(template); 
 
         spawnedElement.transform.SetParent(gameObject.transform);
 
         spawnedElement.name = characterAssets.GetCharacterAssetItemAt (index).characterPortrait.name;
         spawnedElement.GetComponent<Image>().sprite = sprites[index];
-        spawnedElement.transform.localScale = portraitTemplate.transform.localScale;
+        spawnedElement.transform.localScale = template.transform.localScale;
 
         return spawnedElement;
     }
 
-    public void SlideLeft()
+    public void Slide (Step step)
     {
-        spawnedElements[selectedElementIndex].transform.localScale = Vector3.one;
-             /* //Remove first item
+        //Reset IncreasedSizeOfSelectedElement
+        spawnedElements[selectedElementIndex].transform.localScale = Vector3.one;    
+
+        if (step == Step.Next)
+            _SlideLeft();
+        else
+            _SlideRight();
+    }
+
+    void _SlideLeft()
+    {
+        StartCoroutine(SlideLeft());
+    }
+
+    IEnumerator SlideLeft()
+    {
+       
+        yield return Slide(-templateRect.width);
+        SlideLeftOperations();
+        AdjustPositionOfAllElements();
+    }
+
+    void SlideLeftOperations()
+    {
+        //Remove first item
         GameObject firstElement = spawnedElements[0];
         spawnedElements.Remove(firstElement);
         Destroy (firstElement);
         
         //Add last item
         int numberOfAssets = characterAssets.GetCharacterAssetItems().Length;
-        int index = (selectedIndex+1)%numberOfAssets;
-
+        int index = (selectedIndex+3)%numberOfAssets;
         GameObject lastElement = SpawnElement(index);
-        spawnedElements.Insert(0,lastElement);
+        spawnedElements.Add(lastElement);
 
-        selectedIndex = (selectedIndex-1)%numberOfAssets;
-        if (selectedIndex<0)
-            selectedIndex+=numberOfAssets;
+        //Update selectedIndex
+        selectedIndex = (selectedIndex+1)%numberOfAssets;
 
-
-        //spawnedElements[selectedElementIndex].transform.localScale = Vector3.one*1.5f;
-
-        AdjustPositionOfAllElements();*/
-
-        
+        //Increase size of selected object
+        spawnedElements[selectedElementIndex].transform.localScale = Vector3.one*1.2f;
     }
 
-    public void SlideRight()
+    void _SlideRight()
     {
-        //spawnedElements[selectedElementIndex].transform.localScale = Vector3.one*1.5f;
-        StartCoroutine(MoveElementsRight());
+        StartCoroutine(SlideRight());
     }
 
-    IEnumerator MoveElementsRight()
+    IEnumerator SlideRight()
+    {
+        yield return Slide(templateRect.width);
+        spawnedElements[selectedElementIndex].transform.localScale = Vector3.one;
+        SlideRightOperations();
+        AdjustPositionOfAllElements();
+    }
+
+    void SlideRightOperations()
+    {
+        //Remove last item
+        GameObject lastItem = spawnedElements[spawnedElements.Count-1];
+        spawnedElements.Remove(lastItem);
+        Destroy (lastItem);
+        
+       //Add first item
+        int numberOfAssets = characterAssets.GetCharacterAssetItems().Length;
+        int index = (selectedIndex-3 + numberOfAssets*3) %numberOfAssets;
+        GameObject firstElement = SpawnElement(index);
+        spawnedElements.Insert(0,firstElement);
+
+        //Update SelectedIndex
+        selectedIndex = (selectedIndex-1)%numberOfAssets;
+
+        //Increase size of selected object
+        spawnedElements[selectedElementIndex].transform.localScale = Vector3.one*1.2f;
+    }
+
+    IEnumerator Slide(float xtargetPos)
     {
         float currentPos = 0;
         float startTime = Time.time;
-        float targetPos = 400f;
+        float targetPos = xtargetPos;
 
         while (Mathf.Abs(currentPos-targetPos) > 0.01f)
         {
@@ -125,85 +181,6 @@ public class ScrollSelection : MonoBehaviour
             AdjustPositionOfAllElements(currentPos);
             yield return null;
         }
-
-        //AdjustPositionOfAllElements(currentPos);
-        
-        spawnedElements[selectedElementIndex].transform.localScale = Vector3.one;
-
-       //Remove last item
-        GameObject lastItem = spawnedElements[spawnedElements.Count-1];
-        spawnedElements.Remove(lastItem);
-        Destroy (lastItem);
-        
-       //Add first item
-        int numberOfAssets = characterAssets.GetCharacterAssetItems().Length;
-        int index = (selectedIndex-3 + numberOfAssets*3) %numberOfAssets;
-
-        GameObject firstElement = SpawnElement(index);
-        spawnedElements.Insert(0,firstElement);
-
-        selectedIndex = (selectedIndex-1)%numberOfAssets;
-
-        AdjustPositionOfAllElements();
-
-        //spawnedElements[selectedElementIndex].transform.localScale = Vector3.one*1.5f;
-
-    }
-
-
-
-    GameObject[] GetShownElements()
-    {
-        GameObject[] shownElements = new GameObject[maxElementsInARow+2];
-
-        int activePrefabIndex = characterAssets.GetActivePrefabIndex();
-
-        int totalElements = spawnedElements.Count;
-
-        int elementsBefore = (maxElementsInARow)/2;
-        int elementsAfter = maxElementsInARow-elementsBefore-1;
-
-        //Before (not visible)
-        int beforeIndex = CalculateNewIndex(activePrefabIndex,totalElements,-elementsBefore-1);
-        shownElements[0] = spawnedElements[beforeIndex];
-
-        //Before
-        for (int i= 0; i<=elementsBefore;i++)
-        {   
-           int index = CalculateNewIndex(activePrefabIndex,totalElements,-(i+1));
-           shownElements[i+1] = spawnedElements[index];
-        }
-
-        //Active Element
-        shownElements[elementsBefore+1] = spawnedElements[activePrefabIndex];
-
-        //After
-        for (int i = 1; i < elementsAfter; i++)
-        {   
-            int index = CalculateNewIndex(activePrefabIndex, totalElements, i+1);
-            shownElements[elementsBefore + i+2] = spawnedElements[index];
-        }
-
-        //After (not visible)
-        int afterIndex = CalculateNewIndex(activePrefabIndex,totalElements,elementsAfter+1);
-        shownElements[shownElements.Length-1] = spawnedElements[afterIndex];
-
-        for (int i = 0; i<shownElements.Length;i++)
-        {
-            Debug.Log (shownElements[i]+ " "+i);
-        }
-
-        return shownElements;
-    }
-
-    int CalculateNewIndex(int activeIndex,int totalElements,int steps)
-    {
-        int newIndex = (activeIndex + steps) % totalElements;
-
-        if (newIndex < 0)
-            newIndex += totalElements;
-
-            return newIndex;
     }
 
     public void AdjustPositionOfAllElements(float xOffset=0)
@@ -211,20 +188,20 @@ public class ScrollSelection : MonoBehaviour
         GameObject[] shownElements=spawnedElements.ToArray();
 
         //Calculate Padding
-        float totalWidthOfAllElements = shownElements.Length*shownElements[0].GetComponent<RectTransform>().rect.width;
+        float totalWidthOfAllElements = shownElements.Length*templateRect.width;
         float totalWidthOfParent = GetComponent<RectTransform>().rect.width;
         float padding = (totalWidthOfParent-totalWidthOfAllElements)/2;
 
-        Vector2 position = portraitTemplate.GetComponent<RectTransform>().anchoredPosition;
-        position.x -= portraitTemplate.GetComponent<RectTransform>().rect.width;
-        position.x +=+xOffset;
+        Vector2 position = template.GetComponent<RectTransform>().anchoredPosition;
+        position.x -= templateRect.width;
+        position.x +=xOffset;
         //position.x+=padding;
 
         for (int i= 0; i<shownElements.Length;i++)
         {
             shownElements[i].SetActive(true);          
             shownElements[i].GetComponent<RectTransform>().anchoredPosition  = position;
-            position.x += shownElements[i].GetComponent<RectTransform>().rect.width;
+            position.x += shownElements[i].GetComponent<RectTransform>().rect.width+paddingSide;
         }
     }
 

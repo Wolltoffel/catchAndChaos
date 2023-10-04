@@ -78,11 +78,8 @@ public class CharacterSelect : MonoBehaviour
 
         CharacterInstantiator.ReplaceCharacter(characters, out GameObject character, true);
 
-        if (scrollSelection!=null)
-            if (step == Step.Prev)
-            scrollSelection.SlideLeft();
-            else
-                scrollSelection.SlideRight();
+        scrollSelection.Slide(step);
+
     }
 
     bool CheckForController()

@@ -1099,7 +1099,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 200, y: 490}
-  m_SizeDelta: {x: 1520, y: 500}
+  m_SizeDelta: {x: 1580, y: 500}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &2853078921883315818
 CanvasRenderer:
@@ -1153,7 +1153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 0
   m_DownSamplingRate: 1
-  m_Softness: 1
+  m_Softness: 0.491
   m_Alpha: 1
   m_IgnoreParent: 0
   m_PartOfParent: 0
@@ -1172,7 +1172,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxElementsInARow: 3
-  portraitTemplate: {fileID: 2862655680300945493}
+  paddingSide: 100
+  template: {fileID: 2862655680300945493}
 --- !u!1 &2848820135645973270
 GameObject:
   m_ObjectHideFlags: 0
@@ -2558,7 +2559,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 200, y: 0}
-  m_SizeDelta: {x: 1500, y: 500}
+  m_SizeDelta: {x: 1580, y: 500}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &3736554819791317400
 MonoBehaviour:
