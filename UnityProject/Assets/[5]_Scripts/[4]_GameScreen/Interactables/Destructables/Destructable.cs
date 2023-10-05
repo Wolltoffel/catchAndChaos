@@ -6,6 +6,8 @@ public class Destructable : MonoBehaviour
 {
     public float destroyTimeLeft;
 
+    public Shader prevShader;
+
 
     private void Awake()
     {

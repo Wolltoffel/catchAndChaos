@@ -36,7 +36,7 @@ public class ScrollSelection : MonoBehaviour
         SetStartValue();
 
         int numberOfAssets = characterAssets.GetCharacterAssetItems().Length;
-        characterModelSwitcher.SpawnModels(selectedIndex,new int[1]{(selectedIndex-1+numberOfAssets)%numberOfAssets},new int[1]{(selectedIndex+1)%numberOfAssets});
+        characterModelSwitcher.SpawnModels(numberOfAssets,new int[1]{(selectedIndex-1+numberOfAssets)%numberOfAssets},new int[1]{(selectedIndex+1)%numberOfAssets});
     }
 
     void LoadSprites()

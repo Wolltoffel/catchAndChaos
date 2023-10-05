@@ -11,6 +11,8 @@ public class CharacterModelSwitcher : MonoBehaviour
    int [] beforeActiveModelIndex;
    int [] afterActiveModelIndex;
 
+   int amountOfAssets;
+
    GameObject activeModel;
    List<GameObject> afterActiveModels = new List<GameObject>();
    List<GameObject> beforeActiveModels = new List<GameObject>();
@@ -44,11 +46,14 @@ public class CharacterModelSwitcher : MonoBehaviour
         Destroy(lastModel.transform.parent.gameObject);
 
         //Add first Model
+        
     }
 
     
-   public void SpawnModels(int activeModelIndex,int[]beforeActiveModelIndex,int[]afterActiveModelIndex)
-   {
+   public void SpawnModels(int amountOfAssets,int[]beforeActiveModelIndex,int[]afterActiveModelIndex)
+   {    
+        this.amountOfAssets = amountOfAssets;
+
         CharacterInstantiator.InstantiateCharacter(Characters.Child,out activeModel,anchor.position);
         float circleSize = 2;
         Vector3 circleCenter = anchor.transform.position;

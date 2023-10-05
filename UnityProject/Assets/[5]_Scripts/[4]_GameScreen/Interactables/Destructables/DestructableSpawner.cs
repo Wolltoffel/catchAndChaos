@@ -7,6 +7,13 @@ public class DestructableSpawner : MonoBehaviour
     List<GameObject> potentialDestructables  = new List<GameObject>();
     [SerializeField] int amountOfDestructables;
     [SerializeField]Color outlineColor;
+
+    [Header ("Highlight")]
+    [SerializeField] Shader highlightShader;
+    [SerializeField] Color emissionColor;
+    [SerializeField] float emissionStrength;
+    
+    
     GameObject randomDestructable;
 
     public void Awake()
@@ -39,34 +46,23 @@ public class DestructableSpawner : MonoBehaviour
         //Get random destructable
         int random = Random.Range(0, potentialDestructables.Count);
         randomDestructable = potentialDestructables[random];
-        randomDestructable.tag = "Chaos";
-        ActivateOutline(randomDestructable);
         potentialDestructables.Remove(potentialDestructables[random]);
         randomDestructable.AddComponent<Destructable>();
+        randomDestructable.tag = "Chaos";
+        ActivateHighlight(randomDestructable);
         Debug.Log(randomDestructable.name);
     }
 
-    public void ActivateOutline(GameObject target)
+    public void ActivateHighlight(GameObject target)
     {
-        CustomOutline customOutline = target.GetComponent<CustomOutline>();
-        if (customOutline==null)
-            customOutline = target.AddComponent<CustomOutline>();
-
-        customOutline.activeOutline = true;
-        customOutline.outlineColor = outlineColor;
-        customOutline.outlineWidth = 3f;
-        customOutline.StartPulsating(20,30,Effect.OutlineWidth,2f);
-        customOutline.seeThroughWalls = true;
-    }
-
-    public void DeactivateOutline(GameObject target)
-    {
-        target.layer = 0;
-        //Set Children
-        Transform[] children = target.GetComponentsInChildren<Transform>();
-        for (int i = 0; i < children.Length; i++)
-        {
-            children[i].gameObject.layer = 0;
-        }
+       Material[] materials = target.GetComponent<Renderer>().materials;
+       for (int i = 0; i < materials.Length; i++)
+       {    
+            target.GetComponent<Destructable>().prevShader = materials[i].shader;
+            Color baseColor = materials[i].GetColor("_BaseColor");
+            materials[i].shader = highlightShader;
+            materials[i].SetColor("_EmissionColor", emissionColor*emissionStrength);
+            materials[i].SetColor("_Color",baseColor);
+       }
     }
 }

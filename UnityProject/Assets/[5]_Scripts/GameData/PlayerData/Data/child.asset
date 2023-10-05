@@ -26,3 +26,4 @@ MonoBehaviour:
   tempSpeed: 1
   timeToDestroy: 5
   chaosScorePerChaosObject: 30
+  destroyParticles: {fileID: 2992653543910639731, guid: 1ad43715c83d95843996e69c4f0521af, type: 3}

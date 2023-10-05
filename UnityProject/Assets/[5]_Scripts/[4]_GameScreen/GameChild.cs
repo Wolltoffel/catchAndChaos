@@ -324,22 +324,38 @@ class Destroy : ChildState
 
     GameObject destroyPrompt;
     GameObject promptHolder;
+
+    GameObject particleInstance;
     public Destroy (Destructable destructable)
     {
         this.destroyTime = destructable.destroyTimeLeft;
         startDestroyTime = Time.time;
         this.destructable = destructable;
     }
+
     public override ChildState UpdateState()
     {
         if (Input.GetButtonUp(inputDevice + "X"))
         {
             WorldSpaceUI.RemovePrompt(promptHolder);
+            GameObject.Destroy (particleInstance);
+            particleInstance =null;
             return new Idle();
         }
 
         destroyTime -= Time.deltaTime;
 
+        if (particleInstance==null)
+        {
+            //Spawn Particles on destructable
+            Vector3 position = destructable.gameObject.transform.position;
+            GameObject particles = GameData.GetData<ChildData>("Child").destroyParticles;
+            particleInstance = GameObject.Instantiate(particles);
+            particleInstance.transform.position = position;
+            particleInstance.transform.localScale = new Vector3(2,2,2);
+            Debug.Log (particleInstance.name);
+            Debug.Log ("SpawnedParticles");
+        }
 
         //Show Prompt
         if (destroyPrompt==null)
@@ -349,13 +365,20 @@ class Destroy : ChildState
         {
             DestroyMeter destroyMeter = destroyPrompt.GetComponent <DestroyMeter>();
             if (destroyMeter!=null)
+            {
                 destroyMeter.UpdateProgress(destroyTime,GameData.GetData<ChildData>("Child").timeToDestroy);
+                destructable.destroyTimeLeft = destroyTime;
+            }
+                
         }      
         
         if (destroyTime <= 0)
         {
             WorldSpaceUI.RemovePrompt(promptHolder);
-
+            
+            GameObject.Destroy (particleInstance);
+            particleInstance =null;
+            
             destructable.DestroyObject();
             destructable = null;
             return new Idle();
@@ -366,8 +389,12 @@ class Destroy : ChildState
         //Stunned
         ChildState stunned = Stunned();
         if (stunned != null)
-        {
+        {   
+            GameObject.Destroy (particleInstance);
+            particleInstance =null;
+
             WorldSpaceUI.RemovePrompt(promptHolder);
+
             return stunned;
         }
 

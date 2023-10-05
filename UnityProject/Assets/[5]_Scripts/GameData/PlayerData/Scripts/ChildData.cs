@@ -19,6 +19,8 @@ public class ChildData : PlayerData
     public float timeToDestroy;
     public int chaosScorePerChaosObject;
 
+    public GameObject destroyParticles;
+
     public void ResetData()
     {
         tempSlideCoolDown = 0;
