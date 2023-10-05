@@ -10,22 +10,22 @@ public class Plushie : MonoBehaviour
 
     private Coroutine coroutine;
     private Transform handAnchor;
-    private Rigidbody rigidbody;
-    private Collider collider;
+    private Rigidbody _rigidbody;
+    private Collider _collider;
     private bool isActive;
 
     private void Start()
     {
-        if (!TryGetComponent(out collider))
+        if (!TryGetComponent(out _collider))
         {
             MeshCollider collider = gameObject.AddComponent<MeshCollider>();
             collider.convex = true;
-            this.collider = collider;
+            this._collider = collider;
         }
 
-        if (!TryGetComponent(out rigidbody))
+        if (!TryGetComponent(out _rigidbody))
         {
-            rigidbody = gameObject.AddComponent<Rigidbody>();
+            _rigidbody = gameObject.AddComponent<Rigidbody>();
         }
 
         gameObject.layer = 6;
@@ -55,11 +55,11 @@ public class Plushie : MonoBehaviour
 
         yield return new WaitForSeconds(0.8f);
 
-        collider.enabled = true;
+        _collider.enabled = true;
 
         Vector3 force = targetDir * 60;
-        rigidbody.isKinematic = false;
-        rigidbody.AddForce(force,ForceMode.Impulse);
+        _rigidbody.isKinematic = false;
+        _rigidbody.AddForce(force,ForceMode.Impulse);
 
         Debug.Log("Plushie Thrown");
         isActive = true;
@@ -70,8 +70,8 @@ public class Plushie : MonoBehaviour
     public void AttachToTarget(Transform target)
     {
         this.handAnchor = target;
-        collider.enabled = false;
-        rigidbody.isKinematic = true;
+        _collider.enabled = false;
+        _rigidbody.isKinematic = true;
 
         coroutine = StartCoroutine(_AttachToTarget(target));
     }

@@ -105,4 +105,33 @@ public class CharacterInstantiator : MonoBehaviour
         activeAnimator.SetInteger(parameterName,index);
         activeAnimator.Play(animatorStateInfo.fullPathHash, 0, animatorStateInfo.normalizedTime);
     }
+
+    public static void AddCharacter(Characters characterType, out GameObject character,Transform parentOfCharacter,Vector3 position,int index,bool addParentConstraint=false)
+    {
+        PlayerData characterData;
+        if (characterType == Characters.Child)
+        {
+            characterData = childData;
+            character = child = Instantiate(characterData.characterAssets.GetCharacterAssetItemAt(index).characterPrefab);
+            character.transform.localScale = Vector3.one * _initialScale / 1.4f;
+        }
+        else
+        {
+            characterData = parentData;
+            character = parent = Instantiate(characterData.characterAssets.prefab);
+            character.transform.localScale = Vector3.one * _initialScale;
+        }
+
+        if (addParentConstraint)
+        {
+            ParentConstraint parentConstraint = character.AddComponent<ParentConstraint>();
+            parentConstraint.constraintActive = true;
+            ConstraintSource source = new ConstraintSource();
+            source.sourceTransform = parentOfCharacter.transform;
+            source.weight = 1f;
+            parentConstraint.AddSource (source);
+        }
+
+        character.transform.position = position;
+    }
 }

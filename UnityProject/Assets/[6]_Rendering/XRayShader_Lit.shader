@@ -10,6 +10,7 @@ Shader "Custom/XRayShader_Lit"
         [HideInInspector] _WorkflowMode("WorkflowMode", Float) = 1.0
 
 		_XRayColor("Color", Color) = (0.5,0.5,0.5,1)
+        _Saturation("Saturation", Float) = 1.0
 
         [MainColor] _BaseColor("Color", Color) = (0.5,0.5,0.5,1)
         [MainTexture] _BaseMap("Albedo", 2D) = "white" {}
@@ -191,6 +192,61 @@ Shader "Custom/XRayShader_Lit"
                 float4 positionCS               : SV_POSITION;
             };
 
+             float3 RGBtoHSV(float3 rgb)
+            {
+                float Cmax = max(max(rgb.r, rgb.g), rgb.b);
+                float Cmin = min(min(rgb.r, rgb.g), rgb.b);
+                float delta = Cmax - Cmin;
+
+                float hue = 0;
+                if (delta > 0)
+                {
+                    if (Cmax == rgb.r)
+                        hue = (rgb.g - rgb.b) / delta;
+                    else if (Cmax == rgb.g)
+                        hue = 2 + (rgb.b - rgb.r) / delta;
+                    else
+                        hue = 4 + (rgb.r - rgb.g) / delta;
+
+                    hue *= 60;
+                    if (hue < 0)
+                        hue += 360;
+                }
+
+                float saturation = (Cmax > 0) ? (delta / Cmax) : 0;
+                float value = Cmax;
+
+                return float3(hue / 360, saturation, value);
+            }
+
+        float3 HSVtoRGB(float3 hsv)
+        {
+            float hue = hsv.x * 360.0; // Convert hue from [0, 1] to [0, 360]
+
+            float C = hsv.z * hsv.y; // Chroma
+            float X = C * (1.0 - abs(fmod(hue / 60.0, 2.0) - 1.0));
+            float m = hsv.z - C;
+
+            float3 rgb = float3(0.0, 0.0, 0.0);
+
+            if (hue >= 0.0 && hue < 60.0)
+                rgb = float3(C, X, 0.0);
+            else if (hue >= 60.0 && hue < 120.0)
+                rgb = float3(X, C, 0.0);
+            else if (hue >= 120.0 && hue < 180.0)
+                rgb = float3(0.0, C, X);
+            else if (hue >= 180.0 && hue < 240.0)
+                rgb = float3(0.0, X, C);
+            else if (hue >= 240.0 && hue < 300.0)
+                rgb = float3(X, 0.0, C);
+            else if (hue >= 300.0 && hue <= 360.0)
+                rgb = float3(C, 0.0, X);
+
+            return rgb + m;
+        }
+
+            float _Saturation;
+
             Varyings LitPassVertex(Attributes input)
             {
                 Varyings output;
@@ -318,6 +374,12 @@ Shader "Custom/XRayShader_Lit"
                 // Mix the pixel color with fogColor. You can optionaly use MixFogColor to override the fogColor
                 // with a custom one.
                 color = MixFog(color, fogFactor);
+
+                //Add Saturation
+                color = RGBtoHSV(color);
+                color.y = color.y*_Saturation;
+                color = HSVtoRGB(color);
+
                 return half4(color, surfaceData.alpha);
             }
             ENDHLSL
