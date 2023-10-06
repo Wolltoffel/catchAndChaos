@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameScreenManager : MonoBehaviour
@@ -18,9 +19,10 @@ public class GameScreenManager : MonoBehaviour
     [SerializeField] 
     private AudioClip[] backgroundAudioClips;
 
-    //TimeCounter
-    private float timeRemaining;
+    //Coroutines
     private Coroutine timeCoroutine;
+    private static Coroutine checkForChaosUpdate;
+    private static GameScreenManager instance;
 
     //Data
     private ChaosData chaosData;
@@ -30,6 +32,9 @@ public class GameScreenManager : MonoBehaviour
     void Awake()
     {
         interactableManager = GetComponent<GameInteractableManager>();
+
+        instance = this;
+
         SetupGame();
     }
 
@@ -86,6 +91,8 @@ public class GameScreenManager : MonoBehaviour
 
         parent.enabled = true;
         child.enabled = true;
+
+        checkForChaosUpdate = StartCoroutine(CheckForChaos());
     }
 
     private void InitializeUI()
@@ -99,16 +106,28 @@ public class GameScreenManager : MonoBehaviour
         CharacterInstantiator.InstantiateCharacter(Characters.Child, out childObj, childObj.transform);
     }
 
-    private void Update()
+    private IEnumerator CheckForChaos()
     {
-        if (chaosData.EndGame)
+        while (true)
         {
-            EndGame(EndCondition.Chaos);
+            if (chaosData.EndGame || playTimeData.hasChildWon)
+            {
+                EndGame(EndCondition.Chaos);
+                checkForChaosUpdate = null;
+                yield break;
+            }
+            yield return null;
         }
     }
 
     public static void EndGame(EndCondition condition)
     {
+        if (checkForChaosUpdate != null)
+        {
+            instance.StopCoroutine(checkForChaosUpdate);
+            checkForChaosUpdate = null;
+        }
+        
         ScreenSwitcher.OutsourceCoroutine(_EndGame(condition));
     }
 
