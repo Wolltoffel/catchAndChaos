@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.Windows;
 using static UnityEngine.Rendering.DebugUI;
 
 public class MovementScript : MonoBehaviour
@@ -41,7 +43,7 @@ public class MovementScript : MonoBehaviour
     public void MovePlayer(float xAxis, float yAxis, float speed = 1)
     {
         float yValue = transform.position.y;
-        Vector2 axis = new Vector2(xAxis, yAxis);
+        Vector2 axis = OptimizeMovement(transform.position,new Vector2(xAxis, yAxis));
         previousMovement = Vector2.Lerp(previousMovement, axis, lerpValue);
         Vector3 movementDir = (new Vector3(previousMovement.x, 0, previousMovement.y));
         Vector3 movement = movementDir * movementSpeed * speed / 10 * Time.deltaTime * Time.timeScale * 500;
@@ -61,6 +63,68 @@ public class MovementScript : MonoBehaviour
             }
         }
         transform.position = new Vector3(transform.position.x, yValue, transform.position.z);
+    }
+
+    private Vector2 OptimizeMovement(Vector3 position, Vector2 input)
+    {
+        float speedMag = input.magnitude;
+
+        RaycastHit hit;
+        if (Physics.Linecast(position, position + transform.forward, out hit))
+        {
+            if (hit.collider.gameObject.tag == "Door")
+            {
+                var dir = hit.collider.gameObject.transform.position - position;
+                dir.y = 0;
+                Debug.Log(dir.magnitude);
+                pos = transform.position + Vector3.up;
+                loc = pos + dir;
+                if (dir.magnitude > 0.6)
+                {
+                    dir.Normalize();
+                    return new Vector2(dir.x, dir.z) * speedMag;
+
+                }
+                
+            }
+        }
+
+        return input;
+
+        //DirectionalWeights surrounding = Spacializer.CalculateSurroundings(position+ Vector3.up);
+        //float xInput = input.x;
+        //float yInput = input.y;
+
+        //Debug.Log(xInput + " - "+ yInput);
+
+        //if (xInput > 0)
+        //{
+        //    xInput = xInput * surrounding.east;
+        //}
+        //else if (xInput < 0)
+        //{
+        //    xInput = xInput * surrounding.west;
+        //}
+        //if (yInput > 0)
+        //{
+        //    yInput = yInput * surrounding.north;
+        //}
+        //else if (yInput < 0)
+        //{
+        //    yInput = yInput * surrounding.south;
+        //}
+
+        //Debug.Log(xInput + " - " + yInput);
+
+        //return new Vector2(xInput,yInput).normalized;
+    }
+
+    Vector3 pos = Vector3.zero;
+    Vector3 loc = Vector3.zero;
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(pos, loc);
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit)
@@ -192,6 +256,59 @@ public class MovementScript : MonoBehaviour
         coroutine = null;
     }
     #endregion
+}
+
+static class Spacializer
+{
+    static public DirectionalWeights CalculateSurroundings(Vector3 position)
+    {
+        DirectionalWeights directionalWeights = new DirectionalWeights();
+
+        float checkDistance = 2;
+
+        for (int i = 0; i < directionalWeights.directionCount; i++)
+        {
+            RaycastHit hit;
+            bool hasHit = Physics.Linecast(position, position + new Vector3(directionalWeights.directions[i].y, 0, directionalWeights.directions[i].x) * checkDistance,out hit);
+            directionalWeights.weights[i] = hasHit? hit.distance / checkDistance : 1;
+        }
+        return directionalWeights;
+    }
+}
+
+class DirectionalWeights
+{
+    //public DirectionalWeights(int resolution)
+    //{
+    //    if (resolution < 4)
+    //        resolution = 4;
+
+
+    //}
+
+    public float[] weights = new float[8];
+    public Vector2[] directions = new Vector2[8]
+    {
+        new Vector2(1,0),
+        new Vector2(1,1).normalized,
+        new Vector2(0,1),
+        new Vector2(-1,1).normalized,
+        new Vector2(-1,0),
+        new Vector2(-1,-1).normalized,
+        new Vector2(0,-1),
+        new Vector2(1,-1).normalized,
+    };
+
+    public float directionCount { get => weights.Length; }
+
+    public float north { get => weights[0]; set => weights[0] = Mathf.Clamp01(value); }
+    public float south { get => weights[4]; set => weights[4] = Mathf.Clamp01(value); }
+    public float west { get => weights[6]; set => weights[6] = Mathf.Clamp01(value); }
+    public float east { get => weights[2]; set => weights[2] = Mathf.Clamp01(value); }
+    public float northWest { get => weights[7]; set => weights[7] = Mathf.Clamp01(value); }
+    public float northEast { get => weights[1]; set => weights[1] = Mathf.Clamp01(value); }
+    public float southEast { get => weights[3]; set => weights[3] = Mathf.Clamp01(value); }
+    public float southWest { get => weights[5]; set => weights[5] = Mathf.Clamp01(value); }
 }
 
 /*
