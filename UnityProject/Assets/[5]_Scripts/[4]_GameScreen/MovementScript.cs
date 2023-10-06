@@ -68,22 +68,24 @@ public class MovementScript : MonoBehaviour
     private Vector2 OptimizeMovement(Vector3 position, Vector2 input)
     {
         float speedMag = input.magnitude;
+        Vector3 moveDir = new Vector3(input.x, 0, input.y).normalized;
 
         RaycastHit hit;
-        if (Physics.Linecast(position, position + transform.forward, out hit))
+        if (Physics.Linecast(position, position + moveDir, out hit))
         {
             if (hit.collider.gameObject.tag == "Door")
             {
                 var dir = hit.collider.gameObject.transform.position - position;
                 dir.y = 0;
+                var mag = dir.magnitude;
                 Debug.Log(dir.magnitude);
                 pos = transform.position + Vector3.up;
                 loc = pos + dir;
-                if (dir.magnitude > 0.6)
+                if (mag > 1f)
                 {
+                    Debug.Log("TRUEE;");
                     dir.Normalize();
                     return new Vector2(dir.x, dir.z) * speedMag;
-
                 }
                 
             }
