@@ -2539,6 +2539,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anchor: {fileID: 749442389970106093}
+  xOffset: 1.8
 --- !u!1 &5480778196499372958
 GameObject:
   m_ObjectHideFlags: 0
@@ -3107,7 +3108,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4606152949192336593
 RectTransform:
   m_ObjectHideFlags: 0

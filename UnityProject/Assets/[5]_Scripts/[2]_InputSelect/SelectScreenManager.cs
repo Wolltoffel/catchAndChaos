@@ -99,10 +99,10 @@ public class SelectScreenManager : MonoBehaviour
     {   
 
         //Spawn Characters and ajdust Camera
-        CharacterInstantiator.InstantiateCharacter(Characters.Child, out GameObject characterChild, spawnPositionChild.transform, true);
-        CharacterInstantiator.InstantiateCharacter(Characters.Parent, out GameObject characterParent, spawnPositionParent.transform,true);
-        CharacterInstantiator.GetActiveCharacter(Characters.Child).GetComponent<Animator>().SetInteger("ChildIndex",0);
-        CharacterInstantiator.GetActiveCharacter(Characters.Parent).GetComponent<Animator>().SetInteger("MomIndex",0);
+        //CharacterInstantiator.InstantiateCharacter(Characters.Child, out GameObject characterChild, spawnPositionChild.transform, true);
+        //CharacterInstantiator.InstantiateCharacter(Characters.Parent, out GameObject characterParent, spawnPositionParent.transform,true);
+        //CharacterInstantiator.GetActiveCharacter(Characters.Child).GetComponent<Animator>().SetInteger("ChildIndex",0);
+        //CharacterInstantiator.GetActiveCharacter(Characters.Parent).GetComponent<Animator>().SetInteger("MomIndex",0);
         Camera.main.GetComponent<CameraManager>().SetCameraAsMain();
         Camera.main.GetComponent<CameraManager>().SetCameraPosition(cameraPosition);
 

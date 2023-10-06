@@ -36,7 +36,9 @@ public class ScrollSelection : MonoBehaviour
         SetStartValue();
 
         int numberOfAssets = characterAssets.GetCharacterAssetItems().Length;
-        characterModelSwitcher.SpawnModels(numberOfAssets,new int[1]{(selectedIndex-1+numberOfAssets)%numberOfAssets},new int[1]{(selectedIndex+1)%numberOfAssets});
+        characterModelSwitcher.AddModels(numberOfAssets,
+        new int[2]{(selectedIndex-1+numberOfAssets)%numberOfAssets,(selectedIndex-2+numberOfAssets)%numberOfAssets},
+        new int[2]{(selectedIndex+1)%numberOfAssets,(selectedIndex+2)%numberOfAssets});
     }
 
     void LoadSprites()
@@ -114,7 +116,7 @@ public class ScrollSelection : MonoBehaviour
     void SlideLeft()
     {
         StartCoroutine(_SlideLeft());
-        characterModelSwitcher.SlideLeft();
+        characterModelSwitcher.Slide(Step.Next);
     }
 
     IEnumerator _SlideLeft()
@@ -150,6 +152,7 @@ public class ScrollSelection : MonoBehaviour
     void SlideRight()
     {
         StartCoroutine(_SlideRight());
+        characterModelSwitcher.Slide(Step.Prev);
     }
 
     IEnumerator _SlideRight()

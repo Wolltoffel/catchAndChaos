@@ -3,102 +3,180 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+struct Circle
+{
+    public float path01;
+    public float radius;
+    public Vector3 circleCenter;
+
+    public Circle(float path, float radius, Vector3 tangentCrossPoint)
+    {
+        this.path01 = path;
+        this.radius = radius;
+        this.circleCenter = tangentCrossPoint;
+    }
+}
+
 public class CharacterModelSwitcher : MonoBehaviour
 {
 
     [SerializeField]Transform anchor;
+    [SerializeField] float xOffset = 4f;
    int activeModelIndex;
-   int [] beforeActiveModelIndex;
-   int [] afterActiveModelIndex;
-
    int amountOfAssets;
-
    GameObject activeModel;
-   List<GameObject> afterActiveModels = new List<GameObject>();
-   List<GameObject> beforeActiveModels = new List<GameObject>();
+   Transform characterParent;
 
-    public void SlideLeft() 
+   List<GameObject> spawnedCharacterModels = new List<GameObject>();
+
+
+    public void Slide (Step step)
     {
-        //activeModel.transform.position = beforeActiveModels[0].transform.position;
+        if (step == Step.Next)
+            SlideOperation(-1);
+        else
+            SlideOperation(1);
 
-        List<GameObject> allCharacterModels = new List<GameObject>();
-        allCharacterModels.AddRange(beforeActiveModels);
-        allCharacterModels.Add(activeModel);
-        allCharacterModels.AddRange(afterActiveModels);
-
-        for (int i = allCharacterModels.Count-1; i >0; i--)
-        {
-            if (allCharacterModels[i]==activeModel)
-                allCharacterModels[i].transform.position = allCharacterModels[i-1].transform.position;
-            else
-                allCharacterModels[i].transform.parent.gameObject.transform.position = allCharacterModels[i-1].transform.position;
-
-            AdjustSaturation(allCharacterModels[i],false);
-        }
-
-        //Update active model
-        activeModel = allCharacterModels[beforeActiveModels.Count];
-        AdjustSaturation(activeModel,true);
-
-        //Delete last Model
-        GameObject lastModel = allCharacterModels[0];
-        beforeActiveModels.Remove(lastModel);
-        Destroy(lastModel.transform.parent.gameObject);
-
-        //Add first Model
-        
+        UpdateNames();
     }
 
-    
-   public void SpawnModels(int amountOfAssets,int[]beforeActiveModelIndex,int[]afterActiveModelIndex)
+    void SlideOperation(int slideDir) 
+    {
+        //Normalize direction
+        if (slideDir!=0)
+            slideDir = (slideDir*slideDir)/slideDir;
+        
+        MoveModels(slideDir);
+
+        UpdateActiveModel();
+        
+        int delNeighbourIndex = slideDir<0?0:spawnedCharacterModels.Count-1;
+        DeleteModel(delNeighbourIndex);
+        
+        int addNeighbourIndex = slideDir<0?spawnedCharacterModels.Count-1:0;
+        Vector3 position = spawnedCharacterModels[addNeighbourIndex].transform.position+new Vector3(slideDir*(-xOffset),0,0);
+        AddModel(position,(activeModelIndex+3*(-slideDir)+3*amountOfAssets)%amountOfAssets);
+        
+        activeModelIndex = (activeModelIndex+(-slideDir))%amountOfAssets;
+    }
+
+    void MoveModels(int direction)
+    {   
+        int startvalue = direction<0?spawnedCharacterModels.Count-1:0;
+        for (int i = startvalue; i >=0 && i<spawnedCharacterModels.Count; i+=direction)
+        {   
+            if (i+direction<spawnedCharacterModels.Count&&i+direction>=0){
+                spawnedCharacterModels[i].transform.parent.position = spawnedCharacterModels[i+direction].transform.parent.position;
+                AdjustSaturation(spawnedCharacterModels[i],false);
+            }
+        }
+
+        /*for (int i = spawnedCharacterModels.Count-1; i >0; i--)
+        {    
+            spawnedCharacterModels[i].transform.parent.position = spawnedCharacterModels[i-1].transform.parent.position;
+            AdjustSaturation(spawnedCharacterModels[i],false);
+        }*/
+    }
+
+
+
+    #region  AddModels
+   public void AddModels(int amountOfAssets,int[]beforeActiveModelIndex,int[]afterActiveModelIndex)
    {    
         this.amountOfAssets = amountOfAssets;
 
-        CharacterInstantiator.InstantiateCharacter(Characters.Child,out activeModel,anchor.position);
         float circleSize = 2;
-        Vector3 circleCenter = anchor.transform.position;
-        circleCenter.z+=circleSize;
+        Vector3 circleCenter = anchor.transform.position+new Vector3(0,0,circleSize);
+
+        //Before active models
+        List<GameObject> beforeActiveModels;
+        SpawnModels(beforeActiveModelIndex,new Circle(0.375f,circleSize,circleCenter),out beforeActiveModels);
+        //Add before active in reverse
+        for (int i = beforeActiveModels.Count-1; i >=0; i--)
+        {
+            spawnedCharacterModels.Add(beforeActiveModels[i]);
+        }
+
+        //Spawn ActiveModel
+        activeModelIndex = (beforeActiveModelIndex[0]+1)%amountOfAssets;
+        SpawnModel(beforeActiveModelIndex.Length,activeModelIndex,anchor.transform.position,out activeModel);
+        AdjustSaturation(activeModel,true);
+        spawnedCharacterModels.Add(activeModel);
         
-        //After active model
-        float circlePath=-0.5f;
-        for (int i = 0; i < afterActiveModelIndex.Length; i++)
-        {
-            Vector2 position2D = GetCoordinatesAlongCircle(circlePath, circleSize,circleCenter);
-            Vector3 position = new Vector3(position2D.x,circleCenter.y,position2D.y);
-            GameObject parent = new GameObject("AfterActiveModelParent_"+i);
-            parent.transform.position = position;
-            parent.transform.rotation = Quaternion.Euler(0,180,0);
-            GameObject spawnedModel;
-            CharacterInstantiator.AddCharacter(Characters.Child,out spawnedModel,parent.transform, position,afterActiveModelIndex[i],true);
-            afterActiveModels.Add(spawnedModel);
-            afterActiveModels[i].transform.SetParent (parent.transform);
-            afterActiveModels[i].name = "AferActiveModel_"+i;
-            AdjustSaturation(afterActiveModels[i],false);
-            circlePath+=0.25f;
-        }
+        //After after active models
+        List<GameObject> afterActiveModels;
+        SpawnModels(afterActiveModelIndex,new Circle(0.125f,circleSize,circleCenter),out afterActiveModels);
+        spawnedCharacterModels.AddRange(afterActiveModels);
 
-        //Before active model
-        circlePath=0.5f;
-        for (int i = 0; i < beforeActiveModelIndex.Length; i++)
-        {
-            Vector2 position2D = GetCoordinatesAlongCircle(circlePath, circleSize,circleCenter);
-            Vector3 position = new Vector3(position2D.x,circleCenter.y,position2D.y);
-            GameObject parent = new GameObject("BeforeActiveModelParent_"+i);
-            parent.transform.position = position;
-            parent.transform.rotation = Quaternion.Euler(0,180,0);
-            GameObject spawnedModel;
-            CharacterInstantiator.AddCharacter(Characters.Child,out spawnedModel,parent.transform, position,beforeActiveModelIndex[i],true);
-            beforeActiveModels.Add(spawnedModel);
-            beforeActiveModels[i].transform.SetParent (parent.transform);
-            beforeActiveModels[i].name = "BeforeActiveModel_"+i;
-            AdjustSaturation(beforeActiveModels[i],false);
-            circlePath-=0.25f;
-        }
-
+        //Name Models
+        UpdateNames();
    }
 
-   Vector2 GetCoordinatesAlongCircle(float t,float center,Vector3 circlePos)
+   void SpawnModels(int[]activeModelIndex,Circle circle, out List<GameObject> spawnedModels)
    {
+        Vector3 offset = new Vector3(xOffset,0,0);
+        spawnedModels = new List<GameObject>();
+        for (int i = 0; i < activeModelIndex.Length; i++)
+        {
+            Vector3 position;
+            if (i>0)
+                position = spawnedModels[i-1].transform.position+offset;
+            else
+            {
+                Vector2 position2D = GetCoordinatesAlongCircle(circle);
+                position = new Vector3(position2D.x,circle.circleCenter.y,position2D.y);
+            }
+                
+            SpawnModel(i,activeModelIndex[i],position, out GameObject spawnedModel );
+            spawnedModels.Add(spawnedModel);
+        }
+   }
+
+   void SpawnModel(int index, int modelIndex,Vector3 position, out GameObject spawnedModel){
+        GameObject parent = new GameObject(name+"_Parent_"+index);
+        parent.transform.position = position;
+        parent.transform.rotation = Quaternion.Euler(0,180,0);
+        CharacterInstantiator.AddCharacter(Characters.Child,out spawnedModel,parent.transform, position,modelIndex,true);
+        spawnedModel.transform.SetParent (parent.transform);
+        spawnedModel.name = name+"_"+index;
+        AdjustSaturation(spawnedModel,false);
+   }
+
+   void UpdateNames()
+   {
+        for (int i = 0; i < spawnedCharacterModels.Count; i++)
+        {
+            spawnedCharacterModels[i].transform.parent.name = $"name+({i})";
+        }
+   }
+   #endregion
+
+    #region  HelperFunctions
+
+    void UpdateActiveModel()
+    {
+        activeModel = spawnedCharacterModels[(spawnedCharacterModels.Count/2)+1];
+        AdjustSaturation(activeModel,true);
+    }
+    void AddModel(Vector3 position, int modelIndex)
+    {
+        SpawnModel(spawnedCharacterModels.Count,modelIndex,position,out GameObject spawnedModel);
+        spawnedCharacterModels.Add(spawnedModel);
+    }
+
+    void DeleteModel(int modelIndex)
+    {
+        GameObject lastModel = spawnedCharacterModels[modelIndex];
+        spawnedCharacterModels.Remove(lastModel);
+        Destroy(lastModel.transform.parent.gameObject);
+    }
+
+   Vector2 GetCoordinatesAlongCircle(Circle circlePos)
+   {
+        float t = circlePos.path01;
+        Vector3 circleTangentCrossPoint = circlePos.circleCenter;
+        float circleRadius = circlePos.radius;
+
         t = Mathf.Clamp01(t);
 
         float angle = t*2*Mathf.PI;
@@ -106,7 +184,7 @@ public class CharacterModelSwitcher : MonoBehaviour
         float x = Mathf.Cos(angle);
         float y = Mathf.Sin(angle);
 
-        return new Vector2(x,y)*center+new Vector2(circlePos.x,circlePos.z);
+        return new Vector2(x,y)*circleRadius+new Vector2(circleTangentCrossPoint.x,circleTangentCrossPoint.z);
    }
 
    void AdjustSaturation (GameObject parent, bool saturate)
@@ -125,5 +203,6 @@ public class CharacterModelSwitcher : MonoBehaviour
                     materials[j].SetFloat("_Saturation",0);
             }
         }
-   }    
+   } 
+   #endregion   
 }
