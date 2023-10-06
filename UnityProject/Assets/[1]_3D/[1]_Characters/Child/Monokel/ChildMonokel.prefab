@@ -52,7 +52,10 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'Hips'\n\tFrom animation clip 'animStaticIdle'\n\tFrom
+    animation clip 'animStaticIdle'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -70,7 +73,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lerpValue: 1
-  movementSpeed: 0.15
+  movementSpeed: 0.2
   rotationSpeed: 20
   pushForce: 1000
 --- !u!54 &5409604688557674026
@@ -186,6 +189,58 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: f875c448cacd70744ac8d720b938f16a, type: 2}
+    - target: {fileID: 693819629987513726, guid: d7bff83fea660244e8eee8f373b87954, type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 693819629987513726, guid: d7bff83fea660244e8eee8f373b87954, type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[1]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 693819629987513726, guid: d7bff83fea660244e8eee8f373b87954, type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[2]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 693819629987513726, guid: d7bff83fea660244e8eee8f373b87954, type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[3]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 693819629987513726, guid: d7bff83fea660244e8eee8f373b87954, type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[4]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 693819629987513726, guid: d7bff83fea660244e8eee8f373b87954, type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[8]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 693819629987513726, guid: d7bff83fea660244e8eee8f373b87954, type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[19]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 693819629987513726, guid: d7bff83fea660244e8eee8f373b87954, type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[20]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 693819629987513726, guid: d7bff83fea660244e8eee8f373b87954, type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[21]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 693819629987513726, guid: d7bff83fea660244e8eee8f373b87954, type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[22]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 693819629987513726, guid: d7bff83fea660244e8eee8f373b87954, type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[24]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 693819629987513726, guid: d7bff83fea660244e8eee8f373b87954, type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[25]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 693819629987513726, guid: d7bff83fea660244e8eee8f373b87954, type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[26]
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 815220289071504802, guid: d7bff83fea660244e8eee8f373b87954, type: 3}
       propertyPath: m_Layer
       value: 8

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class InteractableContainer : Object
@@ -12,7 +13,7 @@ public class InteractableContainer : Object
 
         for (int i = 0; i < interactableTags.Length; i++)
         {
-            interactables[i] = new InteractableCategory(interactableTags[i].tag, interactableTags[i].interactionRange);
+            interactables[i] = new InteractableCategory(interactableTags[i].tag, interactableTags[i].interactionRange, interactableTags[i].character);
         }
     }
 
@@ -53,27 +54,66 @@ public class InteractableContainer : Object
         throw new System.Exception($"Interactable Category not.\nTag \"{tag}\"");
     }
 
-    public GameObject GetClosestInteractable(string tag, Vector3 position)
+    private InteractableCategory[] GetInteractableCategoriesForCharacter(Characters character)
     {
-        InteractableCategory interactable = GetInteractableCategory(tag);
+        List<InteractableCategory> interactablesForCharacter = new List<InteractableCategory>();
+        for (int i = 0; i < interactables.Length; i++)
+        {
+            if (interactables[i].character == character)
+                interactablesForCharacter.Add(interactables[i]);
+        }
+        return interactablesForCharacter.ToArray();
+    }
 
+    public GameObject GetClosestInteractableForCharacter(Characters character, Vector3 position, out string category)
+    {
+        InteractableCategory[] interactables = GetInteractableCategoriesForCharacter(character);
+
+        GameObject closestObject = null; 
+        float currentDistance = -1;
+        category = "";
+
+        for (int i = 0; i < interactables.Length; i++)
+        {
+            float distance;
+            GameObject obj = GetClosestInteractableInCategory(interactables[i], position, out distance);
+            if (obj && (distance < currentDistance || currentDistance < 0))
+            {
+                currentDistance = distance;
+                closestObject = obj;
+                category = interactables[i].tag;
+            }
+        }
+
+        return closestObject;
+    }
+
+    //public GameObject GetClosestInteractableInCategory(string tag, Vector3 position)
+    //{
+    //    InteractableCategory interactable = GetInteractableCategory(tag);
+    //    return GetClosestInteractableInCategory(interactable,position, out float t);
+    //}
+
+    private GameObject GetClosestInteractableInCategory(InteractableCategory interactable, Vector3 position, out float distance)
+    {
         if (interactable.objects == null || interactable.objects.Count == 0)
         {
+            distance = 0;
             return null;
         }
 
         GameObject closestObject = interactable.objects[0];
-        float currentDistance = Vector3.Distance(closestObject.transform.position, position);
+        distance = Vector3.Distance(closestObject.transform.position, position);
 
         for (int i = 1; i < interactable.objects.Count; i++)
         {
             Transform currentObj = interactable.objects[i].transform;
             float newDistance = Vector3.Distance(currentObj.position, position);
-            closestObject = newDistance < currentDistance ? interactable.objects[i] : closestObject;
-            currentDistance = newDistance < currentDistance ? newDistance : currentDistance;
+            closestObject = newDistance < distance ? interactable.objects[i] : closestObject;
+            distance = newDistance < distance ? newDistance : distance;
         }
 
-        return currentDistance > interactable.interactRange ? null : closestObject;
+        return distance > interactable.interactRange ? null : closestObject;
     }
 
     public void AddObjectsWithTag(string tag)
@@ -84,14 +124,16 @@ public class InteractableContainer : Object
 
 public class InteractableCategory
 {
+    public readonly Characters character;
     public readonly string tag;
     public readonly float interactRange;
     public List<GameObject> objects = new List<GameObject>();
 
-    public InteractableCategory(string tag, float interactRange)
+    public InteractableCategory(string tag, float interactRange, Characters character)
     {
         this.tag = tag;
         this.interactRange = interactRange;
+        this.character = character;
         this.objects = new List<GameObject>();
     }
 }
@@ -99,6 +141,7 @@ public class InteractableCategory
 [System.Serializable]
 public struct InteractablePresets
 {
+    public Characters character;
     public string tag;
     public float interactionRange;
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -151,12 +152,13 @@ public class MovementScript : MonoBehaviour
     {
         float yValue = transform.position.y;
         float time = 0;
-        Vector3 catchDir = transform.forward;
+
+        Vector3 catchDir = CalculateCatchDir();
 
         while (time < catchDuration)
         {
             float multiplicator = -Mathf.Pow((time+0.5f), 8) + 1;
-            Vector3 movement = catchDir * (Mathf.Clamp01(multiplicator)) / 48;
+            Vector3 movement = catchDir * (Mathf.Clamp01(multiplicator)) / 28;
             characterController.Move(movement * Time.timeScale);
 
             transform.position = new Vector3(transform.position.x, yValue, transform.position.z);
@@ -168,6 +170,19 @@ public class MovementScript : MonoBehaviour
 
         coroutine = null;
     }
+
+    private Vector3 CalculateCatchDir()
+    {
+        Vector3 dir = CharacterInstantiator.GetActiveCharacter(Characters.Child).transform.position - transform.position;
+        dir.Normalize();
+        if (Vector3.Dot(dir,transform.forward) > 0)
+        {
+            return dir;
+        }
+
+        return transform.forward;
+    }
+
     public void StopCatch()
     {
         if (coroutine != null)

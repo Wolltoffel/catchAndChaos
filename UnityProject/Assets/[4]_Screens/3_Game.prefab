@@ -282,15 +282,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactableTags:
-  - tag: Plushie
+  - character: 1
+    tag: Plushie
     interactionRange: 2
-  - tag: Door
+  - character: 1
+    tag: Door
     interactionRange: 5
-  - tag: Lolly
+  - character: 0
+    tag: Lolly
     interactionRange: 2
-  - tag: Vent
+  - character: 0
+    tag: Vent
     interactionRange: 3
-  - tag: Chaos
+  - character: 0
+    tag: Chaos
     interactionRange: 5
 --- !u!1 &4078362155094007473
 GameObject:

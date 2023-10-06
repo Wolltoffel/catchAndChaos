@@ -1,6 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.XR;
+using static UnityEngine.EventSystems.PointerEventData;
 
 public class GameParent : MonoBehaviour
 {
@@ -23,117 +27,120 @@ public class GameParent : MonoBehaviour
 abstract class ParentBaseState : State
 {
     protected ParentData parentData;
-    static GameObject buttonPromptDoor,buttonPromptPlushiePickUp, buttonPromptPlushieThrow;
-    static int currentDoorHash;
+    protected string inputButton;
+    protected static bool hasPlushie;
+    private static GameObject currentButtonPrompt;
 
     public ParentBaseState()
     {
         parentData = GameData.GetData<ParentData>("Parent");
         gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Parent);
+        inputButton = parentData.tempInputDevice + "X";
     }
 
     public abstract ParentBaseState UpdateState();
 
-    protected void CheckDoorToggle(string inputDevice)
-    {
-        GameObject interactable;
-        if (InteractableInRange("Door", out interactable))
-        {
-            if (buttonPromptDoor == null)
-            {
-                WorldSpaceUI.ShowButtonPrompt(interactable.transform, inputDevice + "B", out buttonPromptDoor, "Door");
-                currentDoorHash = interactable.GetHashCode();
-            }
-            else if (currentDoorHash != interactable.GetHashCode())
-            {
-                WorldSpaceUI.RemovePrompt(buttonPromptDoor);
-                WorldSpaceUI.ShowButtonPrompt(interactable.transform, inputDevice + "B", out buttonPromptDoor, "Door");
-                currentDoorHash = interactable.GetHashCode();
-            }
-
-            if (Input.GetButtonDown($"{inputDevice}B"))
-            {
-                gameObject.GetComponent<Animator>().SetInteger("MomIndex", 5);
-
-                WorldSpaceUI.RemovePrompt(buttonPromptDoor);
-                buttonPromptDoor = null;
-
-                DoorSwitch toggle = interactable.GetComponent<DoorSwitch>();
-                if (toggle == null)
-                    toggle = interactable.GetComponentInParent<DoorSwitch>();
-                if (toggle != null)
-                {
-                    toggle.Toggle();
-                }
-            }
-        }
-        else
-        {
-            WorldSpaceUI.RemovePrompt(buttonPromptDoor);
-            buttonPromptDoor = null;
-        }
-    }
-
-
-    protected Plushie GetPlushieIfInRange(string inputDevice)
-    {
-        GameObject interactable;
-        if (InteractableInRange("Plushie", out interactable))
-        {
-            if (buttonPromptPlushiePickUp == null)
-            {
-                WorldSpaceUI.ShowButtonPrompt(interactable.transform, inputDevice + "X", out buttonPromptPlushiePickUp, "PlushiePickUp");
-            }
-
-            if (Input.GetButtonDown($"{inputDevice}X"))
-            {
-                WorldSpaceUI.RemovePrompt(buttonPromptPlushiePickUp);
-                buttonPromptPlushiePickUp = null;
-
-                Plushie plushie = interactable.GetComponent<Plushie>();
-
-                return plushie;
-            }
-        }
-        else
-        {
-            WorldSpaceUI.RemovePrompt(buttonPromptPlushiePickUp);
-            buttonPromptPlushiePickUp = null;
-        }
-        return null;
-    }
-
-    protected bool CheckForPlushieAction(string inputDevice)
+    protected ParentBaseState CheckAction()
     {
         if (parentData.plushie == null)
         {
-            parentData.plushie = GetPlushieIfInRange(inputDevice);
-            if (Input.GetButtonDown($"{inputDevice}X"))
+            bool interactableInRange = InteractableInRange(Characters.Parent, out GameObject interactableObject, out string action);
+
+            if (interactableInRange)
             {
-                if (parentData.plushie != null)
+                //Check if its the same object as so far
+                int objectHash = interactableObject.GetHashCode();
+                if (currentObjectHash != objectHash || currentButtonPrompt == null)
                 {
-                    gameObject.GetComponent<Animator>().SetInteger("MomIndex", 5);
-                    parentData.plushie.AttachToTarget(gameObject.transform);
+                    currentObjectHash = objectHash;
+                    WorldSpaceUI.RemovePrompt(currentButtonPrompt);
+
+                    string hint = action;
+                    if (hint == "Plushie")
+                        hint = "PlushiePickUp";
+
+                    Debug.Log(action);
+                    WorldSpaceUI.ShowButtonPrompt(interactableObject.transform, inputButton, out currentButtonPrompt, hint);
                 }
+
+                if (Input.GetButtonDown(inputButton))
+                    return HandleAction(interactableObject, action);
+
+                return null;
             }
+
+            //RemovePrompt
+            if (currentButtonPrompt != null)
+            {
+                WorldSpaceUI.RemovePrompt(currentButtonPrompt);
+                currentButtonPrompt = null;
+            }
+
+            return null;
         }
         else
         {
-            if (buttonPromptPlushieThrow == null)
-            {
-                Transform characterTransform = CharacterInstantiator.GetActiveCharacter(Characters.Parent).transform;
-                WorldSpaceUI.ShowButtonPrompt(characterTransform, inputDevice + "X", out buttonPromptPlushieThrow, "PlushieThrow");
-            }
+            if (Input.GetButtonDown(inputButton))
+                return HandleAction(null, "Plushie");
+            return null;
+        }        
+    }
 
-            if (Input.GetButtonDown($"{inputDevice}X"))
-            {
-                WorldSpaceUI.RemovePrompt(buttonPromptPlushieThrow);
-                buttonPromptPlushieThrow = null;
-                return true;
-            }
+    private ParentBaseState HandleAction(GameObject interactableObject, string action)
+    {
+        ParentBaseState returnState = null;
+        switch (action)
+        {
+            case "Door":
+                returnState = ToggleDoor(interactableObject);
+                break;
+            case "Plushie":
+                returnState = TogglePlushie(interactableObject);
+                break;
+            default:
+                break;
         }
 
-        return false;
+        return returnState;
+    }
+
+    protected ParentBaseState ToggleDoor(GameObject interactable)
+    {
+        gameObject.GetComponent<Animator>().SetInteger("MomIndex", 5);
+
+        WorldSpaceUI.RemovePrompt(currentButtonPrompt);
+        currentButtonPrompt = null;
+
+        DoorSwitch toggle = interactable.GetComponent<DoorSwitch>();
+        if (toggle == null)
+            toggle = interactable.GetComponentInParent<DoorSwitch>();
+        if (toggle != null)
+        {
+            toggle.Toggle();
+        }
+
+        return null;
+    }
+
+    protected ParentBaseState TogglePlushie(GameObject interactable)
+    {
+        if (parentData.plushie == null)
+        {
+            WorldSpaceUI.RemovePrompt(currentButtonPrompt);
+            WorldSpaceUI.ShowButtonPrompt(gameObject.transform, inputButton, out currentButtonPrompt, "PlushieThrow");
+
+            parentData.plushie = interactable.GetComponent<Plushie>();
+
+            gameObject.GetComponent<Animator>().SetInteger("MomIndex", 5);
+            parentData.plushie.AttachToTarget(gameObject.transform);
+            return null;
+        }
+        else
+        {
+            WorldSpaceUI.RemovePrompt(currentButtonPrompt);
+            currentButtonPrompt = null;
+            return new ParentThrow();
+        }
     }
 
     protected bool GetMovement(string inputDevice, out float xAxis, out float yAxis)
@@ -176,29 +183,26 @@ class ParentIdle : ParentBaseState
             return state;
 
         string inputDevice = parentData.tempInputDevice;
-        float xAxis;
-        float yAxis;
-        bool moveInput = GetMovement(inputDevice, out xAxis, out yAxis);
-
-
-        //CheckForPlushie
-        bool hasBeenThrown = CheckForPlushieAction(inputDevice);
-        if (hasBeenThrown)
-        {
-            return new ParentThrow();
-        }
-
-        //CheckForDoors
-        CheckDoorToggle(inputDevice);
 
         //CheckForCatch
-        if (Input.GetButtonDown($"{inputDevice}A"))
+        if (Input.GetButtonDown($"{inputDevice}B"))
         {
             MovementScript movement = gameObject.GetComponent<MovementScript>();
             movement.DoCatch();
             return new ParentCatch();
         }
 
+        //CheckForAction
+        ParentBaseState action = CheckAction();
+        if (action != null)
+        {
+            return action;
+        }
+
+        //CheckForMove
+        float xAxis;
+        float yAxis;
+        bool moveInput = GetMovement(inputDevice, out xAxis, out yAxis);
         if (moveInput)
         {
             return new ParentMovement();
@@ -230,20 +234,19 @@ class ParentMovement : ParentBaseState
         float yAxis;
         bool moveInput = GetMovement(inputDevice, out xAxis, out yAxis);
 
-        //CheckForDoorToggle
-        CheckDoorToggle(inputDevice);
-
         //CheckForCatch
-        if (Input.GetButtonDown($"{inputDevice}A"))
+        if (Input.GetButtonDown($"{inputDevice}B"))
         {
             movement.DoCatch();
             return new ParentCatch();
         }
 
-        //CheckForPlushie
-        bool hasBeenThrown = CheckForPlushieAction(inputDevice);
-        if (hasBeenThrown)
-            return new ParentThrow();
+        //CheckForAction
+        ParentBaseState action = CheckAction();
+        if (action != null)
+        {
+            return action;
+        }
 
         //MovePlayer
         movement.MovePlayer(xAxis, yAxis);

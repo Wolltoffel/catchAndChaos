@@ -23,9 +23,13 @@ abstract class ChildState : State
     public abstract ChildState UpdateState();
 
     static GameObject buttonPromptSlide, buttonPromptLolly, buttonPromptDestroy;
+    static GameObject currentButtonPrompt;
     protected static GameObject lastVentInRange;
     static float timerLolly;
     static bool lollyPickedUp;
+    string lastAction;
+
+    protected string inputButton { get => inputDevice + "A"; }
 
     public ChildState()
     {
@@ -33,95 +37,133 @@ abstract class ChildState : State
         GameData.GetData<ChildData>("Child").tempSpeed = GameData.GetData<ChildData>("Child").defaultSpeed;
     }
 
-    protected ChildState Slide()
+    protected ChildState CheckAction()
     {
-        bool interactableInRange = InteractableInRange("Vent", out GameObject interactableObject);
-        if (interactableInRange)
-        {
-            lastVentInRange = interactableObject;
+        bool interactableInRange = InteractableInRange(Characters.Child, out GameObject interactableObject, out string action);
 
-            //Show ButtonPrompt  
-            if (buttonPromptSlide == null)
-                WorldSpaceUI.ShowButtonPrompt(interactableObject.transform, inputDevice + "B", out buttonPromptSlide, "Vent");
-            //Toogle Vent
-            VentRollup ventRollup = interactableObject.GetComponent<VentRollup>();
-            if (ventRollup == null)
-                ventRollup = interactableObject.AddComponent<VentRollup>();
-
-            ventRollup.OpenVent();
-            
-             if (Input.GetButtonDown(inputDevice + "B"))
-             {
-                //Remove Button Prompt
-                WorldSpaceUI.RemovePrompt(buttonPromptSlide);
-                buttonPromptSlide = null;
-
-                //Handle Animations & Movement
-                Debug.Log("Going through vent");
-                gameObject.GetComponent<MovementScript>().DoSlide(interactableObject);
-                gameObject.GetComponent<Animator>().SetInteger("ChildIndex", 4);
-
-                return new Slide();
-               }
-        }
-        else
-        {
-            if (lastVentInRange!=null)
-            {
-                lastVentInRange.GetComponent<VentRollup>().CloseVent();
-            }
-            
-            WorldSpaceUI.RemovePrompt(buttonPromptSlide);
-            buttonPromptSlide = null;
-        }
-        return null;
-    }
-
-    protected void LollyPickUp()
-    {
-        //Lolly PickUp
-        if (InteractableInRange("Lolly", out GameObject interactableObject) )
-        {
-            if (buttonPromptLolly == null)
-            {
-                WorldSpaceUI.ShowButtonPrompt(interactableObject.transform, inputDevice + "A", out buttonPromptLolly, "Lolly");
-            }
-            
-            if (Input.GetButtonDown(inputDevice+"A"))
-            {
-                //Lollyspeed
-                lollyPickedUp = true;
-                WorldSpaceUI.RemovePrompt(buttonPromptLolly);
-                buttonPromptLolly = null;
-                GameData.GetData<InteractableContainer>("InteractableContainer").RemoveObjectFromCategory("Lolly", interactableObject);
-                GameObject.Destroy(interactableObject);
-                timerLolly = GameData.GetData<ChildData>("Child").lollyDuration;
-
-            }     
-        }
-        else
-        {
-            WorldSpaceUI.RemovePrompt(buttonPromptLolly);
-            buttonPromptLolly = null;
-        }
-
-        //Apply speed boost
+        //HandleSpeedBoost
         if (lollyPickedUp)
         {
             ChildData childData = GameData.GetData<ChildData>("Child");
             timerLolly -= Time.deltaTime;
 
-            if (timerLolly>0)
+            if (timerLolly > 0)
             {
                 childData.tempSpeed = childData.lollySpeed;
             }
-                
+
             else
             {
                 childData.tempSpeed = childData.defaultSpeed;
                 lollyPickedUp = false;
-            }        
+            }
         }
+
+        if (interactableInRange)
+        {
+            //Check if its the same object as so far
+            int objectHash = interactableObject.GetHashCode();
+            if (currentObjectHash != objectHash || currentButtonPrompt == null)
+            {
+                currentObjectHash = objectHash;
+                WorldSpaceUI.RemovePrompt(currentButtonPrompt);
+                WorldSpaceUI.ShowButtonPrompt(interactableObject.transform, inputButton, out currentButtonPrompt, action);
+
+                if (lastVentInRange != null)
+                    lastVentInRange.GetComponent<VentRollup>().CloseVent();
+            }
+
+            return HandleAction(interactableObject, action);
+        }
+
+
+        //RemovePrompt
+        if (currentButtonPrompt != null)
+        {
+            WorldSpaceUI.RemovePrompt(currentButtonPrompt);
+            currentButtonPrompt = null;
+        }
+
+        //VentRollup
+        if (lastVentInRange != null)
+            lastVentInRange.GetComponent<VentRollup>().CloseVent();
+
+        return null;
+    }
+
+    private ChildState HandleAction(GameObject interactableObject, string action)
+    {
+        ChildState returnState = null;
+
+        switch (action)
+        {
+            case "Vent":
+                returnState = Slide(interactableObject);
+                break;
+            case "Chaos":
+                returnState = Destroy(interactableObject);
+                break;
+            case "Lolly":
+                LollyPickUp(true, interactableObject);
+                break;
+            default:
+                Debug.Log($"ERROR! NO ACTION FOUND!!! ACTION: {action}");
+                break;
+        }
+
+        return returnState;
+    }
+
+    protected ChildState Slide(GameObject interactableObject)
+    {
+        lastVentInRange = interactableObject;
+
+        //Toogle Vent
+        VentRollup ventRollup = interactableObject.GetComponent<VentRollup>();
+        if (ventRollup == null)
+            ventRollup = interactableObject.AddComponent<VentRollup>();
+
+        ventRollup.OpenVent();
+            
+        if (Input.GetButtonDown(inputButton))
+        {
+            //Remove Button Prompt
+            WorldSpaceUI.RemovePrompt(currentButtonPrompt);
+            currentButtonPrompt = null;
+
+            //Handle Animations & Movement
+            Debug.Log("Going through vent");
+            gameObject.GetComponent<MovementScript>().DoSlide(interactableObject);
+            gameObject.GetComponent<Animator>().SetInteger("ChildIndex", 4);
+
+            return new Slide();
+        }
+        return null;
+    }
+
+    protected void LollyPickUp(bool isLolly,GameObject interactableObject)
+    {
+        if (Input.GetButtonDown(inputButton))
+        {
+            //Lollyspeed
+            lollyPickedUp = true;
+            WorldSpaceUI.RemovePrompt(buttonPromptLolly);
+            buttonPromptLolly = null;
+            GameData.GetData<InteractableContainer>("InteractableContainer").RemoveObjectFromCategory("Lolly", interactableObject);
+            GameObject.Destroy(interactableObject);
+            timerLolly = GameData.GetData<ChildData>("Child").lollyDuration;
+        }     
+    }
+
+    protected ChildState Destroy(GameObject interactableObject)
+    {
+        if (Input.GetButtonDown(inputButton))
+        {
+            WorldSpaceUI.RemovePrompt(buttonPromptDestroy);
+            buttonPromptDestroy = null;
+            return new Destroy(interactableObject.GetComponent<Destructable>());
+        }
+        return null;
     }
 
     protected ChildState Stunned()
@@ -130,30 +172,6 @@ abstract class ChildState : State
             return new Stunned();
         else
             return null;
-    }
-
-    protected ChildState Destroy()
-    {
-        if (InteractableInRange("Chaos", out GameObject interactableObject))
-        {
-            if (buttonPromptDestroy == null)
-            {
-                WorldSpaceUI.ShowButtonPrompt(interactableObject.transform, inputDevice + "X", out buttonPromptDestroy, "Chaos");
-            }
-
-            if (Input.GetButtonDown(inputDevice + "X"))
-            {
-                WorldSpaceUI.RemovePrompt(buttonPromptDestroy);
-                buttonPromptDestroy = null;
-                return new Destroy(interactableObject.GetComponent<Destructable>());
-            }
-        }
-        else
-        {
-            WorldSpaceUI.RemovePrompt(buttonPromptDestroy);
-            buttonPromptDestroy = null;
-        }
-        return null;
     }
 
     protected bool IsGameOver(out ChildState state)
@@ -207,40 +225,22 @@ class Idle : ChildState
         if (IsGameOver(out ChildState state))
             return state;
 
-        //Debug.Log ("Idle");
+        //Check Stun
+        ChildState stunned = Stunned();
+        if (stunned != null)
+            return stunned;
+
+        //Check Action
+        ChildState action = CheckAction();
+        if (action != null)
+            return action;
+
         //Go to Run
         float horizontal = Input.GetAxis(inputDevice + " Horizontal");
         float vertical = Input.GetAxis(inputDevice + " Vertical");
 
         if (horizontal != 0 || vertical != 0)
-        {
             return new Run();
-        }
-
-        LollyPickUp();
-
-        //Slide
-        ChildState slide = Slide();
-        if (slide != null)
-            return slide;
-
-        //Stunned
-        ChildState stunned = Stunned();
-        if (stunned != null)
-            return stunned;
-
-        //Destroy
-        ChildState destroy = Destroy();
-        if (destroy != null)
-            return destroy;
-
-        //Destroy Object
-        /*        if (InteractableInRange("Slidable", out GameObject interactableObject) )
-                {   
-                    //Show Buttonprompt
-                    if (Input.GetButtonDown(inputDevice+"X"))
-                        return new Destroy();
-                }*/
 
         gameObject.GetComponent<Animator>().SetInteger("ChildIndex", 0);
         return this;
@@ -255,7 +255,15 @@ class Run : ChildState
         if (IsGameOver(out ChildState state))
             return state;
 
-        LollyPickUp();
+        //Check Stun
+        ChildState stunned = Stunned();
+        if (stunned != null)
+            return stunned;
+
+        //Check Action
+        ChildState action = CheckAction();
+        if (action != null)
+            return action;
 
         float horizontal = Input.GetAxis(inputDevice + " Horizontal");
         float vertical = Input.GetAxis(inputDevice + " Vertical");
@@ -271,22 +279,6 @@ class Run : ChildState
         gameObject.GetComponent<MovementScript>().MovePlayer(inputVector.x, inputVector.y, GameData.GetData<ChildData>("Child").tempSpeed);
         gameObject.GetComponent<Animator>().SetInteger("ChildIndex", 1);
 
-        //Slide
-        ChildState slide = Slide();
-        if (slide != null)
-            return slide;
-
-
-        //Destroy
-        ChildState destroy = Destroy();
-        if (destroy != null)
-            return destroy;
-
-        //Stunned
-        ChildState stunned = Stunned();
-        if (stunned!=null)
-            return stunned;
-
         return this;
 
     }
@@ -299,7 +291,6 @@ class Slide : ChildState
     public Slide()
     {
         movement = CharacterInstantiator.GetActiveCharacter(Characters.Child).GetComponent<MovementScript>();
-
     }
 
     public override ChildState UpdateState()
@@ -309,6 +300,7 @@ class Slide : ChildState
             VentRollup ventRollUp = lastVentInRange.GetComponent<VentRollup>();
             ventRollUp.CloseVent();
             GameObject.Destroy(ventRollUp);
+            lastVentInRange = null;
             return new Idle();
         }
             
@@ -335,7 +327,7 @@ class Destroy : ChildState
 
     public override ChildState UpdateState()
     {
-        if (Input.GetButtonUp(inputDevice + "X"))
+        if (Input.GetButtonUp(inputButton))
         {
             WorldSpaceUI.RemovePrompt(promptHolder);
             GameObject.Destroy (particleInstance);

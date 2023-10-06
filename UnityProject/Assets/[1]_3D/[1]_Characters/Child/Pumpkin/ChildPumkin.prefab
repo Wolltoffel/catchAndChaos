@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lerpValue: 1
-  movementSpeed: 0.15
+  movementSpeed: 0.2
   rotationSpeed: 20
   pushForce: 1000
 --- !u!54 &5409604688557674026
