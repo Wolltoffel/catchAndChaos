@@ -2540,6 +2540,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anchor: {fileID: 749442389970106093}
   xOffset: 1.8
+  circleSize: 2
 --- !u!1 &5480778196499372958
 GameObject:
   m_ObjectHideFlags: 0

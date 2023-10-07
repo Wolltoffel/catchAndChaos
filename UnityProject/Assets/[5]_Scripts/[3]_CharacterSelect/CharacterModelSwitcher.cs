@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
+using UnityEngine.TextCore;
 
-struct Circle
+[System.Serializable]
+struct CirclePath
 {
     public float path01;
     public float radius;
     public Vector3 circleCenter;
 
-    public Circle(float path, float radius, Vector3 tangentCrossPoint)
+    public CirclePath(float path, float radius, Vector3 tangentCrossPoint)
     {
         this.path01 = path;
         this.radius = radius;
@@ -22,60 +25,111 @@ public class CharacterModelSwitcher : MonoBehaviour
 
     [SerializeField]Transform anchor;
     [SerializeField] float xOffset = 4f;
-   int activeModelIndex;
-   int amountOfAssets;
-   GameObject activeModel;
-   Transform characterParent;
+    [SerializeField]float circleSize = 2;
 
-   List<GameObject> spawnedCharacterModels = new List<GameObject>();
+    Vector3 circleCenter;
+    int activeModelIndex;
+    int amountOfAssets;
+    GameObject activeModel;
+    Transform characterParent;
+
+    List<IEnumerator> runningCouroutines = new List<IEnumerator>();
+
+
+    List<GameObject> spawnedCharacterModels = new List<GameObject>();
 
 
     public void Slide (Step step)
     {
         if (step == Step.Next)
-            SlideOperation(-1);
+            StartCoroutine(SlideOperation(-1));
         else
-            SlideOperation(1);
-
-        UpdateNames();
+            StartCoroutine(SlideOperation(1));
     }
 
-    void SlideOperation(int slideDir) 
-    {
-        //Normalize direction
-        if (slideDir!=0)
-            slideDir = (slideDir*slideDir)/slideDir;
-        
+    IEnumerator SlideOperation(int slideDir) 
+    {   
+        if (runningCouroutines.Count>0)
+            yield break;
+
         MoveModels(slideDir);
 
-        UpdateActiveModel();
+        yield return new WaitUntil(()=>runningCouroutines.Count<=0);
         
         int delNeighbourIndex = slideDir<0?0:spawnedCharacterModels.Count-1;
         DeleteModel(delNeighbourIndex);
         
         int addNeighbourIndex = slideDir<0?spawnedCharacterModels.Count-1:0;
-        Vector3 position = spawnedCharacterModels[addNeighbourIndex].transform.position+new Vector3(slideDir*(-xOffset),0,0);
-        AddModel(position,(activeModelIndex+3*(-slideDir)+3*amountOfAssets)%amountOfAssets);
-        
+        Vector3 position = spawnedCharacterModels[addNeighbourIndex].transform.parent.position+new Vector3(slideDir*(-xOffset),0,0);
+        AddModel(position,(activeModelIndex-3+3*amountOfAssets)%amountOfAssets,slideDir<0?spawnedCharacterModels.Count:0);
+
+        //Update activeModel
         activeModelIndex = (activeModelIndex+(-slideDir))%amountOfAssets;
+        activeModel = spawnedCharacterModels[(spawnedCharacterModels.Count/2)];
+        AdjustSaturation(activeModel,true);
+
+        UpdateNames();
     }
 
     void MoveModels(int direction)
     {   
+        //CalculatePositions
+        Dictionary<int,Tuple<Transform,Vector3,bool>> transformAndTargetPos = new Dictionary<int, Tuple<Transform, Vector3, bool>>();
         int startvalue = direction<0?spawnedCharacterModels.Count-1:0;
         for (int i = startvalue; i >=0 && i<spawnedCharacterModels.Count; i+=direction)
         {   
-            if (i+direction<spawnedCharacterModels.Count&&i+direction>=0){
-                spawnedCharacterModels[i].transform.parent.position = spawnedCharacterModels[i+direction].transform.parent.position;
+            if (i+direction<spawnedCharacterModels.Count&&i+direction>=0)
+            {   
+                Transform currentTransform = spawnedCharacterModels[i].transform.parent;
+                Vector3 targetPos = spawnedCharacterModels[i+direction].transform.parent.position;
+                bool followCircle = false;
+                
+               // if (direction<0 && i==(spawnedCharacterModels.Count/2)+1|direction>0 && i==(spawnedCharacterModels.Count/2)-1)
+                   // followCircle = true;
+
+                Tuple<Transform,Vector3,bool> newTuple = new Tuple<Transform,Vector3,bool>(currentTransform,targetPos,followCircle);
+                transformAndTargetPos.Add(i,newTuple);
                 AdjustSaturation(spawnedCharacterModels[i],false);
             }
         }
 
-        /*for (int i = spawnedCharacterModels.Count-1; i >0; i--)
-        {    
-            spawnedCharacterModels[i].transform.parent.position = spawnedCharacterModels[i-1].transform.parent.position;
-            AdjustSaturation(spawnedCharacterModels[i],false);
-        }*/
+        //Run Coroutines
+        var keys = transformAndTargetPos.Keys.ToList();
+        for (int i = 0; i < keys.Count; i++)
+        {
+            if (transformAndTargetPos.TryGetValue(keys[i],out Tuple<Transform,Vector3, bool>tuple))
+            {
+                Transform currentTransform  = tuple.Item1;
+                Vector3 targetPos = tuple.Item2;
+                bool followCircle = tuple.Item3;
+                StartCoroutineWithCleanUp(MoveModel(currentTransform,targetPos,followCircle));
+            }
+
+        }
+    }
+
+    IEnumerator MoveModel(Transform modelToMove,Vector3 targetPos, bool followCircle=false)
+    {
+        float moveSpeed = 2;
+        float startTime = Time.time;
+        Vector3 startPos = modelToMove.position;
+        Vector3 currentPos = startPos;
+
+        while (Vector3.Distance(currentPos,targetPos)>0.000001f)
+        {
+            float t = (Time.time - startTime) /(1/moveSpeed);
+            
+            if (followCircle)
+              currentPos= GetCoordinatesAlongCircle (new CirclePath(t,circleSize,circleCenter));
+            else
+                currentPos = Vector3.Lerp(currentPos,targetPos,t);
+
+            modelToMove.position = currentPos;
+            yield return null;
+        }
+
+        modelToMove.position = targetPos;
+        yield return null;
     }
 
 
@@ -84,13 +138,11 @@ public class CharacterModelSwitcher : MonoBehaviour
    public void AddModels(int amountOfAssets,int[]beforeActiveModelIndex,int[]afterActiveModelIndex)
    {    
         this.amountOfAssets = amountOfAssets;
-
-        float circleSize = 2;
-        Vector3 circleCenter = anchor.transform.position+new Vector3(0,0,circleSize);
+        circleCenter = anchor.transform.position+new Vector3(0,0,circleSize);
 
         //Before active models
         List<GameObject> beforeActiveModels;
-        SpawnModels(beforeActiveModelIndex,new Circle(0.375f,circleSize,circleCenter),out beforeActiveModels);
+        SpawnModels(beforeActiveModelIndex,new CirclePath(0.375f,circleSize,circleCenter),out beforeActiveModels,new Vector3(-xOffset,0,0));
         //Add before active in reverse
         for (int i = beforeActiveModels.Count-1; i >=0; i--)
         {
@@ -105,22 +157,21 @@ public class CharacterModelSwitcher : MonoBehaviour
         
         //After after active models
         List<GameObject> afterActiveModels;
-        SpawnModels(afterActiveModelIndex,new Circle(0.125f,circleSize,circleCenter),out afterActiveModels);
+        SpawnModels(afterActiveModelIndex,new CirclePath(0.125f,circleSize,circleCenter),out afterActiveModels,new Vector3(xOffset,0,0));
         spawnedCharacterModels.AddRange(afterActiveModels);
 
         //Name Models
         UpdateNames();
    }
 
-   void SpawnModels(int[]activeModelIndex,Circle circle, out List<GameObject> spawnedModels)
+   void SpawnModels(int[]activeModelIndex,CirclePath circle, out List<GameObject> spawnedModels,Vector3 offsetInput)
    {
-        Vector3 offset = new Vector3(xOffset,0,0);
         spawnedModels = new List<GameObject>();
         for (int i = 0; i < activeModelIndex.Length; i++)
         {
             Vector3 position;
             if (i>0)
-                position = spawnedModels[i-1].transform.position+offset;
+                position = spawnedModels[i-1].transform.position+offsetInput;
             else
             {
                 Vector2 position2D = GetCoordinatesAlongCircle(circle);
@@ -136,6 +187,7 @@ public class CharacterModelSwitcher : MonoBehaviour
         GameObject parent = new GameObject(name+"_Parent_"+index);
         parent.transform.position = position;
         parent.transform.rotation = Quaternion.Euler(0,180,0);
+        parent.transform.SetParent(anchor);
         CharacterInstantiator.AddCharacter(Characters.Child,out spawnedModel,parent.transform, position,modelIndex,true);
         spawnedModel.transform.SetParent (parent.transform);
         spawnedModel.name = name+"_"+index;
@@ -153,25 +205,22 @@ public class CharacterModelSwitcher : MonoBehaviour
 
     #region  HelperFunctions
 
-    void UpdateActiveModel()
-    {
-        activeModel = spawnedCharacterModels[(spawnedCharacterModels.Count/2)+1];
-        AdjustSaturation(activeModel,true);
-    }
-    void AddModel(Vector3 position, int modelIndex)
+    void AddModel(Vector3 position, int modelIndex,int index)
     {
         SpawnModel(spawnedCharacterModels.Count,modelIndex,position,out GameObject spawnedModel);
-        spawnedCharacterModels.Add(spawnedModel);
+        spawnedCharacterModels.Insert(index,spawnedModel);
     }
 
     void DeleteModel(int modelIndex)
     {
-        GameObject lastModel = spawnedCharacterModels[modelIndex];
-        spawnedCharacterModels.Remove(lastModel);
-        Destroy(lastModel.transform.parent.gameObject);
+        GameObject modelToDestroy = spawnedCharacterModels[modelIndex];
+        spawnedCharacterModels.Remove(modelToDestroy);
+        ReferenceEquals(modelToDestroy.transform,null);
+        ReferenceEquals(modelToDestroy,null);
+        Destroy(modelToDestroy.transform.parent.gameObject);
     }
 
-   Vector2 GetCoordinatesAlongCircle(Circle circlePos)
+   Vector2 GetCoordinatesAlongCircle(CirclePath circlePos)
    {
         float t = circlePos.path01;
         Vector3 circleTangentCrossPoint = circlePos.circleCenter;
@@ -203,6 +252,19 @@ public class CharacterModelSwitcher : MonoBehaviour
                     materials[j].SetFloat("_Saturation",0);
             }
         }
-   } 
+   }
+
+    void StartCoroutineWithCleanUp(IEnumerator coroutine)
+    {
+        StartCoroutine(WaitForCoroutine(coroutine));
+    }
+
+    IEnumerator WaitForCoroutine(IEnumerator coroutine)
+    {
+        runningCouroutines.Add (coroutine);
+        yield return StartCoroutine(coroutine);
+        runningCouroutines.Remove(coroutine);
+    }
+
    #endregion   
 }
