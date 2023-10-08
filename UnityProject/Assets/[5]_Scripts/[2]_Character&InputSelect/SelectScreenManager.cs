@@ -97,8 +97,7 @@ public class SelectScreenManager : MonoBehaviour
     SelectScreenData parent_selectScreenData, child_SelectScreenData;
     void Awake()
     {   
-
-        //Adjust Camera Camera
+        //Adjust Camera
         Camera.main.GetComponent<CameraManager>().SetCameraAsMain();
         Camera.main.GetComponent<CameraManager>().SetCameraPosition(cameraPosition);
 
@@ -138,9 +137,12 @@ public class SelectScreenManager : MonoBehaviour
 
    void SetReady (Characters characters)
    {
-        if (characters == Characters.Child)
+        if (characters == Characters.Child && !(child is Ready)&&!(child is ReadyToSwitchScreen))
+        {
             child = new Ready(child_SelectScreenData);
-        else
+        }
+            
+        else if (characters == Characters.Parent && !(parent is Ready)&&!(parent is ReadyToSwitchScreen))
             parent = new Ready(parent_selectScreenData);
    }
     
@@ -245,11 +247,12 @@ public class CustomiseCharacterTogether: MenuState
         if (Input.GetButtonDown(dataPack.characterSelect.GetInputDevice()+"A")|dataPack.readyButton.GetReady(dataPack.character))
         {
             dataPack.readyButton.SetReady(dataPack.character);
-            
+            dataPack.characterSelect.HideCharacterSelect();
+
             if(dataPack.character==Characters.Child)
-                CharacterInstantiator.GetActiveCharacter(dataPack.character).GetComponent<Animator>().SetInteger("ChildIndex",10);
+                CharacterInstantiator.GetActiveCharacter(dataPack.character).GetComponent<Animator>().SetInteger("ChildIndex",11);
             else
-                CharacterInstantiator.GetActiveCharacter(dataPack.character).GetComponent<Animator>().SetInteger("MomIndex",10);
+                CharacterInstantiator.GetActiveCharacter(dataPack.character).GetComponent<Animator>().SetInteger("MomIndex",11);
             
             return new Ready(dataPack);
         }
@@ -261,22 +264,29 @@ public class CustomiseCharacterTogether: MenuState
 
 public class Ready: MenuState
 {
+    bool startedTimer = false;
+    float timer;
     public Ready(SelectScreenData data) : base(data) {}
     public override MenuState UpdateMenu()
     {   
-        dataPack.characterSelect.HideCharacterSelect();
-        GameObject activeCharacter = CharacterInstantiator.GetActiveCharacter(dataPack.character);
+        AnimationClip animationClip = CharacterInstantiator.GetActiveCharacter(dataPack.character).GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip;
 
-        Animator activeAnimator = activeCharacter.GetComponent<Animator>();
-        AnimatorStateInfo animatorStateInfo = activeAnimator.GetCurrentAnimatorStateInfo(0);
-       
-        if (!animatorStateInfo.IsName("player selection"))
+
+        if (animationClip.name.Equals("animReady") && startedTimer==false)
         {
-            return new ReadyToSwitchScreen(dataPack);
+            startedTimer = true;
+            timer = animationClip.length;
         }
-        
+
+        if (startedTimer)
+            timer -=Time.deltaTime;
+
+        if (timer<=0.01f && startedTimer)
+            return new ReadyToSwitchScreen(dataPack);
+
         return this;
     }
+
 }
 
 public class ReadyToSwitchScreen: MenuState

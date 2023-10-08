@@ -275,6 +275,10 @@ public class CharacterModelSwitcher : MonoBehaviour
         CharacterInstantiator.AddCharacter(characters,out spawnedModel,parent.transform, position,modelIndex,true);
         spawnedModel.transform.SetParent (parent.transform);
         spawnedModel.name = name+"_"+index;
+        if (characters == Characters.Child)
+            spawnedModel.GetComponent<Animator>().SetInteger("ChildIndex",10);
+        else
+            spawnedModel.GetComponent<Animator>().SetInteger("MomIndex",10);
         AdjustHighlight(spawnedModel,1);
    }
 
@@ -288,7 +292,8 @@ public class CharacterModelSwitcher : MonoBehaviour
    {
         for (int i = 0; i < spawnedCharacterModels.Count; i++)
         {
-            spawnedCharacterModels[i].transform.parent.name = $"name+({i})";
+            spawnedCharacterModels[i].transform.parent.name = $"Model_({i})";
+            spawnedCharacterModels[i].transform.name = $"ModelInstance_({i})";
         }
    }
     void AddModel(Vector3 position, int modelIndex,int index)
@@ -363,7 +368,8 @@ public class CharacterModelSwitcher : MonoBehaviour
     {
         for (int i = 0; i < spawnedCharacterModels.Count; i++)
         {
-            spawnedCharacterModels[i].SetActive(false);
+            if (spawnedCharacterModels[i]!=activeModel)
+                spawnedCharacterModels[i].SetActive(false);
         }
 
 

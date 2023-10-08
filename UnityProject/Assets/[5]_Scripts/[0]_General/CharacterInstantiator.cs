@@ -119,13 +119,13 @@ public class CharacterInstantiator : MonoBehaviour
         if (characterType == Characters.Child)
         {
             characterData = childData;
-            character = child = Instantiate(characterData.characterAssets.GetCharacterAssetItemAt(index).characterPrefab);
+            character  = Instantiate(characterData.characterAssets.GetCharacterAssetItemAt(index).characterPrefab);
             character.transform.localScale = Vector3.one * _initialScale / 1.4f;
         }
         else
         {
             characterData = parentData;
-            character = parent = Instantiate(characterData.characterAssets.GetCharacterAssetItemAt(index).characterPrefab);
+            character  = Instantiate(characterData.characterAssets.GetCharacterAssetItemAt(index).characterPrefab);
             character.transform.localScale = Vector3.one * _initialScale;
         }
 
