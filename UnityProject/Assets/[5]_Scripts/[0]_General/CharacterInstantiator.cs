@@ -125,7 +125,7 @@ public class CharacterInstantiator : MonoBehaviour
         else
         {
             characterData = parentData;
-            character = parent = Instantiate(characterData.characterAssets.prefab);
+            character = parent = Instantiate(characterData.characterAssets.GetCharacterAssetItemAt(index).characterPrefab);
             character.transform.localScale = Vector3.one * _initialScale;
         }
 
