@@ -247,7 +247,7 @@ Shader "Custom/XRayShader_Lit"
         }
 
             float _Saturation;
-            float _AccentColor;
+            float4 _AccentColor;
             float _AccentColorTopOpacity;
             float _RenderAccentColorOnTop;
 
@@ -386,7 +386,10 @@ Shader "Custom/XRayShader_Lit"
 
                 color  = color*(1-_AccentColorTopOpacity) + _AccentColorTopOpacity*_AccentColor;
 
-                return half4(color, surfaceData.alpha);
+                //color = _AccentColor;
+
+                //return half4(color, surfaceData.alpha);
+                return half4 (color,1.0);
             }
             ENDHLSL
         }
