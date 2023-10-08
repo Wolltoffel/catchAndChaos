@@ -347,41 +347,6 @@ MonoBehaviour:
   m_MaskInteraction: 85
   m_UseStencil: 1
   m_RaycastFilter: 0
---- !u!1 &672081713808022280
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2878165281164218835}
-  m_Layer: 5
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2878165281164218835
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 672081713808022280}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4606152949192336593}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &798426522939512933
 GameObject:
   m_ObjectHideFlags: 0
@@ -1017,7 +982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b88437cd2b9471c488c1620e057d5d24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterSelectChild: {fileID: 3736554819791317400}
+  characterSelectChild: {fileID: 1117229770486577359}
   characterSelectParent: {fileID: 7070008200828232947}
   spawnPositionChild: {fileID: 6798733735181615610}
   spawnPositionParent: {fileID: 1978575887869199108}
@@ -1400,11 +1365,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characters: 1
-  prevController: {fileID: 0}
-  nextController: {fileID: 0}
-  prevKeyboard: {fileID: 0}
-  nextKeyboard: {fileID: 0}
-  scrollSelection: {fileID: 0}
+  prevController: {fileID: 1682666447362488416}
+  nextController: {fileID: 1006274216414036903}
+  prevKeyboard: {fileID: 3551118438766933411}
+  nextKeyboard: {fileID: 636511159774656527}
+  scrollSelection: {fileID: 6768756955923110131}
 --- !u!1 &1667610974578742253
 GameObject:
   m_ObjectHideFlags: 0
@@ -1534,7 +1499,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7228236621538997115}
-  - component: {fileID: 3758731422383722284}
   m_Layer: 5
   m_Name: Buttons
   m_TagString: Untagged
@@ -1565,24 +1529,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 240}
   m_SizeDelta: {x: 1580, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3758731422383722284
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1857682630298479805}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0761ecf46d5f1f547ac17a2ca4c65d0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characters: 0
-  prevController: {fileID: 1682666447362488416}
-  nextController: {fileID: 1006274216414036903}
-  prevKeyboard: {fileID: 3551118438766933411}
-  nextKeyboard: {fileID: 636511159774656527}
-  scrollSelection: {fileID: 6768756955923110131}
 --- !u!1 &1964315504521307235
 GameObject:
   m_ObjectHideFlags: 0
@@ -2696,6 +2642,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5825143546999830397}
+  - component: {fileID: 1117229770486577359}
   m_Layer: 5
   m_Name: Child
   m_TagString: Untagged
@@ -2727,6 +2674,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1920, y: 2160}
   m_Pivot: {x: 0, y: 0.5}
+--- !u!114 &1117229770486577359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3528554566973789164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0761ecf46d5f1f547ac17a2ca4c65d0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characters: 0
+  prevController: {fileID: 8906749300806085287}
+  nextController: {fileID: 4459230379635822733}
+  prevKeyboard: {fileID: 301903911362356254}
+  nextKeyboard: {fileID: 2212619802071707983}
+  scrollSelection: {fileID: 7785374456097371873}
 --- !u!1 &3648682873605189938
 GameObject:
   m_ObjectHideFlags: 0
@@ -4278,7 +4243,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7168736127771335797}
-  - component: {fileID: 3736554819791317400}
   m_Layer: 5
   m_Name: Buttons
   m_TagString: Untagged
@@ -4309,24 +4273,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 240}
   m_SizeDelta: {x: 1580, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3736554819791317400
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5499687047682430445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0761ecf46d5f1f547ac17a2ca4c65d0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characters: 0
-  prevController: {fileID: 8906749300806085287}
-  nextController: {fileID: 4459230379635822733}
-  prevKeyboard: {fileID: 301903911362356254}
-  nextKeyboard: {fileID: 2212619802071707983}
-  scrollSelection: {fileID: 7785374456097371873}
 --- !u!1 &5634617918281596986
 GameObject:
   m_ObjectHideFlags: 0
@@ -4375,7 +4321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b8ceb6a2ef232f41beab3c37ed4244b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anchor: {fileID: 749442389970106093}
+  anchor: {fileID: 8085175277719201704}
   xOffset: 3
   circleSize: 3
   moveSpeed: 2
@@ -4986,7 +4932,6 @@ RectTransform:
   m_Children:
   - {fileID: 5280363693626646618}
   - {fileID: 6144431431245110302}
-  - {fileID: 2878165281164218835}
   m_Father: {fileID: 4312758788742149408}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

@@ -39,6 +39,8 @@ public class CharacterModelSwitcher : MonoBehaviour
     bool activeFastSlide;
     Coroutine fastSlideTimer;
 
+    Characters characters;
+
     List<IEnumerator> runningCouroutines = new List<IEnumerator>();
     List<GameObject> spawnedCharacterModels = new List<GameObject>();
 
@@ -65,7 +67,7 @@ public class CharacterModelSwitcher : MonoBehaviour
         yield return new WaitUntil(()=>runningCouroutines.Count<=0);
 
         activeModel = spawnedCharacterModels[((spawnedCharacterModels.Count/2)-(slideDir))];
-        CharacterInstantiator.SetActiveCharacter(Characters.Child,activeModel);
+        CharacterInstantiator.SetActiveCharacter(characters,activeModel);
 
         MoveModels(slideDir, activeFastSlide);
 
@@ -215,9 +217,10 @@ public class CharacterModelSwitcher : MonoBehaviour
 
 
     #region  AddModels
-   public void AddModels(int amountOfAssets,int[]beforeActiveModelIndex,int[]afterActiveModelIndex)
+   public void AddModels(int amountOfAssets,int[]beforeActiveModelIndex,int[]afterActiveModelIndex, Characters characters)
    {    
         this.amountOfAssets = amountOfAssets;
+        this.characters = characters;
         circleCenter = anchor.transform.position+new Vector3(0,0,circleSize);
 
         //Before active models
@@ -234,7 +237,7 @@ public class CharacterModelSwitcher : MonoBehaviour
         SpawnModel(beforeActiveModelIndex.Length,activeModelIndex,anchor.transform.position,out activeModel);
         AdjustHighlight(activeModel,0);
         spawnedCharacterModels.Add(activeModel);
-        CharacterInstantiator.SetActiveCharacter(Characters.Child,activeModel);
+        CharacterInstantiator.SetActiveCharacter(characters,activeModel);
         
         //After after active models
         List<GameObject> afterActiveModels;
@@ -269,7 +272,7 @@ public class CharacterModelSwitcher : MonoBehaviour
         parent.transform.position = position;
         parent.transform.rotation = Quaternion.Euler(0,180,0);
         parent.transform.SetParent(anchor);
-        CharacterInstantiator.AddCharacter(Characters.Child,out spawnedModel,parent.transform, position,modelIndex,true);
+        CharacterInstantiator.AddCharacter(characters,out spawnedModel,parent.transform, position,modelIndex,true);
         spawnedModel.transform.SetParent (parent.transform);
         spawnedModel.name = name+"_"+index;
         AdjustHighlight(spawnedModel,1);

@@ -41,7 +41,7 @@ public class ScrollSelection : MonoBehaviour
         int numberOfAssets = characterAssets.GetCharacterAssetItems().Length;
         characterModelSwitcher.AddModels(numberOfAssets,
         new int[2]{(selectedIndex-1+numberOfAssets)%numberOfAssets,(selectedIndex-2+numberOfAssets)%numberOfAssets},
-        new int[2]{(selectedIndex+1)%numberOfAssets,(selectedIndex+2)%numberOfAssets});
+        new int[2]{(selectedIndex+1)%numberOfAssets,(selectedIndex+2)%numberOfAssets},character);
     }
 
     public void SetCharacter(Characters characters)

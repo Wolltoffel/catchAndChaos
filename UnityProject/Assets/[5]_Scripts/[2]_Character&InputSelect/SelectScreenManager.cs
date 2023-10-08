@@ -265,8 +265,6 @@ public class Ready: MenuState
     public override MenuState UpdateMenu()
     {   
         dataPack.characterSelect.HideCharacterSelect();
-
-
         GameObject activeCharacter = CharacterInstantiator.GetActiveCharacter(dataPack.character);
 
         Animator activeAnimator = activeCharacter.GetComponent<Animator>();
