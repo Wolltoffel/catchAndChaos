@@ -4375,7 +4375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b8ceb6a2ef232f41beab3c37ed4244b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anchor: {fileID: 749442389970106093}
+  anchor: {fileID: 8085175277719201704}
   xOffset: 3
   circleSize: 3
   moveSpeed: 2
