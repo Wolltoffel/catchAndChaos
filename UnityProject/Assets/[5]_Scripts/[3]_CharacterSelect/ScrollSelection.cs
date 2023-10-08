@@ -27,9 +27,10 @@ public class ScrollSelection : MonoBehaviour
 
 
     private void Start() 
-    {
+    {   
         templateRect = template.GetComponent<RectTransform>().rect;
 
+        ClearChildren();
         LoadSprites();
         SpawnElements();
         AdjustPositionOfAllElements();
@@ -39,6 +40,17 @@ public class ScrollSelection : MonoBehaviour
         characterModelSwitcher.AddModels(numberOfAssets,
         new int[2]{(selectedIndex-1+numberOfAssets)%numberOfAssets,(selectedIndex-2+numberOfAssets)%numberOfAssets},
         new int[2]{(selectedIndex+1)%numberOfAssets,(selectedIndex+2)%numberOfAssets});
+    }
+
+    void ClearChildren()
+    {
+        RectTransform[] rectTransforms = transform.GetComponentsInChildren<RectTransform>();
+
+        for (int i = 0; i<rectTransforms.Length;i++)
+        {
+            if (rectTransforms[i]!=template.GetComponent<RectTransform>() && rectTransforms[i] !=GetComponent<RectTransform>())
+                Destroy(rectTransforms[i].gameObject);
+        }
     }
 
     void LoadSprites()
@@ -121,7 +133,6 @@ public class ScrollSelection : MonoBehaviour
 
     IEnumerator _SlideLeft()
     {
-       
         yield return Slide(-templateRect.width);
         ResizeSelectedElement(selectedElementIndex);
         SlideLeftOperations();
@@ -233,7 +244,6 @@ public class ScrollSelection : MonoBehaviour
         float padding = (totalWidthOfParent-totalWidthOfAllElements)/2;
 
         Vector2 position = template.GetComponent<RectTransform>().anchoredPosition;
-        //position.x -= templateRect.width/2;
         position.x +=xOffset+paddingSide;
 
         for (int i= 0; i<shownElements.Length;i++)

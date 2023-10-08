@@ -26,6 +26,9 @@ public class CharacterModelSwitcher : MonoBehaviour
     [SerializeField]Transform anchor;
     [SerializeField] float xOffset = 4f;
     [SerializeField]float circleSize = 2;
+    [SerializeField] float moveSpeed = 4;
+    [SerializeField]float moveSpeedMultiplier=2;
+
 
     Vector3 circleCenter;
     int activeModelIndex;
@@ -33,14 +36,17 @@ public class CharacterModelSwitcher : MonoBehaviour
     GameObject activeModel;
     Transform characterParent;
 
+    bool activeFastSlide;
+    Coroutine fastSlideTimer;
+
     List<IEnumerator> runningCouroutines = new List<IEnumerator>();
-
-
     List<GameObject> spawnedCharacterModels = new List<GameObject>();
+
+    Dictionary<int,Tuple<Transform,Vector3,bool,bool>> movementInfo;
 
 
     public void Slide (Step step)
-    {
+{
         if (step == Step.Next)
             StartCoroutine(SlideOperation(-1));
         else
@@ -49,87 +55,162 @@ public class CharacterModelSwitcher : MonoBehaviour
 
     IEnumerator SlideOperation(int slideDir) 
     {   
+
         if (runningCouroutines.Count>0)
-            yield break;
+        {
+            FinishCoroutines();
+            ActivateFastSlide();
+        }
+        
+        yield return new WaitUntil(()=>runningCouroutines.Count<=0);
 
-        MoveModels(slideDir);
+        activeModel = spawnedCharacterModels[((spawnedCharacterModels.Count/2)-(slideDir))];
 
+        MoveModels(slideDir, activeFastSlide);
+
+        //Wait until all models are moved
         yield return new WaitUntil(()=>runningCouroutines.Count<=0);
         
+        AddAndDeleteModels(slideDir);
+
+        activeModelIndex = (activeModelIndex+(-slideDir))%amountOfAssets;
+
+        UpdateNames();
+    }
+
+    void ActivateFastSlide()
+    {
+         if (fastSlideTimer!=null)
+            StopCoroutine(fastSlideTimer);
+        fastSlideTimer = StartCoroutine(FastSlideTime());
+    }
+    IEnumerator FastSlideTime()
+    {
+        activeFastSlide = true;
+        yield return new WaitForSeconds(0.1f);
+        activeFastSlide = false;
+    }
+
+    void AddAndDeleteModels(int slideDir)
+    {
         int delNeighbourIndex = slideDir<0?0:spawnedCharacterModels.Count-1;
         DeleteModel(delNeighbourIndex);
         
         int addNeighbourIndex = slideDir<0?spawnedCharacterModels.Count-1:0;
         Vector3 position = spawnedCharacterModels[addNeighbourIndex].transform.parent.position+new Vector3(slideDir*(-xOffset),0,0);
         AddModel(position,(activeModelIndex-3+3*amountOfAssets)%amountOfAssets,slideDir<0?spawnedCharacterModels.Count:0);
-
-        //Update activeModel
-        activeModelIndex = (activeModelIndex+(-slideDir))%amountOfAssets;
-        activeModel = spawnedCharacterModels[(spawnedCharacterModels.Count/2)];
-        AdjustSaturation(activeModel,true);
-
-        UpdateNames();
     }
 
-    void MoveModels(int direction)
+    void MoveModels(int direction, bool fast)
     {   
-        //CalculatePositions
-        Dictionary<int,Tuple<Transform,Vector3,bool>> transformAndTargetPos = new Dictionary<int, Tuple<Transform, Vector3, bool>>();
+        movementInfo = new Dictionary<int, Tuple<Transform, Vector3, bool,bool>>();
         int startvalue = direction<0?spawnedCharacterModels.Count-1:0;
+        
         for (int i = startvalue; i >=0 && i<spawnedCharacterModels.Count; i+=direction)
         {   
             if (i+direction<spawnedCharacterModels.Count&&i+direction>=0)
             {   
-                Transform currentTransform = spawnedCharacterModels[i].transform.parent;
-                Vector3 targetPos = spawnedCharacterModels[i+direction].transform.parent.position;
-                bool followCircle = false;
-                
-               // if (direction<0 && i==(spawnedCharacterModels.Count/2)+1|direction>0 && i==(spawnedCharacterModels.Count/2)-1)
-                   // followCircle = true;
-
-                Tuple<Transform,Vector3,bool> newTuple = new Tuple<Transform,Vector3,bool>(currentTransform,targetPos,followCircle);
-                transformAndTargetPos.Add(i,newTuple);
-                AdjustSaturation(spawnedCharacterModels[i],false);
+                movementInfo.Add(i,ComputeMovementInfo(i,direction));
+                AdjustHighlight(spawnedCharacterModels[i],1);
             }
         }
 
-        //Run Coroutines
-        var keys = transformAndTargetPos.Keys.ToList();
+
+        if (fast)
+            FinishCoroutines();
+        else
+            RunCoroutines();
+       
+    }
+
+    Tuple<Transform,Vector3,bool,bool> ComputeMovementInfo(int index, int direction)
+    {
+        Transform currentTransform = spawnedCharacterModels[index].transform.parent;
+        Vector3 targetPos = spawnedCharacterModels[index+direction].transform.parent.position; 
+        bool followCircle = direction<0 && index==(spawnedCharacterModels.Count/2)+1|direction>0 
+        && index==(spawnedCharacterModels.Count/2)-1;
+        bool highlight = spawnedCharacterModels[index]==activeModel;
+
+        return new Tuple<Transform,Vector3,bool,bool>(currentTransform,targetPos,followCircle,highlight);
+    }
+
+    void RunCoroutines()
+    {
+        var keys = movementInfo.Keys.ToList();
         for (int i = 0; i < keys.Count; i++)
         {
-            if (transformAndTargetPos.TryGetValue(keys[i],out Tuple<Transform,Vector3, bool>tuple))
+            if (movementInfo.TryGetValue(keys[i],out Tuple<Transform,Vector3, bool,bool>tuple))
             {
                 Transform currentTransform  = tuple.Item1;
                 Vector3 targetPos = tuple.Item2;
                 bool followCircle = tuple.Item3;
-                StartCoroutineWithCleanUp(MoveModel(currentTransform,targetPos,followCircle));
+                bool highlight = tuple.Item4;
+                StartCoroutineWithCleanUp(MoveModel(currentTransform,targetPos,followCircle,highlight,keys[i]));
             }
-
         }
     }
 
-    IEnumerator MoveModel(Transform modelToMove,Vector3 targetPos, bool followCircle=false)
-    {
-        float moveSpeed = 2;
+    IEnumerator MoveModel(Transform currentTransform,Vector3 targetPos, bool followCircle, bool highlight, int removeKey)
+    {   
+        
+
         float startTime = Time.time;
-        Vector3 startPos = modelToMove.position;
+        Vector3 startPos = currentTransform.position;
         Vector3 currentPos = startPos;
 
-        while (Vector3.Distance(currentPos,targetPos)>0.000001f)
-        {
-            float t = (Time.time - startTime) /(1/moveSpeed);
+        float tempMoveSpeed = Mathf.Clamp(moveSpeed,0.1f,moveSpeed);
+        if (activeFastSlide)
+            tempMoveSpeed*=moveSpeedMultiplier;
+
+        while (currentTransform!=null&&Vector3.Distance(currentPos,targetPos)>0.000001f&& movementInfo.TryGetValue(removeKey,out var info))
+        {   
+            float t = (Time.time - startTime) /(1/tempMoveSpeed);
             
             if (followCircle)
-              currentPos= GetCoordinatesAlongCircle (new CirclePath(t,circleSize,circleCenter));
+                currentPos= GetCoordinatesAlongCircle (new CirclePath(t,circleSize,circleCenter));
             else
                 currentPos = Vector3.Lerp(currentPos,targetPos,t);
+       
+            if (highlight)
+                AdjustHighlight(currentTransform.gameObject,Mathf.Lerp(1,0,50*t));
 
-            modelToMove.position = currentPos;
+            if (currentTransform!=null)
+            {
+                currentTransform.position = currentPos;
+            }
+            
             yield return null;
         }
 
-        modelToMove.position = targetPos;
-        yield return null;
+        if (currentTransform!=null)
+        {
+            currentTransform.position = targetPos;
+            if (highlight)
+                AdjustHighlight(currentTransform.gameObject,0);
+        }   
+        
+        movementInfo.Remove(removeKey);
+    }
+
+    void FinishCoroutines()
+    {
+        var keys = movementInfo.Keys.ToList();
+
+         for (int i = 0; i < keys.Count; i++)
+        {
+            if (movementInfo.TryGetValue(keys[i],out Tuple<Transform,Vector3, bool,bool>tuple))
+            {
+                Transform currentTransform  = tuple.Item1;
+                Vector3 targetPos = tuple.Item2;
+                bool highlight = tuple.Item4;
+
+                if (highlight)
+                    AdjustHighlight(currentTransform.gameObject,0);
+                
+                currentTransform.position = targetPos;
+                movementInfo.Remove(keys[i]);
+            }
+        }
     }
 
 
@@ -152,7 +233,7 @@ public class CharacterModelSwitcher : MonoBehaviour
         //Spawn ActiveModel
         activeModelIndex = (beforeActiveModelIndex[0]+1)%amountOfAssets;
         SpawnModel(beforeActiveModelIndex.Length,activeModelIndex,anchor.transform.position,out activeModel);
-        AdjustSaturation(activeModel,true);
+        AdjustHighlight(activeModel,0);
         spawnedCharacterModels.Add(activeModel);
         
         //After after active models
@@ -191,20 +272,22 @@ public class CharacterModelSwitcher : MonoBehaviour
         CharacterInstantiator.AddCharacter(Characters.Child,out spawnedModel,parent.transform, position,modelIndex,true);
         spawnedModel.transform.SetParent (parent.transform);
         spawnedModel.name = name+"_"+index;
-        AdjustSaturation(spawnedModel,false);
+        AdjustHighlight(spawnedModel,1);
    }
 
-   void UpdateNames()
+
+   #endregion
+
+    #region  HelperFunctions
+
+
+    void UpdateNames()
    {
         for (int i = 0; i < spawnedCharacterModels.Count; i++)
         {
             spawnedCharacterModels[i].transform.parent.name = $"name+({i})";
         }
    }
-   #endregion
-
-    #region  HelperFunctions
-
     void AddModel(Vector3 position, int modelIndex,int index)
     {
         SpawnModel(spawnedCharacterModels.Count,modelIndex,position,out GameObject spawnedModel);
@@ -236,9 +319,11 @@ public class CharacterModelSwitcher : MonoBehaviour
         return new Vector2(x,y)*circleRadius+new Vector2(circleTangentCrossPoint.x,circleTangentCrossPoint.z);
    }
 
-   void AdjustSaturation (GameObject parent, bool saturate)
+   void AdjustHighlight (GameObject parent, float value)
    {
+
         Renderer[] renderers = parent.GetComponentsInChildren<Renderer>();
+        value = Mathf.Clamp01(value);
 
         for (int i= 0; i<renderers.Length;i++)
         {
@@ -246,12 +331,17 @@ public class CharacterModelSwitcher : MonoBehaviour
 
             for (int j= 0; j<materials.Length;j++)
             {
-                if (saturate)
-                    materials[j].SetFloat("_Saturation",1);
-                else
-                    materials[j].SetFloat("_Saturation",0);
+                materials[j].SetFloat("_AccentColorTopOpacity",value);
             }
         }
+   }
+
+   float GetHighlightValue(GameObject parent)
+   {
+        Renderer[] renderers = parent.GetComponentsInChildren<Renderer>();
+        Material[] materials = renderers[0].materials;
+        
+        return materials[0].GetFloat("_AccentColorTopOpacity");
    }
 
     void StartCoroutineWithCleanUp(IEnumerator coroutine)

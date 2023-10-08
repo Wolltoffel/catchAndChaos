@@ -9,35 +9,36 @@ Shader "Custom/XRayShader_Lit"
         // Specular vs Metallic workflow
         [HideInInspector] _WorkflowMode("WorkflowMode", Float) = 1.0
 
-		_XRayColor("Color", Color) = (0.5,0.5,0.5,1)
+		_AccentColor("Accent Color", Color) = (0.5,0.5,0.5,1)
         _Saturation("Saturation", Float) = 1.0
+        _AccentColorTopOpacity("AccentColorTopOpacity",float) = 0
 
         [MainColor] _BaseColor("Color", Color) = (0.5,0.5,0.5,1)
         [MainTexture] _BaseMap("Albedo", 2D) = "white" {}
 
         _Cutoff("Alpha Cutoff", Range(0.0, 1.0)) = 0.5
 
-        _Smoothness("Smoothness", Range(0.0, 1.0)) = 0.5
-        _GlossMapScale("Smoothness Scale", Range(0.0, 1.0)) = 1.0
-        _SmoothnessTextureChannel("Smoothness texture channel", Float) = 0
+        [HideInInspector]_Smoothness("Smoothness", Range(0.0, 1.0)) = 0.5
+        [HideInInspector]_GlossMapScale("Smoothness Scale", Range(0.0, 1.0)) = 1.0
+        [HideInInspector]_SmoothnessTextureChannel("Smoothness texture channel", Float) = 0
 
-        [Gamma] _Metallic("Metallic", Range(0.0, 1.0)) = 0.0
-        _MetallicGlossMap("Metallic", 2D) = "white" {}
+        [HideInInspector][Gamma] _Metallic("Metallic", Range(0.0, 1.0)) = 0.0
+        [HideInInspector]_MetallicGlossMap("Metallic", 2D) = "white" {}
 
-        _SpecColor("Specular", Color) = (0.2, 0.2, 0.2)
-        _SpecGlossMap("Specular", 2D) = "white" {}
+        [HideInInspector]_SpecColor("Specular", Color) = (0.2, 0.2, 0.2)
+        [HideInInspector]_SpecGlossMap("Specular", 2D) = "white" {}
 
-        [ToggleOff] _SpecularHighlights("Specular Highlights", Float) = 1.0
-        [ToggleOff] _EnvironmentReflections("Environment Reflections", Float) = 1.0
+        [HideInInspector][ToggleOff] _SpecularHighlights("Specular Highlights", Float) = 1.0
+       [HideInInspector] [ToggleOff] _EnvironmentReflections("Environment Reflections", Float) = 1.0
 
-        _BumpScale("Scale", Float) = 1.0
-        _BumpMap("Normal Map", 2D) = "bump" {}
+        [HideInInspector]_BumpScale("Scale", Float) = 1.0
+        [HideInInspector]_BumpMap("Normal Map", 2D) = "bump" {}
 
-        _OcclusionStrength("Strength", Range(0.0, 1.0)) = 1.0
-        _OcclusionMap("Occlusion", 2D) = "white" {}
+        [HideInInspector]_OcclusionStrength("Strength", Range(0.0, 1.0)) = 1.0
+        [HideInInspector]_OcclusionMap("Occlusion", 2D) = "white" {}
 
-        _EmissionColor("Color", Color) = (0,0,0)
-        _EmissionMap("Emission", 2D) = "white" {}
+        [HideInInspector]_EmissionColor("Color", Color) = (0,0,0)
+       [HideInInspector] _EmissionMap("Emission", 2D) = "white" {}
 
         // Blending state
         [HideInInspector] _Surface("__surface", Float) = 0.0
@@ -246,6 +247,9 @@ Shader "Custom/XRayShader_Lit"
         }
 
             float _Saturation;
+            float _AccentColor;
+            float _AccentColorTopOpacity;
+            float _RenderAccentColorOnTop;
 
             Varyings LitPassVertex(Attributes input)
             {
@@ -380,6 +384,8 @@ Shader "Custom/XRayShader_Lit"
                 color.y = color.y*_Saturation;
                 color = HSVtoRGB(color);
 
+                color  = color*(1-_AccentColorTopOpacity) + _AccentColorTopOpacity*_AccentColor;
+
                 return half4(color, surfaceData.alpha);
             }
             ENDHLSL
@@ -394,7 +400,8 @@ Shader "Custom/XRayShader_Lit"
             ZTest Always
             Cull Off
 
-             Stencil
+
+            Stencil
             {
                 Ref 1        // Set the reference value for the stencil test
                 Comp NotEqual // Pass if the stencil value is not equal to the reference value
@@ -436,12 +443,13 @@ Shader "Custom/XRayShader_Lit"
                 return o;
             }
 
-            float4 _XRayColor;
+            float4 _AccentColor;
+            float _AccentColorTopOpacity;
 
             float4 frag (v2f i) : SV_Target
             {
-                float4 color = _XRayColor;
-                color.rgb = _XRayColor;
+                float4 color = _AccentColor;
+                color.rgb = _AccentColor;
                 return color;
             } 
             ENDHLSL

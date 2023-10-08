@@ -76,8 +76,6 @@ public class CharacterSelect : MonoBehaviour
         else if (characters == Characters.Parent)
             GameData.GetData<PlayerData>("Parent").characterAssets.UpdateCharacterPrefab(step);
 
-        //CharacterInstantiator.ReplaceCharacter(characters, out GameObject character, true);
-
         scrollSelection.Slide(step);
 
     }
