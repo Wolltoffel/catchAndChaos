@@ -30,6 +30,8 @@ public class CharacterSelect : MonoBehaviour
         buttonSwitcher.buttons.Add(prev);
         buttonSwitcher.buttons.Add(next);
 
+        scrollSelection.SetCharacter(characters);
+
     }
 
     public void SetData(string inputDevice, Characters characters)
@@ -115,5 +117,15 @@ public class CharacterSelect : MonoBehaviour
             button.transform.localScale = currentScale;
             yield return null;
         }
+    }
+
+    public void HideCharacterSelect()
+    {
+        prevController.gameObject.SetActive(false);
+        prevKeyboard.gameObject.SetActive(false);
+        nextController.gameObject.SetActive(false);
+        nextKeyboard.gameObject.SetActive(false);
+        scrollSelection.HideSelection();
+        Destroy(this);
     }
 }

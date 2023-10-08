@@ -98,11 +98,7 @@ public class SelectScreenManager : MonoBehaviour
     void Awake()
     {   
 
-        //Spawn Characters and ajdust Camera
-        //CharacterInstantiator.InstantiateCharacter(Characters.Child, out GameObject characterChild, spawnPositionChild.transform, true);
-        //CharacterInstantiator.InstantiateCharacter(Characters.Parent, out GameObject characterParent, spawnPositionParent.transform,true);
-        //CharacterInstantiator.GetActiveCharacter(Characters.Child).GetComponent<Animator>().SetInteger("ChildIndex",0);
-        //CharacterInstantiator.GetActiveCharacter(Characters.Parent).GetComponent<Animator>().SetInteger("MomIndex",0);
+        //Adjust Camera Camera
         Camera.main.GetComponent<CameraManager>().SetCameraAsMain();
         Camera.main.GetComponent<CameraManager>().SetCameraPosition(cameraPosition);
 
@@ -124,7 +120,7 @@ public class SelectScreenManager : MonoBehaviour
         child = child.UpdateMenu();
         parent = parent.UpdateMenu();
 
-        if (child is Ready && parent is Ready)
+        if (child is ReadyToSwitchScreen && parent is ReadyToSwitchScreen)
         {
             ScreenSwitcher.SwitchScreen(ScreenType.GameScreen);
         }
@@ -268,8 +264,28 @@ public class Ready: MenuState
     public Ready(SelectScreenData data) : base(data) {}
     public override MenuState UpdateMenu()
     {   
-        //dataPack.characterSelect.SetReadyButtonHalf(true);
+        dataPack.characterSelect.HideCharacterSelect();
+
+
+        GameObject activeCharacter = CharacterInstantiator.GetActiveCharacter(dataPack.character);
+
+        Animator activeAnimator = activeCharacter.GetComponent<Animator>();
+        AnimatorStateInfo animatorStateInfo = activeAnimator.GetCurrentAnimatorStateInfo(0);
+       
+        if (!animatorStateInfo.IsName("player selection"))
+        {
+            return new ReadyToSwitchScreen(dataPack);
+        }
         
+        return this;
+    }
+}
+
+public class ReadyToSwitchScreen: MenuState
+{
+    public ReadyToSwitchScreen(SelectScreenData data) : base(data) {}
+    public override MenuState UpdateMenu()
+    {   
         return this;
     }
 }

@@ -65,6 +65,7 @@ public class CharacterModelSwitcher : MonoBehaviour
         yield return new WaitUntil(()=>runningCouroutines.Count<=0);
 
         activeModel = spawnedCharacterModels[((spawnedCharacterModels.Count/2)-(slideDir))];
+        CharacterInstantiator.SetActiveCharacter(Characters.Child,activeModel);
 
         MoveModels(slideDir, activeFastSlide);
 
@@ -152,8 +153,6 @@ public class CharacterModelSwitcher : MonoBehaviour
 
     IEnumerator MoveModel(Transform currentTransform,Vector3 targetPos, bool followCircle, bool highlight, int removeKey)
     {   
-        
-
         float startTime = Time.time;
         Vector3 startPos = currentTransform.position;
         Vector3 currentPos = startPos;
@@ -235,6 +234,7 @@ public class CharacterModelSwitcher : MonoBehaviour
         SpawnModel(beforeActiveModelIndex.Length,activeModelIndex,anchor.transform.position,out activeModel);
         AdjustHighlight(activeModel,0);
         spawnedCharacterModels.Add(activeModel);
+        CharacterInstantiator.SetActiveCharacter(Characters.Child,activeModel);
         
         //After after active models
         List<GameObject> afterActiveModels;
@@ -354,6 +354,17 @@ public class CharacterModelSwitcher : MonoBehaviour
         runningCouroutines.Add (coroutine);
         yield return StartCoroutine(coroutine);
         runningCouroutines.Remove(coroutine);
+    }
+
+    public void HideAll()
+    {
+        for (int i = 0; i < spawnedCharacterModels.Count; i++)
+        {
+            spawnedCharacterModels[i].SetActive(false);
+        }
+
+
+        Destroy(this);
     }
 
    #endregion   

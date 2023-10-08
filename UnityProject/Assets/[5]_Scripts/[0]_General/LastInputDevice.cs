@@ -37,7 +37,8 @@ public class LastInputDevice : MonoBehaviour
             LastInputDeviceData lastInputDeviceData =new LastInputDeviceData(InputDevice.Keyboard);
 
             if (lastInputDevice!= ""||Input.GetMouseButtonDown(0)||Input.GetMouseButtonDown(1)||Input.GetMouseButtonDown(2)
-                || Input.GetAxis ("K2 Horizontal")!=0|| Input.GetAxis("K2 Vertical") !=0)
+                || Input.GetAxis ("K2 Horizontal")!=0|| Input.GetAxis("K2 Vertical") !=0|| Input.GetKeyDown(KeyCode.LeftShift)||
+                Input.GetKeyDown(KeyCode.Tab)||Input.GetKeyDown(KeyCode.KeypadEnter))
             {
                 lastInputDeviceData = new LastInputDeviceData(InputDevice.Keyboard);
             }
@@ -45,6 +46,7 @@ public class LastInputDevice : MonoBehaviour
             {
                 lastInputDeviceData = new LastInputDeviceData(InputDevice.Controller);
             }
+
 
 
             GameData.SetData(lastInputDeviceData,"LastInputDeviceData");

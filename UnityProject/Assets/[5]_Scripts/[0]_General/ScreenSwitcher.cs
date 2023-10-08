@@ -65,7 +65,7 @@ public class ScreenSwitcher : MonoBehaviour
         
         GameObject screenByName  = GetScreenByName(screen);
         GameObject newScreen = Instantiate(screenByName);
-        newScreen.name = screenByName.name+ " instance";
+        newScreen.name = screenByName.name+ "_instance";
         activeScreenDataBase.TryAdd(screen,newScreen);
     }
 

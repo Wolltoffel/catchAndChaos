@@ -69,7 +69,6 @@ public class CharacterInstantiator : MonoBehaviour
     }
 
      
-
     public static GameObject GetActiveCharacter(Characters character)
     {
         if (character == Characters.Child)
@@ -77,6 +76,14 @@ public class CharacterInstantiator : MonoBehaviour
             return child;
         }
         return parent;
+    }
+
+    public static void SetActiveCharacter(Characters characterType, GameObject character)
+    {
+        if (characterType==Characters.Child)
+            child = character;
+        else
+            parent = character;
     }
 
     public static void ReplaceCharacter (Characters characterType, out GameObject character, bool addConstraint)

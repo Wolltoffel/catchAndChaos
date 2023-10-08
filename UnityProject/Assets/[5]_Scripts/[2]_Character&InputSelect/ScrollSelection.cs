@@ -15,6 +15,8 @@ public class ScrollSelection : MonoBehaviour
     [SerializeField] float selectedItemScale = 1.2f;
 
     [SerializeField] CharacterModelSwitcher characterModelSwitcher;
+
+    [HideInInspector]Characters character; 
     
     Rect templateRect;
     
@@ -25,13 +27,13 @@ public class ScrollSelection : MonoBehaviour
     int selectedIndex;
     int selectedElementIndex;
 
-
+    
     private void Start() 
     {   
         templateRect = template.GetComponent<RectTransform>().rect;
 
         ClearChildren();
-        LoadSprites();
+        LoadAssets();
         SpawnElements();
         AdjustPositionOfAllElements();
         SetStartValue();
@@ -40,6 +42,11 @@ public class ScrollSelection : MonoBehaviour
         characterModelSwitcher.AddModels(numberOfAssets,
         new int[2]{(selectedIndex-1+numberOfAssets)%numberOfAssets,(selectedIndex-2+numberOfAssets)%numberOfAssets},
         new int[2]{(selectedIndex+1)%numberOfAssets,(selectedIndex+2)%numberOfAssets});
+    }
+
+    public void SetCharacter(Characters characters)
+    {
+        character  = characters;
     }
 
     void ClearChildren()
@@ -53,9 +60,13 @@ public class ScrollSelection : MonoBehaviour
         }
     }
 
-    void LoadSprites()
-    {
-        characterAssets = GameData.GetData<PlayerData>("Child").characterAssets;
+    void LoadAssets()
+    {   
+        if (character == Characters.Child)
+            characterAssets = GameData.GetData<PlayerData>("Child").characterAssets;
+        else
+            characterAssets = GameData.GetData<PlayerData>("Parent").characterAssets;
+
        CharacterAssetItem[] characterAssetItems =  characterAssets.GetCharacterAssetItems();
        for (int i= 0; i<characterAssetItems.Length;i++)
        {
@@ -252,6 +263,17 @@ public class ScrollSelection : MonoBehaviour
             shownElements[i].GetComponent<RectTransform>().anchoredPosition  = position;
             position.x += shownElements[i].GetComponent<RectTransform>().rect.width+paddingSide;
         }
+    }
+
+    public void HideSelection()
+    {
+        for (int i =0; i<spawnedElements.Count;i++)
+        {
+            spawnedElements[i].SetActive(false);
+        }
+
+        characterModelSwitcher.HideAll();
+        Destroy(this);
     }
 
 }
