@@ -14151,6 +14151,7 @@ MonoBehaviour:
   circleSize: 3
   moveSpeed: 2
   moveSpeedMultiplier: 2
+  modelScale: 0.6
 --- !u!1 &5642690176335891037
 GameObject:
   m_ObjectHideFlags: 0
@@ -19731,6 +19732,7 @@ MonoBehaviour:
   circleSize: 3
   moveSpeed: 2
   moveSpeedMultiplier: 2
+  modelScale: 2
 --- !u!1 &6798733735181615610
 GameObject:
   m_ObjectHideFlags: 0
