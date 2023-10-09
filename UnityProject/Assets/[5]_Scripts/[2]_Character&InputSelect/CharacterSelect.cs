@@ -127,5 +127,6 @@ public class CharacterSelect : MonoBehaviour
         nextKeyboard.gameObject.SetActive(false);
         scrollSelection.HideSelection();
         Destroy(this);
+        Destroy(buttonSwitcher);
     }
 }
