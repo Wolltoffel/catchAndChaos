@@ -28,6 +28,7 @@ public class CharacterModelSwitcher : MonoBehaviour
     [SerializeField]float circleSize = 2;
     [SerializeField] float moveSpeed = 4;
     [SerializeField]float moveSpeedMultiplier=2;
+    [SerializeField] float modelScale=1;
 
 
     Vector3 circleCenter;
@@ -47,7 +48,7 @@ public class CharacterModelSwitcher : MonoBehaviour
     Dictionary<int,Tuple<Transform,Vector3,bool,bool>> movementInfo;
 
 
-    public void Slide (Step step)
+public void Slide (Step step)
 {
         if (step == Step.Next)
             StartCoroutine(SlideOperation(-1));
@@ -271,6 +272,7 @@ public class CharacterModelSwitcher : MonoBehaviour
         GameObject parent = new GameObject(name+"_Parent_"+index);
         parent.transform.position = position;
         parent.transform.rotation = Quaternion.Euler(0,180,0);
+        parent.transform.localScale = new Vector3(modelScale,modelScale,modelScale);
         parent.transform.SetParent(anchor);
         CharacterInstantiator.AddCharacter(characters,out spawnedModel,parent.transform, position,modelIndex,true);
         spawnedModel.transform.SetParent (parent.transform);
