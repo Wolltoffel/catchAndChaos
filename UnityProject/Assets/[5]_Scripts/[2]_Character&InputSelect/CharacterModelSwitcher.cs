@@ -28,7 +28,7 @@ public class CharacterModelSwitcher : MonoBehaviour
     [SerializeField]float circleSize = 2;
     [SerializeField] float moveSpeed = 4;
     [SerializeField]float moveSpeedMultiplier=2;
-    [SerializeField] float modelScale=1;
+    [SerializeField] float modelScale;
 
 
     Vector3 circleCenter;
