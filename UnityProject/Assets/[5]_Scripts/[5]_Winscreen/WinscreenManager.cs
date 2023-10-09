@@ -24,7 +24,7 @@ public class WinscreenManager : MonoBehaviour
     GameObject childInstance, parentInstance;
 
     //WinScreenStuff
-    [SerializeField] private GameObject UIstuff;
+    [SerializeField] private GameObject UIManagers;
 
     private IEnumerator Start()
     {
@@ -37,7 +37,7 @@ public class WinscreenManager : MonoBehaviour
 
     private void SetUpUI()
     {
-        UIstuff.SetActive(true);
+        UIManagers.SetActive(true);
     }
 
     void DetermineWinner()

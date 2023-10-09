@@ -1973,7 +1973,7 @@ MonoBehaviour:
   parentAnchor: {fileID: 3801659326859250823}
   childAnchor: {fileID: 541394721156294827}
   cameraAnchor: {fileID: 0}
-  UIstuff: {fileID: 2381197660694279170}
+  UIManagers: {fileID: 2381197660694279170}
 --- !u!1 &2381197660694279170
 GameObject:
   m_ObjectHideFlags: 0
@@ -1985,6 +1985,7 @@ GameObject:
   - component: {fileID: 8158471083301587593}
   - component: {fileID: 8268207699616916777}
   - component: {fileID: 2624754659468623602}
+  - component: {fileID: 2271012101188144123}
   m_Layer: 0
   m_Name: UIManagers
   m_TagString: Untagged
@@ -2034,8 +2035,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dfd5c34b907ac0458ce4f436de18c65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreTextMeshPro: {fileID: 5018053324582092665}
-  namesTextMeshPro: {fileID: 5018053324582092665}
+  scoreTextMeshProParent: {fileID: 4401102951918610942}
+  scoreTextMeshProChild: {fileID: 3302188553439024031}
+--- !u!114 &2271012101188144123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2381197660694279170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c974915cfb461f74593c1b582596c839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1359261205355032010}
+  childAnimationWin: ChildWin
+  parentAnimationWin: ParentWin
 --- !u!1 &2419992717218021397
 GameObject:
   m_ObjectHideFlags: 0
