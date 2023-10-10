@@ -21,13 +21,13 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SharkBody
-  m_Shader: {fileID: 4800000, guid: 74e6acc84fa10d447a2eacf26990a2a0, type: 3}
+  m_Shader: {fileID: 4800000, guid: a52d11b7dfe1f4c499d62bc2c1e41837, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _SPECULARHIGHLIGHTS_OFF
+  m_ValidKeywords: []
   m_InvalidKeywords:
   - _ENVIRONMENTREFLECTIONS_OFF
+  - _SPECULARHIGHLIGHTS_OFF
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -63,7 +63,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 6f5655b87a8c90441bd9bd25ab881117, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -112,6 +112,7 @@ Material:
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 0
     - _GlossMapScale: 0
+    - _Glossines: 32
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
@@ -119,6 +120,7 @@ Material:
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _RimAmount: 0.716
     - _Saturation: 1
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
@@ -130,9 +132,12 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _AccentColor: {r: 1, g: 1, b: 1, a: 1}
+    - _AmbientColor: {r: 0.39999998, g: 0.39999998, b: 0.39999998, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SpecularColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
     - _XRayColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

@@ -23,6 +23,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _AlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -51,9 +55,11 @@ Material:
     m_Floats:
     - _Cutout: 0.5
     - _EmissionIntensity: 1
+    - _Glossines: 6
     - _Mix: 0.5
     - _NormalStrength: 1
     - _Outline: 0.0003
+    - _RimAmount: 0.252
     - _RimIntensity: 1
     - _RimPower: 0.1
     - _RimSmooth: 1
@@ -63,11 +69,12 @@ Material:
     - _zTest: 0
     m_Colors:
     - _AddColor: {r: 1, g: 1, b: 1, a: 1}
-    - _AmbientColor: {r: 0.5849056, g: 0.5495454, b: 0.5113326, a: 1}
-    - _Color: {r: 0.6886792, g: 0.3941497, b: 0.3941497, a: 0}
+    - _AmbientColor: {r: 0.7924528, g: 0.12459945, b: 0.12459945, a: 1}
+    - _Color: {r: 1, g: 0.14779866, b: 0.14779866, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _OtherTexColor: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 1, g: 0.10062885, b: 0.10062885, a: 0}
-    - _RimColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimColor: {r: 7.812566, g: 3.955418, b: 5.844993, a: 1}
     - _ShadowColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SpecularColor: {r: 22.577173, g: 7.383728, b: 8.469847, a: 1}
   m_BuildTextureStacks: []
