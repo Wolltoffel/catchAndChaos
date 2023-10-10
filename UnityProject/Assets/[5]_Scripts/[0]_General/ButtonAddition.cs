@@ -37,7 +37,7 @@ public class ButtonAddition : MonoBehaviour,ISelectHandler, IDeselectHandler, IP
         if (!scaledUp)
         {
             StopAllCoroutines();
-            StartCoroutine(ScaleUp(transform.localScale,originalScaleButton*1.5f));
+            StartCoroutine(ScaleUp(transform.localScale,originalScaleButton*1.2f));
         }
     }
 
