@@ -276,8 +276,12 @@ class Run : ChildState
 
 
         GameObject gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Child);
-        gameObject.GetComponent<MovementScript>().MovePlayer(inputVector.x, inputVector.y, GameData.GetData<ChildData>("Child").tempSpeed);
-        gameObject.GetComponent<Animator>().SetInteger("ChildIndex", 1);
+        var t = gameObject.GetComponent<MovementScript>().MovePlayer(inputVector.x, inputVector.y, GameData.GetData<ChildData>("Child").tempSpeed);
+
+        if (t == Vector2.zero)
+            gameObject.GetComponent<Animator>().SetInteger("ChildIndex", 0);
+        else
+            gameObject.GetComponent<Animator>().SetInteger("ChildIndex", 1);
 
         return this;
 
