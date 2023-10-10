@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: parent
   m_EditorClassIdentifier: 
   key: Parent
-  tempScore: 2
-  tempInputDevice: J2
+  tempScore: 0
+  tempInputDevice: K2
   characterAssets: {fileID: 11400000, guid: cc1cf37f412ecfa48885957c9d0aa826, type: 2}
   handTransform: {fileID: 0}
   plushie: {fileID: 0}

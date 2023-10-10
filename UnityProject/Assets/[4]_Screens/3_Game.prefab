@@ -45,7 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lollyPrefab: {fileID: 4277073679142548971, guid: d1454aebd4e7b42478b68f472d5d29a8, type: 3}
-  amountOfLollys: 3
+  amountOfLollys: 1
+  lollySpawnRate: 10
+  maxAmountOfLollys: 3
   parentObject: {fileID: 1493361585049889100}
 --- !u!1 &1305096530984796727
 GameObject:
@@ -287,16 +289,16 @@ MonoBehaviour:
     interactionRange: 2
   - character: 1
     tag: Door
-    interactionRange: 5
+    interactionRange: 3
   - character: 0
     tag: Lolly
     interactionRange: 2
   - character: 0
     tag: Vent
-    interactionRange: 3
+    interactionRange: 2
   - character: 0
     tag: Chaos
-    interactionRange: 5
+    interactionRange: 3
 --- !u!1 &4078362155094007473
 GameObject:
   m_ObjectHideFlags: 0
