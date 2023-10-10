@@ -73,7 +73,6 @@ MonoBehaviour:
   movementSpeed: 0.15
   rotationSpeed: 20
   pushForce: 1000
-  minWallDistance: 1
 --- !u!54 &9151529786586322899
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -194,6 +193,10 @@ PrefabInstance:
     - target: {fileID: 2303363701401595986, guid: 56843481167168048a4bb0f7578753b3, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303363701401595986, guid: 56843481167168048a4bb0f7578753b3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2364760118393782170, guid: 56843481167168048a4bb0f7578753b3, type: 3}
       propertyPath: m_Layer

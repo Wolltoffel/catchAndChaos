@@ -1,4 +1,4 @@
-Shader "Custom/ToonShader"
+Shader "Custom/Character"
 {
     Properties
     {
@@ -9,6 +9,9 @@ Shader "Custom/ToonShader"
         _Glossines("Glossines",Float) = 32
         [HDR]_RimColor ("Rim Color", Color) = (1,1,1,1)
         _RimAmount("Rim Amount", Range(0,1)) = 0.716
+
+        _AccentColor("Accent Color", Color) = (0.5,0.5,0.5,1)
+        _AccentColorTopOpacity("AccentColorTopOpacity",float) = 0
     }
     SubShader
     {       
@@ -16,6 +19,12 @@ Shader "Custom/ToonShader"
 
         Pass    
         {
+            Stencil {
+                Ref 1       // Set the reference value for the stencil test
+                Comp Always // Always pass the stencil test (to write the reference value)
+                Pass Replace // Replace the stencil value with the reference value
+        }
+
             Name "ToonShading"
             Tags { 
             "RenderType"="Opaque" 
@@ -105,5 +114,70 @@ Shader "Custom/ToonShader"
             ENDCG
         }
         UsePass "Legacy Shaders/VertexLit/SHADOWCASTER"
-    }
+    
+
+    Pass
+        {   
+            Name "Silhouette"
+             Tags {"Queue" = "Transparent+2" }
+
+            ZWrite Off
+            ZTest Always
+            Cull Off
+
+
+            Stencil
+            {
+                Ref 1        // Set the reference value for the stencil test
+                Comp NotEqual // Pass if the stencil value is not equal to the reference value
+            }
+ 
+            HLSLPROGRAM
+
+            #pragma multi_compile_instancing
+            #pragma vertex vert
+            #pragma fragment frag
+
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl" 
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+
+            struct appdata
+            {
+                float4 vertex : POSITION;
+                float3 normal : NORMAL;
+                float2 texcoord : TEXCOORD0;
+
+            }; 
+
+            struct v2f
+            {
+                float4 vertex : SV_POSITION;
+                float3 normal : TEXCOORD0;
+                float3 worldPos : TEXCOORD1;
+                float2 texCoord : TEXCOORD2;
+
+            };
+
+            v2f vert (appdata v)
+            {
+                v2f o;
+                o.vertex = TransformObjectToHClip(v.vertex);
+                o.worldPos = TransformObjectToWorld(v.vertex);
+                o.normal = v.normal;
+                o.texCoord = v.texcoord;
+                return o;
+            }
+
+            float4 _AccentColor;
+            float _AccentColorTopOpacity;
+
+            float4 frag (v2f i) : SV_Target
+            {
+                float4 color = _AccentColor;
+                color.rgb = _AccentColor;
+                return color;
+            } 
+            ENDHLSL
+        }              
+}
 }

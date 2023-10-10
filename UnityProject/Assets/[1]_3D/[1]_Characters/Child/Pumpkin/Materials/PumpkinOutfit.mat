@@ -122,7 +122,7 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _RenderAccentColorOnTop: 1
-    - _RimAmount: 0.716
+    - _RimAmount: 0.554
     - _Saturation: 1
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
@@ -136,10 +136,10 @@ Material:
     - _AccentColor: {r: 1, g: 1, b: 1, a: 1}
     - _AmbientColor: {r: 0.39999998, g: 0.39999998, b: 0.39999998, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.8773585, g: 0.8249377, b: 0.8249377, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0, g: 0, b: 0, a: 1}
-    - _SpecularColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
+    - _SpecularColor: {r: 0.5, g: 0.21540877, b: 0.21540877, a: 1}
     - _XRayColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
