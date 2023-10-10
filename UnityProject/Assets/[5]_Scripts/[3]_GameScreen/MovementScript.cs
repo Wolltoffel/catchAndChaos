@@ -93,7 +93,7 @@ public class MovementScript : MonoBehaviour
         }
 
         Physics.Linecast(position + Vector3.up, position + Vector3.up + moveDir * 3, out hit, LayerMask.GetMask("Walls"));
-        if (hit.collider != null && (hit.collider.gameObject.tag == "Walls" || hit.collider.gameObject.tag == "Door" || hit.collider.gameObject.tag == "Vent")
+        if (hit.collider != null && (hit.collider.gameObject.tag == "Walls") || hit.collider.gameObject.tag == "Door" || hit.collider.gameObject.tag == "Vent")
         {
             Vector3 dir = hit.point - position;
             Vector2 dir2 = new(dir.x, dir.y);
