@@ -64,4 +64,12 @@ public class GameData : MonoBehaviour
         }
         dataBase.Add(key,newData);
     }
+
+    public static void DebugData()
+    {
+        foreach (var item in dataBase)
+        {
+            Debug.Log($"Key: {item.Key} ::: Object: {item.Value}\n");
+        }
+    }
 }

@@ -10,8 +10,8 @@ public class LollySpawner : MonoBehaviour
     [SerializeField] float lollySpawnRate;
     [SerializeField] int maxAmountOfLollys;
     [SerializeField] GameObject parentObject;
-    List<Transform> spawnPositions = new List<Transform>();
-    List<Transform> originalPositions = new List<Transform>();
+    List<Vector3> spawnPositions = new List<Vector3>();
+    List<Vector3> originalPositions = new List<Vector3>();
 
     Coroutine lollyProduction;
     
@@ -31,9 +31,6 @@ public class LollySpawner : MonoBehaviour
             lollyProduction = null;
         }
 
-        //InteractableContainer interactableData = GameData.GetData<InteractableContainer>("InteractableContainer");
-       // Debug.Log(interactableData);
-
         lollyProduction = StartCoroutine(SpawnLollysOverTime());
     }
 
@@ -45,31 +42,28 @@ public class LollySpawner : MonoBehaviour
         while (!playTimeData.hasGameEnded)
         {
 
-            Debug.Log("Waiting");
+            //Debug.Log("Waiting");
 
             yield return new WaitForSeconds(lollySpawnRate);
 
-            InteractableContainer interactableData = GameData.GetData<InteractableContainer>("InteractableContainer");
             shouldSpawn = true;
-
-            Debug.Log(!playTimeData.hasGameEnded);
-            Debug.Log(shouldSpawn);
-            Debug.Log(interactableData);
 
             while (!playTimeData.hasGameEnded && shouldSpawn)
             {
-                Debug.Log("Spawing");
+                InteractableContainer interactableData = GameData.GetData<InteractableContainer>("InteractableContainer");
+
+                //Debug.Log("Spawing");
                 if (interactableData.GetInteractableCategory("Lolly").objects.Count < maxAmountOfLollys)
                 {
                     var objects = GetFreeLollySpawn();
-                    var spawnedLolly = SpawnSingleLolly(objects[Random.Range(0,objects.Length)].position);
+                    var spawnedLolly = SpawnSingleLolly(objects[Random.Range(0,objects.Length)]);
                     interactableData.AddObjectToCategory("Lolly", spawnedLolly);
                     shouldSpawn = false;
-                    Debug.Log("Spawned");
+                    //Debug.Log("Spawned");
                 }
                 else
                 {
-                    Debug.Log("Failed");
+                    //Debug.Log("Failed");
                     yield return new WaitForSeconds(3);
                 }
             }
@@ -79,19 +73,23 @@ public class LollySpawner : MonoBehaviour
         yield break;
     }
 
-    private Transform[] GetFreeLollySpawn()
+    private Vector3[] GetFreeLollySpawn()
     {
         var data = GameData.GetData<InteractableContainer>("InteractableContainer");
         var category = data.GetInteractableCategory("Lolly").objects.ToArray();
 
         spawnPositions = originalPositions;
-        foreach (var spawnPoint in originalPositions)
+        for (int i = 0; i < originalPositions.Count; i++)
         {
-            foreach (var item in category)
+            for (int j = 0; j < category.Length; j++)
             {
-                if (spawnPoint.position == item.transform.position)
+                if (spawnPositions[i] == null)
                 {
-                    spawnPositions.Remove(spawnPoint);
+                    break;
+                }
+                if (spawnPositions[i] == category[j].transform.position)
+                {
+                    spawnPositions.Remove(spawnPositions[i]);
                     break;
                 }
             }
@@ -106,7 +104,7 @@ public class LollySpawner : MonoBehaviour
 
         for (int i = 0; i<spawnDummies.Length; i++)
         {
-            spawnPositions.Add (spawnDummies[i].transform);
+            spawnPositions.Add (spawnDummies[i].transform.position);
             originalPositions = spawnPositions;
             Destroy(spawnDummies[i]);
         }
@@ -124,7 +122,7 @@ public class LollySpawner : MonoBehaviour
     {
         //Get random transform
         int random = Random.Range(0,spawnPositions.Count);
-        Vector3 randomPos = spawnPositions[random].position;
+        Vector3 randomPos = spawnPositions[random];
 
         SpawnSingleLolly(randomPos);
 
