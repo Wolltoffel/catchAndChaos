@@ -77,11 +77,12 @@ public class InteractableContainer : Object
         {
             float distance;
             GameObject obj = GetClosestInteractableInCategory(interactables[i], position, out distance);
-            if (obj && (distance < currentDistance || currentDistance < 0))
+            if (obj != null && (distance < currentDistance || currentDistance < 0))
             {
                 currentDistance = distance;
                 closestObject = obj;
                 category = interactables[i].tag;
+                //Debug.Log($"{obj.name} distance: {distance}");
             }
         }
 
@@ -102,13 +103,17 @@ public class InteractableContainer : Object
             return null;
         }
 
+        position.y = 0;
+
         GameObject closestObject = interactable.objects[0];
-        distance = Vector3.Distance(closestObject.transform.position, position);
+        distance = Vector3.Distance(new(closestObject.transform.position.x,position.y, closestObject.transform.position.z), position);
 
         for (int i = 1; i < interactable.objects.Count; i++)
         {
             Transform currentObj = interactable.objects[i].transform;
-            float newDistance = Vector3.Distance(currentObj.position, position);
+            Vector3 currentPosition = currentObj.position;
+            currentPosition.y = 0;
+            float newDistance = Vector3.Distance(currentPosition, position);
             closestObject = newDistance < distance ? interactable.objects[i] : closestObject;
             distance = newDistance < distance ? newDistance : distance;
         }
@@ -159,6 +164,7 @@ public class GameInteractableManager : MonoBehaviour
         {
             string tag = interactableTags[i].tag;
             GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag(tag);
+            objectsWithTag = RemoveSimilars(objectsWithTag);
             if (objectsWithTag.Length == 0 || objectsWithTag == null)
                 Debug.Log($"No Objects Found \nTag: {tag}");
             else
@@ -168,5 +174,56 @@ public class GameInteractableManager : MonoBehaviour
             }
         }
         GameData.SetData(allInteractables, "InteractableContainer");
+    }
+
+    private GameObject[] RemoveSimilars(GameObject[] objects)
+    {
+        List<GameObject> list = new List<GameObject>();
+
+        list.AddRange(objects);
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            for (int j = i+1; j < list.Count; j++)
+            {
+                if (list[i].transform.position == list[i].transform.position)
+                {
+                    var obj = FindChild(list[i], list[j]);
+                    if (obj != null)
+                    {
+                        list.Remove(obj);
+                        break;
+                    }
+                }
+            }
+        }
+        return list.ToArray();
+    }
+
+    public static GameObject FindChild(GameObject similar1, GameObject similar2)
+    {
+        Transform current = similar1.transform;
+
+        while (current != null)
+        {
+            if (current.gameObject == similar2)
+            {
+                return similar1; 
+            }
+            current = current.parent;
+        }
+
+        current = similar2.transform;
+
+        while (current != null)
+        {
+            if (current.gameObject == similar1)
+            {
+                return similar2;
+            }
+            current = current.parent;
+        }
+
+        return null;
     }
 }

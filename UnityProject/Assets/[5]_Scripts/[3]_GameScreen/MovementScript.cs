@@ -20,6 +20,7 @@ public class MovementScript : MonoBehaviour
     [SerializeField] private float movementSpeed = 10f;
     [SerializeField] private float rotationSpeed = 50f;
     [SerializeField] private float pushForce = 5f;
+    [SerializeField] private float minWallDistance = 1f;
 
     private void Awake()
     {
@@ -75,21 +76,79 @@ public class MovementScript : MonoBehaviour
         {
             if (hit.collider.gameObject.tag == "Door")
             {
-                var dir = hit.collider.gameObject.transform.position - position;
+                Vector3 dir = hit.collider.gameObject.transform.position - position;
                 dir.y = 0;
-                var mag = dir.magnitude;
-                Debug.Log(dir.magnitude);
+                float mag = dir.magnitude;
+                //Debug.Log(dir.magnitude);
                 pos = transform.position + Vector3.up;
                 loc = pos + dir;
-                if (mag > 1f)
+                if (mag > 0.8f && mag < 2f)
                 {
-                    Debug.Log("TRUEE;");
                     dir.Normalize();
                     return new Vector2(dir.x, dir.z) * speedMag;
                 }
-                
+
             }
+
         }
+
+        Physics.Linecast(position + Vector3.up, position + Vector3.up + moveDir * 3, out hit, LayerMask.GetMask("Walls"));
+        if (hit.collider != null && (hit.collider.gameObject.tag == "Walls" || hit.collider.gameObject.tag == "Door" || hit.collider.gameObject.tag == "Vent")
+        {
+            Vector3 dir = hit.point - position;
+            Vector2 dir2 = new(dir.x, dir.y);
+            Vector3 normal = hit.normal;
+            Vector2 normal2 = new(normal.x, normal.z);
+
+            float distance = dir2.magnitude * Vector2.Dot(dir2.normalized,normal2.normalized);
+            distance = Mathf.Clamp01(distance - minWallDistance);
+            float influence = 1 / (distance * distance);
+
+
+
+        }
+
+        //Physics.Linecast(position + Vector3.up, position + Vector3.up + moveDir * 4, out hit, LayerMask.GetMask("Walls"));
+        //loc = position;
+        //pos = position + moveDir * 4;
+        //if (hit.collider != null && (hit.collider.gameObject.tag == "Walls" || hit.collider.gameObject.tag == "Door" || hit.collider.gameObject.tag == "Vent"))
+        //{
+        //    Vector3 dir = hit.point - position;
+        //    Vector2 dir2 = new(dir.x, dir.y);
+        //    Vector3 normal = hit.normal;
+        //    Vector2 normal2 = new(normal.x, normal.z);
+
+        //    Vector2 reflectedVector = Vector2.Reflect(dir2, normal2);
+
+        //    Vector2 reflectedDirection = reflectedVector.normalized;
+
+        //    float influence = 1 - Mathf.Max(Mathf.Min(hit.distance-0.75f, 1),0);
+
+        //    Vector2 scaledInput = (input + reflectedDirection*influence);
+
+        //    Debug.Log("Input"+input);
+        //    Debug.Log("ReflectedInput" + reflectedVector);
+        //    Debug.Log("Normal" + normal2);
+        //    Debug.Log("Added" + scaledInput);
+        //    Debug.Log("influence:" + influence);
+        //    // Return the scaled and adjusted movement vector
+        //    return scaledInput.magnitude < 0.2f ? Vector2.zero : scaledInput;
+        //}
+        //if (hit.collider.gameObject.tag == "Walls" || hit.collider.gameObject.tag == "Vent")
+        //{
+
+        //    Vector3 dir = hit.point - position;
+        //    Vector3 normal = hit.normal;
+        //    Vector2 normal2 = new(normal.x, normal.z);
+        //    float dot = MathF.Abs(Vector3.Dot(dir, normal));
+
+        //    //DEBUG
+        //    //pos = position;
+        //    //loc = pos + new Vector3(normal.x * dot + input.x, normal.y, normal.z * dot + input.y);
+
+        //    Vector2 ret = (input + normal2 * dot);
+        //    return ret.magnitude < 0.2 ? Vector2.zero : ret * speedMag;
+        //}
 
         return input;
 

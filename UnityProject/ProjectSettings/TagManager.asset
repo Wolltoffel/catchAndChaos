@@ -14,6 +14,7 @@ TagManager:
   - Item
   - Hand
   - Recorder
+  - Walls
   layers:
   - Default
   - TransparentFX
@@ -26,7 +27,7 @@ TagManager:
   - Child
   - Item
   - Outline
-  - 
+  - Walls
   - 
   - 
   - 

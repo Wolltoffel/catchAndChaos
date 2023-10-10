@@ -53,7 +53,11 @@ abstract class ParentBaseState : State
                 if (currentObjectHash != objectHash || currentButtonPrompt == null)
                 {
                     currentObjectHash = objectHash;
-                    WorldSpaceUI.RemovePrompt(currentButtonPrompt);
+                    if (currentButtonPrompt != null)
+                    {
+                        WorldSpaceUI.RemovePrompt(currentButtonPrompt);
+                        Debug.Log("REMOVED");
+                    }
 
                     string hint = action;
                     if (hint == "Plushie")
@@ -107,9 +111,6 @@ abstract class ParentBaseState : State
     protected ParentBaseState ToggleDoor(GameObject interactable)
     {
         gameObject.GetComponent<Animator>().SetInteger("MomIndex", 5);
-
-        WorldSpaceUI.RemovePrompt(currentButtonPrompt);
-        currentButtonPrompt = null;
 
         DoorSwitch toggle = interactable.GetComponent<DoorSwitch>();
         if (toggle == null)
