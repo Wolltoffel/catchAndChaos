@@ -42,11 +42,35 @@ public class MovementScript : MonoBehaviour
         }
     }
 
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        Rigidbody body = hit.collider.attachedRigidbody;
+
+        // no rigidbody
+        if (body == null || body.isKinematic)
+        {
+            return;
+        }
+
+        // We dont want to push objects below us
+        if (hit.moveDirection.y < -0.3)
+        {
+            return;
+        }
+
+        Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
+
+        //body.velocity = pushDir * pushForce * hit.moveLength / (1 + body.mass/50);
+        body.AddForce(pushDir * pushForce * hit.moveLength / (1 + body.mass / 50), ForceMode.Impulse);
+    }
+
+    #region Movement
     public Vector2 MovePlayer(float xAxis, float yAxis, float speed = 1)
     {
         float yValue = transform.position.y;
 
         Vector2 axis = OptimizeMovement(transform.position, new Vector2(xAxis, yAxis));
+        axis = AssureMovement(transform.position, axis);
 
         previousMovement = Vector2.Lerp(previousMovement, axis, 1);
         Vector3 movementDir = (new Vector3(previousMovement.x, 0, previousMovement.y));
@@ -71,11 +95,25 @@ public class MovementScript : MonoBehaviour
         return axis;
     }
 
+    private Vector2 AssureMovement(Vector3 position, Vector2 input)
+    {
+        Debug.Log(input);
+       
+        if (input.x == 1 || input.y == 1 || input.x == -1 || input.y == -1)
+        {
+            Debug.Log("Checking For Second Wall");
+            return OptimizeMovement(position, input);
+        }
+
+        return input;
+    }
+
     private Vector2 OptimizeMovement(Vector3 position, Vector2 input)
     {
         float speedMag = input.magnitude;
         Vector3 moveDir = new Vector3(input.x, 0, input.y).normalized;
 
+        //If Door
         RaycastHit hit;
         if (Physics.Linecast(position, position + moveDir, out hit))
         {
@@ -91,6 +129,8 @@ public class MovementScript : MonoBehaviour
                 }
             }
         }
+
+        //If Wall
         return CalculateOptimizedMovement(input, position); 
 
     }
@@ -138,28 +178,7 @@ public class MovementScript : MonoBehaviour
 
         return (dir2 - proj).normalized;
     }
-
-    void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        Rigidbody body = hit.collider.attachedRigidbody;
-
-        // no rigidbody
-        if (body == null || body.isKinematic)
-        {
-            return;
-        }
-
-        // We dont want to push objects below us
-        if (hit.moveDirection.y < -0.3)
-        {
-            return;
-        }
-
-        Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
-
-        //body.velocity = pushDir * pushForce * hit.moveLength / (1 + body.mass/50);
-        body.AddForce(pushDir * pushForce * hit.moveLength / (1 + body.mass / 50), ForceMode.Impulse);
-    }
+    #endregion
 
     #region Slide
     public void DoSlide(GameObject vent, float slideDuration = 0.4f)
