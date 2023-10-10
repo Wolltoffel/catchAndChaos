@@ -122,7 +122,6 @@ public class MovementScript : MonoBehaviour
             Vector2 resultdir = (movement + moveToCardinal * influence).normalized;
             Vector2 result = resultdir * moveMagnitude;
 
-            Debug.Log(result);
             return result;
         }
 
