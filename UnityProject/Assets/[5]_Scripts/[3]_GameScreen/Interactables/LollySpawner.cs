@@ -31,8 +31,8 @@ public class LollySpawner : MonoBehaviour
             lollyProduction = null;
         }
 
-        InteractableContainer interactableData = GameData.GetData<InteractableContainer>("InteractableContainer");
-        Debug.Log(interactableData);
+        //InteractableContainer interactableData = GameData.GetData<InteractableContainer>("InteractableContainer");
+       // Debug.Log(interactableData);
 
         lollyProduction = StartCoroutine(SpawnLollysOverTime());
     }

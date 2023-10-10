@@ -272,11 +272,11 @@ public void Slide (Step step)
         GameObject parent = new GameObject(name+"_Parent_"+index);
         parent.transform.position = position;
         parent.transform.rotation = Quaternion.Euler(0,180,0);
-        parent.transform.localScale = new Vector3(modelScale,modelScale,modelScale);
         parent.transform.SetParent(anchor);
         CharacterInstantiator.AddCharacter(characters,out spawnedModel,parent.transform, position,modelIndex,true);
         spawnedModel.transform.SetParent (parent.transform);
         spawnedModel.name = name+"_"+index;
+        parent.transform.localScale = new Vector3(modelScale,modelScale,modelScale);
         if (characters == Characters.Child)
             spawnedModel.GetComponent<Animator>().SetInteger("ChildIndex",10);
         else

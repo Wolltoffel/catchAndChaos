@@ -73,6 +73,7 @@ MonoBehaviour:
   movementSpeed: 0.2
   rotationSpeed: 20
   pushForce: 1000
+  minWallDistance: 1
 --- !u!54 &5409604688557674026
 Rigidbody:
   m_ObjectHideFlags: 0
