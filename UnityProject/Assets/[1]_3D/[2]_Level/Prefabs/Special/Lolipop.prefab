@@ -239,6 +239,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 1199505252180401584, guid: 8b713f31acc9c774fbbb7842d9888299, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 70db3a85aa51be34fb46722830898210, type: 2}
+    - target: {fileID: 1199505252180401584, guid: 8b713f31acc9c774fbbb7842d9888299, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 70db3a85aa51be34fb46722830898210, type: 2}
     m_RemovedComponents:
     - {fileID: 8305287729406835176, guid: 8b713f31acc9c774fbbb7842d9888299, type: 3}
     m_RemovedGameObjects: []

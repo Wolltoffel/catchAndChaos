@@ -116,7 +116,7 @@ Material:
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 0
     - _GlossMapScale: 0
-    - _Glossines: 0
+    - _Glossines: 32
     - _Glossiness: 0
     - _GlossinessSource: 0
     - _GlossyReflections: 1
@@ -133,6 +133,9 @@ Material:
     - _ReceiveShadows: 1
     - _RimAmount: 0.716
     - _SampleGI: 0
+    - _ShadowThresh_1: 0.44
+    - _ShadowThresh_2: 0.002
+    - _ShadowThresh_3: -18.97
     - _Shininess: 0
     - _Smoothness: 0.452
     - _SmoothnessSource: 0
@@ -155,9 +158,12 @@ Material:
     m_Colors:
     - _AmbientColor: {r: 0.6603774, g: 0.51854753, b: 0.44648153, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.50980395, g: 0.54901963, b: 0.5254902, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
+    - _ShadowColor_1: {r: 1, g: 1, b: 1, a: 0}
+    - _ShadowColor_2: {r: 0.9058824, g: 0.9058824, b: 0.9058824, a: 0}
+    - _ShadowColor_3: {r: 0.6431373, g: 0.6431373, b: 0.6431373, a: 0}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
     - _SpecularColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
     - _UvOffset: {r: 0, g: 0, b: 0, a: 0}
