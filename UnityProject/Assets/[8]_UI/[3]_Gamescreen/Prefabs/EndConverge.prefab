@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 9017531932705627265}
   - component: {fileID: 8974260607784410937}
   - component: {fileID: 8652917026427179175}
-  - component: {fileID: 8385231740893518884}
+  - component: {fileID: 5610049908848396140}
   m_Layer: 5
   m_Name: EndConverge
   m_TagString: Untagged
@@ -178,7 +178,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &8385231740893518884
+--- !u!114 &5610049908848396140
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -187,7 +187,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4725508866424478200}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea8566106d8544df1abb57ecd11b27ad, type: 3}
+  m_Script: {fileID: 11500000, guid: 55a2d613593844320ba75d16bff2d7d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 1557253007721047219}
+  pos1: {x: 0, y: 0}
+  pos2: {x: 0, y: 0}
