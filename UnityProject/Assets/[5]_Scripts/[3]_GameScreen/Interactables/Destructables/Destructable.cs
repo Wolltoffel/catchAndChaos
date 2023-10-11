@@ -18,12 +18,23 @@ public class Destructable : MonoBehaviour
     {
         GameData.GetData<InteractableContainer>("InteractableContainer").RemoveObjectFromCategory("Chaos", gameObject);
         GameData.GetData<ChaosData>("ChaosData").ModifyChaos(GameData.GetData<ChildData>("Child").chaosScorePerChaosObject);
-        SpawnDebris();
+        SpawnDebris(DebrisTypes.OvenBathtub);
         Destroy(gameObject);
     }
 
-    private void SpawnDebris()
+    private void SpawnDebris(DebrisTypes type)
     {
+        switch (type)
+        {
+            case DebrisTypes.TV:
+                break;
+            case DebrisTypes.OvenBathtub:
+                break;
+            case DebrisTypes.Shelf:
+                break;
+            default:
+                break;
+        }
         GameObject[] debris = GameData.GetData<DebrisPrefabs>("DebrisPrefabs").GetRandomDebris();
         for (int i = 0; i < debris.Length*4; i++)
         {
@@ -31,4 +42,11 @@ public class Destructable : MonoBehaviour
         }
     }
 
+}
+
+public enum DebrisTypes
+{
+    TV,
+    OvenBathtub,
+    Shelf,
 }
