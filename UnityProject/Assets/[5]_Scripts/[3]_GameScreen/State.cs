@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public abstract class State 
 {
@@ -13,10 +14,14 @@ public abstract class State
         //Check if an object is inbetween target object
         if (interactableObject != null)
         {
-            bool hit = Physics.Linecast(gameObject.transform.position+ Vector3.up*1, interactableObject.transform.position, out RaycastHit hitInfo);
-            if (hitInfo.collider != null && hitInfo.collider.gameObject.tag != tag)
-                return false;
-            else if (hitInfo.collider == null)
+            //Old Check
+            //bool hit = Physics.Linecast(gameObject.transform.position+ Vector3.up*1, interactableObject.transform.position, out RaycastHit hitInfo);
+
+            //NewCheck
+            bool hit = Physics.Linecast(gameObject.transform.position + Vector3.up * 1, interactableObject.transform.position, out RaycastHit hitInfo, LayerMask.GetMask("Walls"));
+            if (!hit)
+                return true;
+            else if (hitInfo.collider != null && hitInfo.collider.gameObject.tag != tag)
                 return false;
         }
         else

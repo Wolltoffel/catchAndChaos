@@ -7,24 +7,19 @@ public class DebrisPrefabs : StaticData
 {
     public Debris[] debris;
 
-    public GameObject[] GetRandomDebris()
+    public GameObject[] GetDebris(DebrisTypes debrisType)
     {
-        List<GameObject> gameObjects = new List<GameObject>();
+        List<GameObject> prefabs = new List<GameObject>();
 
-        int j = 0;
-        int maxLoops = 5;
-        while (true)
+        for (int i = 0; i < debris.Length; i++)
         {
-
-            gameObjects.Add(debris[j].debris);
-            if (gameObjects.Count >= 3)
-                break;
-
-            j = (j + 1) % debris.Length;
-            maxLoops--;
+            if (debris[i].debrisType == debrisType)
+            {
+                prefabs.Add(debris[i].debris);
+            }
         }
 
-        return gameObjects.ToArray();
+        return prefabs.ToArray();
     }
 }
 
