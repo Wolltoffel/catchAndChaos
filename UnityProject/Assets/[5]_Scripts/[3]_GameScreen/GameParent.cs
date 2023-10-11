@@ -35,7 +35,7 @@ abstract class ParentBaseState : State
     {
         parentData = GameData.GetData<ParentData>("Parent");
         gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Parent);
-        inputButton = parentData.tempInputDevice + "X";
+        inputButton = parentData.tempInputDevice + "A";
     }
 
     public abstract ParentBaseState UpdateState();
@@ -68,7 +68,9 @@ abstract class ParentBaseState : State
                 }
 
                 if (Input.GetButtonDown(inputButton))
+                {
                     return HandleAction(interactableObject, action);
+                }
 
                 return null;
             }
@@ -133,7 +135,9 @@ abstract class ParentBaseState : State
             parentData.plushie = interactable.GetComponent<Plushie>();
 
             gameObject.GetComponent<Animator>().SetInteger("MomIndex", 5);
-            parentData.plushie.AttachToTarget(gameObject.transform);
+            Transform handTransform = FindDeepChild(gameObject.transform, "Right wrist");
+
+            parentData.plushie.AttachToTarget(handTransform);
             return null;
         }
         else
@@ -142,6 +146,26 @@ abstract class ParentBaseState : State
             currentButtonPrompt = null;
             return new ParentThrow();
         }
+    }
+
+    private Transform FindDeepChild(Transform parent, string name)
+    {
+        Transform result = parent.Find(name);
+        if (result != null)
+        {
+            return result;
+        }
+
+        foreach (Transform child in parent)
+        {
+            result = FindDeepChild(child, name);
+            if (result != null)
+            {
+                return result;
+            }
+        }
+
+        return null;
     }
 
     protected bool GetMovement(string inputDevice, out float xAxis, out float yAxis)
@@ -250,9 +274,18 @@ class ParentMovement : ParentBaseState
         }
 
         //MovePlayer
-        movement.MovePlayer(xAxis, yAxis);
+        Vector2 move = movement.MovePlayer(xAxis, yAxis);
         if (!moveInput)
             return new ParentIdle();
+
+        if (move == Vector2.zero)
+        {
+            gameObject.GetComponent<Animator>().SetInteger("MomIndex", 0);
+        }
+        else
+        {
+            gameObject.GetComponent<Animator>().SetInteger("MomIndex", 1);
+        }
 
         return this;
     }
@@ -307,17 +340,57 @@ class ParentCatch : ParentBaseState
 
 class ParentThrow : ParentBaseState
 {
+    private float timeElapsed = 0;
+    private bool hasThrown = false;
+    private Transform target;
+
     public ParentThrow()
     {
         //Do Antimator
         gameObject.GetComponent<Animator>().SetInteger("MomIndex", 3);
 
-        Vector3 childTarget = CharacterInstantiator.GetActiveCharacter(Characters.Child).transform.position;
-        parentData.plushie.ThrowPlushie(childTarget);
+        timeElapsed = 0;
+        hasThrown = false;
+
+        Transform childTarget = CharacterInstantiator.GetActiveCharacter(Characters.Child).transform;
+
+        Vector3 targetDir = (childTarget.position - gameObject.transform.position).normalized;
+
+        LayerMask obstacleLayer;
+        obstacleLayer = ~6;
+        target = Vector3.Dot(targetDir, gameObject.transform.forward) > 0.2f ? !Physics.Linecast(gameObject.transform.position, childTarget.position, out RaycastHit hit, obstacleLayer) ? target : null : null;
     }
 
     public override ParentBaseState UpdateState()
     {
+        if (!hasThrown)
+        {
+            Transform childTarget = CharacterInstantiator.GetActiveCharacter(Characters.Child).transform;
+            Vector3 targetDir = (childTarget.position - gameObject.transform.position).normalized;
+
+            if (timeElapsed < 0.61f)
+            {
+                LayerMask obstacleLayer;
+                obstacleLayer = ~6;
+                target = Vector3.Dot(targetDir, gameObject.transform.forward) > 0.2f ? !Physics.Linecast(gameObject.transform.position, childTarget.position, out RaycastHit hit, obstacleLayer) ? childTarget : null : null;
+
+                if (target != null)
+                { 
+                    gameObject.transform.rotation = Quaternion.Lerp(Quaternion.LookRotation(targetDir),gameObject.transform.rotation, 0.8f);
+                }
+                timeElapsed += Time.deltaTime;
+                return this;
+            }
+
+            targetDir = target == null ? gameObject.transform.forward : targetDir;
+            gameObject.transform.rotation = Quaternion.LookRotation(targetDir);
+
+            parentData.plushie.ThrowPlushie(targetDir);
+            hasThrown = true;
+
+            return this;
+        }
+
         if (parentData.plushie.IsThrowDone)
         {
             parentData.plushie = null;
