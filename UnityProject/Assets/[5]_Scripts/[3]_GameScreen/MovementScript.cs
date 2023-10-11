@@ -22,6 +22,7 @@ public class MovementScript : MonoBehaviour
     [SerializeField] private float rotationSpeed = 50f;
     [SerializeField] private float pushForce = 5f;
     private float minWallDistance = 0.7f;
+    private float catchDistance = 5;
 
     private void Awake()
     {
@@ -97,11 +98,8 @@ public class MovementScript : MonoBehaviour
 
     private Vector2 AssureMovement(Vector3 position, Vector2 input)
     {
-        Debug.Log(input);
-       
         if (input.x == 1 || input.y == 1 || input.x == -1 || input.y == -1)
         {
-            Debug.Log("Checking For Second Wall");
             return OptimizeMovement(position, input);
         }
 
@@ -249,6 +247,7 @@ public class MovementScript : MonoBehaviour
         float time = 0;
 
         Vector3 catchDir = CalculateCatchDir();
+        transform.rotation = Quaternion.LookRotation(catchDir);
 
         while (time < catchDuration)
         {
@@ -268,11 +267,20 @@ public class MovementScript : MonoBehaviour
 
     private Vector3 CalculateCatchDir()
     {
-        Vector3 dir = CharacterInstantiator.GetActiveCharacter(Characters.Child).transform.position - transform.position;
+        Vector3 childPos = CharacterInstantiator.GetActiveCharacter(Characters.Child).transform.position;
+        Vector3 dir = childPos - transform.position;
+        float distance = dir.magnitude;
         dir.Normalize();
-        if (Vector3.Dot(dir, transform.forward) > 0)
+
+        if (distance <= catchDistance && Vector3.Dot(dir, transform.forward) > 0.4f)
         {
-            return dir;
+            RaycastHit hit;
+            LayerMask obstacleLayer;
+            obstacleLayer = ~6;
+            if (!Physics.Linecast(transform.position, childPos, out hit, obstacleLayer))
+            {
+                return dir;
+            }
         }
 
         return transform.forward;

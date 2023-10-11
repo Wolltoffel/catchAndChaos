@@ -14,7 +14,7 @@ public class BetweenRoundsManager : MonoBehaviour
 
     private IEnumerator Start()
     {
-        GameEndConverge convergeScript = Instantiate(convergePrefab, CharacterInstantiator.GetActiveCharacter(Characters.Parent).transform).GetComponent<GameEndConverge>();
+        GameEndCircles convergeScript = Instantiate(convergePrefab, CharacterInstantiator.GetActiveCharacter(Characters.Parent).transform).GetComponent<GameEndCircles>();
         convergeScript.ConvergeOn(CharacterInstantiator.GetActiveCharacter(Characters.Parent).transform, CharacterInstantiator.GetActiveCharacter(Characters.Child).transform);
 
         PlayerData parent = GameData.GetData<PlayerData>("Parent");

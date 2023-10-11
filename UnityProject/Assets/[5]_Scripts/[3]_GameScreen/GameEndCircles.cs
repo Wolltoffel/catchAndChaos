@@ -1,11 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameEndConverge : MonoBehaviour
+public class GameEndCircles : MonoBehaviour
 {
     [SerializeField] private Image image;
     private Material material;
@@ -21,13 +19,13 @@ public class GameEndConverge : MonoBehaviour
 
         material = image.GetComponent<Image>().material;
         material.SetFloat("_Convergence", 0);
-        material.SetVector("_Position_1", new Vector2(0.25f,0.25f));
+        material.SetVector("_Position_1", new Vector2(0.25f, 0.25f));
         material.SetVector("_Position_2", new Vector2(0.75f, 0.75f));
 
         GetComponent<Canvas>().sortingOrder = -100;
     }
 
-    public void ConvergeOn(Transform transform1, Transform transform2,float time = 1)
+    public void ConvergeOn(Transform transform1, Transform transform2, float time = 1)
     {
         if (material == null)
             return;
@@ -43,7 +41,7 @@ public class GameEndConverge : MonoBehaviour
         {
             progress += Time.deltaTime / time;
 
-            pos1 = Camera.main.WorldToScreenPoint(transform1.position+ Vector3.up* 1.2f);
+            pos1 = Camera.main.WorldToScreenPoint(transform1.position + Vector3.up * 1.2f);
             pos2 = Camera.main.WorldToScreenPoint(transform2.position);
 
             material.SetVector("_Position_1", pos1);

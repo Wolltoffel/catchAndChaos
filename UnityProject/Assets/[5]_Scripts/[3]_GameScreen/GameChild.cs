@@ -267,7 +267,7 @@ class Run : ChildState
 
         float horizontal = Input.GetAxis(inputDevice + " Horizontal");
         float vertical = Input.GetAxis(inputDevice + " Vertical");
-        Vector2 inputVector = new Vector2(horizontal, vertical).normalized;
+        Vector2 inputVector = new Vector2(horizontal, vertical);
 
         if (horizontal == 0 && vertical == 0)
         {
@@ -303,7 +303,7 @@ class Slide : ChildState
         {
             VentRollup ventRollUp = lastVentInRange.GetComponent<VentRollup>();
             ventRollUp.CloseVent();
-            GameObject.Destroy(ventRollUp);
+            //GameObject.Destroy(ventRollUp);
             lastVentInRange = null;
             return new Idle();
         }

@@ -32,7 +32,7 @@ public class Plushie : MonoBehaviour
         //Debug.Log(gameObject.layer);
     }
 
-    public void ThrowPlushie(Vector3 target)
+    public void ThrowPlushie(Vector3 targetDir)
     {
         if (coroutine != null)
         {
@@ -41,25 +41,11 @@ public class Plushie : MonoBehaviour
             StopCoroutine(coroutine);
         }
 
-        coroutine = StartCoroutine(_ThrowPlushie(target));
-    }
-
-    private IEnumerator _ThrowPlushie(Vector3 target)
-    {
-        Vector3 targetDir = (target - transform.position).normalized;
-        Transform parent = CharacterInstantiator.GetActiveCharacter(Characters.Parent).transform;
-        LayerMask obstacleLayer;
-        obstacleLayer = ~6;
-        targetDir = Vector3.Dot(targetDir, parent.forward) > 0.2f ? Physics.Linecast(parent.position, target, out RaycastHit hit, obstacleLayer) ? parent.forward : targetDir : parent.forward;
-        targetDir = new Vector3(targetDir.x,0,targetDir.z).normalized;
-
-        yield return new WaitForSeconds(0.8f);
-
         _collider.enabled = true;
 
-        Vector3 force = targetDir * 60;
+        Vector3 force = targetDir * 1000;
         _rigidbody.isKinematic = false;
-        _rigidbody.AddForce(force,ForceMode.Impulse);
+        _rigidbody.AddForce(force, ForceMode.Impulse);
 
         Debug.Log("Plushie Thrown");
         isActive = true;
@@ -84,14 +70,14 @@ public class Plushie : MonoBehaviour
 
         while (time < duration)
         {
-            transform.position = Vector3.Lerp(origin,target.position + Vector3.up, time);
+            transform.position = Vector3.Lerp(origin,target.position, time);
 
             time += Time.deltaTime * Time.timeScale;
 
             yield return null;
         }
 
-        transform.position = target.position + Vector3.up;
+        transform.position = target.position;
         transform.parent = target;
 
         coroutine = null;
@@ -101,6 +87,7 @@ public class Plushie : MonoBehaviour
     {
         if (isActive)
         {
+            Debug.Log(collision.gameObject.name);
             if (collision.gameObject.layer == 8)
             {
                 Debug.Log("Child has been Hospitalized.");
