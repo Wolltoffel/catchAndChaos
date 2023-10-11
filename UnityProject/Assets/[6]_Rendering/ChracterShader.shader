@@ -10,8 +10,10 @@ Shader "Custom/Character"
         [HDR]_RimColor ("Rim Color", Color) = (1,1,1,1)
         _RimAmount("Rim Amount", Range(0,1)) = 0.716
 
-        _AccentColor("Accent Color", Color) = (0.5,0.5,0.5,1)
-        _AccentColorTopOpacity("AccentColorTopOpacity",float) = 0
+        _FlatColorTop("Flat Color Top", Color) = (0.5,0.5,0.5,1)
+        _FlatColorTopOpacity("Flat Color Opacity",float) = 0
+
+        _SilhouetteColor ("Silhouette Color", Color) = (1,1,1,1)
     }
     SubShader
     {       
@@ -34,8 +36,8 @@ Shader "Custom/Character"
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            //#pragma multi_compile _ _MAIN_LIGHT_SHADOWS
-           // #pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE
+            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS
+            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE
 
             #include "UnityCG.cginc"
             #include "Lighting.cginc"
@@ -78,6 +80,9 @@ Shader "Custom/Character"
             float4 _RimColor;
             float _RimAmount;
 
+            float4 _FlatColorTop;
+            float _FlatColorTopOpacity;
+
             fixed4 frag (v2f i) : SV_Target
             {   
                 //Shadow
@@ -109,6 +114,7 @@ Shader "Custom/Character"
                 float4 baseColorTex = tex2D(_MainTex,i.uv);
 
                 col=baseColorTex*(light+_AmbientColor+specular+rim+_Color);
+                col = col*(1-_FlatColorTopOpacity)+_FlatColorTopOpacity*_FlatColorTop;
                 return col;
             }
             ENDCG
@@ -119,7 +125,7 @@ Shader "Custom/Character"
     Pass
         {   
             Name "Silhouette"
-             Tags {"Queue" = "Transparent+2" }
+            Tags {"Queue" = "Transparent+2" }
 
             ZWrite Off
             ZTest Always
@@ -168,13 +174,11 @@ Shader "Custom/Character"
                 return o;
             }
 
-            float4 _AccentColor;
-            float _AccentColorTopOpacity;
+            float4 _SilhouetteColor;
 
             float4 frag (v2f i) : SV_Target
             {
-                float4 color = _AccentColor;
-                color.rgb = _AccentColor;
+                float4 color = _SilhouetteColor;
                 return color;
             } 
             ENDHLSL

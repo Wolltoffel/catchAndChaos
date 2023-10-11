@@ -4,11 +4,12 @@ Shader "Custom/ToonShader"
     {
         _MainTex("AlbedoMap", 2D) = "white"{}
         _Color ("Color", Color) = (0,0,0,0)
-        _AmbientColor ("AmbientColor", Color) = (0.4,0.4,0.4,1)
+        [HDR]_AmbientColor ("AmbientColor", Color) = (0.4,0.4,0.4,1)
         [HDR] _SpecularColor("Specular Color", Color) = (0.9,0.9,0.9,1)
         _Glossines("Glossines",Float) = 32
         [HDR]_RimColor ("Rim Color", Color) = (1,1,1,1)
         _RimAmount("Rim Amount", Range(0,1)) = 0.716
+
     }
     SubShader
     {       
@@ -36,6 +37,7 @@ Shader "Custom/ToonShader"
             {
                 float4 vertex : POSITION;
                 float2 uv : TEXCOORD0;
+                float4 tangent: TANGENT;
                 float3 normal:NORMAL;
             };
 
@@ -58,6 +60,7 @@ Shader "Custom/ToonShader"
                 o.worldNormal = UnityObjectToWorldNormal(v.normal);
                 o.viewDir = WorldSpaceViewDir (v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv,_MainTex);
+
                 TRANSFER_SHADOW(0)
                 return o;
             }
@@ -73,7 +76,7 @@ Shader "Custom/ToonShader"
             {   
                 //Shadow
                 float shadow = SHADOW_ATTENUATION(i);
-
+   
                 //Hard Shadows
                 float3 normal = normalize(i.worldNormal);
                 fixed4 col = fixed4(_Color.rgb,_Color.a);
@@ -99,7 +102,7 @@ Shader "Custom/ToonShader"
                 //Base Color Tex
                 float4 baseColorTex = tex2D(_MainTex,i.uv);
 
-                col=baseColorTex*(light+_AmbientColor+specular+rim+_Color);
+                col=baseColorTex*_Color*(light+_AmbientColor+specular+rim);
                 return col;
             }
             ENDCG

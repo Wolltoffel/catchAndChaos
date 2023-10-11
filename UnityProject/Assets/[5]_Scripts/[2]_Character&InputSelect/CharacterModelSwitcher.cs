@@ -29,6 +29,7 @@ public class CharacterModelSwitcher : MonoBehaviour
     [SerializeField] float moveSpeed = 4;
     [SerializeField]float moveSpeedMultiplier=2;
     [SerializeField] float modelScale;
+    [SerializeField] Color backgroundSilhouetteColor;
 
 
     Vector3 circleCenter;
@@ -341,7 +342,8 @@ public void Slide (Step step)
 
             for (int j= 0; j<materials.Length;j++)
             {
-                materials[j].SetFloat("_AccentColorTopOpacity",value);
+                materials[j].SetFloat("_FlatColorTopOpacity",value);
+                materials[j].SetColor ("_FlatColorTop",backgroundSilhouetteColor);
             }
         }
    }
@@ -351,7 +353,7 @@ public void Slide (Step step)
         Renderer[] renderers = parent.GetComponentsInChildren<Renderer>();
         Material[] materials = renderers[0].materials;
         
-        return materials[0].GetFloat("_AccentColorTopOpacity");
+        return materials[0].GetFloat("_FlatColorTopOpacity");
    }
 
     void StartCoroutineWithCleanUp(IEnumerator coroutine)
