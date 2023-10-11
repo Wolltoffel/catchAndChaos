@@ -14152,6 +14152,7 @@ MonoBehaviour:
   moveSpeed: 2
   moveSpeedMultiplier: 2
   modelScale: 0.75
+  backgroundSilhouetteColor: {r: 0.8962264, g: 0.6820339, b: 0.81310695, a: 1}
 --- !u!1 &5642690176335891037
 GameObject:
   m_ObjectHideFlags: 0
@@ -19733,6 +19734,7 @@ MonoBehaviour:
   moveSpeed: 2
   moveSpeedMultiplier: 2
   modelScale: 0.8
+  backgroundSilhouetteColor: {r: 0.758441, g: 0.9339623, b: 0.7195621, a: 1}
 --- !u!1 &6798733735181615610
 GameObject:
   m_ObjectHideFlags: 0

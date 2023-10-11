@@ -3,7 +3,22 @@ guid: 8b16c1225e534964281d09c2927cedfe
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: hell beige
+    second: {fileID: 2100000, guid: 37b4c4591f315b94c9deef285eaeb279, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "mint gr\xFCn"
+    second: {fileID: 2100000, guid: 49f04c0cf6b6ceb4397ec72684b15dc4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: salmon
+    second: {fileID: 2100000, guid: 703fb208599f0e44e8843d04b4cbb72e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
