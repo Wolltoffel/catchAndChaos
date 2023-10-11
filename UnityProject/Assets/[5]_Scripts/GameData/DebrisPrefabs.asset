@@ -15,10 +15,8 @@ MonoBehaviour:
   key: DebrisPrefabs
   debris:
   - debris: {fileID: 8218100174696599929, guid: 5a1cb119f4cfa47179765d65d3c4cbeb, type: 3}
-    probablility: 1
+    debrisType: 0
   - debris: {fileID: 5635198748494537591, guid: 9623bb9fb683143419e384f514c34a4d, type: 3}
-    probablility: 1
-  - debris: {fileID: 8218100174696599929, guid: 5a1cb119f4cfa47179765d65d3c4cbeb, type: 3}
-    probablility: 0
-  - debris: {fileID: 5635198748494537591, guid: 9623bb9fb683143419e384f514c34a4d, type: 3}
-    probablility: 0
+    debrisType: 2
+  - debris: {fileID: 8218100174696599929, guid: 2b541c8dd8b584fa18366ee7c817c921, type: 3}
+    debrisType: 1
