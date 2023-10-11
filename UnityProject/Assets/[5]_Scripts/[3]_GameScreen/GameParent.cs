@@ -382,10 +382,11 @@ class ParentThrow : ParentBaseState
                 return this;
             }
 
-            targetDir = target == null ? gameObject.transform.forward : targetDir;
+            targetDir = target == null ? gameObject.transform.forward : (childTarget.position - gameObject.transform.position).normalized;
             gameObject.transform.rotation = Quaternion.LookRotation(targetDir);
+            Vector3 throwDir = target == null? targetDir : ((childTarget.position + Vector3.up) - parentData.plushie.transform.position).normalized;
 
-            parentData.plushie.ThrowPlushie(targetDir);
+            parentData.plushie.ThrowPlushie(throwDir);
             hasThrown = true;
 
             return this;

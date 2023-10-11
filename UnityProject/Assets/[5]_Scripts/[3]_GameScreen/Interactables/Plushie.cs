@@ -51,44 +51,6 @@ public class Plushie : MonoBehaviour
         isActive = true;
         transform.parent = null;
         coroutine = null;
-
-        //Vector3 targetDir = (target.position - transform.position).normalized;
-        //Transform parent = CharacterInstantiator.GetActiveCharacter(Characters.Parent).transform;
-        //Vector3 parentForward = parent.forward;
-
-        //LayerMask obstacleLayer;
-        //obstacleLayer = ~6;
-        //target = Vector3.Dot(targetDir, parentForward) > 0.2f ? !Physics.Linecast(parent.position, target.position, out RaycastHit hit, obstacleLayer) ? target : null : null;
-
-        //coroutine = StartCoroutine(_ThrowPlushie(target));
-    }
-
-    private IEnumerator _ThrowPlushie(Transform target)
-    {
-        Transform parent = CharacterInstantiator.GetActiveCharacter(Characters.Parent).transform;
-        Vector3 targetDir = parent.forward;
-
-        if (target != null)
-        {
-            targetDir = (target.position - transform.position).normalized;
-        }
-
-        for (float time = 0; time < 0.61f; time += Time.deltaTime)
-        {
-            yield return null;
-        }
-        yield return new WaitForSeconds(0.61f);
-
-        _collider.enabled = true;
-
-        Vector3 force = targetDir * 600;
-        _rigidbody.isKinematic = false;
-        _rigidbody.AddForce(force,ForceMode.Impulse);
-
-        Debug.Log("Plushie Thrown");
-        isActive = true;
-        transform.parent = null;
-        coroutine = null;
     }
 
     public void AttachToTarget(Transform target)
@@ -125,6 +87,7 @@ public class Plushie : MonoBehaviour
     {
         if (isActive)
         {
+            Debug.Log(collision.gameObject.name);
             if (collision.gameObject.layer == 8)
             {
                 Debug.Log("Child has been Hospitalized.");
