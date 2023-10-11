@@ -22,20 +22,22 @@ Shader "Custom/ToonShader"
     {       
         LOD 100
 
+        
+        UsePass "Legacy Shaders/VertexLit/SHADOWCASTER"
+
         Pass    
         {
             Name "ToonShading"
             Tags { 
             "RenderType"="Opaque" 
             "PassFlags" = "OnlyDirectional" 
-            "LightMode" = "UniversalForward" }
+            "LightMode" = "UniversalForward" 
+            }
 
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS
-            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE
-            #pragma multi_compile _ _SHADOWS_SOFT
+            #pragma multi_compile_fwdadd_fullshadows 
 
 
             #include "UnityCG.cginc"
@@ -123,9 +125,9 @@ Shader "Custom/ToonShader"
                 float4 shadowColor;
                 if (NormalDotLight>_ShadowThresh_1)
                     col *= _ShadowColor_1;
-                if (NormalDotLight>_ShadowThresh_2)
+                else if (NormalDotLight>_ShadowThresh_2)
                     col *= _ShadowColor_2;
-                if (NormalDotLight>_ShadowThresh_3)
+                else if (NormalDotLight>_ShadowThresh_3)
                     col *= _ShadowColor_3;
 
                 col.a *=shadow;
@@ -136,9 +138,8 @@ Shader "Custom/ToonShader"
         }
 
 
-        UsePass "Legacy Shaders/VertexLit/SHADOWCASTER"
     }
 
 
-    FallBack "Diffuse"
+    FallBack "VertexLit"
 }
