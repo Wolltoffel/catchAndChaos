@@ -54,6 +54,7 @@ public class Destructable : MonoBehaviour
 public enum DebrisTypes
 {
     TV,
-    OvenBathtub,
+    Oven,
     Shelf,
+    Bathtub,
 }
