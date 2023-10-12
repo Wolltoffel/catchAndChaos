@@ -6,7 +6,6 @@ public class DestructableSpawner : MonoBehaviour
 {
     List<GameObject> potentialDestructables  = new List<GameObject>();
     [SerializeField] int amountOfDestructables;
-    [SerializeField]Color outlineColor;
 
     [Header ("Highlight")]
     [SerializeField] Shader highlightShader;
@@ -47,7 +46,8 @@ public class DestructableSpawner : MonoBehaviour
         int random = Random.Range(0, potentialDestructables.Count);
         randomDestructable = potentialDestructables[random];
         potentialDestructables.Remove(potentialDestructables[random]);
-        randomDestructable.AddComponent<Destructable>();
+        if (randomDestructable==null)
+            randomDestructable.AddComponent<Destructable>();
         randomDestructable.tag = "Chaos";
         ActivateHighlight(randomDestructable);
         Debug.Log(randomDestructable.name);
