@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: childrenCarpet
-  m_Shader: {fileID: 4800000, guid: a52d11b7dfe1f4c499d62bc2c1e41837, type: 3}
+  m_Shader: {fileID: 4800000, guid: a60e91c1afb2f194291e0d2a49eac446, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -106,9 +106,10 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _RimAmount: 0.324
-    - _ShadowThresh_1: 0.33
-    - _ShadowThresh_2: -0.04
-    - _ShadowThresh_3: -4.18
+    - _SampleGI: 0
+    - _ShadowThresh_1: 0.16
+    - _ShadowThresh_2: 0.6
+    - _ShadowThresh_3: 0.2
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -124,8 +125,8 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 0, g: 0, b: 0, a: 1}
-    - _ShadowColor_1: {r: 1, g: 1, b: 1, a: 0}
-    - _ShadowColor_2: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 0}
+    - _ShadowColor_1: {r: 0.71242094, g: 0.7735849, b: 0.63978875, a: 0}
+    - _ShadowColor_2: {r: 0.6320754, g: 0.15901265, b: 0.15901265, a: 0}
     - _ShadowColor_3: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SpecularColor: {r: 0, g: 0, b: 0, a: 1}
