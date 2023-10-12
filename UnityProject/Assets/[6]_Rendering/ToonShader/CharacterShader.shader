@@ -51,7 +51,6 @@ Shader "Custom/Character"
                 #include "AutoLight.cginc"
 
 
-
                 struct appdata
                 {
                     float4 vertex : POSITION;
