@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: FrogOutfit
-  m_Shader: {fileID: 4800000, guid: 28868cd991ed6284f8ddd20cc5e19464, type: 3}
+  m_Shader: {fileID: 4800000, guid: cd5a3b36f8b20b849818d520dd957bf1, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -126,7 +126,7 @@ Material:
     - _DstBlendAlpha: 0
     - _EmissionEnabled: 0
     - _EnvironmentReflections: 0
-    - _FlatColorTopOpacity: 0
+    - _FlatColorTopOpacity: 1
     - _FlipbookMode: 0
     - _GlossMapScale: 0
     - _Glossines: 1
@@ -142,6 +142,9 @@ Material:
     - _RenderAccentColorOnTop: 1
     - _RimAmount: 0.394
     - _Saturation: 1
+    - _ShadowThresh_1: -0.27
+    - _ShadowThresh_2: 0.6
+    - _ShadowThresh_3: 0.8
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _SoftParticlesEnabled: 0
@@ -163,6 +166,9 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FlatColorTop: {r: 0.9528302, g: 0.01498151, b: 0.01498151, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
+    - _ShadowColor_1: {r: 0.922, g: 0.922, b: 0.922, a: 0}
+    - _ShadowColor_2: {r: 1, g: 1, b: 1, a: 0}
+    - _ShadowColor_3: {r: 1, g: 1, b: 1, a: 0}
     - _SilhouetteColor: {r: 1, g: 1, b: 1, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0, g: 0, b: 0, a: 1}
