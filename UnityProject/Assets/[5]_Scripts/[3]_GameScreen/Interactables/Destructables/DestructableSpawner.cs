@@ -55,14 +55,17 @@ public class DestructableSpawner : MonoBehaviour
 
     public void ActivateHighlight(GameObject target)
     {
-       Material[] materials = target.GetComponent<Renderer>().materials;
-       for (int i = 0; i < materials.Length; i++)
+       Material[] materialImport = target.GetComponent<Renderer>().materials;
+       List<Material> materials  = new List<Material>();
+       for (int i = 0; i < materialImport.Length; i++)
        {    
-            target.GetComponent<Destructable>().prevShader = materials[i].shader;
-            Color baseColor = materials[i].GetColor("_BaseColor");
-            materials[i].shader = highlightShader;
-            materials[i].SetColor("_EmissionColor", emissionColor*emissionStrength);
-            materials[i].SetColor("_Color",baseColor);
+            materials.Add (materialImport[i]);
+            
+            Material highlightMaterial = new Material(highlightShader);
+            highlightMaterial.SetColor("_EmissionColor", emissionColor*emissionStrength);
+            materials.Add (highlightMaterial);
        }
+
+       target.GetComponent<Renderer>().SetMaterials(materials);
     }
 }

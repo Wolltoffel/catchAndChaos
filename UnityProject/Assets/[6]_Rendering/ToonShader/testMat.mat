@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: testMat
-  m_Shader: {fileID: -6465566751694194690, guid: 8ce4b02f1e539da4facf3ca74a008998, type: 3}
+  m_Shader: {fileID: 4800000, guid: a52d11b7dfe1f4c499d62bc2c1e41837, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -148,7 +148,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ShadowColor_1: {r: 0, g: 0, b: 0, a: 0}
+    - _ShadowColor_1: {r: 0.6132076, g: 0.090631254, b: 0.090631254, a: 0}
     - _ShadowColor_2: {r: 0.4433962, g: 0.4433962, b: 0.4433962, a: 0}
     - _ShadowColor_3: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
