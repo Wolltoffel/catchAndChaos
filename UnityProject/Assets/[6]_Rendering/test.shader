@@ -114,6 +114,7 @@ Shader "Custom/ToonShaderReceiveShadows"
                     
                     half3 attenuatedLightColor = mainLight.color * (mainLight.distanceAttenuation * mainLight.shadowAttenuation);
                     half3 diffuseColor = LightingLambert(attenuatedLightColor, mainLight.direction, i.worldNormal); 
+
                     col = _Color*texColor;
                     //col *=shadow;
                     if (diffuseColor.r<_ShadowThresh_1)

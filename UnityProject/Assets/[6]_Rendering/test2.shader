@@ -60,6 +60,8 @@ Shader "Custom/test2"
  
                 #include "Packages/com.unity.render-pipelines.universal/Shaders/UnlitInput.hlsl"
                 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+                #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+
 
  
                 struct Attributes
@@ -75,13 +77,15 @@ Shader "Custom/test2"
                 {
                     float2 uv        : TEXCOORD0;
                     float fogCoord : TEXCOORD1;
-                    float4 vertex : SV_POSITION;                  
+                    float4 vertex : SV_POSITION;                
                     half3  normalWS : TEXCOORD2;
                     float4 shadowCoord : TEXCOORD3;
+                    float4 positionOS: TEXCOORD4;
  
                     UNITY_VERTEX_INPUT_INSTANCE_ID
                     UNITY_VERTEX_OUTPUT_STEREO
                 };
+
  
                 Varyings vert(Attributes input)
                 {
@@ -96,6 +100,7 @@ Shader "Custom/test2"
                     output.uv = TRANSFORM_TEX(input.uv, _BaseMap);
                     output.fogCoord = ComputeFogFactor(vertexInput.positionCS.z);
                     output.shadowCoord = GetShadowCoord(vertexInput);
+                    output.positionOS = input.positionOS;
                    
                     VertexNormalInputs vertexNormalInput = GetVertexNormalInputs(input.normalOS, input.tangentOS);
                     output.normalWS = vertexNormalInput.normalWS;
@@ -111,17 +116,44 @@ Shader "Custom/test2"
                     half3 color = texColor.rgb * _BaseColor.rgb;
                     half alpha = texColor.a * _BaseColor.a;
 
+
                     Light mainLight = GetMainLight(input.shadowCoord);
+
+                    float3 shadowAttenuation=0;    
+                    int kernelSize = 2;
+                    float4 positionOS = input.positionOS;
+                    float4 positionVarying;
+                    for (int x = -kernelSize; x <= kernelSize; x++)
+                    {
+                        for (int y = -kernelSize; y <= kernelSize; y++)
+                        {
+                             for (int z = -kernelSize; z <= kernelSize; z++)
+                             {
+                                    float3 offset = float3(0, 0,0);
+                                    VertexPositionInputs vertexInput = GetVertexPositionInputs(positionOS.xyz+offset);
+                                    Light mainLight = GetMainLight(GetShadowCoord(vertexInput));
+                                    shadowAttenuation += mainLight.shadowAttenuation;
+                             }
+                        }
+                    }
+
+                    shadowAttenuation /= ((2 * kernelSize + 1) * (2 * kernelSize + 1) * (2 * kernelSize + 1));
+
+
  
                     half3 attenuatedLightColor = mainLight.color * (mainLight.distanceAttenuation * mainLight.shadowAttenuation);
                     half3 diffuseColor = LightingLambert(attenuatedLightColor, mainLight.direction, input.normalWS);            
  
-                    color *= mainLight.shadowAttenuation; //mainLight.shadowAttenuation;
+                    //color *= mainLight.shadowAttenuation; //mainLight.shadowAttenuation;
 
-                    color.rbg = mainLight.shadowAttenuation;
- 
+                    //color.rbg =shadowAttenuation;
+
                     return half4(color, alpha);
                 }
+
+
+                
+
                 ENDHLSL
             }
     

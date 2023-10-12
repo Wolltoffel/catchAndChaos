@@ -108,7 +108,7 @@ Material:
     - _RimAmount: 0.324
     - _SampleGI: 0
     - _ShadowThresh_1: 0.16
-    - _ShadowThresh_2: 0.6
+    - _ShadowThresh_2: 0
     - _ShadowThresh_3: 0.2
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
