@@ -56,14 +56,12 @@ abstract class ParentBaseState : State
                     if (currentButtonPrompt != null)
                     {
                         WorldSpaceUI.RemovePrompt(currentButtonPrompt);
-                        Debug.Log("REMOVED");
                     }
 
                     string hint = action;
                     if (hint == "Plushie")
                         hint = "PlushiePickUp";
 
-                    Debug.Log(action);
                     WorldSpaceUI.ShowButtonPrompt(interactableObject.transform, inputButton, out currentButtonPrompt, hint);
                 }
 

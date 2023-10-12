@@ -15,6 +15,7 @@ TagManager:
   - Hand
   - Recorder
   - Walls
+  - Ignore
   layers:
   - Default
   - TransparentFX

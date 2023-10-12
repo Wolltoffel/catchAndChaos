@@ -21,7 +21,7 @@ public abstract class State
             bool hit = Physics.Linecast(gameObject.transform.position + Vector3.up * 1, interactableObject.transform.position, out RaycastHit hitInfo, LayerMask.GetMask("Walls"));
             if (!hit)
                 return true;
-            else if (hitInfo.collider != null && hitInfo.collider.gameObject.tag != tag)
+            else if (hitInfo.collider != null && !(hitInfo.collider.gameObject.tag == tag || hitInfo.collider.gameObject.tag == "Ignore"))
                 return false;
         }
         else
