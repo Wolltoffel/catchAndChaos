@@ -21,7 +21,11 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PumpkinOutfit
+<<<<<<< Updated upstream
   m_Shader: {fileID: 4800000, guid: 28868cd991ed6284f8ddd20cc5e19464, type: 3}
+=======
+  m_Shader: {fileID: 4800000, guid: cd5a3b36f8b20b849818d520dd957bf1, type: 3}
+>>>>>>> Stashed changes
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -114,7 +118,7 @@ Material:
     - _EnvironmentReflections: 0
     - _FlatColorTopOpacity: 0
     - _GlossMapScale: 0
-    - _Glossines: 32
+    - _Glossines: 1
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
@@ -140,13 +144,19 @@ Material:
     - _AccentColor: {r: 1, g: 1, b: 1, a: 1}
     - _AmbientColor: {r: 0.39999998, g: 0.39999998, b: 0.39999998, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.8773585, g: 0.8249377, b: 0.8249377, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FlatColorTop: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
+<<<<<<< Updated upstream
     - _ShadowColor_1: {r: 0, g: 0, b: 0, a: 0}
     - _ShadowColor_2: {r: 0, g: 0, b: 0, a: 0}
     - _ShadowColor_3: {r: 0, g: 0, b: 0, a: 0}
+=======
+    - _ShadowColor_1: {r: 0.4056604, g: 0.20270066, b: 0.036994144, a: 0}
+    - _ShadowColor_2: {r: 0.7264151, g: 0.41792566, b: 0.1279221, a: 0}
+    - _ShadowColor_3: {r: 0.8396226, g: 0.6237589, b: 0.29043543, a: 0}
+>>>>>>> Stashed changes
     - _SilhouetteColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecularColor: {r: 0.5, g: 0.21540877, b: 0.21540877, a: 1}

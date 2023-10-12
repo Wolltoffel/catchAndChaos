@@ -1,9 +1,9 @@
-Shader "Custom/ToonShader"
+Shader "Custom/Character"
 {
     Properties
     {
-        _BaseMap("AlbedoMap", 2D) = "white"{}
-        _BaseColor ("Color", Color) = (0,0,0,0)
+  _BaseMap("AlbedoMap", 2D) = "white"{}
+        _Color ("Color", Color) = (0,0,0,0)
         
         _ShadowColor_1 ("_ShadowColor", Color) = (0,0,0,0)
         _ShadowColor_2 ("_ShadowColor", Color) = (0,0,0,0)
@@ -15,22 +15,30 @@ Shader "Custom/ToonShader"
         [HDR] _SpecularColor("Specular Color", Color) = (0.9,0.9,0.9,1)
         _Glossines("Glossines",Float) = 32
 
+        _FlatColorTop("Flat Color Top", Color) = (0.5,0.5,0.5,1)
+        _FlatColorTopOpacity("Flat Color Opacity",float) = 0
+
+        _SilhouetteColor ("Silhouette Color", Color) = (1,1,1,1)
     }
     SubShader
     {       
         LOD 100
 
-            Pass    
-            {
-                Name "ToonShading"
-                Tags { 
-                "RenderType"="Opaque" 
-                "PassFlags" = "OnlyDirectional" 
-                "LightMode" = "UniversalForward" 
-                "RenderPipeline"="UniversalPipeline"
-                }
+        Pass    
+        {
+            Stencil {
+                Ref 1       // Set the reference value for the stencil test
+                Comp Always // Always pass the stencil test (to write the reference value)
+                Pass Replace // Replace the stencil value with the reference value
+        }
 
-                HLSLPROGRAM
+            Name "ToonShading"
+            Tags { 
+            "RenderType"="Opaque" 
+            "PassFlags" = "OnlyDirectional" 
+            "LightMode" = "UniversalForward" }
+
+             HLSLPROGRAM
                 #pragma vertex vert
                 #pragma fragment frag
 
@@ -73,7 +81,7 @@ Shader "Custom/ToonShader"
                     return o;
                 }
 
-                float4 _BaseColor;
+                float4 _Color;
                 float _Glossines;
                 float4 _SpecularColor;
                 float4 _RimColor;
@@ -93,7 +101,7 @@ Shader "Custom/ToonShader"
     
                     //Hard Shadows
                     float3 normal = normalize(i.worldNormal);
-                    fixed4 col = fixed4(_BaseColor.rgb,_BaseColor.a);
+                    fixed4 col = fixed4(_Color.rgb,_Color.a);
                     float NormalDotLight = dot (_WorldSpaceLightPos0,normal);
                     
 
@@ -117,7 +125,7 @@ Shader "Custom/ToonShader"
                     //Base Color Tex
                     float4 baseColorTex = tex2D(_BaseMap,i.uv);
 
-                    col=baseColorTex*_BaseColor*(_BaseColor+specular+rim);
+                    col=baseColorTex*_Color*(_Color+specular+rim);
 
                     float4 shadowColor;
                     if (NormalDotLight<_ShadowThresh_1)
@@ -132,9 +140,71 @@ Shader "Custom/ToonShader"
                 }
                 ENDHLSL
             }
-
+        
+    
         UsePass "Legacy Shaders/VertexLit/SHADOWCASTER"
+    
 
-    }
-    FallBack "VertexLit"
+    Pass
+        {   
+            Name "Silhouette"
+            Tags {"Queue" = "Transparent+2" }
+
+            ZWrite Off
+            ZTest Always
+            Cull Off
+
+
+            Stencil
+            {
+                Ref 1        // Set the reference value for the stencil test
+                Comp NotEqual // Pass if the stencil value is not equal to the reference value
+            }
+ 
+            HLSLPROGRAM
+
+            #pragma multi_compile_instancing
+            #pragma vertex vert
+            #pragma fragment frag
+
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl" 
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+
+            struct appdata
+            {
+                float4 vertex : POSITION;
+                float3 normal : NORMAL;
+                float2 texcoord : TEXCOORD0;
+
+            }; 
+
+            struct v2f
+            {
+                float4 vertex : SV_POSITION;
+                float3 normal : TEXCOORD0;
+                float3 worldPos : TEXCOORD1;
+                float2 texCoord : TEXCOORD2;
+
+            };
+
+            v2f vert (appdata v)
+            {
+                v2f o;
+                o.vertex = TransformObjectToHClip(v.vertex);
+                o.worldPos = TransformObjectToWorld(v.vertex);
+                o.normal = v.normal;
+                o.texCoord = v.texcoord;
+                return o;
+            }
+
+            float4 _SilhouetteColor;
+
+            float4 frag (v2f i) : SV_Target
+            {
+                float4 color = _SilhouetteColor;
+                return color;
+            } 
+            ENDHLSL
+        }              
+}
 }

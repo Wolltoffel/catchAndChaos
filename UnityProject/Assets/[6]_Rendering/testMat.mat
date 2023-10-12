@@ -21,11 +21,12 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: testMat
-  m_Shader: {fileID: 4800000, guid: a52d11b7dfe1f4c499d62bc2c1e41837, type: 3}
+  m_Shader: {fileID: 4800000, guid: a60e91c1afb2f194291e0d2a49eac446, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _USE_UV1_FOR_UV0
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -41,6 +42,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ClearCoatMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -61,7 +66,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: fc3ccf37d12a4f74780c9d7768780088, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -98,7 +103,9 @@ Material:
     - _AlphaToMask: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
+    - _BlendOp: 0
     - _BumpScale: 1
+    - _ClearCoat: 0
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
@@ -116,10 +123,11 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueOffset: 0
-    - _ReceiveShadows: 1
-    - _RimAmount: 0.716
-    - _ShadowThresh_1: 0.01
-    - _ShadowThresh_2: 0.2
+    - _ReceiveShadows: 0
+    - _RimAmount: 0
+    - _SampleGI: 0
+    - _ShadowThresh_1: 0.0001
+    - _ShadowThresh_2: 0.3
     - _ShadowThresh_3: 0.5
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
@@ -127,17 +135,18 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
+    - _SwapUVs: 1
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
     - _AmbientColor: {r: 0.4, g: 0.4, b: 0.4, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.8207547, g: 0.44651115, b: 0.44651115, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ShadowColor_1: {r: 0.4339623, g: 0.34252995, b: 0.34252995, a: 0}
-    - _ShadowColor_2: {r: 0.8773585, g: 0.4254769, b: 0.23727298, a: 0}
-    - _ShadowColor_3: {r: 0.6886792, g: 0.5240892, b: 0.5240892, a: 0}
+    - _ShadowColor_1: {r: 0, g: 0, b: 0, a: 0}
+    - _ShadowColor_2: {r: 0.4433962, g: 0.4433962, b: 0.4433962, a: 0}
+    - _ShadowColor_3: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SpecularColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
   m_BuildTextureStacks: []

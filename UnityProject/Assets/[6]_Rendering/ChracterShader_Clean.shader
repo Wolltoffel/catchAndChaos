@@ -1,4 +1,4 @@
-Shader "Custom/Character"
+Shader "Custom/Character_Clean"
 {
     Properties
     {
