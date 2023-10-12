@@ -63,7 +63,6 @@ abstract class ParentBaseState : State
                         hint = "PlushiePickUp";
 
                     WorldSpaceUI.ShowButtonPrompt(interactableObject.transform, inputButton, out currentButtonPrompt, hint);
-                    Debug.Log (inputButton);
                 }
 
                 if (Input.GetButtonDown(inputButton))
