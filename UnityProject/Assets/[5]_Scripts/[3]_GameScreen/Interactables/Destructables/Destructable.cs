@@ -5,6 +5,7 @@ using UnityEngine;
 public class Destructable : MonoBehaviour
 {
     public float destroyTimeLeft;
+    public DebrisTypes type = DebrisTypes.TV;
 
     public Shader prevShader;
 
@@ -18,7 +19,7 @@ public class Destructable : MonoBehaviour
     {
         GameData.GetData<InteractableContainer>("InteractableContainer").RemoveObjectFromCategory("Chaos", gameObject);
         GameData.GetData<ChaosData>("ChaosData").ModifyChaos(GameData.GetData<ChildData>("Child").chaosScorePerChaosObject);
-        SpawnDebris(DebrisTypes.Shelf);
+        SpawnDebris(type);
         Destroy(gameObject);
     }
 
