@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MonokelOutfit
-  m_Shader: {fileID: 4800000, guid: 28868cd991ed6284f8ddd20cc5e19464, type: 3}
+  m_Shader: {fileID: 4800000, guid: cd5a3b36f8b20b849818d520dd957bf1, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -125,7 +125,7 @@ Material:
     - _RenderAccentColorOnTop: 1
     - _RimAmount: 0.716
     - _Saturation: 1
-    - _ShadowThresh_1: 0.4
+    - _ShadowThresh_1: -0.45
     - _ShadowThresh_2: 0.6
     - _ShadowThresh_3: 0.8
     - _Smoothness: 0
@@ -144,9 +144,9 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FlatColorTop: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ShadowColor_1: {r: 0, g: 0, b: 0, a: 0}
-    - _ShadowColor_2: {r: 0, g: 0, b: 0, a: 0}
-    - _ShadowColor_3: {r: 0, g: 0, b: 0, a: 0}
+    - _ShadowColor_1: {r: 0.934, g: 0.934, b: 0.934, a: 1}
+    - _ShadowColor_2: {r: 1, g: 1, b: 1, a: 1}
+    - _ShadowColor_3: {r: 1, g: 1, b: 1, a: 1}
     - _SilhouetteColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecularColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}

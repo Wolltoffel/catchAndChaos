@@ -161,14 +161,14 @@ Material:
     - _AmbientColor: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
-    - _Color: {r: 1, g: 1, b: 1, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FlatColorTop: {r: 0.9528302, g: 0.01498151, b: 0.01498151, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ShadowColor_1: {r: 0.922, g: 0.922, b: 0.922, a: 0}
-    - _ShadowColor_2: {r: 1, g: 1, b: 1, a: 0}
-    - _ShadowColor_3: {r: 1, g: 1, b: 1, a: 0}
+    - _ShadowColor_1: {r: 0.922, g: 0.922, b: 0.922, a: 1}
+    - _ShadowColor_2: {r: 1, g: 1, b: 1, a: 1}
+    - _ShadowColor_3: {r: 1, g: 1, b: 1, a: 1}
     - _SilhouetteColor: {r: 1, g: 1, b: 1, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0, g: 0, b: 0, a: 1}
