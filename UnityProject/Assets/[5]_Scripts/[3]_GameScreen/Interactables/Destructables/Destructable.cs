@@ -5,6 +5,7 @@ using UnityEngine;
 public class Destructable : MonoBehaviour
 {
     public float destroyTimeLeft;
+    public DebrisTypes type = DebrisTypes.TV;
 
     public Shader prevShader;
 
@@ -18,7 +19,7 @@ public class Destructable : MonoBehaviour
     {
         GameData.GetData<InteractableContainer>("InteractableContainer").RemoveObjectFromCategory("Chaos", gameObject);
         GameData.GetData<ChaosData>("ChaosData").ModifyChaos(GameData.GetData<ChildData>("Child").chaosScorePerChaosObject);
-        SpawnDebris(DebrisTypes.Shelf);
+        SpawnDebris(type);
         Destroy(gameObject);
     }
 
@@ -28,8 +29,24 @@ public class Destructable : MonoBehaviour
 
         for (int i = 0; i < debris.Length*4; i++)
         {
-            Instantiate(debris[i%debris.Length],transform.position + Vector3.up *0.5f,Quaternion.identity, transform.parent);
+            float randomRange = 0.03f;
+            Vector3 randomPos = new Vector3(Random.Range(-randomRange, randomRange), Random.Range(-randomRange, randomRange), Random.Range(-randomRange, randomRange));
+            GameObject obj = Instantiate(debris[i%debris.Length],transform.position + randomPos,Quaternion.identity, transform.parent);
+            obj.transform.position = transform.position;
+            ApplyRandomForce(obj);
         }
+    }
+
+    private void ApplyRandomForce(GameObject obj)
+    {
+        Rigidbody rigidbody = obj.GetComponent<Rigidbody>();
+
+        rigidbody.AddExplosionForce(1, transform.position, 1);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, 0.2f);
     }
 
 }

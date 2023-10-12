@@ -14,9 +14,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: DebrisPrefabs
   debris:
-  - debris: {fileID: 8218100174696599929, guid: 5a1cb119f4cfa47179765d65d3c4cbeb, type: 3}
-    debrisType: 0
-  - debris: {fileID: 5635198748494537591, guid: 9623bb9fb683143419e384f514c34a4d, type: 3}
-    debrisType: 2
-  - debris: {fileID: 8218100174696599929, guid: 2b541c8dd8b584fa18366ee7c817c921, type: 3}
+  - debris: {fileID: 4197313825745852054, guid: 199e142ed5d1648d0b9cf7dc8a03a8d7, type: 3}
     debrisType: 1
+  - debris: {fileID: 1710708885696616707, guid: e739b1fdd49f64b72b5216e3328bb018, type: 3}
+    debrisType: 0
+  - debris: {fileID: 2158413960038808420, guid: 50c8804720d9e461c9992765f49b39f5, type: 3}
+    debrisType: 0
+  - debris: {fileID: 4212421675823664816, guid: 8d14f9b3f23d54f3f9a22cc9c4f9d370, type: 3}
+    debrisType: 2
+  - debris: {fileID: 4800394281765340044, guid: 3ca8f840aa93746268a85e4a76ce48c8, type: 3}
+    debrisType: 1
+  - debris: {fileID: 4720575812204836076, guid: d8fbe128eae784baabddeba1719f7f53, type: 3}
+    debrisType: 0
+  - debris: {fileID: 1178238065798565040, guid: 26c1d36af081c4eab9ad91562ca49514, type: 3}
+    debrisType: 1
+  - debris: {fileID: 5209570923022560528, guid: 0e78740bc4e314532b78f91c1f8608a6, type: 3}
+    debrisType: 2
+  - debris: {fileID: 4088985652726261152, guid: 716eb297bcdeb40658e7c56e51aaab33, type: 3}
+    debrisType: 2
+  - debris: {fileID: 3820209441132711420, guid: 980eec17af60b48b19236bcc26a30b3b, type: 3}
+    debrisType: 1
+  - debris: {fileID: 3454925928211071537, guid: d8aaade1fe2ea44baba962a0a246c8ea, type: 3}
+    debrisType: 1
+  - debris: {fileID: 9030290613553481542, guid: f79565053d5b04ae489f7e716684a11a, type: 3}
+    debrisType: 1
+  - debris: {fileID: 3459576674789669610, guid: 76a6d401206d3490da55f0baa1a2f332, type: 3}
+    debrisType: 0
+  - debris: {fileID: 3708498194709280437, guid: 8a8c0ddbe4a6d4eb5bdfe2e0fed627d8, type: 3}
+    debrisType: 0
+  - debris: {fileID: 2320087296025160849, guid: 76d4283465cb54b3da3754185a314c86, type: 3}
+    debrisType: 0
