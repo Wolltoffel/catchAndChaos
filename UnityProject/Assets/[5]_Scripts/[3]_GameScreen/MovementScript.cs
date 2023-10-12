@@ -69,8 +69,9 @@ public class MovementScript : MonoBehaviour
     public Vector2 MovePlayer(float xAxis, float yAxis, float speed = 1)
     {
         float yValue = transform.position.y;
-
-        Vector2 axis = OptimizeMovement(transform.position, new Vector2(xAxis, yAxis));
+        Vector2 axis = new Vector2(xAxis, yAxis);
+        axis = axis.magnitude >= 1 ? axis.normalized : axis;
+        axis = OptimizeMovement(transform.position, axis);
         axis = AssureMovement(transform.position, axis);
 
         previousMovement = Vector2.Lerp(previousMovement, axis, 1);
