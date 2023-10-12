@@ -28,8 +28,24 @@ public class Destructable : MonoBehaviour
 
         for (int i = 0; i < debris.Length*4; i++)
         {
-            Instantiate(debris[i%debris.Length],transform.position + Vector3.up *0.5f,Quaternion.identity, transform.parent);
+            float randomRange = 0.03f;
+            Vector3 randomPos = new Vector3(Random.Range(-randomRange, randomRange), Random.Range(-randomRange, randomRange), Random.Range(-randomRange, randomRange));
+            GameObject obj = Instantiate(debris[i%debris.Length],transform.position + randomPos,Quaternion.identity, transform.parent);
+            obj.transform.position = transform.position;
+            ApplyRandomForce(obj);
         }
+    }
+
+    private void ApplyRandomForce(GameObject obj)
+    {
+        Rigidbody rigidbody = obj.GetComponent<Rigidbody>();
+
+        rigidbody.AddExplosionForce(1, transform.position, 1);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, 0.2f);
     }
 
 }
