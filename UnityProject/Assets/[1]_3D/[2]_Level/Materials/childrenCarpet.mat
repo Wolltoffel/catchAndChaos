@@ -124,12 +124,12 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _RimColor: {r: 0, g: 0, b: 0, a: 1}
-    - _ShadowColor_1: {r: 0.71242094, g: 0.7735849, b: 0.63978875, a: 0}
-    - _ShadowColor_2: {r: 0.6320754, g: 0.15901265, b: 0.15901265, a: 0}
-    - _ShadowColor_3: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 0}
+    - _RimColor: {r: 1, g: 1, b: 1, a: 1}
+    - _ShadowColor_1: {r: 0.8679245, g: 0.8679245, b: 0.8679245, a: 0}
+    - _ShadowColor_2: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 0}
+    - _ShadowColor_3: {r: 1, g: 1, b: 1, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _SpecularColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &7862364114184462497
 MonoBehaviour:

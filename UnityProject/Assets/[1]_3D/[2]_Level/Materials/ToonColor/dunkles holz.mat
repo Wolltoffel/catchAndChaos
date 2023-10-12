@@ -119,8 +119,8 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _RimAmount: 0.553
-    - _ShadowThresh_1: 0.75
-    - _ShadowThresh_2: 0.42
+    - _ShadowThresh_1: 0.46
+    - _ShadowThresh_2: 0.61
     - _ShadowThresh_3: -2.38
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
@@ -133,13 +133,13 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _AmbientColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BaseColor: {r: 0.533326, g: 0.4088398, b: 0.28811622, a: 1}
+    - _BaseColor: {r: 0.5849056, g: 0.4769985, b: 0.3724635, a: 1}
     - _Color: {r: 0.745283, g: 0.7109317, b: 0.6784888, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ShadowColor_1: {r: 1, g: 0.8762803, b: 0.759434, a: 1}
+    - _ShadowColor_1: {r: 0.654902, g: 0.5372549, b: 0.41960785, a: 1}
     - _ShadowColor_2: {r: 0.7075472, g: 0.6224413, b: 0.53733534, a: 1}
-    - _ShadowColor_3: {r: 0.655, g: 0.5380357, b: 0.4210714, a: 1}
+    - _ShadowColor_3: {r: 1, g: 0.8745098, b: 0.7607843, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SpecularColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
   m_BuildTextureStacks: []
