@@ -58,11 +58,11 @@ abstract class ParentBaseState : State
                     if (currentButtonPrompt != null)
                         WorldSpaceUI.RemovePrompt(currentButtonPrompt);
 
-               /*      if (outline!=null)
+                     if (outline!=null)
                     {
                         outline.activeOutline = false;
                         outline = null;
-                    } */
+                    } 
 
                     Transform buttonPromptTarget = interactableObject.transform;
 
@@ -71,15 +71,15 @@ abstract class ParentBaseState : State
                     {
                         hint = "PlushiePickUp";
                         
-                        //AddOutline (interactableObject, out outline);
+                        AddOutline (interactableObject, out outline);
                     }
                         
                     
-       /*              if (hint=="Child")
+                     if (hint=="Child")
                     {
                         buttonPromptTarget = CharacterInstantiator.GetActiveCharacter(Characters.Parent).transform;
                         hint = hasPlushie?"PlushieThrow":"Catch";
-                    } */
+                    } 
 
                     WorldSpaceUI.ShowButtonPrompt(buttonPromptTarget, inputButton, out currentButtonPrompt, hint);
                 }
@@ -99,11 +99,11 @@ abstract class ParentBaseState : State
                 currentButtonPrompt = null;
             }
 
-        /*     if (outline!=null)
+             if (outline!=null)
             {
                 outline.activeOutline = false;
                 outline = null;
-            } */
+            } 
 
             return null;
         }
