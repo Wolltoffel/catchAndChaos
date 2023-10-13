@@ -14,33 +14,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: DebrisPrefabs
   debris:
-  - debris: {fileID: 4197313825745852054, guid: 199e142ed5d1648d0b9cf7dc8a03a8d7, type: 3}
-    debrisType: 1
-  - debris: {fileID: 1710708885696616707, guid: e739b1fdd49f64b72b5216e3328bb018, type: 3}
+  - debris: {fileID: 1942020470688010098, guid: cf7e0b47c038345bf8329b0489ce1a3f, type: 3}
     debrisType: 0
-  - debris: {fileID: 2158413960038808420, guid: 50c8804720d9e461c9992765f49b39f5, type: 3}
+  - debris: {fileID: 5282068533024723149, guid: 90eb67b27f9db4d6ea37e78babe2c546, type: 3}
     debrisType: 0
-  - debris: {fileID: 4212421675823664816, guid: 8d14f9b3f23d54f3f9a22cc9c4f9d370, type: 3}
+  - debris: {fileID: 4868184106262616858, guid: 20c36b909b4a6401888b7eac6675fef0, type: 3}
+    debrisType: 0
+  - debris: {fileID: 1250535763086214801, guid: 97fae3a64910b483981fc752a4471f7b, type: 3}
+    debrisType: 0
+  - debris: {fileID: 1608172231885211809, guid: ec720430600d543f188109e9fa2ad91d, type: 3}
+    debrisType: 0
+  - debris: {fileID: 7772297499383420446, guid: f40cd7fb2c4104bcf91e608aa5a3549c, type: 3}
     debrisType: 2
-  - debris: {fileID: 4800394281765340044, guid: 3ca8f840aa93746268a85e4a76ce48c8, type: 3}
-    debrisType: 1
-  - debris: {fileID: 4720575812204836076, guid: d8fbe128eae784baabddeba1719f7f53, type: 3}
-    debrisType: 0
-  - debris: {fileID: 1178238065798565040, guid: 26c1d36af081c4eab9ad91562ca49514, type: 3}
-    debrisType: 1
-  - debris: {fileID: 5209570923022560528, guid: 0e78740bc4e314532b78f91c1f8608a6, type: 3}
+  - debris: {fileID: 4352554024418936893, guid: 697eeb90a1b82425a9f7bc8bde224f1e, type: 3}
     debrisType: 2
-  - debris: {fileID: 4088985652726261152, guid: 716eb297bcdeb40658e7c56e51aaab33, type: 3}
-    debrisType: 2
-  - debris: {fileID: 3820209441132711420, guid: 980eec17af60b48b19236bcc26a30b3b, type: 3}
+  - debris: {fileID: 5251113112545344419, guid: d707b2f90fe324f1192ea9fe909146a7, type: 3}
+    debrisType: 3
+  - debris: {fileID: 3829153879383483905, guid: ad510909fe90c42fbad44f48f20b9417, type: 3}
+    debrisType: 3
+  - debris: {fileID: 3383841910607110555, guid: 8c8844611a28b4441814d1fb7d914ead, type: 3}
     debrisType: 1
-  - debris: {fileID: 3454925928211071537, guid: d8aaade1fe2ea44baba962a0a246c8ea, type: 3}
+  - debris: {fileID: 4290027265787816815, guid: 0c8f926a36c394d5d8390f54e5795add, type: 3}
     debrisType: 1
-  - debris: {fileID: 9030290613553481542, guid: f79565053d5b04ae489f7e716684a11a, type: 3}
+  - debris: {fileID: 3840546485114670097, guid: 57843bf5eb4f249a6958a4694c488165, type: 3}
     debrisType: 1
-  - debris: {fileID: 3459576674789669610, guid: 76a6d401206d3490da55f0baa1a2f332, type: 3}
-    debrisType: 0
-  - debris: {fileID: 3708498194709280437, guid: 8a8c0ddbe4a6d4eb5bdfe2e0fed627d8, type: 3}
-    debrisType: 0
-  - debris: {fileID: 2320087296025160849, guid: 76d4283465cb54b3da3754185a314c86, type: 3}
-    debrisType: 0
+  - debris: {fileID: 3405891222309103265, guid: 7aa4785cfcfdf4f28a1704c45c3a0a2d, type: 3}
+    debrisType: 1
+  - debris: {fileID: 1386215289977215746, guid: 14db6d0744cdb4a01bbd6b6a3616c13a, type: 3}
+    debrisType: 1
+  - debris: {fileID: 2868165649314100302, guid: 4416be979e27740d5afa9d77ab7775e1, type: 3}
+    debrisType: 1

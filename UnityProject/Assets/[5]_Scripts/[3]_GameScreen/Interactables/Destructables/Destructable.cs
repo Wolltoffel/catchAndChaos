@@ -31,7 +31,8 @@ public class Destructable : MonoBehaviour
         {
             float randomRange = 0.03f;
             Vector3 randomPos = new Vector3(Random.Range(-randomRange, randomRange), Random.Range(-randomRange, randomRange), Random.Range(-randomRange, randomRange));
-            GameObject obj = Instantiate(debris[i%debris.Length],transform.position + randomPos,Quaternion.identity, transform.parent);
+            Vector3 randomRot = new Vector3(Random.Range(-360, 360), Random.Range(-360, 360), Random.Range(-360, 360));
+            GameObject obj = Instantiate(debris[i%debris.Length],transform.position + randomPos,Quaternion.Euler(randomRot), transform.parent);
             obj.transform.position = transform.position;
             ApplyRandomForce(obj);
         }
@@ -41,7 +42,7 @@ public class Destructable : MonoBehaviour
     {
         Rigidbody rigidbody = obj.GetComponent<Rigidbody>();
 
-        rigidbody.AddExplosionForce(1, transform.position, 1);
+        rigidbody.AddExplosionForce(100, transform.position, 1);
     }
 
     private void OnDrawGizmos()
