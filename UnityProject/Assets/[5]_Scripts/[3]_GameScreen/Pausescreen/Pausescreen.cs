@@ -8,11 +8,16 @@ using UnityEngine.EventSystems;
 public class Pausescreen : MonoBehaviour
 {
     [SerializeField] GameObject pauseScreenPrefab;
+    [SerializeField] Transform parent;
 
     string inputDevice;
     bool gamePaused;
     GameObject pauseScreenInstance;
     PauseScreenData data;
+
+    void  Start()
+    {
+    }
 
     void Update()
     {
@@ -47,6 +52,7 @@ public class Pausescreen : MonoBehaviour
     {
         pauseScreenInstance = Instantiate(pauseScreenPrefab);
         pauseScreenInstance.transform.name = "PauseScreen_instance";
+        pauseScreenInstance.transform.SetParent(parent);
 
         data = pauseScreenInstance.GetComponentInChildren<PauseScreenData>();
         data.unpauseButton.onClick.AddListener(()=>UnpauseGame()); 
@@ -59,7 +65,6 @@ public class Pausescreen : MonoBehaviour
 
     void UnpauseGame()
     {
-        Debug.Log ("UnpauseGame");
         Destroy(pauseScreenInstance);
         gamePaused = false;
         Time.timeScale = 1;
@@ -73,6 +78,7 @@ public class Pausescreen : MonoBehaviour
 
     void BackToMainMenu()
     {
+        UnpauseGame();
         ScreenSwitcher.SwitchScreen(ScreenType.MainMenu);
     }
 

@@ -987,6 +987,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseScreenPrefab: {fileID: 8617863531841441982, guid: 23e083213a2136c40a6986c0c8ca4526, type: 3}
+  parent: {fileID: 3652606651269227197}
 --- !u!1 &8570264424980288776
 GameObject:
   m_ObjectHideFlags: 0

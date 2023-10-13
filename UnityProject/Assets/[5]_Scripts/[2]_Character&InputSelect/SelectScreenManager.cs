@@ -164,7 +164,6 @@ public class WaitForKeyInput: MenuState
     public WaitForKeyInput(SelectScreenData data) : base(data) {}
         public override MenuState UpdateMenu()
         {
-
             string inputDevice = "";
             if (dataPack.character == Characters.Child)
                 inputDevice = GetInputDevice("X");
@@ -189,6 +188,7 @@ public class WaitForKeyInput: MenuState
 
         string GetInputDevice(string buttton)
         {
+
                 string inputDevice = "";
                 if (Input.GetButtonDown("J1"+buttton)) //Controller 1
                     inputDevice =  "J1";
@@ -205,11 +205,15 @@ public class WaitForKeyInput: MenuState
                         Input.GetAxis("K2 Vertical")!=0 && dataPack.character == Characters.Parent) // Second Keyboard Layout
                     inputDevice=  "K2";
 
+                Debug.Log (inputDevice);
+
+
                 //Check if input device is already set
                 for (int i = 0; i<dataPack.setInputDevices.Count;i++)
                 {
                         if (inputDevice==dataPack.setInputDevices[i])
                         {   
+                            
                             return "";
                         }
                 } 
