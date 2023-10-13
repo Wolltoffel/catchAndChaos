@@ -14,7 +14,7 @@ public class Plushie : MonoBehaviour
     private Collider _collider;
     private bool isActive;
 
-    private void Start()
+    private void Awake()
     {
         if (!TryGetComponent(out _collider))
         {

@@ -175,7 +175,8 @@ abstract class ParentBaseState : State
 
             //hasPlushie = true;
 
-            parentData.plushie = interactable.GetComponent<Plushie>();
+            var temp = interactable.GetComponent<Plushie>();
+            parentData.plushie = temp == null ? interactable.AddComponent<Plushie>() : temp;
 
             gameObject.GetComponent<Animator>().SetInteger("MomIndex", 5);
             Transform handTransform = FindDeepChild(gameObject.transform, "Right wrist");
