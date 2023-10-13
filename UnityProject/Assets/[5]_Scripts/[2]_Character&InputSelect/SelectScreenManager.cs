@@ -205,8 +205,6 @@ public class WaitForKeyInput: MenuState
                         Input.GetAxis("K2 Vertical")!=0 && dataPack.character == Characters.Parent) // Second Keyboard Layout
                     inputDevice=  "K2";
 
-                Debug.Log (inputDevice);
-
 
                 //Check if input device is already set
                 for (int i = 0; i<dataPack.setInputDevices.Count;i++)

@@ -229,7 +229,7 @@ namespace UnityEngine.EventSystems
             m_LastMousePosition = input.mousePosition;
 
             var toSelect = eventSystem.currentSelectedGameObject;
-            if (toSelect == null)
+            if (toSelect == null && GameData.GetData<LastInputDeviceData>("LastInputDeviceData").inputDevice == InputDevice.Controller)
                 toSelect = eventSystem.firstSelectedGameObject;
 
             eventSystem.SetSelectedGameObject(toSelect, GetBaseEventData());

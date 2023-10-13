@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 
 [System.Serializable]
@@ -23,6 +24,7 @@ public class ButtonSwitchData
            controller.gameObject.SetActive(true);
            keyboard.gameObject.SetActive(false);
            activeButton = controller;
+
         }
         else if (inputDevice == InputDevice.Keyboard)
         {
