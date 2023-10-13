@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 741577763602081993}
   - component: {fileID: 5737737772782475413}
   - component: {fileID: 1233436844684669090}
+  - component: {fileID: 5770773281998044548}
   m_Layer: 6
   m_Name: Adriache
   m_TagString: Untagged
@@ -134,3 +135,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5770773281998044548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1245915432972126492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a2bc64c4ffb2a948a177ec84e6b2832, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _preRenderOutline: 1
+  _activeOutline: 0
+  _outlineColor: {r: 0, g: 0, b: 0, a: 0}
+  _activeCutoff: 0
+  _cutoffTex: {fileID: 0}
+  _outlineWidth: 0
+  _seeThroughWalls: 0
+  computedNormals:
+    smoothNormals: []

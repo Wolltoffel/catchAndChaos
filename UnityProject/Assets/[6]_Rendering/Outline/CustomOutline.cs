@@ -403,15 +403,19 @@ public class CustomOutline : MonoBehaviour
 #region SmoothNormals
   public void RecalculateNormals()
   {
-        MeshFilter meshFilter = GetComponent<MeshFilter>();
+        MeshFilter meshFilter = GetComponentInChildren<MeshFilter>();
         Mesh mesh = meshFilter.sharedMesh;
+        if (mesh==null)
+          mesh = GetComponentInChildren<SkinnedMeshRenderer>().sharedMesh;
         computedNormals.smoothNormals = SmoothNormals(mesh);
   }
 
   void InjectNormals()
   {
-        MeshFilter meshFilter = GetComponent<MeshFilter>();
+        MeshFilter meshFilter = GetComponentInChildren<MeshFilter>();
         Mesh mesh = meshFilter.sharedMesh;
+        if (mesh==null)
+          mesh = GetComponentInChildren<SkinnedMeshRenderer>().sharedMesh;
 
          if (!mesh.isReadable)
          {
@@ -422,7 +426,13 @@ public class CustomOutline : MonoBehaviour
         if (computedNormals.smoothNormals==null)
           RecalculateNormals();
 
-       meshFilter.sharedMesh.SetUVs(2,computedNormals.smoothNormals);
+
+
+       if (meshFilter.sharedMesh==null)
+          GetComponentInChildren<SkinnedMeshRenderer>().sharedMesh.SetUVs(5,computedNormals.smoothNormals);
+        else
+          meshFilter.sharedMesh.SetUVs(5,computedNormals.smoothNormals);
+       
 
        //Combine Submeshes
        CombineSubmeshes(mesh);

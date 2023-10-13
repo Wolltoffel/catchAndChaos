@@ -202,6 +202,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8810182724685927520}
   - component: {fileID: 1953675065401209303}
+  - component: {fileID: 4581567166339196002}
+  - component: {fileID: 9069703580373245686}
   m_Layer: 6
   m_Name: Tigrenz
   m_TagString: Untagged
@@ -284,6 +286,35 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.00012508733, y: 0.007971685, z: -0.0022433759}
     m_Extent: {x: 0.0053392393, y: 0.01956359, z: 0.0075531076}
   m_DirtyAABB: 0
+--- !u!33 &4581567166339196002
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5801137801713700087}
+  m_Mesh: {fileID: 0}
+--- !u!114 &9069703580373245686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5801137801713700087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a2bc64c4ffb2a948a177ec84e6b2832, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _preRenderOutline: 0
+  _activeOutline: 0
+  _outlineColor: {r: 0, g: 0, b: 0, a: 0}
+  _activeCutoff: 0
+  _cutoffTex: {fileID: 0}
+  _outlineWidth: 0
+  _seeThroughWalls: 0
+  computedNormals:
+    smoothNormals: []
 --- !u!1 &6240677244692585754
 GameObject:
   m_ObjectHideFlags: 0
