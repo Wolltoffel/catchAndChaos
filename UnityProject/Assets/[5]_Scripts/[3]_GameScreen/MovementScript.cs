@@ -26,6 +26,8 @@ public class MovementScript : MonoBehaviour
 
     private void Awake()
     {
+        catchDistance = GameData.GetData<ParentData>("Parent").catchDistance;
+
         if (!TryGetComponent(out characterController))
         {
             characterController = gameObject.AddComponent<CharacterController>();

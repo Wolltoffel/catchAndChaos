@@ -119,8 +119,6 @@ public class LastInputDevice : MonoBehaviour
                     return true;
             }
         }
-
-        Debug.Log ("No Axis Movement detectd");
         return false;
     }
 

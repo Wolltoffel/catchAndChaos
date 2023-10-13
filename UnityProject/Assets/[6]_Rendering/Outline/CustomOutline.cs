@@ -158,13 +158,15 @@ public class CustomOutline : MonoBehaviour
   Material outLineFill;
   Material outLineMask;
 
-  MeshRenderer _meshRenderer;
-  MeshRenderer meshRenderer
+  Renderer _meshRenderer;
+  Renderer meshRenderer
   {
     get 
     {
       if(_meshRenderer==null)
-        _meshRenderer = GetComponent<MeshRenderer>();
+        _meshRenderer = GetComponent<Renderer>();
+      if (_meshRenderer==null)
+         _meshRenderer = GetComponentInChildren<Renderer>();
       return _meshRenderer;
     }
     set{_meshRenderer = value;}

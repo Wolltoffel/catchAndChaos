@@ -31,6 +31,8 @@ abstract class ParentBaseState : State
     protected static bool hasPlushie;
     private static GameObject currentButtonPrompt;
 
+    private static CustomOutline outline;
+
     public ParentBaseState()
     {
         parentData = GameData.GetData<ParentData>("Parent");
@@ -54,15 +56,32 @@ abstract class ParentBaseState : State
                 {
                     currentObjectHash = objectHash;
                     if (currentButtonPrompt != null)
-                    {
                         WorldSpaceUI.RemovePrompt(currentButtonPrompt);
+
+                    if (outline!=null)
+                    {
+                        outline.activeOutline = false;
+                        outline = null;
                     }
+
+                    Transform buttonPromptTarget = interactableObject.transform;
 
                     string hint = action;
                     if (hint == "Plushie")
+                    {
                         hint = "PlushiePickUp";
+                        
+                        AddOutline (interactableObject, out outline);
+                    }
+                        
+                    
+                    if (hint=="Child")
+                    {
+                        buttonPromptTarget = CharacterInstantiator.GetActiveCharacter(Characters.Parent).transform;
+                        hint = hasPlushie?"Throw":"Catch";
+                    }
 
-                    WorldSpaceUI.ShowButtonPrompt(interactableObject.transform, inputButton, out currentButtonPrompt, hint);
+                    WorldSpaceUI.ShowButtonPrompt(buttonPromptTarget, inputButton, out currentButtonPrompt, hint);
                 }
 
                 if (Input.GetButtonDown(inputButton))
@@ -80,6 +99,12 @@ abstract class ParentBaseState : State
                 currentButtonPrompt = null;
             }
 
+            if (outline!=null)
+            {
+                outline.activeOutline = false;
+                outline = null;
+            }
+
             return null;
         }
         else
@@ -88,6 +113,17 @@ abstract class ParentBaseState : State
                 return HandleAction(null, "Plushie");
             return null;
         }        
+    }
+
+    protected void AddOutline(GameObject gameObject, out CustomOutline customOutline)
+    {
+        customOutline = gameObject.GetComponent<CustomOutline>();
+            if (customOutline==null)
+                customOutline  = gameObject.AddComponent<CustomOutline>();
+
+            customOutline.activeOutline = true;
+            customOutline.outlineWidth = 10;
+            customOutline.outlineColor = Color.white;
     }
 
     private ParentBaseState HandleAction(GameObject interactableObject, string action)
@@ -129,6 +165,16 @@ abstract class ParentBaseState : State
         {
             WorldSpaceUI.RemovePrompt(currentButtonPrompt);
             WorldSpaceUI.ShowButtonPrompt(gameObject.transform, inputButton, out currentButtonPrompt, "PlushieThrow");
+
+            if (outline!=null)
+            {
+                outline.activeOutline = false;
+                outline = null;
+            }
+
+            //interactable.
+
+            hasPlushie = true;
 
             parentData.plushie = interactable.GetComponent<Plushie>();
 
@@ -346,6 +392,8 @@ class ParentThrow : ParentBaseState
     {
         //Do Antimator
         gameObject.GetComponent<Animator>().SetInteger("MomIndex", 3);
+
+        hasPlushie = false;
 
         timeElapsed = 0;
         hasThrown = false;

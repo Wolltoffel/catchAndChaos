@@ -299,6 +299,9 @@ MonoBehaviour:
   - character: 0
     tag: Chaos
     interactionRange: 3
+  - character: 1
+    tag: Child
+    interactionRange: 5
 --- !u!1 &4078362155094007473
 GameObject:
   m_ObjectHideFlags: 0

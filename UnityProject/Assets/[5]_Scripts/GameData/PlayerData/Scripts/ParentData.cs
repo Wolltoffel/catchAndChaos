@@ -8,4 +8,6 @@ public class ParentData : PlayerData
 {
     public Transform handTransform;
     [HideInInspector] public Plushie plushie;
+    
+    public float catchDistance;
 }
