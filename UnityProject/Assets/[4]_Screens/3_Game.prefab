@@ -1232,6 +1232,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: LollySpawnPoint
       objectReference: {fileID: 0}
+    - target: {fileID: 774663971522137898, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Ignore
+      objectReference: {fileID: 0}
     - target: {fileID: 1106975779169182910, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
       value: LollySpawnPoint
@@ -1240,9 +1244,17 @@ PrefabInstance:
       propertyPath: m_Convex
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1484056870206047143, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Ignore
+      objectReference: {fileID: 0}
     - target: {fileID: 2033181724852938828, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_Shadows.m_Type
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268447374936176050, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Ignore
       objectReference: {fileID: 0}
     - target: {fileID: 2416549068523227626, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
@@ -1296,13 +1308,25 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Door
       objectReference: {fileID: 0}
+    - target: {fileID: 4543296225549451553, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Ignore
+      objectReference: {fileID: 0}
     - target: {fileID: 4561305119044150367, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_LocalPosition.y
       value: -11.012
       objectReference: {fileID: 0}
+    - target: {fileID: 4740258173026330593, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Ignore
+      objectReference: {fileID: 0}
     - target: {fileID: 4855181143334485436, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
       value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 4868047891824151267, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Ignore
       objectReference: {fileID: 0}
     - target: {fileID: 4892528438904374977, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_Name
@@ -1364,6 +1388,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Door
       objectReference: {fileID: 0}
+    - target: {fileID: 5821424614425278065, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Ignore
+      objectReference: {fileID: 0}
     - target: {fileID: 5844427821161548743, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
       value: Door
@@ -1375,6 +1403,14 @@ PrefabInstance:
     - target: {fileID: 6139757617748406722, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_LocalPosition.y
       value: -11.012
+      objectReference: {fileID: 0}
+    - target: {fileID: 6207241769181004894, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Ignore
+      objectReference: {fileID: 0}
+    - target: {fileID: 6306931679486486042, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Ignore
       objectReference: {fileID: 0}
     - target: {fileID: 6714984567277880643, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
@@ -1396,21 +1432,41 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -11.012
       objectReference: {fileID: 0}
+    - target: {fileID: 7461540853924933692, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Ignore
+      objectReference: {fileID: 0}
     - target: {fileID: 7711040619110599165, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
       value: LollySpawnPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 7761164873580979242, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Ignore
       objectReference: {fileID: 0}
     - target: {fileID: 7819372796392009927, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
       value: Vent
       objectReference: {fileID: 0}
+    - target: {fileID: 8223131665747525944, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Ignore
+      objectReference: {fileID: 0}
     - target: {fileID: 8728228773147878455, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
       value: Vent
       objectReference: {fileID: 0}
+    - target: {fileID: 8795877933906910863, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Ignore
+      objectReference: {fileID: 0}
     - target: {fileID: 8906647264600065366, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_LocalPosition.y
       value: -11.012
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017186860986393143, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Ignore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

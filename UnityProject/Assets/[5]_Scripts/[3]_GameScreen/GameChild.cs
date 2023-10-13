@@ -132,7 +132,6 @@ abstract class ChildState : State
             currentButtonPrompt = null;
 
             //Handle Animations & Movement
-            Debug.Log("Going through vent");
             gameObject.GetComponent<MovementScript>().DoSlide(interactableObject);
             gameObject.GetComponent<Animator>().SetInteger("ChildIndex", 4);
 

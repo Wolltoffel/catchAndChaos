@@ -253,7 +253,7 @@ public class MovementScript : MonoBehaviour
         while (time < catchDuration)
         {
             float multiplicator = -Mathf.Pow((time + 0.5f), 8) + 1;
-            Vector3 movement = catchDir * (Mathf.Clamp01(multiplicator)) / 28;
+            Vector3 movement = catchDir * (Mathf.Clamp01(multiplicator)) * Time.deltaTime * 5;
             characterController.Move(movement * Time.timeScale);
 
             transform.position = new Vector3(transform.position.x, yValue, transform.position.z);

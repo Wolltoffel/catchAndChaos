@@ -14,10 +14,6 @@ public abstract class State
         //Check if an object is inbetween target object
         if (interactableObject != null)
         {
-            //Old Check
-            //bool hit = Physics.Linecast(gameObject.transform.position+ Vector3.up*1, interactableObject.transform.position, out RaycastHit hitInfo);
-
-            //NewCheck
             bool hit = Physics.Linecast(gameObject.transform.position + Vector3.up * 1, interactableObject.transform.position, out RaycastHit hitInfo, LayerMask.GetMask("Walls"));
             if (!hit)
                 return true;

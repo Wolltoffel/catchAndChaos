@@ -35,7 +35,7 @@ abstract class ParentBaseState : State
     {
         parentData = GameData.GetData<ParentData>("Parent");
         gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Parent);
-        inputButton = parentData.tempInputDevice + "A";
+        inputButton = parentData.tempInputDevice + "X";
     }
 
     public abstract ParentBaseState UpdateState();
@@ -208,7 +208,7 @@ class ParentIdle : ParentBaseState
         string inputDevice = parentData.tempInputDevice;
 
         //CheckForCatch
-        if (Input.GetButtonDown($"{inputDevice}B"))
+        if (Input.GetButtonDown($"{inputDevice}A"))
         {
             MovementScript movement = gameObject.GetComponent<MovementScript>();
             movement.DoCatch();
@@ -258,7 +258,7 @@ class ParentMovement : ParentBaseState
         bool moveInput = GetMovement(inputDevice, out xAxis, out yAxis);
 
         //CheckForCatch
-        if (Input.GetButtonDown($"{inputDevice}B"))
+        if (Input.GetButtonDown($"{inputDevice}A"))
         {
             movement.DoCatch();
             return new ParentCatch();
