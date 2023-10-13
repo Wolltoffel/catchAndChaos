@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 916572690511266077}
   - component: {fileID: 3124553972672591319}
   - component: {fileID: 2128895622003558802}
+  - component: {fileID: -6724312747055286279}
   m_Layer: 6
   m_Name: Catili
   m_TagString: Untagged
@@ -106,3 +107,24 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -4415468511698537201, guid: 1a9fa69a19521be42bae222495947882, type: 3}
+--- !u!114 &-6724312747055286279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3484758311415370754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a2bc64c4ffb2a948a177ec84e6b2832, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _preRenderOutline: 1
+  _activeOutline: 0
+  _outlineColor: {r: 0, g: 0, b: 0, a: 0}
+  _activeCutoff: 0
+  _cutoffTex: {fileID: 0}
+  _outlineWidth: 0
+  _seeThroughWalls: 0
+  computedNormals:
+    smoothNormals: []

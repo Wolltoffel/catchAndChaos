@@ -82,6 +82,6 @@ Material:
     - _border: 0
     m_Colors:
     - _MainColor: {r: 0.2735849, g: 0.25487798, b: 0.23874155, a: 0}
-    - _Position_1: {r: 969.78265, g: 600.50006, b: 0, a: 0}
-    - _Position_2: {r: 912.0191, g: 487.25208, b: 0, a: 0}
+    - _Position_1: {r: 830.28076, g: 742.52, b: 0, a: 0}
+    - _Position_2: {r: 1054.7527, g: 336.363, b: 0, a: 0}
   m_BuildTextureStacks: []

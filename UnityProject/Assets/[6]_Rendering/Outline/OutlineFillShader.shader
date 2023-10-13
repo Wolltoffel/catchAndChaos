@@ -49,7 +49,7 @@ Shader "CustomOutline/OutlineFillShader"
             sampler2D _cutoffTex;
             float4 _cutoffTex_ST;
 
-            v2f vert (float4 position : POSITION, float3 normal: TEXCOORD3,float2 uv :TEXCOORD0)
+            v2f vert (float4 position : POSITION, float3 normal: TEXCOORD5,float2 uv :TEXCOORD0)
             {
                 v2f o;
                 
