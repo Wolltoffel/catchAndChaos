@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 1792101150031985005}
   - component: {fileID: 816952577612099364}
   - component: {fileID: 4271733370059167333}
-  - component: {fileID: -5249282141058766492}
   m_Layer: 6
   m_Name: Julegg
   m_TagString: Untagged
@@ -106,7 +105,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -7611452045011396419, guid: 22b3dec155aef6343b3711d967676c8e, type: 3}
 --- !u!54 &816952577612099364
@@ -157,15 +156,3 @@ MonoBehaviour:
   _seeThroughWalls: 0
   computedNormals:
     smoothNormals: []
---- !u!114 &-5249282141058766492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4234765579020230104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e829f59dc49ea4820b30a67ed4f42b1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

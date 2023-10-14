@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 5737737772782475413}
   - component: {fileID: 1233436844684669090}
   - component: {fileID: 5770773281998044548}
-  - component: {fileID: 568696891533681945}
   m_Layer: 6
   m_Name: Adriache
   m_TagString: Untagged
@@ -106,7 +105,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 2538246360768183949, guid: 0badfc5a53b571a44b990c5ce90342dc, type: 3}
 --- !u!54 &1233436844684669090
@@ -157,15 +156,3 @@ MonoBehaviour:
   _seeThroughWalls: 0
   computedNormals:
     smoothNormals: []
---- !u!114 &568696891533681945
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1245915432972126492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e829f59dc49ea4820b30a67ed4f42b1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

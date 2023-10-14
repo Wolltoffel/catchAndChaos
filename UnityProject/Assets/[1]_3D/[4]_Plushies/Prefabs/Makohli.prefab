@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 3691712156198451770}
   - component: {fileID: 5447911740700196947}
   - component: {fileID: 3564634280809897270}
-  - component: {fileID: -6993141408776840459}
   m_Layer: 6
   m_Name: Makohli
   m_TagString: Untagged
@@ -157,15 +156,3 @@ MonoBehaviour:
   _seeThroughWalls: 0
   computedNormals:
     smoothNormals: []
---- !u!114 &-6993141408776840459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3612467083225649931}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e829f59dc49ea4820b30a67ed4f42b1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
