@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: PlayerTimeData
   m_EditorClassIdentifier: 
   key: PlayTimeData
-  hasChildWon: 0
-  hasGameEnded: 0
+  hasChildWon: 1
+  hasGameEnded: 1
   playTime: 100

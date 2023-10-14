@@ -68,7 +68,7 @@ Material:
     - _Blend: 0
     - _CastShadows: 1
     - _CircleRadius: 3.19
-    - _Convergence: 1
+    - _Convergence: 0
     - _Cull: 2
     - _DstBlend: 10
     - _MinimumCircleSize: 0
@@ -82,6 +82,6 @@ Material:
     - _border: 0
     m_Colors:
     - _MainColor: {r: 0.2735849, g: 0.25487798, b: 0.23874155, a: 0}
-    - _Position_1: {r: 1919.772, g: 1033.2948, b: 0, a: 0}
-    - _Position_2: {r: 1920.2119, g: 1179.2732, b: 0, a: 0}
+    - _Position_1: {r: 1325.3483, g: 1489.7076, b: 0, a: 0}
+    - _Position_2: {r: 2533.8242, g: 713.8874, b: 0, a: 0}
   m_BuildTextureStacks: []

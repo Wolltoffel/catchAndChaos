@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class GameEndCircles : MonoBehaviour
 {
     [SerializeField] private Image image;
+    [SerializeField] private GameObject converge;
     private Material material;
     private Coroutine coroutine;
 
@@ -14,8 +15,6 @@ public class GameEndCircles : MonoBehaviour
 
     private void Awake()
     {
-
-
         if (image == null)
             return;
         material = image.GetComponent<Image>().material;
@@ -25,7 +24,9 @@ public class GameEndCircles : MonoBehaviour
         material.SetVector("_Position_1", new Vector2(0.25f, 0.25f));
         material.SetVector("_Position_2", new Vector2(0.75f, 0.75f));
 
-        GetComponent<Canvas>().sortingOrder = -100;
+        GetComponent<Canvas>().sortingOrder = 1;
+
+        converge.SetActive(true);
     }
 
     public void ConvergeOn(Transform transform1, Transform transform2, float time = 2)
@@ -36,7 +37,7 @@ public class GameEndCircles : MonoBehaviour
         coroutine = StartCoroutine(_Converge(transform1, transform2, time));
     }
 
-    private IEnumerator _Converge(Transform transform1, Transform transform2, float time = 2)
+    private IEnumerator _Converge(Transform parentTransform, Transform childTransform, float time = 2)
     {
         float progress = 0;
         float initialTime = time;
@@ -50,8 +51,8 @@ public class GameEndCircles : MonoBehaviour
 
             Debug.Log($"Converge: {progress} - ElapsedTime: {timeElapsed}");
 
-            pos1 = Camera.main.WorldToScreenPoint(transform1.position + Vector3.up * 1.2f);
-            pos2 = Camera.main.WorldToScreenPoint(transform2.position);
+            pos1 = Camera.main.WorldToScreenPoint(parentTransform.position + Vector3.up * 1.2f);
+            pos2 = Camera.main.WorldToScreenPoint(childTransform.position);
 
             material.SetVector("_Position_1", pos1);
             material.SetVector("_Position_2", pos2);
@@ -73,8 +74,8 @@ public class GameEndCircles : MonoBehaviour
 
             //Debug.Log($"Converge: {progress} - ElapsedTime: {timeElapsed}");
 
-            pos1 = Camera.main.WorldToScreenPoint(transform1.position + Vector3.up * 1.2f);
-            pos2 = Camera.main.WorldToScreenPoint(transform2.position);
+            pos1 = Camera.main.WorldToScreenPoint(parentTransform.position + Vector3.up * 1.2f);
+            pos2 = Camera.main.WorldToScreenPoint(childTransform.position);
 
             material.SetVector("_Position_1", pos1);
             material.SetVector("_Position_2", pos2);
