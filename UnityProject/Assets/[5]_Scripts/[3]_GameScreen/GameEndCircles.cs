@@ -71,7 +71,7 @@ public class GameEndCircles : MonoBehaviour
 
             progress = - Mathf.Pow(timeElapsed - 0.4f,2) + 0.314f;
 
-            Debug.Log($"Converge: {progress} - ElapsedTime: {timeElapsed}");
+            //Debug.Log($"Converge: {progress} - ElapsedTime: {timeElapsed}");
 
             pos1 = Camera.main.WorldToScreenPoint(transform1.position + Vector3.up * 1.2f);
             pos2 = Camera.main.WorldToScreenPoint(transform2.position);

@@ -1336,9 +1336,17 @@ PrefabInstance:
       propertyPath: m_TagString
       value: LollySpawnPoint
       objectReference: {fileID: 0}
+    - target: {fileID: 1131705320343681240, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Plushie
+      objectReference: {fileID: 0}
     - target: {fileID: 1220805291782662292, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_Convex
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1244057506747892708, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Plushie
       objectReference: {fileID: 0}
     - target: {fileID: 1484056870206047143, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
@@ -1364,6 +1372,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Door
       objectReference: {fileID: 0}
+    - target: {fileID: 2648752555876475913, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Plushie
+      objectReference: {fileID: 0}
     - target: {fileID: 2879232544628860396, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
       value: Door
@@ -1371,6 +1383,10 @@ PrefabInstance:
     - target: {fileID: 3103291717335634906, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3355522749023979620, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Plushie
       objectReference: {fileID: 0}
     - target: {fileID: 3389813693373960456, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_Layer
@@ -1388,6 +1404,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Chaos
       objectReference: {fileID: 0}
+    - target: {fileID: 3747546949302062657, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Plushie
+      objectReference: {fileID: 0}
     - target: {fileID: 3750361492283781341, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
@@ -1400,9 +1420,17 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 4156002973242278026, guid: 1d875ec13c43799428d2baebb91b5046, type: 3}
+    - target: {fileID: 3754155892690338759, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Plushie
+      objectReference: {fileID: 0}
     - target: {fileID: 4038974775866086890, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
       value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 4297916001388143523, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Plushie
       objectReference: {fileID: 0}
     - target: {fileID: 4543296225549451553, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
@@ -1515,6 +1543,10 @@ PrefabInstance:
     - target: {fileID: 6720373668601102726, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
       value: Vent
+      objectReference: {fileID: 0}
+    - target: {fileID: 6938157721052782660, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Plushie
       objectReference: {fileID: 0}
     - target: {fileID: 7058459143131470819, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
