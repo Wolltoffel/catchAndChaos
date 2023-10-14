@@ -3,17 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 
 public class Pausescreen : MonoBehaviour
 {
     [SerializeField] GameObject pauseScreenPrefab;
     [SerializeField] Transform parent;
+    [SerializeField] RenderTexture backgroundTex;
+
+    [SerializeField] Image uiMask;
 
     string inputDevice;
     bool gamePaused;
     GameObject pauseScreenInstance;
     PauseScreenData data;
+
+
 
     void  Start()
     {
@@ -45,7 +52,7 @@ public class Pausescreen : MonoBehaviour
             {
                 inputDevice = childInput;
                 PauseGame();
-            }   
+            } 
     }
 
     void PauseGame()
@@ -60,19 +67,43 @@ public class Pausescreen : MonoBehaviour
 
         Time.timeScale = 0;
         gamePaused = true;
-        //StartCoroutine(SetSelectedObjectLater());
+
+        SetDepthOfField(true);
+        SetMask(true);
     }
 
+    void SetMask(bool active)
+    {   
+        if (active)
+            uiMask.color = new Color(0,0,0,0);
+        else
+            uiMask.color = Color.black;
+    }
+
+ 
+
     void UnpauseGame()
-    {
+    {   
+        SetDepthOfField(false);
+        SetMask(false);
+
         Destroy(pauseScreenInstance);
         gamePaused = false;
         Time.timeScale = 1;
     }
 
+    void SetDepthOfField(bool active)
+    {
+        DepthOfField depthOfField;
+        VolumeProfile postProcessVolumeProfile = Camera.main.GetComponentInChildren<Volume>().sharedProfile;
+        postProcessVolumeProfile.TryGet<DepthOfField>(out depthOfField);
+        depthOfField.active = active;
+    }
+
+
     void GamePaused()
     {
-        if (Input.GetButtonDown(inputDevice+"Start"))
+        if (Input.GetButtonDown(inputDevice+"Start")|Input.GetButtonDown("Start"))
             UnpauseGame();
     }
 

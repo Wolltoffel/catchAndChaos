@@ -23,7 +23,9 @@ public class WorldSpaceUI : MonoBehaviour
 
    public float hintOffsetX, hintOffsetY;
    static WorldSpaceUI instance;
-   static List<Prompt> buttonPrompts = new List<Prompt>();
+   static List<Prompt> prompts = new List<Prompt>();
+
+   public Transform globalParent;
 
 
    void Awake()
@@ -41,14 +43,13 @@ public class WorldSpaceUI : MonoBehaviour
       spawnedPrompt = Instantiate(prompt);
       //Add GameObject to canvas
       spawnedPrompt.GetComponent<RectTransform>().SetParent(canvasHolder.GetComponent<RectTransform>());
-        //Start Coroutine that follows objects
-        _AdjustPosition(spawnedPrompt, target, Vector2.zero);
-        Coroutine coroutine = instance.StartCoroutine(AdjustPosition(spawnedPrompt,target,Vector2.zero));
+      //Start Coroutine that follows objects
+      _AdjustPosition(spawnedPrompt, target, Vector2.zero);
+      Coroutine coroutine = instance.StartCoroutine(AdjustPosition(spawnedPrompt,target,Vector2.zero));
         
-
       //Create newnPrompt file and save Coroutine to list
       Prompt promptData = new Prompt(canvasHolder,coroutine,target);
-      buttonPrompts.Add (promptData);
+      prompts.Add (promptData);
    } 
  
    public static void ShowButtonPrompt(Transform target,string buttonName, out GameObject canvasHolder, string hintName = "")
@@ -107,7 +108,7 @@ public class WorldSpaceUI : MonoBehaviour
       
       //Create new ButtonPrompt file and save Coroutine to lists
       Prompt buttonPrompt = new Prompt(canvasHolder,coroutine,target);
-      buttonPrompts.Add (buttonPrompt);
+      prompts.Add (buttonPrompt);
    }
 
    static GameObject SetUpCanvas(string objectName)
@@ -135,20 +136,20 @@ public class WorldSpaceUI : MonoBehaviour
    
    public static void RemovePrompt(GameObject spawnedObject)
    {
-      for (int i = 0; i<buttonPrompts.Count; i++)
+      for (int i = 0; i<prompts.Count; i++)
       {
-         if (buttonPrompts[i].instance == spawnedObject)
+         if (prompts[i].instance == spawnedObject)
          {
-            DestroyPrompt(buttonPrompts[i]);
+            DestroyPrompt(prompts[i]);
          } 
       }
    }
 
     public static void RemoveAllButtonPrompts()
     {
-        for (int i = buttonPrompts.Count - 1; i >= 0 ; i--)
+        for (int i = prompts.Count - 1; i >= 0 ; i--)
         {
-            DestroyPrompt(buttonPrompts[i]);
+            DestroyPrompt(prompts[i]);
         }
     }
 
@@ -156,7 +157,7 @@ public class WorldSpaceUI : MonoBehaviour
    {
       instance.StopCoroutine(buttonPrompt.coroutine);
       Destroy(buttonPrompt.instance);
-      buttonPrompts.Remove(buttonPrompt);
+      prompts.Remove(buttonPrompt);
    }
 
 
@@ -183,8 +184,6 @@ public class WorldSpaceUI : MonoBehaviour
         Vector2 newPos = new Vector2((worldToScreenPoint.x + offset.x) * xScreenToScaler, (worldToScreenPoint.y + offset.y) * yScreenToScaler) - screenMidPoint;
         RectTransform rect = spawnedSprite.GetComponent<RectTransform>();
         rect.anchoredPosition = newPos;
-
-    }
-
+   }
 
 }
