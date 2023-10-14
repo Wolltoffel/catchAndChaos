@@ -7,14 +7,12 @@ public class ChaosMeterUI : MonoBehaviour
 {
     [SerializeField] [Range(0, 1)] private float currentValue, targetValue = 0;
     [SerializeField] private RectTransform maskTranfrom;
-    private float maskMaximumHeight;
 
     private Coroutine lerpCoroutine;
     private float lerpFactor = 0.01f;
 
     private void Awake()
     {
-        maskMaximumHeight = maskTranfrom.rect.height;
         SetValueOnMeter(0);
     }
 
@@ -32,7 +30,7 @@ public class ChaosMeterUI : MonoBehaviour
 
     private IEnumerator LerpToTarget()
     {
-        float offset = 0.01f;
+        float offset = 0.001f;
 
         //Lerp while not at target position
         while (targetValue - offset >= currentValue || targetValue + offset <= currentValue)
@@ -52,8 +50,9 @@ public class ChaosMeterUI : MonoBehaviour
     private void SetValueOnMeter(float i)
     {
         //sets the height of the mask
-        i = Mathf.Clamp01(i);
-        Vector2 newSizeDelta = new(maskTranfrom.sizeDelta.x, maskMaximumHeight * i);
+        i = 1 - Mathf.Clamp01(i);
+
+        Vector2 newSizeDelta = new(- Screen.width * i, maskTranfrom.sizeDelta.y);
         maskTranfrom.sizeDelta = newSizeDelta;
     }
 }

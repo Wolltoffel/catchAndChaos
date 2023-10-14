@@ -14,6 +14,7 @@ public class CharacterAssetItem
 {
     public GameObject characterPrefab;
     public Sprite characterPortrait;
+    public string skinName;
 }
 
 [CreateAssetMenu(fileName = "ADataObject", menuName = "Custom/AData/CharacterAssetContainer")]

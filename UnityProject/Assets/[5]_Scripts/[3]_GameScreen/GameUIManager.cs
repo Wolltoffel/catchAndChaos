@@ -13,10 +13,13 @@ public class GameUIManager : MonoBehaviour
     [SerializeField] private SlideCooldownUI slideCooldown;
     [SerializeField] private ChaosMeterUI chaosMeter;
     [SerializeField] private TimeCounterUI timeCounter;
+    [SerializeField] private PlayerScoreUI parentScore;
+    [SerializeField] private PlayerScoreUI childScore;
 
     private PlayTimeData timeData;
     private ChaosData chaosData;
     private ChildData childData;
+    private ParentData parentData;
 
     private void Start()
     {
@@ -24,6 +27,8 @@ public class GameUIManager : MonoBehaviour
         timeData = GameData.GetData<PlayTimeData>("PlayTimeData");
         chaosData = GameData.GetData<ChaosData>("ChaosData");
         childData = GameData.GetData<ChildData>("Child");
+        parentData = GameData.GetData<ParentData>("Parent");
+        UpdatePlayerScores();
     }
 
     private void Update()
@@ -31,6 +36,12 @@ public class GameUIManager : MonoBehaviour
         UpdateTimeCounterVisual();
         UpdateChaosMeter();
         UpdateSlideCooldown();
+    }
+
+    public void UpdatePlayerScores()
+    {
+        parentScore.UpdateUI(parentData.tempScore);
+        childScore.UpdateUI(childData.tempScore);
     }
 
     /// <summary>
