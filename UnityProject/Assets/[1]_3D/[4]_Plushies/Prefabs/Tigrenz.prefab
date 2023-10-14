@@ -73,6 +73,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 397593970497969256}
+  - component: {fileID: 8871186114168870576}
   m_Layer: 6
   m_Name: Tigrenz
   m_TagString: Untagged
@@ -97,6 +98,18 @@ Transform:
   - {fileID: 8810182724685927520}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8871186114168870576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067169701734254290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e829f59dc49ea4820b30a67ed4f42b1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1500507989453733628
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,6 +217,8 @@ GameObject:
   - component: {fileID: 1953675065401209303}
   - component: {fileID: 4581567166339196002}
   - component: {fileID: 9069703580373245686}
+  - component: {fileID: 253633967332207161}
+  - component: {fileID: 7989566213205528772}
   m_Layer: 6
   m_Name: Tigrenz
   m_TagString: Untagged
@@ -315,6 +330,55 @@ MonoBehaviour:
   _seeThroughWalls: 0
   computedNormals:
     smoothNormals: []
+--- !u!64 &253633967332207161
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5801137801713700087}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2542093410174296060, guid: 162d6518a3d1d6c44a7c0adc8d0a6584, type: 3}
+--- !u!54 &7989566213205528772
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5801137801713700087}
+  serializedVersion: 4
+  m_Mass: 40
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &6240677244692585754
 GameObject:
   m_ObjectHideFlags: 0
