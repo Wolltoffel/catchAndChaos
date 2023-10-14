@@ -181,7 +181,7 @@ abstract class ParentBaseState : State
             gameObject.GetComponent<Animator>().SetInteger("MomIndex", 5);
             Transform handTransform = FindDeepChild(gameObject.transform, "Right wrist");
 
-            parentData.plushie.AttachToTarget(handTransform);
+            parentData.plushie.AttachToTarget(handTransform, gameObject.GetComponentInChildren<Renderer>().material.shader);
             return null;
         }
         else

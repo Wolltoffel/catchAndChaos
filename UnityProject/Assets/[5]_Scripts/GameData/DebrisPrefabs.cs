@@ -28,4 +28,9 @@ public class Debris
 {
     public GameObject debris;
     public DebrisTypes debrisType = DebrisTypes.Shelf;
+
+    public static void Log(string log)
+    {
+        Debug.Log(log);
+    }
 }

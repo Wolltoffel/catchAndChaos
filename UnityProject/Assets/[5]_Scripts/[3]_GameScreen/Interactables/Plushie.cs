@@ -53,11 +53,17 @@ public class Plushie : MonoBehaviour
         coroutine = null;
     }
 
-    public void AttachToTarget(Transform target)
+    public void AttachToTarget(Transform target, Shader shader)
     {
         this.handAnchor = target;
         _collider.enabled = false;
         _rigidbody.isKinematic = true;
+        Material[] plushieChildren = GetComponentInChildren<Renderer>().sharedMaterials;
+        for (int i = 0; i < plushieChildren.Length; i++)
+        {
+            var f = shader;
+            plushieChildren[i].shader = f;
+        }
 
         coroutine = StartCoroutine(_AttachToTarget(target));
     }

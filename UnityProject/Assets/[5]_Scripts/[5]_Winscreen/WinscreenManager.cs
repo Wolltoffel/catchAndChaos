@@ -26,9 +26,13 @@ public class WinscreenManager : MonoBehaviour
     //WinScreenStuff
     [SerializeField] private GameObject UIManagers;
 
-    private IEnumerator Start()
+    private void Awake()
     {
         DetermineWinner();
+    }
+
+    private IEnumerator Start()
+    {
         SpawnCharacters();
         //SetCameraPosition();
         SetUpUI();
