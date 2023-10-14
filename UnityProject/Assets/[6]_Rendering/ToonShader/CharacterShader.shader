@@ -141,6 +141,8 @@ Shader "Custom/Character"
             }
         
     
+        UsePass "Legacy Shaders/VertexLit/SHADOWCASTER"
+    
 
     Pass
         {   
@@ -202,24 +204,6 @@ Shader "Custom/Character"
                 return color;
             } 
             ENDHLSL
-        } 
-        // Pass to render object as a shadow caster
-        Pass
-        {
-            Name "ShadowCaster"
-            Tags { "LightMode" = "ShadowCaster" }
-            LOD 80
-            Cull [_Culling]
-            Offset [_Offset], [_Offset]
-            ZWrite [_ZWrite]
-            ZTest [_ZTest]
-         
-            CGPROGRAM
-            #pragma vertex vertShadow
-            #pragma fragment fragShadow
-            #pragma target 2.0
-            #pragma multi_compile_shadowcaster
-            ENDCG
-        }            
+        }              
 }
 }
