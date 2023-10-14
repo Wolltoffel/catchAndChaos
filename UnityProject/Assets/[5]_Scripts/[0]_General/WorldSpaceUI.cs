@@ -22,10 +22,15 @@ public class WorldSpaceUI : MonoBehaviour
 {
 
    public float hintOffsetX, hintOffsetY;
+   public Sprite globalMask;
    static WorldSpaceUI instance;
    static List<Prompt> prompts = new List<Prompt>();
 
-   public Transform globalParent;
+   static GameObject globalMaskInstance;
+   static Image maskImage;
+
+   static GameObject canvasHolder_;
+
 
 
    void Awake()
@@ -36,13 +41,19 @@ public class WorldSpaceUI : MonoBehaviour
             Destroy(instance);
    }
 
+   void Start()
+   {
+      CreateGlobalMask();
+   }
+
    public static void ShowPrompt (GameObject prompt,Transform target, string promptName, out GameObject canvasHolder,out GameObject spawnedPrompt)
    {
-      canvasHolder = SetUpCanvas(promptName);
+      canvasHolder = GetCurrentCanvasHolder();
 
       spawnedPrompt = Instantiate(prompt);
       //Add GameObject to canvas
       spawnedPrompt.GetComponent<RectTransform>().SetParent(canvasHolder.GetComponent<RectTransform>());
+
       //Start Coroutine that follows objects
       _AdjustPosition(spawnedPrompt, target, Vector2.zero);
       Coroutine coroutine = instance.StartCoroutine(AdjustPosition(spawnedPrompt,target,Vector2.zero));
@@ -52,25 +63,24 @@ public class WorldSpaceUI : MonoBehaviour
       prompts.Add (promptData);
    } 
  
-   public static void ShowButtonPrompt(Transform target,string buttonName, out GameObject canvasHolder, string hintName = "")
+   public static void ShowButtonPrompt(Transform target,string buttonName, out GameObject spriteHolder, string hintName = "")
    {
-      GameObject spriteHolder;
       Sprite buttonSprite = GameData.GetData<ButtonPromptAsssets>("ButtonPromptAssets").GetButtonSpriteByName(buttonName);
-      SpawnPrompt(target,buttonName,buttonSprite, out canvasHolder,out spriteHolder,Vector2.zero, 1.5f);
+      SpawnPrompt(target,buttonName,buttonSprite,out spriteHolder,Vector2.zero, 1.5f);
+      
       if (hintName!="" &&  !GameData.GetData<ButtonPromptAsssets>("ButtonPromptAssets").WasHintAlreadyShown(hintName))
       {
          Sprite hintSprite = GameData.GetData<ButtonPromptAsssets>("ButtonPromptAssets").GetHintSpriteByName(hintName);
          GameData.GetData<ButtonPromptAsssets>("ButtonPromptAssets").AddToShownHints(hintName);
-         SpawnHint(buttonName+"_hint",hintSprite,canvasHolder,new Vector2(instance.hintOffsetX,instance.hintOffsetY),spriteHolder.transform);
+         SpawnHint(buttonName+"_hint",hintSprite,new Vector2(instance.hintOffsetX,instance.hintOffsetY),spriteHolder.transform);
       }
-
    }
 
-   static void SpawnHint(string objectName,Sprite sprite,GameObject canvasHolder,Vector2 offset,Transform parent,float scale = 1)
+   static void SpawnHint(string objectName,Sprite sprite,Vector2 offset,Transform parent,float scale = 1)
    {
       
       //Add Sprite to Canvas
-      GameObject spriteHolder = AddSpriteToCanvas(sprite,canvasHolder.GetComponent<RectTransform>(),objectName);
+      GameObject spriteHolder = AddSpriteToCanvas(sprite,GetCurrentCanvasHolder().GetComponent<RectTransform>(),objectName);
       spriteHolder.GetComponent<RectTransform>().rotation = Quaternion.Euler(0,0,8);
 
       //Set Scale
@@ -85,16 +95,10 @@ public class WorldSpaceUI : MonoBehaviour
       spriteHolder.transform.localPosition = new Vector3(offset.x,offset.y,0);
    }  
 
-   static void SpawnPrompt(Transform target,string objectName,Sprite sprite, out GameObject canvasHolder,out GameObject spriteHolder, Vector2 offset, float scale = 1f,Transform canvas = null)
+   static void SpawnPrompt(Transform target,string objectName,Sprite sprite,out GameObject spriteHolder, Vector2 offset, float scale = 1f,Transform canvas = null)
    { 
-      //Add Canvas if neccessary
-      if (canvas==null)
-         canvasHolder = SetUpCanvas(objectName);
-      else
-         canvasHolder = canvas.gameObject;
-
       //Add Sprite to Canvas
-      spriteHolder = AddSpriteToCanvas(sprite,canvasHolder.GetComponent<RectTransform>(),objectName);
+      spriteHolder = AddSpriteToCanvas(sprite,GetCurrentCanvasHolder().GetComponent<RectTransform>(),objectName);
       spriteHolder.GetComponent<RectTransform>().rotation = Quaternion.Euler(0,0,8);
 
       //Set Scale
@@ -107,14 +111,17 @@ public class WorldSpaceUI : MonoBehaviour
       Coroutine coroutine = instance.StartCoroutine(AdjustPosition(spriteHolder,target,offset));
       
       //Create new ButtonPrompt file and save Coroutine to lists
-      Prompt buttonPrompt = new Prompt(canvasHolder,coroutine,target);
+      Prompt buttonPrompt = new Prompt(spriteHolder,coroutine,target);
       prompts.Add (buttonPrompt);
+
+      //Add mask
+      spriteHolder.transform.SetParent(globalMaskInstance.transform);
    }
 
-   static GameObject SetUpCanvas(string objectName)
+   static GameObject SetUpCanvas()
    {
          GameObject canvasHolder;
-         canvasHolder = new GameObject("WorldUI: "+ objectName);
+         canvasHolder = new GameObject("WorldUICanvas");
          Canvas canvas =canvasHolder.AddComponent<Canvas>();
          canvas.renderMode  = RenderMode.ScreenSpaceOverlay;
          CanvasScaler canvasScaler  = canvasHolder.AddComponent<CanvasScaler>();
@@ -174,7 +181,7 @@ public class WorldSpaceUI : MonoBehaviour
     static private void _AdjustPosition(GameObject spawnedSprite, Transform target, Vector2 offset, CanvasScaler canvasScaler = null)
     {
         if (canvasScaler == null)
-            canvasScaler = spawnedSprite.GetComponentInParent<CanvasScaler>();
+            canvasScaler = GetCurrentCanvasHolder().GetComponent<CanvasScaler>();
 
         float xScreenToScaler = canvasScaler.referenceResolution.x / Screen.width;
         float yScreenToScaler = canvasScaler.referenceResolution.y / Screen.height;
@@ -184,6 +191,34 @@ public class WorldSpaceUI : MonoBehaviour
         Vector2 newPos = new Vector2((worldToScreenPoint.x + offset.x) * xScreenToScaler, (worldToScreenPoint.y + offset.y) * yScreenToScaler) - screenMidPoint;
         RectTransform rect = spawnedSprite.GetComponent<RectTransform>();
         rect.anchoredPosition = newPos;
+   }
+
+   static GameObject GetCurrentCanvasHolder()
+   {
+         if (canvasHolder_ == null)
+            return canvasHolder_ = SetUpCanvas();
+         return canvasHolder_;
+   }
+
+   void CreateGlobalMask()
+   {
+
+      globalMaskInstance = new GameObject("GlobalWorldUIMask");
+      maskImage = globalMaskInstance.AddComponent<Image>();
+      maskImage.transform.SetParent(GetCurrentCanvasHolder().transform);
+      globalMaskInstance.AddComponent<Mask>().showMaskGraphic = false;
+      RectTransform rectTransform = globalMaskInstance.GetComponent<RectTransform>();
+      rectTransform.anchorMin = Vector2.zero;
+      rectTransform.anchorMax = Vector2.one;
+      rectTransform.anchoredPosition = Vector2.zero;
+      rectTransform.sizeDelta = Vector2.zero;
+      maskImage.sprite =globalMask;
+      maskImage.color = Color.black;
+   }
+
+   public static void SetWorldUI(bool active)
+   {
+      maskImage.color = new Color(0,0,0,active?1:0);
    }
 
 }

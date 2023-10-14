@@ -70,6 +70,7 @@ public class Pausescreen : MonoBehaviour
 
         SetDepthOfField(true);
         SetMask(true);
+        WorldSpaceUI.SetWorldUI(false);
     }
 
     void SetMask(bool active)
@@ -86,6 +87,7 @@ public class Pausescreen : MonoBehaviour
     {   
         SetDepthOfField(false);
         SetMask(false);
+        WorldSpaceUI.SetWorldUI(true);
 
         Destroy(pauseScreenInstance);
         gamePaused = false;
@@ -95,7 +97,7 @@ public class Pausescreen : MonoBehaviour
     void SetDepthOfField(bool active)
     {
         DepthOfField depthOfField;
-        VolumeProfile postProcessVolumeProfile = Camera.main.GetComponentInChildren<Volume>().sharedProfile;
+        VolumeProfile postProcessVolumeProfile = Camera.main.GetComponentInChildren<Volume>().profile;
         postProcessVolumeProfile.TryGet<DepthOfField>(out depthOfField);
         depthOfField.active = active;
     }
