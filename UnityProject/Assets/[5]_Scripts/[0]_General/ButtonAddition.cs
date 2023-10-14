@@ -23,13 +23,13 @@ public class ButtonAddition : MonoBehaviour,ISelectHandler, IDeselectHandler, IP
 
     void Update()
     {
-       /* InputDevice inputDevice = GameData.GetData<LastInputDeviceData>("LastInputDeviceData").inputDevice;
+        InputDevice inputDevice = GameData.GetData<LastInputDeviceData>("LastInputDeviceData").inputDevice;
         if (inputDevice==InputDevice.Keyboard)
             if (EventSystem.current!=null)
                 EventSystem.current.SetSelectedGameObject(null);
         if (inputDevice==InputDevice.Controller)
             if (EventSystem.current!=null && EventSystem.current.currentSelectedGameObject==null)
-                    EventSystem.current.SetSelectedGameObject(EventSystem.current.firstSelectedGameObject);*/
+                    EventSystem.current.SetSelectedGameObject(EventSystem.current.firstSelectedGameObject);
     }
 
     public void OnSelect (BaseEventData baseEventData)

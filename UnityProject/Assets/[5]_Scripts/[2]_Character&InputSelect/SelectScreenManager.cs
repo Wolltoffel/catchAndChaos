@@ -249,7 +249,7 @@ public class CustomiseCharacterTogether: MenuState
         if (Input.GetButtonDown(dataPack.characterSelect.GetInputDevice()+"A")|dataPack.readyButton.GetReady(dataPack.character))
         {
             dataPack.readyButton.SetReady(dataPack.character);
-            dataPack.characterSelect.HideCharacterSelect();
+            dataPack.characterSelect.HideCharacterSelectElements();
 
             if(dataPack.character==Characters.Child)
                 CharacterInstantiator.GetActiveCharacter(dataPack.character).GetComponent<Animator>().SetInteger("ChildIndex",11);

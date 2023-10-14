@@ -17,6 +17,8 @@ public class ScrollSelection : MonoBehaviour
     [SerializeField] CharacterModelSwitcher characterModelSwitcher;
 
     [HideInInspector]Characters character; 
+
+    [SerializeField] GameObject loggedInBackground;
     
     Rect templateRect;
     
@@ -31,6 +33,10 @@ public class ScrollSelection : MonoBehaviour
     private void Start() 
     {   
         templateRect = template.GetComponent<RectTransform>().rect;
+
+
+        loggedInBackground.SetActive(false);
+        
 
         ClearChildren();
         LoadAssets();
@@ -55,7 +61,9 @@ public class ScrollSelection : MonoBehaviour
 
         for (int i = 0; i<rectTransforms.Length;i++)
         {
-            if (rectTransforms[i]!=template.GetComponent<RectTransform>() && rectTransforms[i] !=GetComponent<RectTransform>())
+            if (rectTransforms[i]!=template.GetComponent<RectTransform>()
+             && rectTransforms[i] !=GetComponent<RectTransform>()
+             &&rectTransforms[i]!=loggedInBackground.GetComponent<RectTransform>())
                 Destroy(rectTransforms[i].gameObject);
         }
     }
@@ -89,7 +97,7 @@ public class ScrollSelection : MonoBehaviour
             if (amountOfElements==selectedElementIndex)
             {
                 selectedIndex = index;
-                ResizeSelectedElement(selectedElementIndex);
+                ToggleResize(selectedElementIndex);
             }
                 
             amountOfElements++;
@@ -128,7 +136,7 @@ public class ScrollSelection : MonoBehaviour
     public void Slide (Step step)
     {
         //Reset IncreasedSizeOfSelectedElement
-        ResizeSelectedElement(selectedElementIndex);  
+        ToggleResize(selectedElementIndex);  
 
         if (step == Step.Next)
             SlideLeft();
@@ -145,7 +153,7 @@ public class ScrollSelection : MonoBehaviour
     IEnumerator _SlideLeft()
     {
         yield return Slide(-templateRect.width);
-        ResizeSelectedElement(selectedElementIndex);
+        ToggleResize(selectedElementIndex);
         SlideLeftOperations();
         yield return null;
         AdjustPositionOfAllElements();
@@ -168,7 +176,7 @@ public class ScrollSelection : MonoBehaviour
         selectedIndex = (selectedIndex+1)%numberOfAssets;
 
         //Increase size of selected object
-        ResizeSelectedElement(selectedElementIndex);
+        ToggleResize(selectedElementIndex);
     }
 
     void SlideRight()
@@ -180,7 +188,7 @@ public class ScrollSelection : MonoBehaviour
     IEnumerator _SlideRight()
     {
         yield return Slide(templateRect.width);
-        ResizeSelectedElement(selectedElementIndex);
+        ToggleResize(selectedElementIndex);
         SlideRightOperations();
         yield return null;
         AdjustPositionOfAllElements();
@@ -203,7 +211,7 @@ public class ScrollSelection : MonoBehaviour
         selectedIndex = (selectedIndex-1)%numberOfAssets;
 
         //Increase size of selected object
-        ResizeSelectedElement(selectedElementIndex);
+        ToggleResize(selectedElementIndex);
     }
 
     IEnumerator Slide(float xtargetPos)
@@ -221,12 +229,12 @@ public class ScrollSelection : MonoBehaviour
         }
     }
 
-    void ResizeSelectedElement(int elementIndex)
+    void ToggleResize(int elementIndex)
     {
-        StartCoroutine(_ResizeSelectedElement(elementIndex));
+        StartCoroutine(_ToogleResize(elementIndex));
     }
 
-    IEnumerator _ResizeSelectedElement(int elementIndex)
+    IEnumerator _ToogleResize(int elementIndex)
     {   
         Vector3 currentScale = spawnedElements[selectedElementIndex].transform.localScale;
         Vector3 targetScale = Vector3.one;
@@ -234,6 +242,11 @@ public class ScrollSelection : MonoBehaviour
         if (Mathf.Abs(currentScale.x-selectedItemScale)>0.01f)
             targetScale = new Vector3(selectedItemScale,selectedItemScale,0);
         
+        yield return ResizeElement(elementIndex,currentScale,targetScale);
+    }
+
+    IEnumerator ResizeElement(int elementIndex,Vector3 currentScale,Vector3 targetScale)
+    {
         float startTime = Time.time;
         
         while (Vector3.Distance(currentScale,targetScale) > 0.01f)
@@ -265,15 +278,12 @@ public class ScrollSelection : MonoBehaviour
         }
     }
 
-    public void HideSelection()
+    public void HighlightSelected()
     {
-        for (int i =0; i<spawnedElements.Count;i++)
-        {
-            spawnedElements[i].SetActive(false);
-        }
-
-        characterModelSwitcher.HideAll();
-        Destroy(this);
+        StartCoroutine(ResizeElement(selectedElementIndex,spawnedElements[selectedElementIndex].transform.localScale,new Vector3(1,1,0)*(selectedItemScale+0.2f)));
+        loggedInBackground.SetActive (true);
+        //characterModelSwitcher.HideAll();
+        //Destroy(this);
     }
 
 }

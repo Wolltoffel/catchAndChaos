@@ -119,14 +119,15 @@ public class CharacterSelect : MonoBehaviour
         }
     }
 
-    public void HideCharacterSelect()
+    public void HideCharacterSelectElements()
     {
         prevController.gameObject.SetActive(false);
         prevKeyboard.gameObject.SetActive(false);
         nextController.gameObject.SetActive(false);
         nextKeyboard.gameObject.SetActive(false);
-        scrollSelection.HideSelection();
+        scrollSelection.HighlightSelected();
         Destroy(this);
         Destroy(buttonSwitcher);
+        buttonSwitcher = null;
     }
 }
