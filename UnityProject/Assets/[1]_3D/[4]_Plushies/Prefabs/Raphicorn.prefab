@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5968232966791230630}
   - component: {fileID: 1684250998570740909}
   - component: {fileID: -4990426755365434162}
+  - component: {fileID: -726502210750222428}
   m_Layer: 6
   m_Name: Raphicorn
   m_TagString: Untagged
@@ -156,3 +157,15 @@ MonoBehaviour:
   _seeThroughWalls: 0
   computedNormals:
     smoothNormals: []
+--- !u!114 &-726502210750222428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4674049677141038782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e829f59dc49ea4820b30a67ed4f42b1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
