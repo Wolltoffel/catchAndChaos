@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9050689337831483975
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -7,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: mint blue
+  m_Name: pflanze. matt
   m_Shader: {fileID: 4800000, guid: a52d11b7dfe1f4c499d62bc2c1e41837, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -105,10 +118,10 @@ Material:
     - _Parallax: 0.02
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RimAmount: 0.282
-    - _ShadowThresh_1: 0.14
-    - _ShadowThresh_2: 0.68
-    - _ShadowThresh_3: -1.74
+    - _RimAmount: 0.398
+    - _ShadowThresh_1: 0.01
+    - _ShadowThresh_2: 0.12
+    - _ShadowThresh_3: -3.93
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -120,26 +133,13 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _AmbientColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BaseColor: {r: 0.6282632, g: 0.865, b: 0.8422369, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 0.6493192, g: 0.7264151, b: 0.5722232, a: 1}
+    - _Color: {r: 0.5770492, g: 0.66, b: 0.4940984, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ShadowColor_1: {r: 0.4392157, g: 0.6313726, b: 0.6156863, a: 1}
-    - _ShadowColor_2: {r: 0.5147847, g: 0.742, b: 0.72069854, a: 1}
-    - _ShadowColor_3: {r: 0.5686274, g: 0.81960785, b: 0.79607844, a: 1}
+    - _ShadowColor_1: {r: 0.70980394, g: 0.7254902, b: 0.69411767, a: 0}
+    - _ShadowColor_2: {r: 0.89397174, g: 0.8962264, b: 0.89199895, a: 0}
+    - _ShadowColor_3: {r: 1, g: 1, b: 1, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _SpecularColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SpecularColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
   m_BuildTextureStacks: []
---- !u!114 &546628161148520628
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 7
