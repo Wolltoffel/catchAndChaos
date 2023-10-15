@@ -327,6 +327,7 @@ class Destroy : ChildState
         this.destroyTime = destructable.destroyTimeLeft;
         startDestroyTime = Time.time;
         this.destructable = destructable;
+        Camera.main.GetComponentInParent<CameraManager>().ApplyCameraShake(CameraManager.CameraShakeType.Chaos);
     }
 
     public override ChildState UpdateState()
@@ -336,6 +337,7 @@ class Destroy : ChildState
             WorldSpaceUI.RemovePrompt(promptHolder);
             GameObject.Destroy (particleInstance);
             particleInstance =null;
+            Camera.main.GetComponentInParent<CameraManager>().ApplyCameraShake(CameraManager.CameraShakeType.Off);
             return new Idle();
         }
 
@@ -377,6 +379,7 @@ class Destroy : ChildState
             
             destructable.DestroyObject();
             destructable = null;
+            Camera.main.GetComponentInParent<CameraManager>().ApplyCameraShake(CameraManager.CameraShakeType.Off);
             return new Idle();
         }
        

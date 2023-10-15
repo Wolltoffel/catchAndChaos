@@ -99,17 +99,25 @@ public class CameraManager : MonoBehaviour
     {
         switch (shakeType)
         {
+            case CameraShakeType.Chaos:
+                animator.SetInteger("State", 1);
+                break;
+            case CameraShakeType.Destroy:
+                animator.SetTrigger("DestroyTrigger");
+                break;
             default:
-
+                animator.SetInteger("State", 0);
                 break;
         }
 
-        animator.SetTrigger("DestroyTrigger");
+
     }
 
     public enum CameraShakeType
     {
-        Destroy
+        Chaos,
+        Destroy,
+        Off
     }
 }
 
