@@ -190,7 +190,6 @@ public class CustomiseCharacterSingle: MenuState
             dataPack.inputSelectToHide.SetActive(true);
             dataPack.characterSelect.SetInteractable(false);;
             dataPack.characterSelect.HideCharacterModels();
-
             return new WaitForKeyInput(dataPack);
         }
                     
