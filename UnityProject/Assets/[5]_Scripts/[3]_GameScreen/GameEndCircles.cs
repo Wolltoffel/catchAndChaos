@@ -25,8 +25,6 @@ public class GameEndCircles : MonoBehaviour
         material.SetVector("_Position_2", new Vector2(0.75f, 0.75f));
 
         GetComponent<Canvas>().sortingOrder = 1;
-
-        converge.SetActive(true);
     }
 
     public void ConvergeOn(Transform transform1, Transform transform2, float time = 2)

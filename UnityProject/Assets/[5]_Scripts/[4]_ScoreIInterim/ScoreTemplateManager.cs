@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class ScoreTemplateManager : MonoBehaviour
 {
@@ -11,6 +12,18 @@ public class ScoreTemplateManager : MonoBehaviour
     private TextMeshProUGUI nameTextMesh;
     [SerializeField]
     private TextMeshProUGUI scoreTextMesh;
+
+    private void Awake()
+    {
+        SetSize();
+    }
+
+    private void SetSize()
+    {
+        float ratio = Screen.width / 3840f;
+        nameTextMesh.fontSize *= ratio;
+        scoreTextMesh.fontSize *= ratio;
+    }
 
     public void SetName(string name)
     {
