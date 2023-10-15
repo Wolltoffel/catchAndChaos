@@ -12,10 +12,13 @@ public class ScoreTemplateManager : MonoBehaviour
     private TextMeshProUGUI nameTextMesh;
     [SerializeField]
     private TextMeshProUGUI scoreTextMesh;
+    [SerializeField]
+    private Animator animator;
 
     private void Awake()
     {
         SetSize();
+        animator.enabled = true;
     }
 
     private void SetSize()
@@ -44,5 +47,10 @@ public class ScoreTemplateManager : MonoBehaviour
     public void SetParent(Transform transform)
     {
         gameObject.transform.parent = transform;
+    }
+
+    public void HighlightWinner()
+    {
+
     }
 }

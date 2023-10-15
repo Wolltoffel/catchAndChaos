@@ -26,6 +26,15 @@ public class WinscreenManager : MonoBehaviour
     //WinScreenStuff
     [SerializeField] private GameObject UIManagers;
 
+    [Space]
+    //CanvasSortingOrder
+    [SerializeField] private Canvas canvasParent;
+    [SerializeField] private Canvas canvasChild;
+    [SerializeField] private Canvas canvasForeground;
+    [SerializeField] private int sortingOrderParent;
+    [SerializeField] private int sortingOrderChild;
+    [SerializeField] private int sortingOrderForeground;
+
     private void Awake()
     {
         DetermineWinner();
@@ -38,6 +47,8 @@ public class WinscreenManager : MonoBehaviour
         SetUpUI();
         yield return null;
     }
+
+    private void Update() => UpdateCanvasSortingOrder();
 
     private void SetUpUI()
     {
@@ -90,5 +101,12 @@ public class WinscreenManager : MonoBehaviour
     {
         Camera.main.GetComponent<CameraManager>().SetCameraAsMain();
         Camera.main.GetComponent<CameraManager>().SetCameraPosition(cameraAnchor);
+    }
+
+    void UpdateCanvasSortingOrder()
+    {
+        canvasParent.sortingOrder = sortingOrderParent;
+        canvasChild.sortingOrder = sortingOrderChild;
+        canvasForeground.sortingOrder = sortingOrderForeground;
     }
 }

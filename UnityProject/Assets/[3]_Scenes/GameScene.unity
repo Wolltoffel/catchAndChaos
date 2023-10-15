@@ -604,7 +604,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63035393885434b38a9268dc876ab7f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundeffects: []
+  soundeffects:
+  - name: 
+    audioClip: {fileID: 8300000, guid: 9ebf2350eab921a45992be54282ec6ff, type: 3}
+  - name: 
+    audioClip: {fileID: 8300000, guid: c79d0a59044766b42a2c58a24f4f2817, type: 3}
+  - name: 
+    audioClip: {fileID: 8300000, guid: c0a333a52d08e0e47bb60df5c1320da5, type: 3}
+  - name: 
+    audioClip: {fileID: 8300000, guid: 372bd1d98fce64744ad125d67dc1fead, type: 3}
+  - name: 
+    audioClip: {fileID: 8300000, guid: aed5f89d56de4bb4ba1825e4750075b6, type: 3}
+  - name: 
+    audioClip: {fileID: 8300000, guid: 06ae6709d65940b4cb833b1ae03d0c89, type: 3}
+  - name: 
+    audioClip: {fileID: 8300000, guid: 1ae10efddcf6cff4cabd18fdebe47b8b, type: 3}
+  - name: 
+    audioClip: {fileID: 8300000, guid: 0819d06a4f65cd440b4a87a39374e2de, type: 3}
+  - name: 
+    audioClip: {fileID: 8300000, guid: 15d093a7143710e40bce62e414042883, type: 3}
+  - name: 
+    audioClip: {fileID: 8300000, guid: be4d88af5c665e44da7a1aa91f4241ab, type: 3}
+  - name: 
+    audioClip: {fileID: 8300000, guid: 0b636850752fd42409dcfe57cfe61f03, type: 3}
 --- !u!114 &2128072744
 MonoBehaviour:
   m_ObjectHideFlags: 0
