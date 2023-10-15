@@ -50,8 +50,8 @@ public class SelectScreenManager : MonoBehaviour
     void Start()
     {   
         //Adjust Camera
-        Camera.main.GetComponent<CameraManager>().SetCameraAsMain();
-        Camera.main.GetComponent<CameraManager>().SetCameraPosition(cameraPosition);
+        Camera.main.GetComponentInParent<CameraManager>().SetCameraAsMain();
+        Camera.main.GetComponentInParent<CameraManager>().SetCameraPosition(cameraPosition);
 
         //Initialise StateMachine
         parent_selectScreenData = new SelectScreenData(Characters.Parent,setInputDevices,characterSelectParent,inputSelectToHideParent,backButton,buttonInfo);
@@ -83,17 +83,11 @@ public class SelectScreenManager : MonoBehaviour
         else
             buttonInfo.SetActive(false);
 
-   }
+        if (!(child is WaitForKeyInput) | !(parent is WaitForKeyInput))  
+            backButton.SetScreenScreenToJumpTo(ScreenType.CharacterInputSelect);
+        else
+            backButton.SetScreenScreenToJumpTo(ScreenType.MainMenu);
 
-   void SetReady (Characters characters)
-   {
-        if (characters == Characters.Child && !(child is Ready)&&!(child is ReadyToSwitchScreen))
-        {
-            child = new Ready(child_SelectScreenData);
-        }
-            
-        else if (characters == Characters.Parent && !(parent is Ready)&&!(parent is ReadyToSwitchScreen))
-            parent = new Ready(parent_selectScreenData);
    }
     
 }
@@ -181,6 +175,7 @@ public class CustomiseCharacterSingle: MenuState
         {
             dataPack.characterSelect.HideCharacterSelectElements();
 
+
             if(dataPack.character==Characters.Child)
                 CharacterInstantiator.GetActiveCharacter(dataPack.character).GetComponent<Animator>().SetInteger("ChildIndex",11);
             else
@@ -194,7 +189,7 @@ public class CustomiseCharacterSingle: MenuState
             dataPack.setInputDevices.Remove (dataPack.selectedInputDevice);
             dataPack.inputSelectToHide.SetActive(true);
             dataPack.characterSelect.SetInteractable(false);;
-
+            dataPack.characterSelect.HideCharacterModels();
             return new WaitForKeyInput(dataPack);
         }
                     

@@ -43,7 +43,7 @@ public class GameScreenManager : MonoBehaviour
         SpawnCharacters();
 
         //Position Camera
-        cameraScript = Camera.main.GetComponent<CameraManager>();
+        cameraScript = Camera.main.GetComponentInParent<CameraManager>();
         cameraScript.GameCamera();
         cameraScript.TrackPlayers(parentObj.transform, childObj.transform);
 
@@ -74,7 +74,7 @@ public class GameScreenManager : MonoBehaviour
 
     private IEnumerator BeforeGameStart()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2f);
 
         GameObject introAnimation = Instantiate(GameData.GetData<UIAnimations>("UIAnimations").introAnimationPrefab);
 

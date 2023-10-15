@@ -11,11 +11,16 @@ public class CameraManager : MonoBehaviour
     private Transform child;
 
     private Coroutine coroutine;
+    private Animator animator;
 
+    private void Awake()
+    {
+        animator = GetComponentInChildren<Animator>();
+    }
 
     public void SetCameraAsMain()
     {
-        Camera camera = GetComponent<Camera>();
+        Camera camera = GetComponentInChildren<Camera>();
         Camera.SetupCurrent(camera);
         camera.depth = -1;
     }
@@ -89,6 +94,32 @@ public class CameraManager : MonoBehaviour
             yield return null;
         }
     }
+
+    public void ApplyCameraShake(CameraShakeType shakeType = CameraShakeType.Destroy)
+    {
+        switch (shakeType)
+        {
+            case CameraShakeType.Chaos:
+                animator.SetInteger("State", 1);
+                break;
+            case CameraShakeType.Destroy:
+                animator.SetTrigger("DestroyTrigger");
+                break;
+            default:
+                animator.SetInteger("State", 0);
+                break;
+        }
+
+
+    }
+
+    public enum CameraShakeType
+    {
+        Chaos,
+        Destroy,
+        Off
+    }
 }
+
 
 

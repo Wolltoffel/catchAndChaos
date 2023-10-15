@@ -14,6 +14,9 @@ public class ScreenSwitcher : MonoBehaviour
     [SerializeField] ScreenType startScreen;
 
 
+    [Header("Loading Screen")]
+    [SerializeField] GameObject loadingScreen;
+
     [Header ("Screen Prefabs")]
 
     [SerializeField] GameObject mainMenu;
@@ -45,8 +48,18 @@ public class ScreenSwitcher : MonoBehaviour
         ActivateScreen(startScreen);
     }
 
-    public static void SwitchScreen(ScreenType screen)
+    public static void SwitchScreen(ScreenType screen, bool activateLoad = true)
     {
+        instance.StartCoroutine(instance._SwitchScreen(screen, activateLoad));
+    }
+
+    public IEnumerator _SwitchScreen(ScreenType screen ,bool activateLoad)
+    {
+        if (loadingScreen != null && activateLoad)
+        {
+            LoadingScreenManager manager = Instantiate(loadingScreen).GetComponent<LoadingScreenManager>();
+            yield return new WaitForSeconds(manager.loadTime-2);
+        }
         instance.DeactivateAllScreens();
         instance.ActivateScreen(screen);
     }
@@ -109,6 +122,6 @@ public class ScreenSwitcher : MonoBehaviour
         }
 
         throw new SystemException ($"No screen with the name {screen} existent.");
-    }
+    } 
 
 }

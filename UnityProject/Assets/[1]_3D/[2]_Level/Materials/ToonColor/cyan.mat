@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: cyan
-  m_Shader: {fileID: 4800000, guid: a52d11b7dfe1f4c499d62bc2c1e41837, type: 3}
+  m_Shader: {fileID: 4800000, guid: a60e91c1afb2f194291e0d2a49eac446, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -121,8 +121,8 @@ Material:
     - _ReceiveShadows: 1
     - _RimAmount: 0.716
     - _SampleGI: 0
-    - _ShadowThresh_1: -0.24
-    - _ShadowThresh_2: 0.51
+    - _ShadowThresh_1: 0.2
+    - _ShadowThresh_2: 0.67
     - _ShadowThresh_3: -2.67
     - _Shininess: 0
     - _Smoothness: 0

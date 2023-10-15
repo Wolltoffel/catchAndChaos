@@ -81,7 +81,8 @@ abstract class ParentBaseState : State
                         hint = hasPlushie?"PlushieThrow":"Catch";
                     } 
 
-                    WorldSpaceUI.ShowButtonPrompt(buttonPromptTarget, inputButton, out currentButtonPrompt, hint);
+                    if (buttonPromptTarget!=null)
+                        WorldSpaceUI.ShowButtonPrompt(buttonPromptTarget, inputButton, out currentButtonPrompt, hint);
                 }
 
                 if (Input.GetButtonDown(inputButton))

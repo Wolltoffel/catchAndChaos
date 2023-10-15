@@ -313,6 +313,7 @@ MonoBehaviour:
   rootTransform: {fileID: 1727280992299098575}
   nameTextMesh: {fileID: 4439081934890943781}
   scoreTextMesh: {fileID: 2440588214692813308}
+  animator: {fileID: 4685463977847923037}
 --- !u!1 &7742755490799195025
 GameObject:
   m_ObjectHideFlags: 0

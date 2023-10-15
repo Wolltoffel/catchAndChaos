@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class DestroyMeter : MonoBehaviour
 {
     Image image;
+    [SerializeField]Image outlineImage;
 
     void Start()
     {
@@ -15,5 +16,6 @@ public class DestroyMeter : MonoBehaviour
     public void UpdateProgress(float currentProgress,float totalProgress)
     {
         image.fillAmount = currentProgress/totalProgress;
+        outlineImage.fillAmount = currentProgress/totalProgress;
     }
 }

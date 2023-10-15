@@ -46,9 +46,9 @@ public class WorldSpaceUI : MonoBehaviour
       CreateGlobalMask();
    }
 
-   public static void ShowPrompt (GameObject prompt,Transform target, string promptName, out GameObject canvasHolder,out GameObject spawnedPrompt)
+   public static void ShowPrompt (GameObject prompt,Transform target, string promptName,out GameObject spawnedPrompt)
    {
-      canvasHolder = GetCurrentCanvasHolder();
+      GameObject canvasHolder = GetCurrentCanvasHolder();
 
       spawnedPrompt = Instantiate(prompt);
       //Add GameObject to canvas
@@ -59,7 +59,7 @@ public class WorldSpaceUI : MonoBehaviour
       Coroutine coroutine = instance.StartCoroutine(AdjustPosition(spawnedPrompt,target,Vector2.zero));
         
       //Create newnPrompt file and save Coroutine to list
-      Prompt promptData = new Prompt(canvasHolder,coroutine,target);
+      Prompt promptData = new Prompt(spawnedPrompt,coroutine,target);
       prompts.Add (promptData);
    } 
  
@@ -204,16 +204,24 @@ public class WorldSpaceUI : MonoBehaviour
    {
 
       globalMaskInstance = new GameObject("GlobalWorldUIMask");
-      maskImage = globalMaskInstance.AddComponent<Image>();
+      maskImage = GetGlobalMask().AddComponent<Image>();
       maskImage.transform.SetParent(GetCurrentCanvasHolder().transform);
-      globalMaskInstance.AddComponent<Mask>().showMaskGraphic = false;
-      RectTransform rectTransform = globalMaskInstance.GetComponent<RectTransform>();
+      GetGlobalMask().AddComponent<Mask>().showMaskGraphic = false;
+      RectTransform rectTransform = GetGlobalMask().GetComponent<RectTransform>();
       rectTransform.anchorMin = Vector2.zero;
       rectTransform.anchorMax = Vector2.one;
       rectTransform.anchoredPosition = Vector2.zero;
       rectTransform.sizeDelta = Vector2.zero;
       maskImage.sprite =globalMask;
       maskImage.color = Color.black;
+   }
+
+   GameObject GetGlobalMask()
+   {
+      if (globalMaskInstance==null)
+            CreateGlobalMask();;
+   
+      return globalMaskInstance;   
    }
 
    public static void SetWorldUI(bool active)

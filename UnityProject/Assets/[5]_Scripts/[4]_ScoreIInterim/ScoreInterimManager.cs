@@ -12,6 +12,10 @@ public class BetweenRoundsManager : MonoBehaviour
     [SerializeField] GameObject scoreTemplate;
 
     [SerializeField] private GameObject convergePrefab;
+    private ScoreTemplateManager parentScoreManager;
+    private ScoreTemplateManager childScoreManager;
+
+
 
     private IEnumerator Start()
     {
@@ -23,26 +27,34 @@ public class BetweenRoundsManager : MonoBehaviour
         StartCoroutine(ScoreTemplateToOrigin(Characters.Parent));
         yield return StartCoroutine(ScoreTemplateToOrigin(Characters.Child));
 
-        PlayerData parent = GameData.GetData<PlayerData>("Parent");
-        PlayerData child = GameData.GetData<PlayerData>("Child");
+        PlayerData parentData = GameData.GetData<PlayerData>("Parent");
+        PlayerData childData = GameData.GetData<PlayerData>("Child");
         PlayTimeData data = GameData.GetData<PlayTimeData>("PlayTimeData");
 
-        parentText.text = parent.tempScore.ToString();
-        childText.text = child.tempScore.ToString();
+        parentScoreManager.SetScore(parentData.tempScore);
+        childScoreManager.SetScore(childData.tempScore);
 
+        ScoreTemplateManager winScore;
         if (data.hasChildWon)
-            child.tempScore++;
+        {
+            childData.tempScore++;
+            winScore = childScoreManager;
+        }
         else
-            parent.tempScore++;
+        {
+            parentData.tempScore++;
+            winScore = parentScoreManager;
+        }
 
         yield return new WaitForSeconds(1);
 
-        parentText.text = parent.tempScore.ToString();
-        childText.text = child.tempScore.ToString();
+        parentScoreManager.SetScore(parentData.tempScore);
+        childScoreManager.SetScore(childData.tempScore);
+        winScore.HighlightWinner();
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
 
-        if (child.tempScore >= 3 || parent.tempScore >= 3)
+        if (childData.tempScore >= 3 || parentData.tempScore >= 3)
         {
             ScreenSwitcher.SwitchScreen(ScreenType.EndScreen);
         }
@@ -56,38 +68,40 @@ public class BetweenRoundsManager : MonoBehaviour
     {
         Transform transform = CharacterInstantiator.GetActiveCharacter(character).transform;
         Vector2 screenPos = Camera.main.WorldToScreenPoint(transform.position);
-        ScoreTemplateManager scoreTemplateManager = Instantiate(scoreTemplate).GetComponentInChildren<ScoreTemplateManager>();
+        ScoreTemplateManager scoreManager = Instantiate(scoreTemplate).GetComponentInChildren<ScoreTemplateManager>();
 
-        Vector2 currentPos = scoreTemplateManager.SetPosition(screenPos);
+        Vector2 currentPos = scoreManager.SetPosition(screenPos);
         Vector2 screenSizes = new(Screen.width, Screen.height);
-        Vector2 targetPos = character == Characters.Child ? new(Screen.width * 0.25f, Screen.height / 2) : new(Screen.width * 0.75f,Screen.height / 2);
-        scoreTemplateManager.SetParent(transform);
+        Vector2 targetPos = character == Characters.Child ? new(Screen.width * 0.3f, Screen.height / 2) : new(Screen.width * 0.7f,Screen.height / 2);
+        scoreManager.SetParent(transform);
 
         PlayerData data;
         if (character == Characters.Child)
         {
             data = GameData.GetData<ChildData>("Child");
+            childScoreManager = scoreManager;
         }
         else
         {
             data = GameData.GetData<ParentData>("Parent");
+            parentScoreManager = scoreManager;
         }
 
-        scoreTemplateManager.SetName(data.characterAssets.name); //FIX
-        scoreTemplateManager.SetScore(data.tempScore);
+        scoreManager.SetName(data.characterAssets.name); //FIX
+        scoreManager.SetScore(data.tempScore);
 
         float timeElapsed = 0;
         while (timeElapsed < transitionTime)
         {
             currentPos = Vector2.Lerp(currentPos, targetPos, timeElapsed / transitionTime);
-            scoreTemplateManager.SetPosition(currentPos);
+            scoreManager.SetPosition(currentPos);
 
             timeElapsed += Time.deltaTime;
 
             yield return null;
         }
 
-        scoreTemplateManager.SetPosition(targetPos);
+        scoreManager.SetPosition(targetPos);
 
     }
 }

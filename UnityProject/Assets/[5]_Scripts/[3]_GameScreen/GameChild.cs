@@ -67,7 +67,8 @@ abstract class ChildState : State
             {
                 currentObjectHash = objectHash;
                 WorldSpaceUI.RemovePrompt(currentButtonPrompt);
-                WorldSpaceUI.ShowButtonPrompt(interactableObject.transform, inputButton, out currentButtonPrompt, action);
+                if (interactableObject!=null)
+                    WorldSpaceUI.ShowButtonPrompt(interactableObject.transform, inputButton, out currentButtonPrompt, action);
 
                 if (lastVentInRange != null)
                     lastVentInRange.GetComponent<VentRollup>().CloseVent();
@@ -75,7 +76,6 @@ abstract class ChildState : State
 
             return HandleAction(interactableObject, action);
         }
-
 
         //RemovePrompt
         if (currentButtonPrompt != null)
@@ -159,6 +159,8 @@ abstract class ChildState : State
         if (Input.GetButtonDown(inputButton))
         {
             WorldSpaceUI.RemovePrompt(buttonPromptDestroy);
+            WorldSpaceUI.RemovePrompt(currentButtonPrompt);
+            currentButtonPrompt = null;
             buttonPromptDestroy = null;
             return new Destroy(interactableObject.GetComponent<Destructable>());
         }
@@ -316,9 +318,7 @@ class Destroy : ChildState
     float destroyTime;
     static float startDestroyTime;
     Destructable destructable;
-
     GameObject destroyPrompt;
-    GameObject promptHolder;
 
     GameObject particleInstance;
     public Destroy (Destructable destructable)
@@ -326,15 +326,17 @@ class Destroy : ChildState
         this.destroyTime = destructable.destroyTimeLeft;
         startDestroyTime = Time.time;
         this.destructable = destructable;
+        Camera.main.GetComponentInParent<CameraManager>().ApplyCameraShake(CameraManager.CameraShakeType.Chaos);
     }
 
     public override ChildState UpdateState()
     {
         if (Input.GetButtonUp(inputButton))
         {
-            WorldSpaceUI.RemovePrompt(promptHolder);
+            WorldSpaceUI.RemovePrompt(destroyPrompt);
             GameObject.Destroy (particleInstance);
             particleInstance =null;
+            Camera.main.GetComponentInParent<CameraManager>().ApplyCameraShake(CameraManager.CameraShakeType.Off);
             return new Idle();
         }
 
@@ -355,7 +357,7 @@ class Destroy : ChildState
         //Show Prompt
         if (destroyPrompt==null)
             WorldSpaceUI.ShowPrompt(GameData.GetData<PromptAssets>("PromptAssets").GetPromptAssetByName("DestroyMeter"),
-            destructable.transform,"DestroyMeter",out promptHolder,out destroyPrompt);
+            destructable.transform,"DestroyMeter",out destroyPrompt);
         else
         {
             DestroyMeter destroyMeter = destroyPrompt.GetComponent <DestroyMeter>();
@@ -369,13 +371,14 @@ class Destroy : ChildState
         
         if (destroyTime <= 0)
         {
-            WorldSpaceUI.RemovePrompt(promptHolder);
+            WorldSpaceUI.RemovePrompt(destroyPrompt);
             
             GameObject.Destroy (particleInstance);
             particleInstance =null;
             
             destructable.DestroyObject();
             destructable = null;
+            Camera.main.GetComponentInParent<CameraManager>().ApplyCameraShake(CameraManager.CameraShakeType.Off);
             return new Idle();
         }
        
@@ -388,7 +391,7 @@ class Destroy : ChildState
             GameObject.Destroy (particleInstance);
             particleInstance =null;
 
-            WorldSpaceUI.RemovePrompt(promptHolder);
+            WorldSpaceUI.RemovePrompt(destroyPrompt);
 
             return stunned;
         }
