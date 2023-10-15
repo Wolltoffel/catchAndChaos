@@ -126,7 +126,7 @@ Material:
     - _DstBlendAlpha: 0
     - _EmissionEnabled: 0
     - _EnvironmentReflections: 0
-    - _FlatColorTopOpacity: 1
+    - _FlatColorTopOpacity: 0
     - _FlipbookMode: 0
     - _GlossMapScale: 0
     - _Glossines: 1
@@ -169,7 +169,7 @@ Material:
     - _ShadowColor_1: {r: 0.922, g: 0.922, b: 0.922, a: 1}
     - _ShadowColor_2: {r: 1, g: 1, b: 1, a: 1}
     - _ShadowColor_3: {r: 1, g: 1, b: 1, a: 1}
-    - _SilhouetteColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SilhouetteColor: {r: 0.5337466, g: 0.9056604, b: 0.484158, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecularColor: {r: 0.16037738, g: 0.16037738, b: 0.16037738, a: 1}
