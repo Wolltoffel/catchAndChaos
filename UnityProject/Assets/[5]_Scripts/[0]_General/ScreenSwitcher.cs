@@ -48,25 +48,20 @@ public class ScreenSwitcher : MonoBehaviour
         ActivateScreen(startScreen);
     }
 
-    public static void SwitchScreen(ScreenType screen)
+    public static void SwitchScreen(ScreenType screen, bool activateLoad = true)
     {
-        instance.StartCoroutine(instance._SwitchScreen(screen));
+        instance.StartCoroutine(instance._SwitchScreen(screen, activateLoad));
     }
 
-    public IEnumerator _SwitchScreen(ScreenType screen)
+    public IEnumerator _SwitchScreen(ScreenType screen ,bool activateLoad)
     {
-
-        if (loadingScreen != null)
+        if (loadingScreen != null && activateLoad)
         {
-            Instantiate(loadingScreen);
-            yield return new WaitForSeconds(1);
+            LoadingScreenManager manager = Instantiate(loadingScreen).GetComponent<LoadingScreenManager>();
+            yield return new WaitForSeconds(manager.loadTime-2);
         }
         instance.DeactivateAllScreens();
         instance.ActivateScreen(screen);
-        if (loadingScreen != null)
-        {
-            yield return new WaitForSeconds(1);
-        }
     }
 
     public static void OutsourceCoroutine(IEnumerator enumerator)
