@@ -71,7 +71,7 @@ Material:
     - _Convergence: 1
     - _Cull: 2
     - _DstBlend: 10
-    - _MinimumCircleSize: 0
+    - _MinimumCircleSize: 0.28020304
     - _QueueControl: 0
     - _QueueOffset: 0
     - _SrcBlend: 5
@@ -79,9 +79,9 @@ Material:
     - _ZTest: 4
     - _ZWrite: 0
     - _ZWriteControl: 0
-    - _border: 0
+    - _border: 0.04
     m_Colors:
     - _MainColor: {r: 1, g: 0.74509805, b: 0.23529412, a: 1}
-    - _Position_1: {r: 1978.6887, g: 1048.8838, b: 0, a: 0}
-    - _Position_2: {r: 1864.9922, g: 1164.8905, b: 0, a: 0}
+    - _Position_1: {r: 1325.3483, g: 1489.7076, b: 0, a: 0}
+    - _Position_2: {r: 2533.8242, g: 713.8874, b: 0, a: 0}
   m_BuildTextureStacks: []
