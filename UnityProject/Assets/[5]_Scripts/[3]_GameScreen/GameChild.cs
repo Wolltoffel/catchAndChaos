@@ -77,7 +77,6 @@ abstract class ChildState : State
             return HandleAction(interactableObject, action);
         }
 
-
         //RemovePrompt
         if (currentButtonPrompt != null)
         {
@@ -358,7 +357,7 @@ class Destroy : ChildState
         //Show Prompt
         if (destroyPrompt==null)
             WorldSpaceUI.ShowPrompt(GameData.GetData<PromptAssets>("PromptAssets").GetPromptAssetByName("DestroyMeter"),
-            destructable.transform,"DestroyMeter",out promptHolder,out destroyPrompt);
+            destructable.transform,"DestroyMeter",out destroyPrompt);
         else
         {
             DestroyMeter destroyMeter = destroyPrompt.GetComponent <DestroyMeter>();
