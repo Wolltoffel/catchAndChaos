@@ -380,5 +380,16 @@ public void Slide (Step step)
         Destroy(this);
     }
 
+    public void HideCharacters()
+    {
+        for (int i = 0; i < spawnedCharacterModels.Count; i++)
+        {
+            Destroy(spawnedCharacterModels[i]);
+        }
+
+        spawnedCharacterModels.Clear(); 
+    }
+
+
    #endregion   
 }

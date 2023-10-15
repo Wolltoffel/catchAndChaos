@@ -93,6 +93,9 @@ Shader "Custom/Character"
                 float _ShadowThresh_2;
                 float _ShadowThresh_3;
 
+                float _FlatColorTopOpacity;
+                fixed4 _FlatColorTop;
+
                 fixed4 frag (v2f i) : SV_Target
                 {   
                     //Light mainLight = GetMainLight(input.shadowCoord);
@@ -135,6 +138,9 @@ Shader "Custom/Character"
                         col *= _ShadowColor_3;
 
                     col.a *=shadow;
+
+                    col = (1-_FlatColorTopOpacity)*col+_FlatColorTopOpacity*_FlatColorTop;
+
                     return col;
                 }
                 ENDHLSL
@@ -219,7 +225,9 @@ Shader "Custom/Character"
             #pragma fragment fragShadow
             #pragma target 2.0
             #pragma multi_compile_shadowcaster
+
             ENDCG
-        }            
+        }   
+       // UsePass "Legacy Shaders/VertexLit/SHADOWCASTER"        
 }
 }

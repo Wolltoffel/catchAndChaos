@@ -286,4 +286,9 @@ public class ScrollSelection : MonoBehaviour
         //Destroy(this);
     }
 
+    public void HideCharacters()
+    {
+        characterModelSwitcher.HideCharacters();
+    }
+
 }

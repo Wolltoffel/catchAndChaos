@@ -143,4 +143,9 @@ public class CharacterSelect : MonoBehaviour
         Destroy(buttonSwitcher);
         buttonSwitcher = null;
     }
+
+    public void HideCharacterModels()
+    {
+        scrollSelection.HideCharacters();
+    }
 }
