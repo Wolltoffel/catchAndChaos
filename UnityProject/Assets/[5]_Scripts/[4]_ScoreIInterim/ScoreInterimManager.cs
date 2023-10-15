@@ -52,7 +52,7 @@ public class BetweenRoundsManager : MonoBehaviour
         childScoreManager.SetScore(childData.tempScore);
         winScore.HighlightWinner();
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
 
         if (childData.tempScore >= 3 || parentData.tempScore >= 3)
         {
