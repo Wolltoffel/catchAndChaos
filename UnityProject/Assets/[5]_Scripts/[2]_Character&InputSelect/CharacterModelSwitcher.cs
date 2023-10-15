@@ -49,8 +49,8 @@ public class CharacterModelSwitcher : MonoBehaviour
     Dictionary<int,Tuple<Transform,Vector3,bool,bool>> movementInfo;
 
 
-public void Slide (Step step)
-{
+    public void Slide (Step step)
+    {
         if (step == Step.Next)
             StartCoroutine(SlideOperation(-1));
         else
@@ -63,7 +63,7 @@ public void Slide (Step step)
         if (runningCouroutines.Count>0)
         {
             FinishCoroutines();
-            ActivateFastSlide();
+            //ActivateFastSlide();
         }
         
         yield return new WaitUntil(()=>runningCouroutines.Count<=0);
