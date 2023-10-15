@@ -10,74 +10,24 @@ public class SelectScreenData
     public List<string> setInputDevices;
     public CharacterSelect characterSelect;
     public GameObject inputSelectToHide;
-
-    public ReadyButton readyButton;
-
     public BackButton backButton;
+    public GameObject butttonInfo;
+    public string selectedInputDevice;
 
-    public SelectScreenData(Characters character, List<string> setInputDevices, CharacterSelect characterSelect,GameObject inputSelectToHide,ReadyButton readyButton,BackButton backButton)
+
+    public SelectScreenData(Characters character, List<string> setInputDevices, CharacterSelect characterSelect,GameObject inputSelectToHide,BackButton backButton, GameObject buttonInfo)
     {
         this.character = character;
         this.setInputDevices = setInputDevices;
         this.characterSelect = characterSelect;
         this.inputSelectToHide = inputSelectToHide;
-        this.readyButton = readyButton;
         this.backButton = backButton;
+        this.butttonInfo = buttonInfo;
 
         if (character == Characters.Child)
             key = "Child";
         else
             key = "Parent";
-    }
-}
-
-[System.Serializable]
-public class ReadyButton
-{
-    public GameObject readdyButtonContainer;
-    public Button controllerButton, keyboardButton;
-    public GameObject highlightChild,highlightParent;
-
-    public void Activate()
-    {
-        readdyButtonContainer.SetActive(true);
-    }
-    public void SetReady(Characters character)
-    {
-        if (character== Characters.Child)
-            highlightChild.SetActive(true);
-        else
-            highlightParent.SetActive(true);
-    }
-
-    public bool GetReady(Characters characters)
-    {
-        if (characters== Characters.Child)
-            return highlightChild.activeInHierarchy;
-        else
-            return highlightParent.activeInHierarchy;
-    }
-
-    public void Initialise()
-    {
-        controllerButton.onClick.AddListener(()=>{
-            SetReady(Characters.Child);
-            SetReady(Characters.Parent);
-        });
-
-        keyboardButton.onClick.AddListener(()=>{
-            SetReady(Characters.Child);
-            SetReady(Characters.Parent);
-        });
-
-        ButtonSwitchData buttonSwitchData = new ButtonSwitchData(controllerButton,keyboardButton);
-        readdyButtonContainer.AddComponent<ButtonSwitcher>().buttons.Add(buttonSwitchData);
-        
-        readdyButtonContainer.SetActive(false);
-        highlightChild.SetActive(false);
-        highlightParent.SetActive(false);
-        controllerButton.gameObject.SetActive(false);
-        keyboardButton.gameObject.SetActive(false);
     }
 }
 
@@ -88,30 +38,34 @@ public class SelectScreenManager : MonoBehaviour
     [SerializeField] Transform cameraPosition;
     [SerializeField] BackButton backButton;
 
+    [SerializeField] GameObject buttonInfo;
+
     [Header ("Character Select")]   
     [SerializeField] GameObject inputSelectToHideChild, inputSelectToHideParent;
-    [SerializeField]ReadyButton readyButton;
+    //[SerializeField]ReadyButton readyButton;
 
     List<string> setInputDevices = new List<string>();
     MenuState child,parent;
     SelectScreenData parent_selectScreenData, child_SelectScreenData;
-    void Awake()
+    void Start()
     {   
         //Adjust Camera
         Camera.main.GetComponent<CameraManager>().SetCameraAsMain();
         Camera.main.GetComponent<CameraManager>().SetCameraPosition(cameraPosition);
 
         //Initialise StateMachine
-        parent_selectScreenData = new SelectScreenData(Characters.Parent,setInputDevices,characterSelectParent,inputSelectToHideParent,readyButton,backButton);
-        child_SelectScreenData = new SelectScreenData(Characters.Child,setInputDevices,characterSelectChild,inputSelectToHideChild,readyButton,backButton);
+        parent_selectScreenData = new SelectScreenData(Characters.Parent,setInputDevices,characterSelectParent,inputSelectToHideParent,backButton,buttonInfo);
+        child_SelectScreenData = new SelectScreenData(Characters.Child,setInputDevices,characterSelectChild,inputSelectToHideChild,backButton,buttonInfo);
         child = new WaitForKeyInput(child_SelectScreenData);
         parent = new WaitForKeyInput(parent_selectScreenData);
 
         //Deactivate characterSelect overlay
-        characterSelectChild.gameObject.SetActive(false);
-        characterSelectParent.gameObject.SetActive(false);
+        characterSelectChild.SetInteractable(false);
+        characterSelectParent.SetInteractable(false);
+
+        //Deactivate ButtonInfo
+        buttonInfo.SetActive(false);
         
-        readyButton.Initialise();
     }
 
    void Update()
@@ -124,15 +78,11 @@ public class SelectScreenManager : MonoBehaviour
             ScreenSwitcher.SwitchScreen(ScreenType.GameScreen);
         }
 
-        if (child is CustomiseCharacterSingle && parent is CustomiseCharacterSingle)
-            readyButton.Activate();
+        if (child is CustomiseCharacterSingle | parent is CustomiseCharacterSingle)
+            buttonInfo.SetActive(true);
+        else
+            buttonInfo.SetActive(false);
 
-        if (readyButton.GetReady(Characters.Child)&&readyButton.GetReady(Characters.Parent))
-        {
-            SetReady(Characters.Child);
-            SetReady(Characters.Parent);
-        }
- 
    }
 
    void SetReady (Characters characters)
@@ -165,6 +115,7 @@ public class WaitForKeyInput: MenuState
         public override MenuState UpdateMenu()
         {
             string inputDevice = "";
+
             if (dataPack.character == Characters.Child)
                 inputDevice = GetInputDevice("X");
             else
@@ -173,10 +124,11 @@ public class WaitForKeyInput: MenuState
             if (inputDevice!="")
             {
                     dataPack.setInputDevices.Add (inputDevice);
+                    dataPack.selectedInputDevice = inputDevice;
                     GameData.GetData<PlayerData>(dataPack.key).tempInputDevice = inputDevice;
 
                     dataPack.inputSelectToHide.SetActive(false);
-                    dataPack.characterSelect.gameObject.SetActive(true);
+                    dataPack.characterSelect.SetInteractable(true);
 
                     dataPack.characterSelect.SetData(inputDevice,dataPack.character);
 
@@ -188,7 +140,6 @@ public class WaitForKeyInput: MenuState
 
         string GetInputDevice(string buttton)
         {
-
                 string inputDevice = "";
                 if (Input.GetButtonDown("J1"+buttton)) //Controller 1
                     inputDevice =  "J1";
@@ -224,31 +175,10 @@ public class CustomiseCharacterSingle: MenuState
     public CustomiseCharacterSingle(SelectScreenData data) : base(data) {}
     public override MenuState UpdateMenu()
     {
-        Characters otherCharacter;
-        if (dataPack.character==Characters.Child)
-            otherCharacter = Characters.Parent;
-        else 
-            otherCharacter = Characters.Child;
-        
-        if (dataPack.readyButton.readdyButtonContainer.activeInHierarchy)
-        {
-            dataPack.backButton.SetScreenScreenToJumpTo(ScreenType.CharacterInputSelect);
-            return new CustomiseCharacterTogether(dataPack);
-        }
-                    
-        return this;
-    }
+        dataPack.backButton.AddIgnoreController(dataPack.selectedInputDevice);
 
-}
-
-public class CustomiseCharacterTogether: MenuState
-{
-    public CustomiseCharacterTogether(SelectScreenData data) : base(data) {}
-    public override MenuState UpdateMenu()
-    {
-        if (Input.GetButtonDown(dataPack.characterSelect.GetInputDevice()+"A")|dataPack.readyButton.GetReady(dataPack.character))
+         if (Input.GetButtonDown(dataPack.characterSelect.GetInputDevice()+"A")|Input.GetKeyDown(KeyCode.Return))
         {
-            dataPack.readyButton.SetReady(dataPack.character);
             dataPack.characterSelect.HideCharacterSelectElements();
 
             if(dataPack.character==Characters.Child)
@@ -258,7 +188,16 @@ public class CustomiseCharacterTogether: MenuState
             
             return new Ready(dataPack);
         }
-              
+
+        if (Input.GetButtonDown(dataPack.characterSelect.GetInputDevice()+"B"))
+        {
+            dataPack.setInputDevices.Remove (dataPack.selectedInputDevice);
+            dataPack.inputSelectToHide.SetActive(true);
+            dataPack.characterSelect.SetInteractable(false);;
+
+            return new WaitForKeyInput(dataPack);
+        }
+                    
         return this;
     }
 

@@ -9,8 +9,9 @@ public class CharacterSelect : MonoBehaviour
     [SerializeField]Characters characters;
     [SerializeField] Button prevController,nextController;
     [SerializeField] Button prevKeyboard,nextKeyboard;
-
     [SerializeField] ScrollSelection scrollSelection;
+
+    bool interactable;
 
     string inputDevice;
     bool activeController;
@@ -34,6 +35,20 @@ public class CharacterSelect : MonoBehaviour
 
     }
 
+    public void SetInteractable(bool interactableInput)
+    {
+        interactable = interactableInput;
+
+        prevController.gameObject.SetActive(interactableInput);
+        prevKeyboard.gameObject.SetActive(interactableInput);
+        nextController.gameObject.SetActive(interactableInput);
+        nextKeyboard.gameObject.SetActive(interactableInput);
+
+        buttonSwitcher.enabled = interactableInput;
+
+        scrollSelection.gameObject.SetActive(interactableInput);
+    }
+
     public void SetData(string inputDevice, Characters characters)
     {
         this.inputDevice = inputDevice;
@@ -55,15 +70,13 @@ public class CharacterSelect : MonoBehaviour
 
     void ProcessControllerInputsForSelection()
     {
-         if (Input.GetButtonDown(inputDevice+"BumperR"))
+         if (Input.GetButtonDown(inputDevice+"BumperR") && interactable)
          {
             nextController.onClick.Invoke();
             
             StartCoroutine(ButtonBlink(nextController,new Vector2(1.15f,1.15f)));
-         }
-                
-                
-        else if (Input.GetButtonDown(inputDevice+"BumperL"))
+         }            
+        else if (Input.GetButtonDown(inputDevice+"BumperL") && interactable)
         {
             prevController.onClick.Invoke();
             StartCoroutine(ButtonBlink(prevController,new Vector2(1.15f,1.15f)));

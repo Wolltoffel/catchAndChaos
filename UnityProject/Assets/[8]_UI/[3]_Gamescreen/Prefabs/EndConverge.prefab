@@ -136,7 +136,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &8974260607784410937
 MonoBehaviour:
@@ -191,5 +191,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 1557253007721047219}
+  converge: {fileID: 1507980264576107836}
   pos1: {x: 0, y: 0}
   pos2: {x: 0, y: 0}
