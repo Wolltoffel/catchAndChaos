@@ -213,6 +213,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentText: {fileID: 2419044175162162509}
   childText: {fileID: 3817007491017040205}
+  scoreTemplate: {fileID: 7253015511642391419, guid: 96b1b0a966c844dab8ef04a32c36e7b4, type: 3}
   convergePrefab: {fileID: 4725508866424478200, guid: cb8e16d8729e44fdba36ad76d1aee8e4, type: 3}
 --- !u!1 &3736453382783045234
 GameObject:
