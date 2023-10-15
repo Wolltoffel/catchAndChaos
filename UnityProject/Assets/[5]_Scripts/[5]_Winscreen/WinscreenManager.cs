@@ -99,8 +99,8 @@ public class WinscreenManager : MonoBehaviour
 
     void SetCameraPosition()
     {
-        Camera.main.GetComponent<CameraManager>().SetCameraAsMain();
-        Camera.main.GetComponent<CameraManager>().SetCameraPosition(cameraAnchor);
+        Camera.main.GetComponentInParent<CameraManager>().SetCameraAsMain();
+        Camera.main.GetComponentInParent<CameraManager>().SetCameraPosition(cameraAnchor);
     }
 
     void UpdateCanvasSortingOrder()

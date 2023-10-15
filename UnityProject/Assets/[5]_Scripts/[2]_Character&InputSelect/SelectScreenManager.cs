@@ -50,8 +50,8 @@ public class SelectScreenManager : MonoBehaviour
     void Start()
     {   
         //Adjust Camera
-        Camera.main.GetComponent<CameraManager>().SetCameraAsMain();
-        Camera.main.GetComponent<CameraManager>().SetCameraPosition(cameraPosition);
+        Camera.main.GetComponentInParent<CameraManager>().SetCameraAsMain();
+        Camera.main.GetComponentInParent<CameraManager>().SetCameraPosition(cameraPosition);
 
         //Initialise StateMachine
         parent_selectScreenData = new SelectScreenData(Characters.Parent,setInputDevices,characterSelectParent,inputSelectToHideParent,backButton,buttonInfo);

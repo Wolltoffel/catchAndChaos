@@ -43,7 +43,7 @@ public class GameScreenManager : MonoBehaviour
         SpawnCharacters();
 
         //Position Camera
-        cameraScript = Camera.main.GetComponent<CameraManager>();
+        cameraScript = Camera.main.GetComponentInParent<CameraManager>();
         cameraScript.GameCamera();
         cameraScript.TrackPlayers(parentObj.transform, childObj.transform);
 
