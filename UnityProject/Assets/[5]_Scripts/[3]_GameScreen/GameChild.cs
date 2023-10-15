@@ -67,7 +67,8 @@ abstract class ChildState : State
             {
                 currentObjectHash = objectHash;
                 WorldSpaceUI.RemovePrompt(currentButtonPrompt);
-                WorldSpaceUI.ShowButtonPrompt(interactableObject.transform, inputButton, out currentButtonPrompt, action);
+                if (interactableObject!=null)
+                    WorldSpaceUI.ShowButtonPrompt(interactableObject.transform, inputButton, out currentButtonPrompt, action);
 
                 if (lastVentInRange != null)
                     lastVentInRange.GetComponent<VentRollup>().CloseVent();
