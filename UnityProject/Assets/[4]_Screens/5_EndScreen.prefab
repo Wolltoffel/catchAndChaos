@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1452580626578962296
 RectTransform:
   m_ObjectHideFlags: 0
@@ -832,8 +832,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6202340597043407798}
   - component: {fileID: 2609152400937989018}
-  - component: {fileID: 2956411671922920013}
   - component: {fileID: 8243751769909757371}
+  - component: {fileID: 4990146100046648266}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -868,29 +868,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 6794212140239816027}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
---- !u!114 &2956411671922920013
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 967970567653267026}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
 --- !u!114 &8243751769909757371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -903,6 +883,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1511ccae7919cfc46b603b9b337fdc94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4990146100046648266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 967970567653267026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 225bae2792086444ebc5857a65e5d37a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  horizontalAxis_Keyboard: K Horizontal
+  horizontalAxis_Gamepad: J Horizontal
+  verticalAxis_Keyboard: K Vertical
+  verticalAxis_Gamepad: J Vertical
+  m_SubmitButton: AA
+  m_CancelButton: AB
+  m_InputActionsPerSecond: 100
+  m_RepeatDelay: 0.001
 --- !u!1 &1152400949884404949
 GameObject:
   m_ObjectHideFlags: 0
@@ -2329,7 +2330,6 @@ GameObject:
   - component: {fileID: 2535167092176874666}
   - component: {fileID: 9038199624025554154}
   - component: {fileID: 4119868906906820162}
-  - component: {fileID: 5885241784985819403}
   m_Layer: 0
   m_Name: Home
   m_TagString: Untagged
@@ -2353,9 +2353,9 @@ RectTransform:
   - {fileID: 1149670728448132613}
   m_Father: {fileID: 1967175662861342086}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 600, y: -513.33826}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 900, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2535167092176874666
@@ -2440,18 +2440,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &5885241784985819403
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3007147845154616619}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2936efa55ecacad40a8e0d18c632c3e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3184268653205932641
 GameObject:
   m_ObjectHideFlags: 0
@@ -3906,8 +3894,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5497740879157501139}
   - {fileID: 6202340597043407798}
+  - {fileID: 5497740879157501139}
   - {fileID: 6169938883820655723}
   - {fileID: 1651744247969812938}
   m_Father: {fileID: 0}
@@ -5228,7 +5216,6 @@ GameObject:
   - component: {fileID: 235462910872243115}
   - component: {fileID: 617890414982283741}
   - component: {fileID: 2342689689172471028}
-  - component: {fileID: 2817618874955641319}
   m_Layer: 0
   m_Name: Replay
   m_TagString: Untagged
@@ -5252,9 +5239,9 @@ RectTransform:
   - {fileID: 445545145334159318}
   m_Father: {fileID: 1967175662861342086}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1050, y: -229.89276}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 900, y: 250}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &235462910872243115
@@ -5339,18 +5326,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2817618874955641319
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6794212140239816027}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2936efa55ecacad40a8e0d18c632c3e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7157747643150027502
 GameObject:
   m_ObjectHideFlags: 0

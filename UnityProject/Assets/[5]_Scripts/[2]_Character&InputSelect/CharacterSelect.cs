@@ -43,8 +43,13 @@ public class CharacterSelect : MonoBehaviour
         prevKeyboard.gameObject.SetActive(interactableInput);
         nextController.gameObject.SetActive(interactableInput);
         nextKeyboard.gameObject.SetActive(interactableInput);
-
+        
+        if (buttonSwitcher==null)
+            buttonSwitcher = gameObject.AddComponent<ButtonSwitcher>();
+        
         buttonSwitcher.enabled = interactableInput;
+    
+            
 
         scrollSelection.gameObject.SetActive(interactableInput);
     }

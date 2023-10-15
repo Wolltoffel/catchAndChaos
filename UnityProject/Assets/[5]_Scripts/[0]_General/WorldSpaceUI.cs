@@ -59,7 +59,7 @@ public class WorldSpaceUI : MonoBehaviour
       Coroutine coroutine = instance.StartCoroutine(AdjustPosition(spawnedPrompt,target,Vector2.zero));
         
       //Create newnPrompt file and save Coroutine to list
-      Prompt promptData = new Prompt(canvasHolder,coroutine,target);
+      Prompt promptData = new Prompt(spawnedPrompt,coroutine,target);
       prompts.Add (promptData);
    } 
  
