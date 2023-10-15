@@ -20,7 +20,7 @@ public class CameraManager : MonoBehaviour
 
     public void SetCameraAsMain()
     {
-        Camera camera = GetComponent<Camera>();
+        Camera camera = GetComponentInChildren<Camera>();
         Camera.SetupCurrent(camera);
         camera.depth = -1;
     }
