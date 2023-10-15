@@ -14,6 +14,9 @@ public class ScreenSwitcher : MonoBehaviour
     [SerializeField] ScreenType startScreen;
 
 
+    [Header("Loading Screen")]
+    [SerializeField] GameObject loadingScreen;
+
     [Header ("Screen Prefabs")]
 
     [SerializeField] GameObject mainMenu;
@@ -47,8 +50,23 @@ public class ScreenSwitcher : MonoBehaviour
 
     public static void SwitchScreen(ScreenType screen)
     {
+        instance.StartCoroutine(instance._SwitchScreen(screen));
+    }
+
+    public IEnumerator _SwitchScreen(ScreenType screen)
+    {
+
+        if (loadingScreen != null)
+        {
+            Instantiate(loadingScreen);
+            yield return new WaitForSeconds(1);
+        }
         instance.DeactivateAllScreens();
         instance.ActivateScreen(screen);
+        if (loadingScreen != null)
+        {
+            yield return new WaitForSeconds(1);
+        }
     }
 
     public static void OutsourceCoroutine(IEnumerator enumerator)
@@ -109,6 +127,6 @@ public class ScreenSwitcher : MonoBehaviour
         }
 
         throw new SystemException ($"No screen with the name {screen} existent.");
-    }
+    } 
 
 }

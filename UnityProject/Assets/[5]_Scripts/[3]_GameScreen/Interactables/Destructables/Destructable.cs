@@ -17,6 +17,7 @@ public class Destructable : MonoBehaviour
 
     public void DestroyObject()
     {
+        Camera.main.GetComponentInParent<CameraManager>().ApplyCameraShake();
         GameData.GetData<InteractableContainer>("InteractableContainer").RemoveObjectFromCategory("Chaos", gameObject);
         GameData.GetData<ChaosData>("ChaosData").ModifyChaos(GameData.GetData<ChildData>("Child").chaosScorePerChaosObject);
         SpawnDebris(type);
