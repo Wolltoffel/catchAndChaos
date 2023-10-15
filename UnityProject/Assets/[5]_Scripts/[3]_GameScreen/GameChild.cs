@@ -132,7 +132,7 @@ abstract class ChildState : State
             currentButtonPrompt = null;
 
             //Handle Animations & Movement
-            gameObject.GetComponent<MovementScript>().DoSlide(interactableObject);
+            gameObject.GetComponent<MovementScript>().DoSlide(interactableObject,GameData.GetData<ChildData>("Child").tempSpeed);
             gameObject.GetComponent<Animator>().SetInteger("ChildIndex", 4);
 
             return new Slide();

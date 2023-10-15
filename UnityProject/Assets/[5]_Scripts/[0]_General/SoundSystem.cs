@@ -49,7 +49,7 @@ public class SoundSystem : MonoBehaviour
         }
     }
     #endregion
-
+    
     private static AudioClip GetAudioClip(string soundName)
     {
         for (int i = 0; i < staticSoundeffects.Length; i++)

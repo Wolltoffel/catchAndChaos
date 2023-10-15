@@ -70,24 +70,45 @@ public class CharacterSelect : MonoBehaviour
     {
         if (activeController)
             ProcessControllerInputsForSelection();
+        
+        ProcessKeyboardInputsForSelection();
 
     }
 
     void ProcessControllerInputsForSelection()
     {
-         if (Input.GetButtonDown(inputDevice+"BumperR") && interactable)
-         {
-            nextController.onClick.Invoke();
-            
-            StartCoroutine(ButtonBlink(nextController,new Vector2(1.15f,1.15f)));
-         }            
-        else if (Input.GetButtonDown(inputDevice+"BumperL") && interactable)
+        if (interactable)
         {
-            prevController.onClick.Invoke();
-            StartCoroutine(ButtonBlink(prevController,new Vector2(1.15f,1.15f)));
+            if (Input.GetButtonDown(inputDevice+"BumperR"))
+            {
+                nextController.onClick.Invoke();
+                StartCoroutine(ButtonBlink(nextController,new Vector2(1.15f,1.15f)));
+            }            
+            else if (Input.GetButtonDown(inputDevice+"BumperL"))
+            {
+                prevController.onClick.Invoke();
+                StartCoroutine(ButtonBlink(prevController,new Vector2(1.15f,1.15f)));
+            }
         }
 
     }
+
+     void ProcessKeyboardInputsForSelection()
+     {
+        if (interactable)
+       {
+            if (Input.GetKeyDown(KeyCode.D) && characters == Characters.Child || characters == Characters.Parent && Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                nextKeyboard.onClick.Invoke();
+                StartCoroutine(ButtonBlink(nextKeyboard,new Vector2(1.15f,1.15f)));
+            }          
+            else if (characters == Characters.Child && Input.GetKeyDown(KeyCode.A)||characters == Characters.Parent && Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                prevKeyboard.onClick.Invoke();
+                StartCoroutine(ButtonBlink(prevKeyboard,new Vector2(-1.15f,1.15f)));
+            }
+        }
+     }
     
     void SwitchCharacter(Step step)
     {
@@ -112,7 +133,7 @@ public class CharacterSelect : MonoBehaviour
     }
     IEnumerator ButtonBlink(Button button,Vector2 targetScale)
     {
-        button.transform.localScale = new Vector2(1,1);
+        //button.transform.localScale = new Vector2(1,1);
         Vector2 currentScale = button.transform.localScale;
         Vector2 startScale = currentScale;
 
