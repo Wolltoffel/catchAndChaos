@@ -31,11 +31,15 @@ public class GameScreenManager : MonoBehaviour
     private PlayTimeData playTimeData;
     private GameInteractableManager interactableManager;
 
+    //IntroAnimation
+    [SerializeField] private GameObject introAnimationPrefab;
+
     void Awake()
     {
         interactableManager = GetComponent<GameInteractableManager>();
 
         instance = this;
+        Cursor.visible = true;
 
         SetupGame();
     }
@@ -86,7 +90,7 @@ public class GameScreenManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
-        GameObject introAnimation = Instantiate(GameData.GetData<UIAnimations>("UIAnimations").introAnimationPrefab);
+        GameObject introAnimation = Instantiate(introAnimationPrefab);
 
         yield return new WaitForSeconds(2);
 

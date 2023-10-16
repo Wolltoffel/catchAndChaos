@@ -605,6 +605,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 1783f4605b4e04f2a84a6098076f4b46, type: 3}
   - {fileID: 8300000, guid: 9a005715e6cdf4cb5a59c93bdc0dcb64, type: 3}
   - {fileID: 8300000, guid: f6ada45734529445db6d7b3b31a5b574, type: 3}
+  introAnimationPrefab: {fileID: 6028349989991199607, guid: f30086a2941c0814080bb9da8b4cfd67, type: 3}
 --- !u!114 &7239997739136708281
 MonoBehaviour:
   m_ObjectHideFlags: 0
