@@ -14,7 +14,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: Bunnyhop Games
   productName: catch & chaos
-  defaultCursor: {fileID: 2800000, guid: f4048650107ce334f89a495843fd64d8, type: 3}
+  defaultCursor: {fileID: 2800000, guid: cc182d50e0c6cc84395cc7b3c1a70cf6, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
   m_ShowUnitySplashScreen: 1
