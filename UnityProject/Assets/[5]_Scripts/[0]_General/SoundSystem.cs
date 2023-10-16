@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 /// <summary>
 /// Manages the sound system of the game.
@@ -8,9 +9,8 @@ using UnityEngine;
 public class SoundSystem : MonoBehaviour
 {
     [Header("Soundeffect Library")]
-    [SerializeField]
-    private Soundeffects[] soundeffects;
-    private static Soundeffects[] staticSoundeffects;
+    [SerializeField] private string SFXFolderPath = "Assets/[7]_Sound/[2]_SFX/Resources/";
+    private static AudioClip[] audioClips;
 
     [Header("Background Music Stuff")]
     private static AudioSource backgroundMusicPlayer;
@@ -22,11 +22,13 @@ public class SoundSystem : MonoBehaviour
     #region Startup
     private void Awake()
     {
+        //Loads sounds into database
+        audioClips = LoadSFX();
+
         // Set up and play the background music
         backgroundMusicPlayer = gameObject.AddComponent<AudioSource>();
         backgroundMusicPlayer.loop = true;
         backgroundMusicPlayer.volume = 0.2f;
-        staticSoundeffects = soundeffects;
     }
 
     private void OnEnable()
@@ -41,31 +43,61 @@ public class SoundSystem : MonoBehaviour
         }
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         if (instance == this)
         {
             instance = null;
         }
     }
-    #endregion
-    
-    private static AudioClip GetAudioClip(string soundName)
-    {
-        for (int i = 0; i < staticSoundeffects.Length; i++)
-        {
-            if (staticSoundeffects[i].Name == soundName)
-            {
-                var t = staticSoundeffects[i].audioClip;
-                if (t == null)
-                {
-                    throw new System.Exception();
-                }
 
-                return staticSoundeffects[i].audioClip;
+    private AudioClip[] LoadSFX()
+    {
+        List<AudioClip> audioClips = new List<AudioClip>();
+
+        if (Directory.Exists(SFXFolderPath))
+        {
+            string[] supportedExtentions = { "*.wav", "*.mp3", "*.ogg", "*.aiff", "*.aif", "*.aac", "*.m4a", "*.flac", "*.mod", "*.xm", "*.it", "*.midi", "*.mid" };
+
+            for (int j = 0; j < supportedExtentions.Length; j++)
+            {
+                string[] filePaths = Directory.GetFiles(SFXFolderPath, supportedExtentions[j]);
+
+                for (int i = 0; i < filePaths.Length; i++)
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(filePaths[i]);
+                    AudioClip audioClip = Resources.Load<AudioClip>(fileName);
+                    audioClips.Add(audioClip);
+                }
             }
         }
-        throw new System.Exception();
+
+        return audioClips.ToArray();
+    }
+    #endregion
+
+    private static AudioClip GetAudioClip(string soundName)
+    {
+        for (int i = 0; i < audioClips.Length; i++)
+        {
+            if (audioClips[i].name == soundName)
+            {
+                return audioClips[i];
+            }
+        }
+
+        return null;
+    }
+
+    #region PlaySound
+    /// <summary>
+    /// Plays the specified sound.
+    /// </summary>
+    /// <param name="soundName">The name of the audioclip to play.</param>
+    public static void PlaySound(string soundName)
+    {
+        AudioClip clip = GetAudioClip(soundName);
+        PlaySound(clip);
     }
 
     /// <summary>
@@ -78,19 +110,34 @@ public class SoundSystem : MonoBehaviour
         instance.StartCoroutine(i);
     }
 
-    public static void PlaySound(string soundName)
+    private IEnumerator _PlaySound(AudioClip audioClip)
     {
-        AudioClip clip = GetAudioClip(soundName);
-        PlaySound(clip);
-    }
+        // Create a new AudioSource component to play the sound
+        AudioSource source = gameObject.AddComponent<AudioSource>();
+        source.clip = audioClip;
+        source.Play();
 
+        // Wait for the sound to finish playing
+        yield return new WaitForSeconds(audioClip.length);
+
+        // Destroy the AudioSource component to clean up
+        Component.Destroy(source);
+    }
+    #endregion
+
+    #region PlayMusic
+    /// <summary>
+    /// Plays the specified music and silences the background music.
+    /// </summary>
+    /// <param name="musicName">The name of the audioclip to play.</param>
+    /// <param name="length">For how long the music should play.</param>
     public static void PlayMusic(string musicName, float length = -1)
     {
         AudioClip clip = GetAudioClip(musicName);
-        PlaySound(clip);
+        PlayMusic(clip, length);
     }
 
-    public static void PlayMusic(AudioClip music, float length = -1)
+    public static void PlayMusic(AudioClip music, float length)
     {
         if (overrideMusicCoroutine != null)
             instance.StopCoroutine(overrideMusicCoroutine);
@@ -122,7 +169,9 @@ public class SoundSystem : MonoBehaviour
         overrideMusicCoroutine = null;
         yield break;
     }
+    #endregion
 
+    #region Background Music
     public static void PlayBackgroundMusic(AudioClip[] musicClips)
     {
         if (musicClips.Length > 0)
@@ -169,37 +218,5 @@ public class SoundSystem : MonoBehaviour
             backgroundMusicPointer = (backgroundMusicPointer + 1) % backgroundMusicDatabase.Length;
         }
     }
-
-
-    private IEnumerator _PlaySound(AudioClip audioClip)
-    {
-        // Create a new AudioSource component to play the sound
-        AudioSource source = gameObject.AddComponent<AudioSource>();
-        source.clip = audioClip;
-        source.Play();
-
-        // Wait for the sound to finish playing
-        yield return new WaitForSeconds(audioClip.length);
-
-        // Destroy the AudioSource component to clean up
-        Component.Destroy(source);
-    }
-}
-
-[System.Serializable]
-class Soundeffects
-{
-    [SerializeField]
-    private string name;
-    public string Name { get
-        {
-            if (name == "" || name.Length == 0)
-            {
-                return audioClip.name;
-            }
-            return name;
-        }
-    }
-
-    public AudioClip audioClip;
+    #endregion
 }
