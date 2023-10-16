@@ -62,7 +62,7 @@ public class CharacterModelSwitcher : MonoBehaviour
         if (runningCouroutines.Count>0||movementInfo.Count>0)
         {
             FinishCoroutines();
-            ActivateFastSlide();
+            //ActivateFastSlide();
         }
         
         yield return new WaitUntil(()=>runningCouroutines.Count<=0 && movementInfo.Count<=0);
