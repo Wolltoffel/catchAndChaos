@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class GameScreenManager : MonoBehaviour
 {
@@ -60,6 +61,14 @@ public class GameScreenManager : MonoBehaviour
 
         ResetTimeCounter();
 
+        ////Enable Background Blurr
+        //var profile = Camera.main.GetComponentInChildren<PostProcessVolume>().profile;
+        //if(profile.TryGetSettings(out DepthOfField depthOfField))
+        //{
+        //    depthOfField.enabled.value = true;
+        //}
+
+
         StartCoroutine(_SetupGame());
     }
 
@@ -74,12 +83,18 @@ public class GameScreenManager : MonoBehaviour
 
     private IEnumerator BeforeGameStart()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         GameObject introAnimation = Instantiate(GameData.GetData<UIAnimations>("UIAnimations").introAnimationPrefab);
 
         yield return new WaitForSeconds(2);
 
+        ////Disable Background Blurr
+        //var profile = Camera.main.GetComponentInChildren<PostProcessVolume>().profile;
+        //if (profile.TryGetSettings(out DepthOfField depthOfField))
+        //{
+        //    depthOfField.enabled.value = false;
+        //}
         Destroy(introAnimation);
     }
 
