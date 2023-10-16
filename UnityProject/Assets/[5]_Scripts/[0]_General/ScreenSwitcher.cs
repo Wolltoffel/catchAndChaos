@@ -28,6 +28,9 @@ public class ScreenSwitcher : MonoBehaviour
     private static ScreenSwitcher instance;
     static Dictionary<ScreenType, GameObject> activeScreenDataBase = new Dictionary<ScreenType, GameObject>();
 
+    public static GameObject currentScreen;
+    public static float lastTransitionTime = 0;
+
     void Awake()
     {
         if (instance==null)
@@ -46,7 +49,7 @@ public class ScreenSwitcher : MonoBehaviour
 
     public void SetStartScreen()
     {   
-        ActivateScreen(startScreen);
+        currentScreen = ActivateScreen(startScreen);
     }
 
     public static void SwitchScreen(ScreenType screen, LoadingScreenType type = LoadingScreenType.Compact)
@@ -61,19 +64,22 @@ public class ScreenSwitcher : MonoBehaviour
             switch (type)
             {
                 case LoadingScreenType.Normal:
-                    LoadingScreenManager manager = Instantiate(loadingScreen).GetComponent<LoadingScreenManager>();
-                    yield return new WaitForSeconds(manager.loadTime - 2);
+                    UIAnimationLengthManager manager = Instantiate(loadingScreen).GetComponent<UIAnimationLengthManager>();
+                    yield return new WaitForSeconds(manager.animationLength / 2);
+                    lastTransitionTime = manager.animationLength / 2;
                     break;
                 case LoadingScreenType.Compact:
-                    Instantiate(loadingScreenCompact).GetComponent<LoadingScreenManager>();
-                    yield return new WaitForSeconds(0.25f);
+                    manager = Instantiate(loadingScreenCompact).GetComponent<UIAnimationLengthManager>();
+                    yield return new WaitForSeconds(manager.animationLength / 2);
+                    lastTransitionTime = manager.animationLength / 2;
                     break;
                 case LoadingScreenType.Off:
+                    lastTransitionTime = 0;
                     break;
             }
         }
         instance.DeactivateAllScreens();
-        instance.ActivateScreen(screen);
+        currentScreen = instance.ActivateScreen(screen);
     }
 
     public static void OutsourceCoroutine(IEnumerator enumerator)
@@ -86,12 +92,13 @@ public class ScreenSwitcher : MonoBehaviour
         instance.ActivateScreen(screen);
     }
 
-    void ActivateScreen(ScreenType screen){
+    GameObject ActivateScreen(ScreenType screen){
         
         GameObject screenByName  = GetScreenByName(screen);
         GameObject newScreen = Instantiate(screenByName);
         newScreen.name = screenByName.name+ "_instance";
         activeScreenDataBase.TryAdd(screen, newScreen);
+        return newScreen;
     }
 
     public static void DeactivateScreen(ScreenType screen)
