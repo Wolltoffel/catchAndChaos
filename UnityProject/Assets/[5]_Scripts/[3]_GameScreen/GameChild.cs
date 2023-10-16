@@ -124,6 +124,7 @@ abstract class ChildState : State
             ventRollup = interactableObject.AddComponent<VentRollup>();
 
         ventRollup.OpenVent();
+        //SoundSystem.PlaySound("ventOpen");
             
         if (Input.GetButtonDown(inputButton))
         {
@@ -132,8 +133,11 @@ abstract class ChildState : State
             currentButtonPrompt = null;
 
             //Handle Animations & Movement
-            gameObject.GetComponent<MovementScript>().DoSlide(interactableObject,GameData.GetData<ChildData>("Child").tempSpeed);
+            gameObject.GetComponent<MovementScript>().DoSlide(interactableObject,0.4f/GameData.GetData<ChildData>("Child").tempSpeed);
             gameObject.GetComponent<Animator>().SetInteger("ChildIndex", 4);
+
+            //Play Sound
+            //SoundSystem.PlaySound("childSlide");
 
             return new Slide();
         }

@@ -182,11 +182,11 @@ public class MovementScript : MonoBehaviour
     #endregion
 
     #region Slide
-    public void DoSlide(GameObject vent, float slideSpeed = 1,float slideDuration = 0.4f)
+    public void DoSlide(GameObject vent,float slideDuration = 0.4f)
     {
-        coroutine = StartCoroutine(_DoSlide(vent,slideSpeed, slideDuration));
+        coroutine = StartCoroutine(_DoSlide(vent, slideDuration));
     }
-    private IEnumerator _DoSlide(GameObject vent, float slideSpeed,float slideDuration)
+    private IEnumerator _DoSlide(GameObject vent,float slideDuration)
     {
         //characterController.enabled = false;
         //rigidbody.isKinematic = true;
@@ -202,8 +202,8 @@ public class MovementScript : MonoBehaviour
 
         while (time < 0.1f)
         {
-            transform.position = Vector3.Lerp(originPos, targetPos, time * 10*slideSpeed);
-            transform.rotation = Quaternion.Slerp(originRot, targetRot, time * 10*slideSpeed);
+            transform.position = Vector3.Lerp(originPos, targetPos, time * 10);
+            transform.rotation = Quaternion.Slerp(originRot, targetRot, time * 10);
 
             time += Time.deltaTime * Time.timeScale;
             yield return null;
@@ -215,7 +215,7 @@ public class MovementScript : MonoBehaviour
 
         while (time < slideDuration)
         {
-            transform.Translate(slideSpeed*slideDir * Time.timeScale * 500 * Time.deltaTime * movementSpeed / 10, Space.World);
+            transform.Translate(slideDir * Time.timeScale * 500 * Time.deltaTime * movementSpeed / 10, Space.World);
             time += Time.deltaTime * Time.timeScale;
 
             yield return null;
