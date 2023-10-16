@@ -64,8 +64,12 @@ public class ScreenSwitcher : MonoBehaviour
             switch (type)
             {
                 case LoadingScreenType.Normal:
+                    UIAnimationLengthManager manager = Instantiate(loadingScreen).GetComponent<UIAnimationLengthManager>();
+                    yield return new WaitForSeconds(manager.animationLength / 2);
+                    lastTransitionTime = manager.animationLength / 2;
+                    break;
                 case LoadingScreenType.Compact:
-                    UIAnimationLengthManager manager = Instantiate(loadingScreenCompact).GetComponent<UIAnimationLengthManager>();
+                    manager = Instantiate(loadingScreenCompact).GetComponent<UIAnimationLengthManager>();
                     yield return new WaitForSeconds(manager.animationLength / 2);
                     lastTransitionTime = manager.animationLength / 2;
                     break;

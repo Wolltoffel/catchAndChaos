@@ -66,14 +66,6 @@ public class GameScreenManager : MonoBehaviour
 
         ResetTimeCounter();
 
-        //Enable Background Blurr
-        var profile = Camera.main.gameObject.GetComponentInChildren<Volume>().profile;
-        if (profile.TryGet(out DepthOfField depthOfField))
-        {
-            depthOfField.active = true;
-        }
-
-
         StartCoroutine(_SetupGame());
     }
 
@@ -88,21 +80,33 @@ public class GameScreenManager : MonoBehaviour
 
     private IEnumerator BeforeGameStart()
     {
-        yield return new WaitForSeconds(ScreenSwitcher.lastTransitionTime + 0.5f);
+        PlayerData child = GameData.GetData<ChildData>("Child");
+        PlayerData parent = GameData.GetData<ParentData>("Parent");
 
-        GameObject introAnimation = Instantiate(introAnimationPrefab);
-        introAnimation.transform.parent = ScreenSwitcher.currentScreen.transform;
-        UIAnimationLengthManager animationLengthManager = introAnimation.GetComponent<UIAnimationLengthManager>();
-
-        yield return new WaitForSeconds(animationLengthManager.animationLength);
-
-        //Disable Background Blurr
-        var profile = Camera.main.gameObject.GetComponentInChildren<Volume>().profile;
-        if (profile.TryGet(out DepthOfField depthOfField))
+        if (child.tempScore == 0 && parent.tempScore == 0)
         {
-            depthOfField.active = false;
+            //Enable Background Blurr
+            var profile = Camera.main.gameObject.GetComponentInChildren<Volume>().profile;
+            if (profile.TryGet(out DepthOfField depthOfField))
+            {
+                depthOfField.active = true;
+            }
+
+            yield return new WaitForSeconds(ScreenSwitcher.lastTransitionTime + 0.5f);
+
+            GameObject introAnimation = Instantiate(introAnimationPrefab);
+            introAnimation.transform.parent = ScreenSwitcher.currentScreen.transform;
+            UIAnimationLengthManager animationLengthManager = introAnimation.GetComponent<UIAnimationLengthManager>();
+
+            yield return new WaitForSeconds(animationLengthManager.animationLength);
+
+            //Disable Background Blurr
+            if (profile.TryGet(out depthOfField))
+            {
+                depthOfField.active = false;
+            }
+            Destroy(introAnimation);
         }
-        Destroy(introAnimation);
     }
 
     private void StartGame()
