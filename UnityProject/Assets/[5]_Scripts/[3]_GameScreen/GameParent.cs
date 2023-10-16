@@ -368,14 +368,21 @@ class ParentCatch : ParentBaseState
         {
             if (colliders[i].gameObject.layer == 8)
             {
-                movement.StopCatch();
+                if (!Physics.Linecast(
+                    gameObject.transform.position + Vector3.up,
+                    CharacterInstantiator.GetActiveCharacter(Characters.Child).transform.position + Vector3.up,
+                    LayerMask.GetMask("Walls")
+                    ))
+                {
+                    movement.StopCatch();
 
-                GameScreenManager.EndGame(EndCondition.Catch);
+                    GameScreenManager.EndGame(EndCondition.Catch);
 
-                PlayTimeData data = GameData.GetData<PlayTimeData>("PlayTimeData");
-                data.hasGameEnded = true;
+                    PlayTimeData data = GameData.GetData<PlayTimeData>("PlayTimeData");
+                    data.hasGameEnded = true;
 
-                return new ParentWin();
+                    return new ParentWin();
+                }
             }
         }
 
