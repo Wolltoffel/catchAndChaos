@@ -73,7 +73,8 @@ MonoBehaviour:
   movementSpeed: 0.2
   rotationSpeed: 20
   pushForce: 1000
-  minWallDistance: 1
+  character: 1
+  minWallDistanceParent: 0.75
 --- !u!54 &9151529786586322899
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -121,7 +122,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 0.7
-  m_Radius: 0.2
+  m_Radius: 0.14
   m_SlopeLimit: 0
   m_StepOffset: 0
   m_SkinWidth: 0.08

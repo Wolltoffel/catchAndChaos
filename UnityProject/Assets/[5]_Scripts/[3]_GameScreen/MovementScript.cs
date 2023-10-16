@@ -21,7 +21,9 @@ public class MovementScript : MonoBehaviour
     [SerializeField] private float movementSpeed = 10f;
     [SerializeField] private float rotationSpeed = 50f;
     [SerializeField] private float pushForce = 5f;
-    private float minWallDistance = 0.7f;
+    [SerializeField] Characters character = Characters.Child;
+    private float minWallDistanceChild = 0.7f;
+    private float minWallDistanceParent = 0.77f;
     private float catchDistance = 5;
 
     private void Awake()
@@ -142,7 +144,7 @@ public class MovementScript : MonoBehaviour
 
         RaycastHit hit;
         Physics.Linecast(position + Vector3.up, position + Vector3.up + Vector2ToVector3(movement.normalized) * 4, out hit, LayerMask.GetMask("Walls"));
-        if (hit.collider != null && (hit.collider.gameObject.tag == "Walls" || hit.collider.gameObject.tag == "Door" || hit.collider.gameObject.tag == "Vent"))
+        if (hit.collider != null /* && (hit.collider.gameObject.tag == "Walls" || hit.collider.gameObject.tag == "Door" || hit.collider.gameObject.tag == "Vent")*/)
         {
             Vector2 ray = Vector3ToVector2(hit.point - position);
             Vector3 dir = hit.point - position;
@@ -152,7 +154,7 @@ public class MovementScript : MonoBehaviour
 
             float distance = ray.magnitude * Vector2.Dot(ray.normalized, normal2.normalized);
             distance = Mathf.Abs(distance);
-            distance = Mathf.Clamp01((distance - minWallDistance));
+            distance = Mathf.Clamp01(distance - (minWallDistanceChild * (((int)character + 1)%2)) - (minWallDistanceParent * ((int)character)));
             float influence = 1 - distance;
 
             float moveMagnitude = movement.magnitude;
@@ -244,7 +246,7 @@ public class MovementScript : MonoBehaviour
     {
         coroutine = StartCoroutine(_DoCatch());
     }
-    private IEnumerator _DoCatch(float catchDuration = 1f)
+    private IEnumerator _DoCatch(float catchDuration = 0.5f)
     {
         float yValue = transform.position.y;
         float time = 0;
@@ -255,7 +257,7 @@ public class MovementScript : MonoBehaviour
         while (time < catchDuration)
         {
             float multiplicator = -Mathf.Pow((time + 0.5f), 8) + 1;
-            Vector3 movement = catchDir * (Mathf.Clamp01(multiplicator)) * Time.deltaTime * 5;
+            Vector3 movement = catchDir * (Mathf.Clamp01(multiplicator)) * Time.deltaTime * 8;
             characterController.Move(movement * Time.timeScale);
 
             transform.position = new Vector3(transform.position.x, yValue, transform.position.z);
