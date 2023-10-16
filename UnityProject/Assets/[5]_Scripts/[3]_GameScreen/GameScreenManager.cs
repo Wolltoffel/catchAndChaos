@@ -88,11 +88,13 @@ public class GameScreenManager : MonoBehaviour
 
     private IEnumerator BeforeGameStart()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(ScreenSwitcher.lastTransitionTime + 0.5f);
 
         GameObject introAnimation = Instantiate(introAnimationPrefab);
+        introAnimation.transform.parent = ScreenSwitcher.currentScreen.transform;
+        UIAnimationLengthManager animationLengthManager = introAnimation.GetComponent<UIAnimationLengthManager>();
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(animationLengthManager.animationLength);
 
         //Disable Background Blurr
         var profile = Camera.main.gameObject.GetComponentInChildren<Volume>().profile;

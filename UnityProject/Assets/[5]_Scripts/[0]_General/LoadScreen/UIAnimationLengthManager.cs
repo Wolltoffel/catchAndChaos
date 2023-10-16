@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 
-public class LoadingScreenManager : MonoBehaviour
+public class UIAnimationLengthManager : MonoBehaviour
 {
-    public float loadTime = 2f;
+    public float animationLength = 2f;
 
     [Header("Local References")]
     private Animator animator;
@@ -17,8 +17,8 @@ public class LoadingScreenManager : MonoBehaviour
             animator = GetComponentInChildren<Animator>();
         }
 
-        loadTime = animator.GetCurrentAnimatorStateInfo(0).length;
+        animationLength = animator.GetCurrentAnimatorStateInfo(0).length;
 
-        Destroy(gameObject, loadTime);
+        Destroy(gameObject, animationLength);
     }
 }
