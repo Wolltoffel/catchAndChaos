@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: UIAnimations
   m_EditorClassIdentifier: 
   key: UIAnimations
-  introAnimationPrefab: {fileID: 6028349989991199607, guid: a524271d8d2f644d68accaf55ee07e8c, type: 3}
+  introAnimationPrefab: {fileID: 6028349989991199607, guid: f30086a2941c0814080bb9da8b4cfd67, type: 3}
