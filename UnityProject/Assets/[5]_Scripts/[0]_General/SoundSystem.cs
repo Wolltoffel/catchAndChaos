@@ -8,10 +8,6 @@ using System.IO;
 /// </summary>
 public class SoundSystem : MonoBehaviour
 {
-    [Header("Soundeffect Library")]
-    [SerializeField] private string SFXFolderPath = "Assets/[7]_Sound/[2]_SFX/Resources/";
-    private static AudioClip[] audioClips;
-
     [Header("Background Music Stuff")]
     private static AudioSource backgroundMusicPlayer;
     private static Coroutine backgroundMusicCoroutine;
@@ -22,9 +18,6 @@ public class SoundSystem : MonoBehaviour
     #region Startup
     private void Awake()
     {
-        //Loads sounds into database
-        audioClips = LoadSFX();
-
         // Set up and play the background music
         backgroundMusicPlayer = gameObject.AddComponent<AudioSource>();
         backgroundMusicPlayer.loop = true;
@@ -50,43 +43,11 @@ public class SoundSystem : MonoBehaviour
             instance = null;
         }
     }
-
-    private AudioClip[] LoadSFX()
-    {
-        List<AudioClip> audioClips = new List<AudioClip>();
-
-        if (Directory.Exists(SFXFolderPath))
-        {
-            string[] supportedExtentions = { "*.wav", "*.mp3", "*.ogg", "*.aiff", "*.aif", "*.aac", "*.m4a", "*.flac", "*.mod", "*.xm", "*.it", "*.midi", "*.mid" };
-
-            for (int j = 0; j < supportedExtentions.Length; j++)
-            {
-                string[] filePaths = Directory.GetFiles(SFXFolderPath, supportedExtentions[j]);
-
-                for (int i = 0; i < filePaths.Length; i++)
-                {
-                    string fileName = Path.GetFileNameWithoutExtension(filePaths[i]);
-                    AudioClip audioClip = Resources.Load<AudioClip>(fileName);
-                    audioClips.Add(audioClip);
-                }
-            }
-        }
-
-        return audioClips.ToArray();
-    }
     #endregion
 
     private static AudioClip GetAudioClip(string soundName)
     {
-        for (int i = 0; i < audioClips.Length; i++)
-        {
-            if (audioClips[i].name == soundName)
-            {
-                return audioClips[i];
-            }
-        }
-
-        return null;
+        return Resources.Load<AudioClip>(soundName);
     }
 
     #region PlaySound
