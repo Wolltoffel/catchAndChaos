@@ -53,7 +53,7 @@ public class BackButton : MonoBehaviour
 
     void GoBack()
     {
-        ScreenSwitcher.SwitchScreen(screenToJumpTo);
+        ScreenSwitcher.SwitchScreen(screenToJumpTo, ScreenSwitcher.LoadingScreenType.Off);
     }
 
     public void SetScreenScreenToJumpTo(ScreenType screenToJumpTo)

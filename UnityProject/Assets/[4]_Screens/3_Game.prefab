@@ -2313,7 +2313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyTimeLeft: 0
-  type: 0
+  type: 1
   prevShader: {fileID: 0}
 --- !u!1 &4674409222175303575 stripped
 GameObject:
@@ -2438,7 +2438,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyTimeLeft: 0
-  type: 0
+  type: 1
   prevShader: {fileID: 0}
 --- !u!1 &8084719503401196756 stripped
 GameObject:
@@ -2458,7 +2458,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyTimeLeft: 0
-  type: 0
+  type: 1
   prevShader: {fileID: 0}
 --- !u!1 &8646185355694084633 stripped
 GameObject:
@@ -2498,5 +2498,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyTimeLeft: 0
-  type: 0
+  type: 1
   prevShader: {fileID: 0}

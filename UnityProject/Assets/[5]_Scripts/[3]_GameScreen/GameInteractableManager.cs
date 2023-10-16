@@ -186,7 +186,7 @@ public class GameInteractableManager : MonoBehaviour
         {
             for (int j = i+1; j < list.Count; j++)
             {
-                if (list[i].transform.position == list[i].transform.position)
+                if (list[i].transform.position == list[j].transform.position)
                 {
                     var obj = FindChild(list[i], list[j]);
                     if (obj != null)

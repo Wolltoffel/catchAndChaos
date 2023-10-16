@@ -47,6 +47,9 @@ public class SelectScreenManager : MonoBehaviour
     List<string> setInputDevices = new List<string>();
     MenuState child,parent;
     SelectScreenData parent_selectScreenData, child_SelectScreenData;
+
+    bool enableGamescreen = true;
+
     void Start()
     {   
         //Adjust Camera
@@ -73,9 +76,10 @@ public class SelectScreenManager : MonoBehaviour
         child = child.UpdateMenu();
         parent = parent.UpdateMenu();
 
-        if (child is ReadyToSwitchScreen && parent is ReadyToSwitchScreen)
+        if (child is ReadyToSwitchScreen && parent is ReadyToSwitchScreen && enableGamescreen)
         {
-            ScreenSwitcher.SwitchScreen(ScreenType.GameScreen);
+            ScreenSwitcher.SwitchScreen(ScreenType.GameScreen, ScreenSwitcher.LoadingScreenType.Normal);
+            enableGamescreen = false;
         }
 
         if (child is CustomiseCharacterSingle | parent is CustomiseCharacterSingle)

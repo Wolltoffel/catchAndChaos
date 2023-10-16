@@ -16,6 +16,7 @@ public class ScreenSwitcher : MonoBehaviour
 
     [Header("Loading Screen")]
     [SerializeField] GameObject loadingScreen;
+    [SerializeField] GameObject loadingScreenCompact;
 
     [Header ("Screen Prefabs")]
 
@@ -48,17 +49,28 @@ public class ScreenSwitcher : MonoBehaviour
         ActivateScreen(startScreen);
     }
 
-    public static void SwitchScreen(ScreenType screen, bool activateLoad = true)
+    public static void SwitchScreen(ScreenType screen, LoadingScreenType type = LoadingScreenType.Compact)
     {
-        instance.StartCoroutine(instance._SwitchScreen(screen, activateLoad));
+        instance.StartCoroutine(instance._SwitchScreen(screen, type));
     }
 
-    public IEnumerator _SwitchScreen(ScreenType screen ,bool activateLoad)
+    public IEnumerator _SwitchScreen(ScreenType screen, LoadingScreenType type)
     {
-        if (loadingScreen != null && activateLoad)
+        if (loadingScreen != null)
         {
-            LoadingScreenManager manager = Instantiate(loadingScreen).GetComponent<LoadingScreenManager>();
-            yield return new WaitForSeconds(manager.loadTime-2);
+            switch (type)
+            {
+                case LoadingScreenType.Normal:
+                    LoadingScreenManager manager = Instantiate(loadingScreen).GetComponent<LoadingScreenManager>();
+                    yield return new WaitForSeconds(manager.loadTime - 2);
+                    break;
+                case LoadingScreenType.Compact:
+                    Instantiate(loadingScreenCompact).GetComponent<LoadingScreenManager>();
+                    yield return new WaitForSeconds(0.25f);
+                    break;
+                case LoadingScreenType.Off:
+                    break;
+            }
         }
         instance.DeactivateAllScreens();
         instance.ActivateScreen(screen);
@@ -79,7 +91,7 @@ public class ScreenSwitcher : MonoBehaviour
         GameObject screenByName  = GetScreenByName(screen);
         GameObject newScreen = Instantiate(screenByName);
         newScreen.name = screenByName.name+ "_instance";
-        activeScreenDataBase.TryAdd(screen,newScreen);
+        activeScreenDataBase.TryAdd(screen, newScreen);
     }
 
     public static void DeactivateScreen(ScreenType screen)
@@ -122,6 +134,13 @@ public class ScreenSwitcher : MonoBehaviour
         }
 
         throw new SystemException ($"No screen with the name {screen} existent.");
-    } 
+    }
+
+    public enum LoadingScreenType
+    {
+        Normal,
+        Compact,
+        Off
+    }
 
 }
