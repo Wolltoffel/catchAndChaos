@@ -7,7 +7,6 @@ using UnityEngine;
 public class Plushie : MonoBehaviour
 {
     public bool IsThrowDone { get => coroutine == null; }
-
     private Coroutine coroutine;
     private Transform handAnchor;
     private Rigidbody _rigidbody;
@@ -29,7 +28,8 @@ public class Plushie : MonoBehaviour
         }
 
         gameObject.layer = 6;
-        //Debug.Log(gameObject.layer);
+        
+        StartCoroutine(MakePlushieBlink());
     }
 
     public void ThrowPlushie(Vector3 targetDir)
@@ -103,5 +103,45 @@ public class Plushie : MonoBehaviour
         }
         isActive = false;
     }
+
+    float waitBetween = 3;
+    IEnumerator MakePlushieBlink()
+    {
+        while(true)
+        {
+            yield return Blink();
+            yield return new WaitForSeconds(waitBetween);
+        }
+    }
+
+    IEnumerator Blink()
+    {
+        float startTime = Time.time;
+        float duration = 0.01f;
+        float target = 2*Mathf.PI;
+        float currentVal = 0;
+        while(target>=currentVal)
+        {
+            float t = Time.time-startTime/(1/duration);
+            currentVal = t;
+            float fresnelValue = Mathf.Sin(currentVal)+1;
+            Debug.Log (fresnelValue);
+            AdjustFresnelInput(fresnelValue*5);
+            yield return null;
+        }
+    }
+
+    void AdjustFresnelInput(float input)
+    {
+        Material[] materials = GetComponent<Renderer>().materials;
+
+        for (int i = 0; i < materials.Length; i++)
+        {
+            if (materials[i].name.Equals( "HighlightPlushies"))
+                materials[i].SetFloat("_FresnelInput",input);
+        }
+    }
+
+
 
 }
