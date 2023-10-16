@@ -11,7 +11,7 @@ public class CharacterSelect : MonoBehaviour
     [SerializeField] Button prevKeyboard,nextKeyboard;
     [SerializeField] ScrollSelection scrollSelection;
 
-    bool interactable;
+    bool interactable = false;
 
     string inputDevice;
     bool activeController;
@@ -52,10 +52,12 @@ public class CharacterSelect : MonoBehaviour
             buttonSwitcher = gameObject.AddComponent<ButtonSwitcher>();
         
         buttonSwitcher.enabled = interactableInput;
-    
-            
+
 
         scrollSelection.gameObject.SetActive(interactableInput);
+
+        if (interactableInput)
+            StartCoroutine(BlockInputs());
     }
 
     public void SetData(string inputDevice, Characters characters)
@@ -74,8 +76,8 @@ public class CharacterSelect : MonoBehaviour
     {
         if (activeController)
             ProcessControllerInputsForSelection();
-        
-        ProcessKeyboardInputsForSelection();
+        else
+            ProcessKeyboardInputsForSelection();
 
     }
 
