@@ -31,7 +31,6 @@ public class CharacterModelSwitcher : MonoBehaviour
     [SerializeField] float modelScale;
     [SerializeField] Color backgroundSilhouetteColor;
 
-
     Vector3 circleCenter;
     int activeModelIndex;
     int amountOfAssets;
@@ -46,7 +45,7 @@ public class CharacterModelSwitcher : MonoBehaviour
     List<IEnumerator> runningCouroutines = new List<IEnumerator>();
     List<GameObject> spawnedCharacterModels = new List<GameObject>();
 
-    Dictionary<int,Tuple<Transform,Vector3,bool,bool>> movementInfo;
+    Dictionary<int,Tuple<Transform,Vector3,bool,bool>> movementInfo = new Dictionary<int, Tuple<Transform, Vector3, bool, bool>>();
 
 
     public void Slide (Step step)
@@ -60,13 +59,13 @@ public class CharacterModelSwitcher : MonoBehaviour
     IEnumerator SlideOperation(int slideDir) 
     {   
 
-        if (runningCouroutines.Count>0)
+        if (runningCouroutines.Count>0||movementInfo.Count>0)
         {
             FinishCoroutines();
-            //ActivateFastSlide();
+            ActivateFastSlide();
         }
         
-        yield return new WaitUntil(()=>runningCouroutines.Count<=0);
+        yield return new WaitUntil(()=>runningCouroutines.Count<=0 && movementInfo.Count<=0);
 
         activeModel = spawnedCharacterModels[((spawnedCharacterModels.Count/2)-(slideDir))];
         CharacterInstantiator.SetActiveCharacter(characters,activeModel);
@@ -388,6 +387,14 @@ public class CharacterModelSwitcher : MonoBehaviour
         }
 
         spawnedCharacterModels.Clear(); 
+    }
+
+    public bool ReadyToReceiveInputs()
+    {
+        if (runningCouroutines.Count<=0 || movementInfo.Count<=0)
+            return false;
+
+        return true;
     }
 
 

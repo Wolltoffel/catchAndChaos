@@ -17,6 +17,8 @@ public class CharacterSelect : MonoBehaviour
     bool activeController;
     ButtonSwitcher buttonSwitcher;
 
+    bool blockInputs;
+
     public void Awake()
     {   
         //Add Listener to all Button Variants        
@@ -32,6 +34,8 @@ public class CharacterSelect : MonoBehaviour
         buttonSwitcher.buttons.Add(next);
 
         scrollSelection.SetCharacter(characters);
+
+        StartCoroutine(BlockInputs());
 
     }
 
@@ -95,17 +99,21 @@ public class CharacterSelect : MonoBehaviour
 
      void ProcessKeyboardInputsForSelection()
      {
-        if (interactable)
+        if (interactable && !blockInputs)
        {
             if (Input.GetKeyDown(KeyCode.D) && characters == Characters.Child || characters == Characters.Parent && Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                nextKeyboard.onClick.Invoke();
+            {   
+                if (nextKeyboard!=null)
+                    nextKeyboard.onClick?.Invoke();
                 StartCoroutine(ButtonBlink(nextKeyboard,new Vector2(1.15f,1.15f)));
+                StartCoroutine(BlockInputs());
             }          
             else if (characters == Characters.Child && Input.GetKeyDown(KeyCode.A)||characters == Characters.Parent && Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                prevKeyboard.onClick.Invoke();
+                if (prevKeyboard!=null)
+                    prevKeyboard.onClick?.Invoke();
                 StartCoroutine(ButtonBlink(prevKeyboard,new Vector2(-1.15f,1.15f)));
+                StartCoroutine(BlockInputs());
             }
         }
      }
@@ -130,6 +138,13 @@ public class CharacterSelect : MonoBehaviour
         }
         return false;
 
+    }
+
+    IEnumerator BlockInputs()
+    {
+            blockInputs = true;
+            yield return new WaitForSeconds(0.001f);
+            blockInputs = false;
     }
     IEnumerator ButtonBlink(Button button,Vector2 targetScale)
     {
