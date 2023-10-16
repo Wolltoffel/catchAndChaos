@@ -82,7 +82,7 @@ Material:
     - _ZWriteControl: 0
     - _border: 0
     m_Colors:
-    - _MainColor: {r: 0.03773582, g: 0.03773582, b: 0.03773582, a: 1}
-    - _Position_1: {r: 1870.3905, g: 1046.0048, b: 0, a: 0}
-    - _Position_2: {r: 1966.4683, g: 1167.5548, b: 0, a: 0}
+    - _MainColor: {r: 0.9339623, g: 0.81996053, b: 0.39208794, a: 1}
+    - _Position_1: {r: 1988.2104, g: 1055.0718, b: 0, a: 0}
+    - _Position_2: {r: 1855.9865, g: 1159.1544, b: 0, a: 0}
   m_BuildTextureStacks: []

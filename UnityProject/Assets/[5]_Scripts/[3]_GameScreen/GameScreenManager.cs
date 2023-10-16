@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class GameScreenManager : MonoBehaviour
 {
@@ -61,12 +62,12 @@ public class GameScreenManager : MonoBehaviour
 
         ResetTimeCounter();
 
-        ////Enable Background Blurr
-        //var profile = Camera.main.GetComponentInChildren<PostProcessVolume>().profile;
-        //if(profile.TryGetSettings(out DepthOfField depthOfField))
-        //{
-        //    depthOfField.enabled.value = true;
-        //}
+        //Enable Background Blurr
+        var profile = Camera.main.gameObject.GetComponentInChildren<Volume>().profile;
+        if (profile.TryGet(out DepthOfField depthOfField))
+        {
+            depthOfField.active = true;
+        }
 
 
         StartCoroutine(_SetupGame());
@@ -89,12 +90,12 @@ public class GameScreenManager : MonoBehaviour
 
         yield return new WaitForSeconds(2);
 
-        ////Disable Background Blurr
-        //var profile = Camera.main.GetComponentInChildren<PostProcessVolume>().profile;
-        //if (profile.TryGetSettings(out DepthOfField depthOfField))
-        //{
-        //    depthOfField.enabled.value = false;
-        //}
+        //Disable Background Blurr
+        var profile = Camera.main.gameObject.GetComponentInChildren<Volume>().profile;
+        if (profile.TryGet(out DepthOfField depthOfField))
+        {
+            depthOfField.active = false;
+        }
         Destroy(introAnimation);
     }
 
