@@ -246,7 +246,7 @@ public class MovementScript : MonoBehaviour
     {
         coroutine = StartCoroutine(_DoCatch());
     }
-    private IEnumerator _DoCatch(float catchDuration = 0.5f)
+    private IEnumerator _DoCatch(float catchDuration = 0.6f)
     {
         float yValue = transform.position.y;
         float time = 0;
@@ -256,8 +256,8 @@ public class MovementScript : MonoBehaviour
 
         while (time < catchDuration)
         {
-            float multiplicator = -Mathf.Pow((time + 0.5f), 8) + 1;
-            Vector3 movement = catchDir * (Mathf.Clamp01(multiplicator)) * Time.deltaTime * 8;
+            float multiplicator = -Mathf.Pow((time+ 0.5f), 8) + 1;
+            Vector3 movement = catchDir * (Mathf.Clamp01(multiplicator)) * Time.deltaTime * 4 * (1/catchDuration);
             characterController.Move(movement * Time.timeScale);
 
             transform.position = new Vector3(transform.position.x, yValue, transform.position.z);
