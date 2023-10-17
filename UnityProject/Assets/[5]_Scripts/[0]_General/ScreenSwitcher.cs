@@ -93,6 +93,11 @@ public class ScreenSwitcher : MonoBehaviour
         instance.ActivateScreen(screen);
     }
 
+    public static void AddScreen(ScreenType screen, out GameObject screenInstance)
+    {
+        screenInstance = instance.ActivateScreen(screen);
+    }
+
     GameObject ActivateScreen(ScreenType screen){
         
         GameObject screenByName  = GetScreenByName(screen);

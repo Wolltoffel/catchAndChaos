@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class BackButton : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class BackButton : MonoBehaviour
     Button button;
     Image image;
     public List<string> ignoredInputs = new List<string>();
+
+    bool overwriteGoBack;
 
     void  Awake()
     {
@@ -52,8 +55,14 @@ public class BackButton : MonoBehaviour
     }
 
     void GoBack()
+    {   if(!overwriteGoBack)
+            ScreenSwitcher.SwitchScreen(screenToJumpTo, ScreenSwitcher.LoadingScreenType.Off);
+    }
+
+    public void OverwriteButtonFunction(UnityAction action)
     {
-        ScreenSwitcher.SwitchScreen(screenToJumpTo, ScreenSwitcher.LoadingScreenType.Off);
+        overwriteGoBack = true;
+        button.onClick.AddListener(action);
     }
 
     public void SetScreenScreenToJumpTo(ScreenType screenToJumpTo)

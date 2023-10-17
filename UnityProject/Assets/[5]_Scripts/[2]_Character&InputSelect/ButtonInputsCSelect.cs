@@ -4,23 +4,32 @@ using UnityEngine;
 
 public class ButtonInputsCSelect : MonoBehaviour
 {
-    [SerializeField] GameObject controller,keyboard;
+    [SerializeField] GameObject controllerScheme,keyboardScheme;
     
+
+    void Awake()
+    {
+        SwitchLayouts();
+    }
 
     // Update is called once per frame
     void Update()
     {
+        SwitchLayouts();
+    }
+
+    void SwitchLayouts()
+    {
         if (GameData.GetData<LastInputDeviceData>("LastInputDeviceData").inputDevice == InputDevice.Keyboard)
         {
-            controller.SetActive(false);
-            keyboard.SetActive(true);
+            controllerScheme.SetActive(false);
+            keyboardScheme.SetActive(true);
         }
             
         else
         {
-            keyboard.SetActive(false);
-            controller.SetActive(true);
-        }
-            
+            keyboardScheme.SetActive(false);
+            controllerScheme.SetActive(true);
+        } 
     }
 }
