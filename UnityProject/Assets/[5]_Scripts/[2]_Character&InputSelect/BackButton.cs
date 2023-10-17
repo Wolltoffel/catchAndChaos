@@ -55,20 +55,21 @@ public class BackButton : MonoBehaviour
     }
 
     void GoBack()
-    {   if(!overwriteGoBack)
-            ScreenSwitcher.SwitchScreen(screenToJumpTo, ScreenSwitcher.LoadingScreenType.Off);
+    {   if (!overwriteGoBack)
+        {
+            ScreenSwitcher.LoadingScreenType type = ScreenSwitcher.LoadingScreenType.Compact;
+
+            if (screenToJumpTo == ScreenType.CharacterInputSelect)
+            {
+                type = ScreenSwitcher.LoadingScreenType.Off;
+            }
+
+            ScreenSwitcher.SwitchScreen(screenToJumpTo, type);
+        }
     }
 
     public void OverwriteButtonFunction(UnityAction action)
-    {
-        ScreenSwitcher.LoadingScreenType type = ScreenSwitcher.LoadingScreenType.Compact;
-
-        if (screenToJumpTo == ScreenType.CharacterInputSelect)
-        {
-            type = ScreenSwitcher.LoadingScreenType.Off;
-        }
-
-        ScreenSwitcher.SwitchScreen(screenToJumpTo, type);
+    { 
         overwriteGoBack = true;
         button.onClick.AddListener(action);
     }
