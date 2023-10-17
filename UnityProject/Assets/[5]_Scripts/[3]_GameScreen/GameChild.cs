@@ -7,6 +7,10 @@ public class GameChild : MonoBehaviour
 
     private void Start()
     {
+        ChildData temp = GameData.GetData<ChildData>("Child");
+        temp.SlideCoolDown = 0;
+        temp.IsSlideReady = true;
+
         childState = new Idle();
     }
 
@@ -39,7 +43,7 @@ abstract class ChildState : State
 
     protected ChildState CheckAction()
     {
-        bool interactableInRange = InteractableInRange(Characters.Child, out GameObject interactableObject, out string action);
+        bool interactableInRange = InteractableInRange(Characters.Child, out GameObject interactableObject, out string actionHint);
 
         //HandleSpeedBoost
         if (lollyPickedUp)
@@ -63,18 +67,36 @@ abstract class ChildState : State
         {
             //Check if its the same object as so far
             int objectHash = interactableObject.GetHashCode();
-            if (currentObjectHash != objectHash || currentButtonPrompt == null)
+            ChildData childData = GameData.GetData<ChildData>("Child");
+            if (currentObjectHash != objectHash || currentButtonPrompt == null || !childData.IsSlideReady)
             {
                 currentObjectHash = objectHash;
                 WorldSpaceUI.RemovePrompt(currentButtonPrompt);
-                if (interactableObject!=null)
-                    WorldSpaceUI.ShowButtonPrompt(interactableObject.transform, inputButton, out currentButtonPrompt, action);
-
+                if (interactableObject != null)
+                {
+                    if (actionHint == "Vent")
+                    {
+                        if (childData.SlideCoolDown > 0)
+                        {
+                            Debug.Log(Mathf.Ceil(childData.SlideCoolDown));
+                            string inputButton = $"{Mathf.Ceil(childData.SlideCoolDown)}Seconds";
+                            WorldSpaceUI.ShowPrompt(GameData.GetData<PromptAssets>("PromptAssets").GetPromptAssetByName(inputButton), interactableObject.transform, "", out currentButtonPrompt);
+                        }
+                        else
+                        {
+                            WorldSpaceUI.ShowButtonPrompt(interactableObject.transform, inputButton, out currentButtonPrompt, actionHint);
+                        }
+                    }
+                    else
+                    {
+                        WorldSpaceUI.ShowButtonPrompt(interactableObject.transform, inputButton, out currentButtonPrompt, actionHint);
+                    }
+                }
                 if (lastVentInRange != null)
                     lastVentInRange.GetComponent<VentRollup>().CloseVent();
             }
 
-            return HandleAction(interactableObject, action);
+            return HandleAction(interactableObject, actionHint);
         }
 
         //RemovePrompt
@@ -116,6 +138,8 @@ abstract class ChildState : State
 
     protected ChildState Slide(GameObject interactableObject)
     {
+        ChildData data = GameData.GetData<ChildData>("Child");
+
         lastVentInRange = interactableObject;
 
         //Toogle Vent
@@ -126,7 +150,7 @@ abstract class ChildState : State
         ventRollup.OpenVent();
         //SoundSystem.PlaySound("ventOpen");
             
-        if (Input.GetButtonDown(inputButton))
+        if (Input.GetButtonDown(inputButton) && data.SlideCoolDown <= 0)
         {
             //Remove Button Prompt
             WorldSpaceUI.RemovePrompt(currentButtonPrompt);
@@ -308,12 +332,26 @@ class Slide : ChildState
         {
             VentRollup ventRollUp = lastVentInRange.GetComponent<VentRollup>();
             ventRollUp.CloseVent();
-            //GameObject.Destroy(ventRollUp);
             lastVentInRange = null;
+            ScreenSwitcher.OutsourceCoroutine(DecreaseSlideCoolDown(3));
             return new Idle();
         }
             
         return this;
+    }
+
+    private IEnumerator DecreaseSlideCoolDown(float slideCooldown)
+    {
+        ChildData data = GameData.GetData<ChildData>("Child");
+        data.SlideCoolDown = slideCooldown;
+
+        while (data.SlideCoolDown >= 0)
+        {
+            yield return null;
+            data.SlideCoolDown -= Time.deltaTime;
+        }
+
+        data.SlideCoolDown = 0;
     }
 }
 

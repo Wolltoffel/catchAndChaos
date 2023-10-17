@@ -96,7 +96,7 @@ Material:
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
     - _GlossMapScale: 1
-    - _Glossines: 32
+    - _Glossines: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Metallic: 0
@@ -128,7 +128,7 @@ Material:
     - _ShadowColor_2: {r: 0.90099996, g: 0.8519356, b: 0.7493465, a: 1}
     - _ShadowColor_3: {r: 1, g: 0.9411765, b: 0.827451, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SpecularColor: {r: 1.7169812, g: 1.0798624, b: 1.0798624, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &8348303073462182332
 MonoBehaviour:

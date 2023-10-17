@@ -18,7 +18,7 @@ MonoBehaviour:
   characterAssets: {fileID: 11400000, guid: e14adfe80b0e29745a2d7ae43e53559c, type: 2}
   tempSlideCoolDown: 0
   stunned: 0
-  slideCoolDown: 5
+  slideCoolDown: 0
   stunTime: 5
   lollyDuration: 5
   lollySpeed: 2

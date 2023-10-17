@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 public enum ScreenType
 {
-    Empty,MainMenu,CharacterInputSelect, GameScreen, ScoreInterim, EndScreen
+    Empty,MainMenu,CharacterInputSelect, GameScreen, ScoreInterim, EndScreen, ControlSchemeScreen
 }
 
 
@@ -25,6 +25,7 @@ public class ScreenSwitcher : MonoBehaviour
     [SerializeField] GameObject game;
     [SerializeField] GameObject scoreInterim;
     [SerializeField] GameObject endScreen;
+    [SerializeField] GameObject controlScheme;
     private static ScreenSwitcher instance;
     static Dictionary<ScreenType, GameObject> activeScreenDataBase = new Dictionary<ScreenType, GameObject>();
 
@@ -64,8 +65,12 @@ public class ScreenSwitcher : MonoBehaviour
             switch (type)
             {
                 case LoadingScreenType.Normal:
+                    UIAnimationLengthManager manager = Instantiate(loadingScreen).GetComponent<UIAnimationLengthManager>();
+                    yield return new WaitForSeconds(manager.animationLength / 2);
+                    lastTransitionTime = manager.animationLength / 2;
+                    break;
                 case LoadingScreenType.Compact:
-                    UIAnimationLengthManager manager = Instantiate(loadingScreenCompact).GetComponent<UIAnimationLengthManager>();
+                    manager = Instantiate(loadingScreenCompact).GetComponent<UIAnimationLengthManager>();
                     yield return new WaitForSeconds(manager.animationLength / 2);
                     lastTransitionTime = manager.animationLength / 2;
                     break;
@@ -134,6 +139,8 @@ public class ScreenSwitcher : MonoBehaviour
                 return scoreInterim;
             case ScreenType.EndScreen:
                 return endScreen;
+            case ScreenType.ControlSchemeScreen:
+                return controlScheme;
         }
 
         throw new SystemException ($"No screen with the name {screen} existent.");

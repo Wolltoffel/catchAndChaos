@@ -10,10 +10,12 @@ public class StartUIHandler : MonoBehaviour
 
     [SerializeField]Button playButton;
     [SerializeField]Button quitButton;
+    [SerializeField] Button controlsButton;
 
     void Awake()
     {
         playButton.onClick.AddListener(() => ScreenSwitcher.SwitchScreen(ScreenType.CharacterInputSelect));
+        controlsButton.onClick.AddListener(() => ScreenSwitcher.SwitchScreen(ScreenType.ControlSchemeScreen));
         quitButton.onClick.AddListener(() =>
         {
 #if UNITY_EDITOR

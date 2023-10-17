@@ -28,8 +28,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5738650891171706383}
   - {fileID: 2375831386951869095}
@@ -251,8 +251,37 @@ PrefabInstance:
     - {fileID: 8305287729406835176, guid: 8b713f31acc9c774fbbb7842d9888299, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 839221885832150117, guid: 8b713f31acc9c774fbbb7842d9888299, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3561170350428629493}
   m_SourcePrefab: {fileID: 100100000, guid: 8b713f31acc9c774fbbb7842d9888299, type: 3}
+--- !u!1 &4965245218660347061 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 839221885832150117, guid: 8b713f31acc9c774fbbb7842d9888299, type: 3}
+  m_PrefabInstance: {fileID: 5714394905493033168}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3561170350428629493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4965245218660347061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a2bc64c4ffb2a948a177ec84e6b2832, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _preRenderOutline: 0
+  _activeOutline: 0
+  _outlineColor: {r: 0, g: 0, b: 0, a: 0}
+  _activeCutoff: 0
+  _cutoffTex: {fileID: 0}
+  _outlineWidth: 0
+  _seeThroughWalls: 0
+  computedNormals:
+    smoothNormals: []
 --- !u!4 &5738650891171706383 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 67082816138143455, guid: 8b713f31acc9c774fbbb7842d9888299, type: 3}

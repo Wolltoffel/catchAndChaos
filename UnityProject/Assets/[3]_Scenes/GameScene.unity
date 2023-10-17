@@ -376,7 +376,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 998615825}
-  - {fileID: 1741362015}
   m_Father: {fileID: 1443900089}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &963194230
@@ -570,37 +569,6 @@ Transform:
   - {fileID: 963194228}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1741362014
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1741362015}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1741362015
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1741362014}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 963194228}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2128072739
 GameObject:
   m_ObjectHideFlags: 0
@@ -655,7 +623,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d154620e97dd25845811f11da7c73468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startScreen: 1
+  startScreen: 2
   loadingScreen: {fileID: 4540070008507954311, guid: 385271db481224000b0ee8fb5baffa79, type: 3}
   loadingScreenCompact: {fileID: 4540070008507954311, guid: bac59f1b3499e41bebee928ccf1d9a03, type: 3}
   mainMenu: {fileID: 8617863531841441982, guid: 90dee2eefa574c145bcd64903fe1bb60, type: 3}
@@ -663,6 +631,7 @@ MonoBehaviour:
   game: {fileID: 4498231438271074110, guid: f9a481ee703aa484286ed25fb827df11, type: 3}
   scoreInterim: {fileID: 1833800976604354694, guid: 58fd8ffb659617a4686c8142f07c2dc2, type: 3}
   endScreen: {fileID: 5287009202372723374, guid: df5632536f656b4469b04d3c328286a6, type: 3}
+  controlScheme: {fileID: 3917575943403266612, guid: 6aeb101f52a06594e811c1f4b766cdb2, type: 3}
 --- !u!4 &2128072742
 Transform:
   m_ObjectHideFlags: 0

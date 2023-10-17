@@ -78,6 +78,7 @@ public class SelectScreenManager : MonoBehaviour
 
         if (child is ReadyToSwitchScreen && parent is ReadyToSwitchScreen && enableGamescreen)
         {
+            GameData.GetData<ChildData>("Child").tempScore = GameData.GetData<ParentData>("Parent").tempScore = 0;
             ScreenSwitcher.SwitchScreen(ScreenType.GameScreen, ScreenSwitcher.LoadingScreenType.Normal);
             enableGamescreen = false;
         }

@@ -115,7 +115,7 @@ public class CharacterModelSwitcher : MonoBehaviour
             if (i+direction<spawnedCharacterModels.Count&&i+direction>=0)
             {   
                 movementInfo.Add(i,ComputeMovementInfo(i,direction));
-                AdjustHighlight(spawnedCharacterModels[i],1);
+                //AdjustHighlight(spawnedCharacterModels[i],1);
             }
         }
 
@@ -175,6 +175,8 @@ public class CharacterModelSwitcher : MonoBehaviour
        
             if (highlight)
                 AdjustHighlight(currentTransform.gameObject,Mathf.Lerp(1,0,50*t));
+            else
+                AdjustHighlight(currentTransform.gameObject,Mathf.Lerp(0,1,50*t));
 
             if (currentTransform!=null)
             {
