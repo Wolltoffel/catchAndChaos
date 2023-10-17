@@ -214,6 +214,9 @@ abstract class ChildState : State
                 state = new Win();
             else
                 state = new Lose();
+
+            timerLolly = 0;
+
             return true;
         }
 
