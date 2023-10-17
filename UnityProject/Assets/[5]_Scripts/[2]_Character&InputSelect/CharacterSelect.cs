@@ -187,8 +187,8 @@ public class CharacterSelect : MonoBehaviour
         buttonSwitcher = null;
     }
 
-    public void HideCharacterModels()
+    public void SetCharacterModels(bool active)
     {
-        scrollSelection.HideCharacters();
+        scrollSelection.SetCharacters(active);
     }
 }

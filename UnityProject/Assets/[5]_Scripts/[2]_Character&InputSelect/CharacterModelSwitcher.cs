@@ -381,14 +381,14 @@ public class CharacterModelSwitcher : MonoBehaviour
         Destroy(this);
     }
 
-    public void HideCharacters()
+    public void SetCharacters(bool active)
     {
         for (int i = 0; i < spawnedCharacterModels.Count; i++)
         {
-            Destroy(spawnedCharacterModels[i]);
+            spawnedCharacterModels[i].SetActive(active);
         }
 
-        spawnedCharacterModels.Clear(); 
+        //spawnedCharacterModels.Clear(); 
     }
 
     public bool ReadyToReceiveInputs()

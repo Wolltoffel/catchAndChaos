@@ -124,7 +124,7 @@ public class Pausescreen : MonoBehaviour
     {
         SetPauseScreenButtons(false);
         ScreenSwitcher.AddScreen(screenType, out overlayScreenInstance);
-        overlayScreenInstance.GetComponentInChildren<BackButton>().OverwriteButtonFunction(()=>DeactivateOverlayScreen());
+        overlayScreenInstance.GetComponentInChildren<BackButton>().OverwriteButtonFunction(()=>DeactivateOverlayScreen()); 
         overlayScreenInstance.GetComponentInChildren<BackgroundImage>().SwitchToTransparentBK();
         StartCoroutine(WaitForBackToPauseMenu());
     }

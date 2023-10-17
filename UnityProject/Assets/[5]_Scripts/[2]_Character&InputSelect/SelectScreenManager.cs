@@ -193,8 +193,8 @@ public class CustomiseCharacterSingle: MenuState
         {
             dataPack.setInputDevices.Remove (dataPack.selectedInputDevice);
             dataPack.inputSelectToHide.SetActive(true);
-            dataPack.characterSelect.SetInteractable(false);;
-            dataPack.characterSelect.HideCharacterModels();
+            dataPack.characterSelect.SetInteractable(false);
+            dataPack.characterSelect.SetCharacterModels(false);
             return new WaitForKeyInput(dataPack);
         }
                     

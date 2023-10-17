@@ -1400,6 +1400,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2555265752270651854}
+  - component: {fileID: 5508497647592383069}
   m_Layer: 5
   m_Name: TopBar
   m_TagString: Untagged
@@ -1428,6 +1429,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &5508497647592383069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1053349827605207757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 505dd928273bea74c9296e1c7ce07850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controllerScheme: {fileID: 7867279661033518606}
+  keyboardScheme: {fileID: 3435205821229585661}
 --- !u!1 &1187274069056826463
 GameObject:
   m_ObjectHideFlags: 0
@@ -21939,7 +21954,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6350332863979637583}
   - component: {fileID: 7471999544311193257}
-  - component: {fileID: 3949075882893979516}
   m_Layer: 5
   m_Name: ButtonInputs
   m_TagString: Untagged
@@ -21976,20 +21990,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7867279661033518606}
   m_CullTransparentMesh: 1
---- !u!114 &3949075882893979516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7867279661033518606}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 505dd928273bea74c9296e1c7ce07850, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controller: {fileID: 738301211900097639}
-  keyboard: {fileID: 7369755167354805337}
 --- !u!1 &7937105939102186812
 GameObject:
   m_ObjectHideFlags: 0
