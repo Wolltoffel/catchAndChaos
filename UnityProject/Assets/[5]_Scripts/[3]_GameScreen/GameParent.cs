@@ -37,7 +37,7 @@ abstract class ParentBaseState : State
     {
         parentData = GameData.GetData<ParentData>("Parent");
         gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Parent);
-        inputButton = parentData.tempInputDevice + "X";
+        inputButton = parentData.tempInputDevice + "A";
     }
 
     public abstract ParentBaseState UpdateState();
@@ -78,7 +78,8 @@ abstract class ParentBaseState : State
                      if (hint=="Child")
                     {
                         buttonPromptTarget = CharacterInstantiator.GetActiveCharacter(Characters.Parent).transform;
-                        hint = hasPlushie?"PlushieThrow":"Catch";
+                        hint = hasPlushie ? "PlushieThrow" : "Catch";
+                        inputButton = hasPlushie ? inputButton : parentData.tempInputDevice + "X";
                     } 
 
                     if (buttonPromptTarget!=null)
@@ -255,7 +256,7 @@ class ParentIdle : ParentBaseState
         string inputDevice = parentData.tempInputDevice;
 
         //CheckForCatch
-        if (Input.GetButtonDown($"{inputDevice}A"))
+        if (Input.GetButtonDown($"{inputDevice}X"))
         {
             MovementScript movement = gameObject.GetComponent<MovementScript>();
             movement.DoCatch();
@@ -305,7 +306,7 @@ class ParentMovement : ParentBaseState
         bool moveInput = GetMovement(inputDevice, out xAxis, out yAxis);
 
         //CheckForCatch
-        if (Input.GetButtonDown($"{inputDevice}A"))
+        if (Input.GetButtonDown($"{inputDevice}X"))
         {
             movement.DoCatch();
             return new ParentCatch();
