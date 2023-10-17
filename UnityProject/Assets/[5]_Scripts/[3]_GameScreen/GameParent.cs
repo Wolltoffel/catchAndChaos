@@ -73,17 +73,17 @@ abstract class ParentBaseState : State
                         
                         AddOutline (interactableObject, out outline);
                     }
-                        
-                    
+
+                    string button = inputButton;
                      if (hint=="Child")
                     {
                         buttonPromptTarget = CharacterInstantiator.GetActiveCharacter(Characters.Parent).transform;
                         hint = hasPlushie ? "PlushieThrow" : "Catch";
-                        inputButton = hasPlushie ? inputButton : parentData.tempInputDevice + "X";
+                        button = hasPlushie ? inputButton : parentData.tempInputDevice + "X";
                     } 
 
                     if (buttonPromptTarget!=null)
-                        WorldSpaceUI.ShowButtonPrompt(buttonPromptTarget, inputButton, out currentButtonPrompt, hint);
+                        WorldSpaceUI.ShowButtonPrompt(buttonPromptTarget, button, out currentButtonPrompt, hint);
                 }
 
                 if (Input.GetButtonDown(inputButton))
