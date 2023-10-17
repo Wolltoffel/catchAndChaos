@@ -15,13 +15,16 @@ public class SoundSystem : MonoBehaviour
 
     private static SoundSystem instance;
 
+    [SerializeField] private float SFXDefaultVolume = 1;
+    [SerializeField] private float musicDefaultVolume = 0.2f;
+
     #region Startup
     private void Awake()
     {
         // Set up and play the background music
         backgroundMusicPlayer = gameObject.AddComponent<AudioSource>();
         backgroundMusicPlayer.loop = true;
-        backgroundMusicPlayer.volume = 0.2f;
+        backgroundMusicPlayer.volume = musicDefaultVolume;
     }
 
     private void OnEnable()
@@ -55,26 +58,30 @@ public class SoundSystem : MonoBehaviour
     /// Plays the specified sound.
     /// </summary>
     /// <param name="soundName">The name of the audioclip to play.</param>
-    public static void PlaySound(string soundName)
+    /// <param name="volume">The volume of the sound (Clamped between 0 and 1).</param>
+    public static void PlaySound(string soundName, float volume = -1)
     {
         AudioClip clip = GetAudioClip(soundName);
-        PlaySound(clip);
+        PlaySound(clip, volume);
     }
 
     /// <summary>
     /// Plays the specified sound.
     /// </summary>
     /// <param name="soundType">The type of sound to play.</param>
-    public static void PlaySound(AudioClip soundClip)
+    /// <param name="volume">The volume of the sound (Clamped between 0 and 1).</param>
+    public static void PlaySound(AudioClip soundClip, float volume = -1)
     {
-        IEnumerator i = instance._PlaySound(soundClip);
+        volume = Mathf.Min(1, volume);
+        IEnumerator i = instance._PlaySound(soundClip, volume);
         instance.StartCoroutine(i);
     }
 
-    private IEnumerator _PlaySound(AudioClip audioClip)
+    private IEnumerator _PlaySound(AudioClip audioClip, float volume)
     {
         // Create a new AudioSource component to play the sound
         AudioSource source = gameObject.AddComponent<AudioSource>();
+        source.volume = volume;
         source.clip = audioClip;
         source.Play();
 
@@ -92,21 +99,22 @@ public class SoundSystem : MonoBehaviour
     /// </summary>
     /// <param name="musicName">The name of the audioclip to play.</param>
     /// <param name="length">For how long the music should play.</param>
-    public static void PlayMusic(string musicName, float length = -1)
+    public static void PlayMusic(string musicName, float length = -1, float volume = -1)
     {
         AudioClip clip = GetAudioClip(musicName);
-        PlayMusic(clip, length);
+        PlayMusic(clip, length, volume);
     }
 
-    public static void PlayMusic(AudioClip music, float length)
+    public static void PlayMusic(AudioClip music, float length = -1, float volume = -1)
     {
+        volume = Mathf.Min(1, volume);
         if (overrideMusicCoroutine != null)
             instance.StopCoroutine(overrideMusicCoroutine);
-        IEnumerator i = instance._PlayMusic(music, length);
+        IEnumerator i = instance._PlayMusic(music, length, volume);
         overrideMusicCoroutine = instance.StartCoroutine(i);
     }
 
-    private IEnumerator _PlayMusic(AudioClip clip, float length)
+    private IEnumerator _PlayMusic(AudioClip clip, float length, float volume)
     {
         float backgroundMusicVolume = backgroundMusicPlayer.volume;
         float timeElapsed = 0;
@@ -114,7 +122,7 @@ public class SoundSystem : MonoBehaviour
         length = length <= 0 ? clip.length : length;
 
         backgroundMusicPlayer.volume = 0;
-        source.volume = backgroundMusicVolume;
+        source.volume = volume <= 0 ? backgroundMusicVolume : volume;
         source.clip = clip;
         source.Play();
 
