@@ -113,6 +113,7 @@ public class GameScreenManager : MonoBehaviour
         //Set up time counter
         SetupTimeCounter();
         InitializeUI();
+        LastInputDevice.SetMouseCursorGlobally(false);
 
         parent.enabled = true;
         child.enabled = true;
@@ -154,6 +155,7 @@ public class GameScreenManager : MonoBehaviour
         }
         
         ScreenSwitcher.OutsourceCoroutine(_EndGame(condition));
+        LastInputDevice.SetMouseCursorGlobally(true);
     }
 
     private static IEnumerator _EndGame(EndCondition condition)
