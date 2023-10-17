@@ -49,7 +49,7 @@ public class Plushie : MonoBehaviour
 
         Debug.Log("Plushie Thrown");
         isActive = true;
-        transform.parent = null;
+        transform.parent = ScreenSwitcher.currentScreen.transform;
         coroutine = null;
     }
 
