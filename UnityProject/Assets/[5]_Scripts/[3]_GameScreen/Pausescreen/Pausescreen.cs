@@ -12,12 +12,15 @@ public class Pausescreen : MonoBehaviour
     [SerializeField] GameObject pauseScreenPrefab;
     [SerializeField] Transform parent;
     [SerializeField] RenderTexture backgroundTex;
+    [SerializeField] GameObject controls; 
 
     [SerializeField] Image uiMask;
 
     string inputDevice;
     bool gamePaused;
     GameObject pauseScreenInstance;
+
+    GameObject overlayScreenInstance;
     PauseScreenData data;
 
 
@@ -64,6 +67,7 @@ public class Pausescreen : MonoBehaviour
         data = pauseScreenInstance.GetComponentInChildren<PauseScreenData>();
         data.unpauseButton.onClick.AddListener(()=>UnpauseGame()); 
         data.backToMainMenuButton.onClick.AddListener(()=>BackToMainMenu());
+        data.controlsButton.onClick.AddListener(()=>OverlayScreen(ScreenType.ControlSchemeScreen));
 
         Time.timeScale = 0;
         gamePaused = true;
@@ -81,8 +85,6 @@ public class Pausescreen : MonoBehaviour
         else
             uiMask.color = Color.black;
     }
-
- 
 
     void UnpauseGame()
     {   
@@ -104,22 +106,61 @@ public class Pausescreen : MonoBehaviour
         depthOfField.active = active;
     }
 
-
     void GamePaused()
     {
         if (Input.GetButtonDown(inputDevice+"Start")|Input.GetButtonDown("Start"))
-            UnpauseGame();
+            if (pauseScreenInstance.activeInHierarchy)
+                UnpauseGame();
     }
 
     void BackToMainMenu()
     {
         UnpauseGame();
         ScreenSwitcher.SwitchScreen(ScreenType.MainMenu);
+        LastInputDevice.SetMouseCursorGlobally(true);
     }
 
-    void ToControlsScreen()
+    void OverlayScreen(ScreenType screenType)
     {
-        //LoadControlsScreenOnTop
+        SetPauseScreenButtons(false);
+        ScreenSwitcher.AddScreen(screenType, out overlayScreenInstance);
+        overlayScreenInstance.GetComponentInChildren<BackButton>().OverwriteButtonFunction(()=>DeactivateOverlayScreen());
+        overlayScreenInstance.GetComponentInChildren<BackgroundImage>().SwitchToTransparentBK();
+        StartCoroutine(WaitForBackToPauseMenu());
+    }
+
+    IEnumerator WaitForBackToPauseMenu()
+    {
+        while (true)
+        {
+            if (Input.GetButtonDown("AB"))
+                DeactivateOverlayScreen();
+            
+            yield return null;
+        }
+    }
+
+    void DeactivateOverlayScreen()
+    {
+        SetPauseScreenButtons(true);
+        Destroy(overlayScreenInstance);
+        StopAllCoroutines();
+    }
+
+    void SetPauseScreenButtons(bool active)
+    {
+        PauseScreenData pauseScreenData = pauseScreenInstance.GetComponentInChildren<PauseScreenData>();
+        List<Button> buttons = new List<Button>();
+        buttons.Add(pauseScreenData.unpauseButton);
+        buttons.Add (pauseScreenData.controlsButton);
+        buttons.Add(pauseScreenData.backToMainMenuButton);
+
+        for (int i = 0; i < buttons.Count; i++)
+        {
+            buttons[i].interactable = active;
+        }
+
+        pauseScreenInstance.SetActive(active);
     }
 
 }

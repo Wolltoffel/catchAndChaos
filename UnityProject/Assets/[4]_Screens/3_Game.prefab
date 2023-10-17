@@ -1476,6 +1476,7 @@ MonoBehaviour:
   pauseScreenPrefab: {fileID: 8617863531841441982, guid: 23e083213a2136c40a6986c0c8ca4526, type: 3}
   parent: {fileID: 3652606651269227197}
   backgroundTex: {fileID: 8400000, guid: 757934ef2b3108b45b357ff38010216b, type: 2}
+  controls: {fileID: 0}
   uiMask: {fileID: 5101475433075803701}
 --- !u!1 &8523915513840920611
 GameObject:
