@@ -943,6 +943,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ed6c6c274626247938945ccec379a9c2, type: 3}
   playButton: {fileID: 8349722206115610651}
   quitButton: {fileID: 4116610243493405318}
+  controlsButton: {fileID: 1324538904288195012}
 --- !u!1 &4758959350367402610
 GameObject:
   m_ObjectHideFlags: 0

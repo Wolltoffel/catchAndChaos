@@ -125,7 +125,6 @@ public class Plushie : MonoBehaviour
             float t = Time.time-startTime/(1/duration);
             currentVal = t;
             float fresnelValue = Mathf.Sin(currentVal)+1;
-            Debug.Log (fresnelValue);
             AdjustFresnelInput(fresnelValue*5);
             yield return null;
         }
