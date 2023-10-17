@@ -388,6 +388,8 @@ public class CharacterModelSwitcher : MonoBehaviour
             spawnedCharacterModels[i].SetActive(active);
         }
 
+        Debug.Log ("Set Character Models "+active);
+
         //spawnedCharacterModels.Clear(); 
     }
 

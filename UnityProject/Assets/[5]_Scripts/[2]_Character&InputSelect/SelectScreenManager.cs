@@ -128,6 +128,7 @@ public class WaitForKeyInput: MenuState
 
                     dataPack.inputSelectToHide.SetActive(false);
                     dataPack.characterSelect.SetInteractable(true);
+                    dataPack.characterSelect.SetCharacterModels(true);
 
                     dataPack.characterSelect.SetData(inputDevice,dataPack.character);
 
