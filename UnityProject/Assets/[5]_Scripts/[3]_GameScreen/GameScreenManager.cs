@@ -153,7 +153,7 @@ public class GameScreenManager : MonoBehaviour
             instance.StopCoroutine(checkForChaosUpdate);
             checkForChaosUpdate = null;
         }
-        
+
         ScreenSwitcher.OutsourceCoroutine(_EndGame(condition));
         LastInputDevice.SetMouseCursorGlobally(true);
     }
@@ -163,6 +163,7 @@ public class GameScreenManager : MonoBehaviour
         WorldSpaceUI.RemoveAllButtonPrompts();
 
         PlayTimeData data = GameData.GetData<PlayTimeData>("PlayTimeData");
+        data.endCondition = condition;
         data.hasGameEnded = true;
 
         switch (condition)

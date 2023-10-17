@@ -3,22 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
+using System;
 
 public class BetweenRoundsManager : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI parentText;
-    [SerializeField] TextMeshProUGUI childText;
-    [SerializeField] GameObject scoreTemplate;
+    [SerializeField] private TextMeshProUGUI endConditiontText;
+    [SerializeField] private Animator conditionAnimator;
+    [SerializeField] private GameObject scoreTemplate;
 
     [SerializeField] private GameObject convergePrefab;
     private ScoreTemplateManager parentScoreManager;
     private ScoreTemplateManager childScoreManager;
 
-
+    private PlayerData parentData;
+    private PlayerData childData;
+    private PlayTimeData data;
 
     private IEnumerator Start()
     {
+        //Get Data
+        parentData = GameData.GetData<PlayerData>("Parent");
+        childData = GameData.GetData<PlayerData>("Child");
+        data = GameData.GetData<PlayTimeData>("PlayTimeData");
+
         GameEndCircles convergeScript = Instantiate(convergePrefab, CharacterInstantiator.GetActiveCharacter(Characters.Parent).transform).GetComponent<GameEndCircles>();
         convergeScript.ConvergeOn(CharacterInstantiator.GetActiveCharacter(Characters.Parent).transform, CharacterInstantiator.GetActiveCharacter(Characters.Child).transform);
 
@@ -27,32 +34,30 @@ public class BetweenRoundsManager : MonoBehaviour
         StartCoroutine(ScoreTemplateToOrigin(Characters.Parent));
         yield return StartCoroutine(ScoreTemplateToOrigin(Characters.Child));
 
-        PlayerData parentData = GameData.GetData<PlayerData>("Parent");
-        PlayerData childData = GameData.GetData<PlayerData>("Child");
-        PlayTimeData data = GameData.GetData<PlayTimeData>("PlayTimeData");
+        endConditiontText.text = GetEndConditionText(data.endCondition);
+        conditionAnimator.enabled = true;
 
         parentScoreManager.SetScore(parentData.tempScore);
         childScoreManager.SetScore(childData.tempScore);
+        int newScore = 0;
 
         ScoreTemplateManager winScore;
         if (data.hasChildWon)
         {
-            childData.tempScore++;
+            newScore = ++childData.tempScore;
             winScore = childScoreManager;
         }
         else
         {
-            parentData.tempScore++;
+            newScore = ++parentData.tempScore;
             winScore = parentScoreManager;
         }
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1f);
 
-        parentScoreManager.SetScore(parentData.tempScore);
-        childScoreManager.SetScore(childData.tempScore);
-        winScore.HighlightWinner();
+        winScore.RaiseScore(newScore);
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1.5f);
 
         if (childData.tempScore >= 3 || parentData.tempScore >= 3)
         {
@@ -61,6 +66,21 @@ public class BetweenRoundsManager : MonoBehaviour
         else
         {
             ScreenSwitcher.SwitchScreen(ScreenType.GameScreen);
+        }
+    }
+
+    private string GetEndConditionText(EndCondition endCondition)
+    {
+        switch (endCondition)
+        {
+            case EndCondition.Chaos:
+                return $"Chaos prevails!";
+            case EndCondition.Catch:
+                return $"{childData.characterAssets.name} was caught!";
+            case EndCondition.Time:
+                return $"Time has run out!";
+            default:
+                return $"If you're seeing this the devs suck!";
         }
     }
 
@@ -78,17 +98,18 @@ public class BetweenRoundsManager : MonoBehaviour
         PlayerData data;
         if (character == Characters.Child)
         {
-            data = GameData.GetData<ChildData>("Child");
+            data = childData;
             childScoreManager = scoreManager;
         }
         else
         {
-            data = GameData.GetData<ParentData>("Parent");
+            data = parentData;
             parentScoreManager = scoreManager;
         }
 
-        scoreManager.SetName(data.characterAssets.name); //FIX
+        scoreManager.SetName(data.characterAssets.name);
         scoreManager.SetScore(data.tempScore);
+        scoreManager.SetCharacter(character);
 
         float timeElapsed = 0;
         while (timeElapsed < transitionTime)

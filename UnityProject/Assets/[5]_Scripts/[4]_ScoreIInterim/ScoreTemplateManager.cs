@@ -7,6 +7,10 @@ using UnityEngine.UI;
 public class ScoreTemplateManager : MonoBehaviour
 {
     [SerializeField]
+    private GameObject parentMask;
+    [SerializeField]
+    private GameObject childMask;
+    [SerializeField]
     private RectTransform rootTransform;
     [SerializeField]
     private TextMeshProUGUI nameTextMesh;
@@ -20,6 +24,18 @@ public class ScoreTemplateManager : MonoBehaviour
         animator.enabled = true;
     }
 
+    public void SetCharacter(Characters character)
+    {
+        if (character == Characters.Child)
+        {
+            parentMask.SetActive(false);
+        }
+        else
+        {
+            childMask.SetActive(false);
+        }
+    }
+
     public void SetName(string name)
     {
         nameTextMesh.text = name;
@@ -27,7 +43,13 @@ public class ScoreTemplateManager : MonoBehaviour
 
     public void SetScore(int score)
     {
-        scoreTextMesh.text = $"Score: {score}";
+        scoreTextMesh.text = $"{score}";
+    }
+
+    public void RaiseScore(int raisedScore)
+    {
+        scoreTextMesh.text = $"{raisedScore}";
+        animator.SetTrigger("Win");
     }
 
     public Vector2 SetPosition(Vector2 position)
@@ -39,10 +61,5 @@ public class ScoreTemplateManager : MonoBehaviour
     public void SetParent(Transform transform)
     {
         gameObject.transform.parent = transform;
-    }
-
-    public void HighlightWinner()
-    {
-
     }
 }

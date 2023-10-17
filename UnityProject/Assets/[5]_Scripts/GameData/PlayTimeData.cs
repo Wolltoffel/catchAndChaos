@@ -8,6 +8,7 @@ public class PlayTimeData : StaticData
     public bool hasMotherWon { get => hasGameEnded && !hasChildWon; }
     public bool hasChildWon;
     public bool hasGameEnded;
+    public EndCondition endCondition;
 
     [SerializeField] private int playTime; 
     private float tempRemainingPlayTime;
