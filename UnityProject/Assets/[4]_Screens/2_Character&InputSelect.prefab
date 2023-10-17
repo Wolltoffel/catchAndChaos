@@ -27928,6 +27928,18 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1962808072846181794, guid: 139dbbdbd85dda642a11084ebfe1e2b1, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 1962808072846181794, guid: 139dbbdbd85dda642a11084ebfe1e2b1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 1962808072846181794, guid: 139dbbdbd85dda642a11084ebfe1e2b1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2110872150278182835, guid: 139dbbdbd85dda642a11084ebfe1e2b1, type: 3}
       propertyPath: m_Name
       value: 5_CharacterPanels
@@ -27986,7 +27998,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5321895144048747438, guid: 139dbbdbd85dda642a11084ebfe1e2b1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6
+      value: 7.45
       objectReference: {fileID: 0}
     - target: {fileID: 5321895144048747438, guid: 139dbbdbd85dda642a11084ebfe1e2b1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -27994,7 +28006,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5321895144048747438, guid: 139dbbdbd85dda642a11084ebfe1e2b1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6379038195328852250, guid: 139dbbdbd85dda642a11084ebfe1e2b1, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 6379038195328852250, guid: 139dbbdbd85dda642a11084ebfe1e2b1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 6379038195328852250, guid: 139dbbdbd85dda642a11084ebfe1e2b1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7050647669505464371, guid: 139dbbdbd85dda642a11084ebfe1e2b1, type: 3}
       propertyPath: m_StaticEditorFlags
