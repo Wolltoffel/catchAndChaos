@@ -16,3 +16,9 @@ MonoBehaviour:
   promptAssetContainers:
   - promptPrefab: {fileID: 4235481504225115747, guid: 8b8a9e96e72e1f147bcca5c164ea4733, type: 3}
     name: DestroyMeter
+  - promptPrefab: {fileID: 4235481504225115747, guid: 8b8a9e96e72e1f147bcca5c164ea4733, type: 3}
+    name: 3Seconds
+  - promptPrefab: {fileID: 4235481504225115747, guid: 8b8a9e96e72e1f147bcca5c164ea4733, type: 3}
+    name: 2Seconds
+  - promptPrefab: {fileID: 4235481504225115747, guid: 8b8a9e96e72e1f147bcca5c164ea4733, type: 3}
+    name: 1Seconds
