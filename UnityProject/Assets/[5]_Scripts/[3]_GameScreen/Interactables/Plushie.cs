@@ -138,7 +138,7 @@ public class Plushie : MonoBehaviour
         {
             if (materials[i].name.Contains( "HighlightPlushies"))
             {
-                Debug.Log ("test");
+                //Debug.Log ("test");
                 materials[i].SetFloat("_FresnelInput",input);
             }
                 
