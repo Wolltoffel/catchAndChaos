@@ -39,7 +39,6 @@ public class GameScreenManager : MonoBehaviour
         interactableManager = GetComponent<GameInteractableManager>();
 
         instance = this;
-        Cursor.visible = true;
 
         SetupGame();
     }
