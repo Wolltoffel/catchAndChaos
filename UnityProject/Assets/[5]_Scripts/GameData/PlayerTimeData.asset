@@ -15,4 +15,5 @@ MonoBehaviour:
   key: PlayTimeData
   hasChildWon: 0
   hasGameEnded: 0
-  playTime: 120
+  endCondition: 2
+  playTime: 10

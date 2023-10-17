@@ -25,5 +25,6 @@ public class PlayTimeData : StaticData
         tempRemainingPlayTime = playTime;
         hasChildWon = false;
         hasGameEnded = false;
+        WorldSpaceUI.RemoveAllButtonPrompts();
     }
 }
