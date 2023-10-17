@@ -117,7 +117,7 @@ public class Plushie : MonoBehaviour
     IEnumerator Blink()
     {
         float startTime = Time.time;
-        float duration = 0.01f;
+        float duration = 40f;
         float target = 2*Mathf.PI;
         float currentVal = 0;
         while(target>=currentVal)
@@ -137,8 +137,12 @@ public class Plushie : MonoBehaviour
 
         for (int i = 0; i < materials.Length; i++)
         {
-            if (materials[i].name.Equals( "HighlightPlushies"))
+            if (materials[i].name.Contains( "HighlightPlushies"))
+            {
+                Debug.Log ("test");
                 materials[i].SetFloat("_FresnelInput",input);
+            }
+                
         }
     }
 
