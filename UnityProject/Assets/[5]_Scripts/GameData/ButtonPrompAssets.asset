@@ -15,43 +15,25 @@ MonoBehaviour:
   key: ButtonPromptAssets
   clearShownHints: 0
   controller:
-  - buttonAsset: {fileID: 21300000, guid: bb2c91e85c086d240bb55f72b8f2fcc8, type: 3}
+  - buttonAsset: {fileID: 21300000, guid: 3f591817da956447ab50db510b69f1a9, type: 3}
     buttonName: JA
-  - buttonAsset: {fileID: 21300000, guid: 28b8794456912e94b96b1378c0c265aa, type: 3}
+  - buttonAsset: {fileID: 21300000, guid: de68a9549e198994ea6f26148e821040, type: 3}
     buttonName: JB
-  - buttonAsset: {fileID: 21300000, guid: 23320c9a16a41254bae64bc6ac5dc4f4, type: 3}
+  - buttonAsset: {fileID: 21300000, guid: f215e3c17deaac2409e1196cb4750035, type: 3}
     buttonName: JX
-  - buttonAsset: {fileID: 21300000, guid: c8b3667fe5ee7fa44ab51c66af506ec6, type: 3}
+  - buttonAsset: {fileID: 21300000, guid: 63450b9cd6fa7204fbab5788de98d575, type: 3}
     buttonName: JY
-  - buttonAsset: {fileID: 21300000, guid: 9ebbc55795f57bb419663f146ec3a226, type: 3}
-    buttonName: J3Seconds
-  - buttonAsset: {fileID: 21300000, guid: 9ebbc55795f57bb419663f146ec3a226, type: 3}
-    buttonName: J2Seconds
-  - buttonAsset: {fileID: 21300000, guid: 9ebbc55795f57bb419663f146ec3a226, type: 3}
-    buttonName: J1Seconds
   keyboard:
-  - buttonAsset: {fileID: 21300000, guid: fb974ec9ab83eb847838e890debbb572, type: 3}
+  - buttonAsset: {fileID: 21300000, guid: e739f8e8223a4114687881259eac019e, type: 3}
     buttonName: K1A
   - buttonAsset: {fileID: 21300000, guid: c4ff66bba8b6c1a4cbb78448ffb0fe6d, type: 3}
     buttonName: K1B
-  - buttonAsset: {fileID: 21300000, guid: ab22ed0cb2ad0b049bb8efec6de702f4, type: 3}
-    buttonName: K1X
-  - buttonAsset: {fileID: 0}
-    buttonName: K1Y
-  - buttonAsset: {fileID: 0}
+  - buttonAsset: {fileID: 21300000, guid: 87a49d9a13dfeae4d9835d00f3cba82b, type: 3}
     buttonName: K2A
   - buttonAsset: {fileID: 21300000, guid: f9a935c2c24607942a29380cfc1bfa25, type: 3}
     buttonName: K2B
-  - buttonAsset: {fileID: 21300000, guid: c4a9aeb4032f1b44a8704b2939669ae9, type: 3}
+  - buttonAsset: {fileID: 21300000, guid: a935c535914820149a2131319ad56232, type: 3}
     buttonName: K2X
-  - buttonAsset: {fileID: 0}
-    buttonName: K2Y
-  - buttonAsset: {fileID: 21300000, guid: 9ebbc55795f57bb419663f146ec3a226, type: 3}
-    buttonName: J3Seconds
-  - buttonAsset: {fileID: 21300000, guid: 9ebbc55795f57bb419663f146ec3a226, type: 3}
-    buttonName: J2Seconds
-  - buttonAsset: {fileID: 21300000, guid: 9ebbc55795f57bb419663f146ec3a226, type: 3}
-    buttonName: J1Seconds
   hints:
   - hintSprite: {fileID: 21300000, guid: fe8d23d79f06fff4c8ec36785ffc40c4, type: 3}
     hintName: Vent
