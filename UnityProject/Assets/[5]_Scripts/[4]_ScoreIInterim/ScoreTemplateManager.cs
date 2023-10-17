@@ -17,15 +17,7 @@ public class ScoreTemplateManager : MonoBehaviour
 
     private void Awake()
     {
-        SetSize();
         animator.enabled = true;
-    }
-
-    private void SetSize()
-    {
-        float ratio = Screen.width / 3840f;
-        nameTextMesh.fontSize *= ratio;
-        scoreTextMesh.fontSize *= ratio;
     }
 
     public void SetName(string name)
