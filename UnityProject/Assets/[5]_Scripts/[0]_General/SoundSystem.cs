@@ -148,7 +148,7 @@ public class SoundSystem : MonoBehaviour
             if (backgroundMusicCoroutine != null)
                 instance.StopCoroutine(backgroundMusicCoroutine);
             IEnumerator i = instance._PlayBackgroundMusic(musicClips);
-            instance.StartCoroutine(i);
+            backgroundMusicCoroutine = instance.StartCoroutine(i);
         }
     }
 
