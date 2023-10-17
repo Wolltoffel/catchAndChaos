@@ -61,6 +61,9 @@ public class WorldSpaceUI : MonoBehaviour
       //Create newnPrompt file and save Coroutine to list
       Prompt promptData = new Prompt(spawnedPrompt,coroutine,target);
       prompts.Add (promptData);
+
+      //Add mask
+      spawnedPrompt.transform.SetParent(globalMaskInstance.transform);
    } 
  
    public static void ShowButtonPrompt(Transform target,string buttonName, out GameObject spriteHolder, string hintName = "")

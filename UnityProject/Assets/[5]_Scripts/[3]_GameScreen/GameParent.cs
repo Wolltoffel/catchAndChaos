@@ -15,7 +15,7 @@ public class GameParent : MonoBehaviour
         gameObject.layer = 7;
 
         //Spawn 3d model
-        state = new ParentIdle();
+        state = new ParentTutorial();
     }
 
     private void Update()
@@ -478,6 +478,43 @@ class ParentLose : ParentBaseState
 
     public override ParentBaseState UpdateState()
     {
+        return this;
+    }
+}
+
+class ParentTutorial : ParentBaseState
+{
+    GameObject tutorialPrompt;
+
+    public ParentTutorial()
+    {
+        //Do Antimator
+        gameObject.GetComponent<Animator>().SetInteger("MomIndex", 0);
+    }
+
+    public override ParentBaseState UpdateState()
+    {
+        string inputDevice = parentData.tempInputDevice;
+
+        if (tutorialPrompt==null)
+        {
+            WorldSpaceUI.ShowPrompt(GameData.GetData<PromptAssets>("PromptAssets").GetPromptAssetByName("TutorialParent"), 
+                CharacterInstantiator.GetActiveCharacter(Characters.Parent).transform,"",out tutorialPrompt);
+        }
+
+        //CheckForMove
+        float xAxis;
+        float yAxis;
+        bool moveInput = GetMovement(inputDevice, out xAxis, out yAxis);
+        if (moveInput||
+            Input.GetButton(inputDevice+"A")||Input.GetButton(inputDevice+"X")||
+            Input.GetButton(inputDevice+"Y")||Input.GetButton(inputDevice+"B"))
+        {
+            WorldSpaceUI.RemovePrompt(tutorialPrompt);
+            tutorialPrompt = null;
+            return new ParentIdle();
+        }
+
         return this;
     }
 }

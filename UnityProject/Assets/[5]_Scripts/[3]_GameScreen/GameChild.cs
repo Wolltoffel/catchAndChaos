@@ -11,7 +11,7 @@ public class GameChild : MonoBehaviour
         temp.SlideCoolDown = 0;
         temp.IsSlideReady = true;
 
-        childState = new Idle();
+        childState = new ChildTutorial();
     }
 
     void Update()
@@ -469,6 +469,37 @@ class Stunned : ChildState
         }
 
         return this;
+    }
+}
+
+class ChildTutorial : ChildState
+{
+    GameObject tutorialPrompt;
+    public override ChildState UpdateState()
+    {
+        gameObject.GetComponent<Animator>().SetInteger("ChildIndex", 0);
+        
+        if (tutorialPrompt==null)
+        {
+            WorldSpaceUI.ShowPrompt(GameData.GetData<PromptAssets>("PromptAssets").GetPromptAssetByName("TutorialChild"), 
+                CharacterInstantiator.GetActiveCharacter(Characters.Child).transform,"",out tutorialPrompt);
+        }
+        
+        //Go to Run
+        float horizontal = Input.GetAxis(inputDevice + " Horizontal");
+        float vertical = Input.GetAxis(inputDevice + " Vertical");
+
+        if (horizontal != 0 || vertical != 0|| 
+            Input.GetButton(inputDevice+"A")||Input.GetButton(inputDevice+"X")||
+            Input.GetButton(inputDevice+"Y")||Input.GetButton(inputDevice+"B"))
+        {
+            WorldSpaceUI.RemovePrompt(tutorialPrompt);
+            tutorialPrompt = null;
+            return new Idle();
+        }
+
+        return this;
+
     }
 }
 
