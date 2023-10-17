@@ -71,6 +71,7 @@ public class Pausescreen : MonoBehaviour
         SetDepthOfField(true);
         SetMask(true);
         WorldSpaceUI.SetWorldUI(false);
+        LastInputDevice.SetMouseCursorGlobally(true);
     }
 
     void SetMask(bool active)
@@ -92,6 +93,7 @@ public class Pausescreen : MonoBehaviour
         Destroy(pauseScreenInstance);
         gamePaused = false;
         Time.timeScale = 1;
+        LastInputDevice.SetMouseCursorGlobally(false);
     }
 
     void SetDepthOfField(bool active)

@@ -20,6 +20,8 @@ public class LastInputDevice : MonoBehaviour
 {
     Vector3 lastMousePosition;
 
+    static bool hiddenMouseCursor;
+
     private void  Awake()
     {
         GameData.SetData(new LastInputDeviceData(InputDevice.Keyboard),"LastInputDeviceData");
@@ -28,7 +30,16 @@ public class LastInputDevice : MonoBehaviour
     private void Update() 
     {
         RegisterLastDevice();
+        Debug.Log ("MouseCurosrHidden "+hiddenMouseCursor);
     }
+
+    public static void SetMouseCursorGlobally (bool active)
+    {
+        Cursor.visible = active;
+        hiddenMouseCursor = !active;
+        Debug.Log (hiddenMouseCursor);
+    }
+
 
     public void RegisterLastDevice()
     {   
@@ -46,7 +57,8 @@ public class LastInputDevice : MonoBehaviour
 
             if (lastInputDevice!= ""|DetecMouseButtonPress()|CheckKeyboardKeys()| DetectMouseMovement())
             {
-                    Cursor.visible = true;
+                    if (!hiddenMouseCursor)
+                        Cursor.visible = true;
                     lastInputDeviceData = new LastInputDeviceData(InputDevice.Keyboard);
 
                     if (eventSystem!=null
