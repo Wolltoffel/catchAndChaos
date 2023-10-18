@@ -52,7 +52,7 @@ public class ChaosMeterUI : MonoBehaviour
         //sets the height of the mask
         i = 1 - Mathf.Clamp01(i);
 
-        Vector2 newSizeDelta = new(- Screen.width * i, maskTranfrom.sizeDelta.y);
+        Vector2 newSizeDelta = new(- 3840 * i, maskTranfrom.sizeDelta.y);
         maskTranfrom.sizeDelta = newSizeDelta;
     }
 }
