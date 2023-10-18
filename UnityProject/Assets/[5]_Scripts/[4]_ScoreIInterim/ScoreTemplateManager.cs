@@ -49,6 +49,7 @@ public class ScoreTemplateManager : MonoBehaviour
     public void RaiseScore(int raisedScore)
     {
         scoreTextMesh.text = $"{raisedScore}";
+        SoundSystem.PlaySound("pointsUp");
         animator.SetTrigger("Win");
     }
 

@@ -369,6 +369,7 @@ class Slide : ChildState
 class Destroy : ChildState
 {
     float destroyTime;
+    float soundTime = 1;
     static float startDestroyTime;
     Destructable destructable;
     GameObject destroyPrompt;
@@ -394,6 +395,13 @@ class Destroy : ChildState
         }
 
         destroyTime -= Time.deltaTime;
+        soundTime += Time.deltaTime;
+
+        if (soundTime >= 1)
+        {
+            soundTime -= 1;
+            SoundSystem.PlaySound("WoodDebrisSound3");
+        }
 
         if (particleInstance==null)
         {

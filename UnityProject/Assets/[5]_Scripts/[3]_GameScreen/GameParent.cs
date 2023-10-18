@@ -348,6 +348,8 @@ class ParentCatch : ParentBaseState
     {
         gameObject.GetComponent<Animator>().SetInteger("MomIndex", 4);
         this.movement = gameObject.GetComponent<MovementScript>();
+        string motherCatch = UnityEngine.Random.Range(0, 2) == 0 ? "MotherCatch" : "MotherCatch2";
+        SoundSystem.PlaySound(motherCatch, 0.8f);
 
         time = 0;
         movement.DoCatch();
@@ -376,6 +378,7 @@ class ParentCatch : ParentBaseState
                     ))
                 {
                     movement.StopCatch();
+                    SoundSystem.PlaySound("Catch");
 
                     GameScreenManager.EndGame(EndCondition.Catch);
 
