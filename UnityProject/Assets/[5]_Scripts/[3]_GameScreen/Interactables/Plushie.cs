@@ -41,6 +41,8 @@ public class Plushie : MonoBehaviour
             StopCoroutine(coroutine);
         }
 
+        SoundSystem.PlaySound("PlushyThrow");
+
         _collider.enabled = true;
 
         Vector3 force = targetDir * 1000;
@@ -55,6 +57,8 @@ public class Plushie : MonoBehaviour
 
     public void AttachToTarget(Transform target, Shader shader)
     {
+        SoundSystem.PlaySound("PlushiePickup");
+
         this.handAnchor = target;
         _collider.enabled = false;
         _rigidbody.isKinematic = true;
@@ -99,6 +103,11 @@ public class Plushie : MonoBehaviour
                 Debug.Log("Child has been Hospitalized.");
                 ChildData data = GameData.GetData<ChildData>("Child");
                 data.stunned = true;
+                SoundSystem.PlaySound("PlushyImpact");
+            }
+            else
+            {
+                SoundSystem.PlaySound("PlushieOnFloor");
             }
         }
         isActive = false;
