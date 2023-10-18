@@ -148,22 +148,28 @@ abstract class ChildState : State
             ventRollup = interactableObject.AddComponent<VentRollup>();
 
         ventRollup.OpenVent();
-        //SoundSystem.PlaySound("ventOpen");
             
-        if (Input.GetButtonDown(inputButton) && data.SlideCoolDown <= 0)
+        if (Input.GetButtonDown(inputButton))
         {
-            //Remove Button Prompt
-            WorldSpaceUI.RemovePrompt(currentButtonPrompt);
-            currentButtonPrompt = null;
+            if (data.SlideCoolDown <= 0)
+            {
+                //Remove Button Prompt
+                WorldSpaceUI.RemovePrompt(currentButtonPrompt);
+                currentButtonPrompt = null;
 
-            //Handle Animations & Movement
-            gameObject.GetComponent<MovementScript>().DoSlide(interactableObject,0.4f/GameData.GetData<ChildData>("Child").tempSpeed);
-            gameObject.GetComponent<Animator>().SetInteger("ChildIndex", 4);
+                //Handle Animations & Movement
+                gameObject.GetComponent<MovementScript>().DoSlide(interactableObject, 0.4f / GameData.GetData<ChildData>("Child").tempSpeed);
+                gameObject.GetComponent<Animator>().SetInteger("ChildIndex", 4);
 
-            //Play Sound
-            SoundSystem.PlaySound("childSlide",5);
+                //Play Sound
+                SoundSystem.PlaySound("Slide3", 0.6f);
 
-            return new Slide();
+                return new Slide();
+            }
+            else
+            {
+                SoundSystem.PlaySound("NoSlide", 0.5f);
+            }
         }
         return null;
     }
@@ -179,6 +185,8 @@ abstract class ChildState : State
             GameData.GetData<InteractableContainer>("InteractableContainer").RemoveObjectFromCategory("Lolly", interactableObject);
             GameObject.Destroy(interactableObject);
             timerLolly = GameData.GetData<ChildData>("Child").lollyDuration;
+            SoundSystem.PlaySound("eatingLolli");
+            SoundSystem.PlayMusic("LollyMusic", 5, 0.5f);
         }     
     }
 
