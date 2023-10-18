@@ -32,14 +32,14 @@ public class LastInputDevice : MonoBehaviour
     private void Update() 
     {
         RegisterLastDevice();
-        Debug.Log ("MouseCurosrHidden "+hiddenMouseCursor);
+        //Debug.Log ("MouseCurosrHidden "+hiddenMouseCursor);
     }
 
     public static void SetMouseCursorGlobally (bool active)
     {
         Cursor.visible = active;
         hiddenMouseCursor = !active;
-        Debug.Log (hiddenMouseCursor);
+        //Debug.Log (hiddenMouseCursor);
     }
 
     public static void SetOnlyKeyboard(bool active)
