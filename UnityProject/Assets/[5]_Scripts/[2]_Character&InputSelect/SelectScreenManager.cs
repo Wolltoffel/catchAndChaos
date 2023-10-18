@@ -42,7 +42,6 @@ public class SelectScreenManager : MonoBehaviour
 
     [Header ("Character Select")]   
     [SerializeField] GameObject inputSelectToHideChild, inputSelectToHideParent;
-    //[SerializeField]ReadyButton readyButton;
 
     List<string> setInputDevices = new List<string>();
     MenuState child,parent;
@@ -115,6 +114,8 @@ public class WaitForKeyInput: MenuState
         {
             string inputDevice = "";
 
+            LastInputDevice.SetOnlyKeyboard(false);
+
             if (dataPack.character == Characters.Child)
                 inputDevice = GetInputDevice("X");
             else
@@ -125,6 +126,9 @@ public class WaitForKeyInput: MenuState
                     dataPack.setInputDevices.Add (inputDevice);
                     dataPack.selectedInputDevice = inputDevice;
                     GameData.GetData<PlayerData>(dataPack.key).tempInputDevice = inputDevice;
+
+                    if (CheckForKeyboard(inputDevice))
+                        LastInputDevice.SetOnlyKeyboard(true);
 
                     dataPack.inputSelectToHide.SetActive(false);
                     dataPack.characterSelect.SetInteractable(true);
@@ -167,6 +171,11 @@ public class WaitForKeyInput: MenuState
                         }
                 } 
                 return inputDevice;
+        }
+
+        bool CheckForKeyboard(string inputDevice)
+        {
+            return inputDevice.Contains("K");
         }  
 }
 

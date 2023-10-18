@@ -21397,7 +21397,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1298487288777483924
 RectTransform:
   m_ObjectHideFlags: 0
@@ -21954,6 +21954,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6350332863979637583}
   - component: {fileID: 7471999544311193257}
+  - component: {fileID: 3507458807862466664}
   m_Layer: 5
   m_Name: ButtonInputs
   m_TagString: Untagged
@@ -21990,6 +21991,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7867279661033518606}
   m_CullTransparentMesh: 1
+--- !u!114 &3507458807862466664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7867279661033518606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 505dd928273bea74c9296e1c7ce07850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controllerScheme: {fileID: 738301211900097639}
+  keyboardScheme: {fileID: 7369755167354805337}
 --- !u!1 &7937105939102186812
 GameObject:
   m_ObjectHideFlags: 0

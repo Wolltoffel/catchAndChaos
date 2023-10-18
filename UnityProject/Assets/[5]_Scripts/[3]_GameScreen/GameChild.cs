@@ -161,7 +161,7 @@ abstract class ChildState : State
             gameObject.GetComponent<Animator>().SetInteger("ChildIndex", 4);
 
             //Play Sound
-            //SoundSystem.PlaySound("childSlide");
+            SoundSystem.PlaySound("childSlide",5);
 
             return new Slide();
         }

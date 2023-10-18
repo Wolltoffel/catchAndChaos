@@ -96,7 +96,6 @@ public class CharacterSelect : MonoBehaviour
                 StartCoroutine(ButtonBlink(prevController,new Vector2(1.15f,1.15f)));
             }
         }
-
     }
 
      void ProcessKeyboardInputsForSelection()

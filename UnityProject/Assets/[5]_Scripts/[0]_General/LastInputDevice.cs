@@ -22,6 +22,8 @@ public class LastInputDevice : MonoBehaviour
 
     static bool hiddenMouseCursor;
 
+    static bool allowOnlyKeyboard;
+
     private void  Awake()
     {
         GameData.SetData(new LastInputDeviceData(InputDevice.Keyboard),"LastInputDeviceData");
@@ -40,6 +42,11 @@ public class LastInputDevice : MonoBehaviour
         Debug.Log (hiddenMouseCursor);
     }
 
+    public static void SetOnlyKeyboard(bool active)
+    {
+        allowOnlyKeyboard = active;
+    }
+
 
     public void RegisterLastDevice()
     {   
@@ -55,7 +62,7 @@ public class LastInputDevice : MonoBehaviour
             
             LastInputDeviceData lastInputDeviceData =new LastInputDeviceData(InputDevice.Keyboard);
 
-            if (lastInputDevice!= ""|DetecMouseButtonPress()|CheckKeyboardKeys()| DetectMouseMovement())
+            if (lastInputDevice!= ""|DetecMouseButtonPress()|CheckKeyboardKeys()| DetectMouseMovement()|allowOnlyKeyboard)
             {
                     if (!hiddenMouseCursor)
                         Cursor.visible = true;
