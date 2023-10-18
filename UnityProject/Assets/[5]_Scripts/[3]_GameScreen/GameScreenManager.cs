@@ -52,12 +52,6 @@ public class GameScreenManager : MonoBehaviour
         cameraScript.GameCamera();
         cameraScript.TrackPlayers(parentObj.transform, childObj.transform);
 
-        //Set up background Sounds
-        if (backgroundAudioClips.Length > 0)
-        {
-            SoundSystem.PlayBackgroundMusic(backgroundAudioClips);
-        }
-
         //Gets data needed for game
         chaosData = GameData.GetData<ChaosData>("ChaosData");
         playTimeData = GameData.GetData<PlayTimeData>("PlayTimeData");
@@ -84,6 +78,12 @@ public class GameScreenManager : MonoBehaviour
 
         if (child.tempScore == 0 && parent.tempScore == 0)
         {
+            //Set up background Sounds
+            if (backgroundAudioClips.Length > 0)
+            {
+                SoundSystem.PlayBackgroundMusic(backgroundAudioClips);
+            }
+
             //Enable Background Blurr
             var profile = Camera.main.gameObject.GetComponentInChildren<Volume>().profile;
             if (profile.TryGet(out DepthOfField depthOfField))
