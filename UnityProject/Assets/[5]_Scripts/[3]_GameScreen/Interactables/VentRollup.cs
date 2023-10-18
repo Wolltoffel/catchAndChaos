@@ -49,10 +49,14 @@ public class VentRollup : MonoBehaviour
 
         if (!isOpen)
         {
+            isOpen = true;
+
             if (coroutine != null)
                 StopCoroutine(coroutine);
 
             coroutine = StartCoroutine(SetVentValue(skinnedMeshRenderer.GetBlendShapeWeight(0), 100));
+
+            //SoundSystem.PlaySound("VentOpen3");
         }
             
         isOpen = true;
