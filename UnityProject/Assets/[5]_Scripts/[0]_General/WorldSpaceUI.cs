@@ -64,6 +64,10 @@ public class WorldSpaceUI : MonoBehaviour
 
       //Add mask
       spawnedPrompt.transform.SetParent(globalMaskInstance.transform);
+
+      //Set Scale
+      float scaleFactor = 3840/Screen.width;
+      spawnedPrompt.transform.localScale = (spawnedPrompt.transform.localScale*scaleFactor)/scaleFactor;
    } 
  
    public static void ShowButtonPrompt(Transform target,string buttonName, out GameObject spriteHolder, string hintName = "")
@@ -89,7 +93,7 @@ public class WorldSpaceUI : MonoBehaviour
       //Set Scale
       spriteHolder.GetComponent<Image>().SetNativeSize();
       Vector3 currentScale = spriteHolder.transform.localScale;
-      spriteHolder.transform.localScale = currentScale*scale;
+      spriteHolder.transform.localScale = (currentScale*scale);
 
       //Set Parent
       spriteHolder.transform.SetParent(parent);
@@ -186,7 +190,7 @@ public class WorldSpaceUI : MonoBehaviour
         if (canvasScaler == null)
             canvasScaler = GetCurrentCanvasHolder().GetComponent<CanvasScaler>();
 
-        float xScreenToScaler = canvasScaler.referenceResolution.x / Screen.width;
+        float xScreenToScaler = canvasScaler.referenceResolution.x /Screen.width;
         float yScreenToScaler = canvasScaler.referenceResolution.y / Screen.height;
 
         Vector3 worldToScreenPoint = Camera.main.WorldToScreenPoint(target.position);
