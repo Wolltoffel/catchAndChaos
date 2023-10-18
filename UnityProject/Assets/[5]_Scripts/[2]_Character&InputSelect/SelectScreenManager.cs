@@ -92,6 +92,9 @@ public class SelectScreenManager : MonoBehaviour
         else
             backButton.SetScreenScreenToJumpTo(ScreenType.MainMenu);
 
+
+        Debug.Log ("Parent+ "+parent.GetType());
+
    }
     
 }
