@@ -18,6 +18,8 @@ public class Pausescreen : MonoBehaviour
 
     string inputDevice;
     bool gamePaused;
+
+    bool allowOnlyKeyboard;
     GameObject pauseScreenInstance;
 
     GameObject overlayScreenInstance;
@@ -76,6 +78,9 @@ public class Pausescreen : MonoBehaviour
         SetMask(true);
         WorldSpaceUI.SetWorldUI(false);
         LastInputDevice.SetMouseCursorGlobally(true);
+
+        allowOnlyKeyboard = LastInputDevice.GetOnlyKeyboard();
+        LastInputDevice.SetOnlyKeyboard(false);
     }
 
     void SetMask(bool active)
@@ -96,6 +101,7 @@ public class Pausescreen : MonoBehaviour
         gamePaused = false;
         Time.timeScale = 1;
         LastInputDevice.SetMouseCursorGlobally(false);
+        LastInputDevice.SetOnlyKeyboard(allowOnlyKeyboard);
     }
 
     void SetDepthOfField(bool active)
