@@ -42,6 +42,8 @@ public class CharacterModelSwitcher : MonoBehaviour
 
     Characters characters;
 
+    Vector3 characterScale;
+
     List<IEnumerator> runningCouroutines = new List<IEnumerator>();
     List<GameObject> spawnedCharacterModels = new List<GameObject>();
 
@@ -249,6 +251,8 @@ public class CharacterModelSwitcher : MonoBehaviour
 
         //Name Models
         UpdateNames();
+
+        characterScale = CharacterInstantiator.GetActiveCharacter(characters).transform.localScale;
    }
 
    void SpawnModels(int[]activeModelIndex,CirclePath circle, out List<GameObject> spawnedModels,Vector3 offsetInput)
@@ -385,12 +389,11 @@ public class CharacterModelSwitcher : MonoBehaviour
     {
         for (int i = 0; i < spawnedCharacterModels.Count; i++)
         {
-            spawnedCharacterModels[i].SetActive(active);
+            if (active)
+                spawnedCharacterModels[i].transform.localScale = characterScale;
+            else
+                spawnedCharacterModels[i].transform.localScale = Vector3.zero;
         }
-
-        Debug.Log ("Set Character Models "+active);
-
-        //spawnedCharacterModels.Clear(); 
     }
 
     public bool ReadyToReceiveInputs()
