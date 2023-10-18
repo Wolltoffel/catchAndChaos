@@ -59,7 +59,18 @@ public class SoundSystem : MonoBehaviour
     /// </summary>
     /// <param name="soundName">The name of the audioclip to play.</param>
     /// <param name="volume">The volume of the sound (Clamped between 0 and 1).</param>
-    public static void PlaySound(string soundName, float volume = -1)
+    public static void PlaySound(string soundName, float delay, float volume = -1)
+    {
+        AudioClip clip = GetAudioClip(soundName);
+        PlaySound(clip, volume, delay);
+    }
+
+    /// <summary>
+    /// Plays the specified sound.
+    /// </summary>
+    /// <param name="soundName">The name of the audioclip to play.</param>
+    /// <param name="volume">The volume of the sound (Clamped between 0 and 1).</param>
+    public static void PlaySound(string soundName, float volume)
     {
         AudioClip clip = GetAudioClip(soundName);
         PlaySound(clip, volume);
@@ -68,17 +79,31 @@ public class SoundSystem : MonoBehaviour
     /// <summary>
     /// Plays the specified sound.
     /// </summary>
+    /// <param name="soundName">The name of the audioclip to play.</param>
+    public static void PlaySound(string soundName)
+    {
+        AudioClip clip = GetAudioClip(soundName);
+        PlaySound(clip);
+    }
+
+    /// <summary>
+    /// Plays the specified sound.
+    /// </summary>
     /// <param name="soundType">The type of sound to play.</param>
     /// <param name="volume">The volume of the sound (Clamped between 0 and 1).</param>
-    public static void PlaySound(AudioClip soundClip, float volume = -1)
+    public static void PlaySound(AudioClip soundClip, float delay = 0, float volume = -1)
     {
         volume = Mathf.Min(1, volume);
-        IEnumerator i = instance._PlaySound(soundClip, volume);
+        IEnumerator i = instance._PlaySound(soundClip, volume, delay);
         instance.StartCoroutine(i);
     }
 
-    private IEnumerator _PlaySound(AudioClip audioClip, float volume)
+    private IEnumerator _PlaySound(AudioClip audioClip, float volume, float delay)
     {
+        //Delay the sound start
+        if (delay > 0)
+            yield return new WaitForSeconds(delay);
+
         // Create a new AudioSource component to play the sound
         AudioSource source = gameObject.AddComponent<AudioSource>();
         source.volume = volume;
@@ -117,7 +142,6 @@ public class SoundSystem : MonoBehaviour
     private IEnumerator _PlayMusic(AudioClip clip, float length, float volume)
     {
         float backgroundMusicVolume = backgroundMusicPlayer.volume;
-        float timeElapsed = 0;
         AudioSource source = gameObject.AddComponent<AudioSource>();
         length = length <= 0 ? clip.length : length;
 
@@ -126,11 +150,7 @@ public class SoundSystem : MonoBehaviour
         source.clip = clip;
         source.Play();
 
-        while (timeElapsed < length)
-        {
-            timeElapsed += Time.deltaTime;
-            yield return null;
-        }
+        yield return new WaitForSeconds(length);
 
         Object.Destroy(source);
         backgroundMusicPlayer.volume = backgroundMusicVolume;
