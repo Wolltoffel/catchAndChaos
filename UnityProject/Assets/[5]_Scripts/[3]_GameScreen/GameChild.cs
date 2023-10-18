@@ -12,6 +12,7 @@ public class GameChild : MonoBehaviour
         temp.IsSlideReady = true;
 
         childState = new ChildTutorial();
+        GameData.GetData<ChildData>("Child").tempSpeed = GameData.GetData<ChildData>("Child").defaultSpeed;
     }
 
     void Update()
@@ -31,6 +32,7 @@ abstract class ChildState : State
     protected static GameObject lastVentInRange;
     static float timerLolly;
     static bool lollyPickedUp;
+    bool runningLollyTimer;
     string lastAction;
 
     protected string inputButton { get => inputDevice + "A"; }
@@ -38,7 +40,18 @@ abstract class ChildState : State
     public ChildState()
     {
         gameObject = CharacterInstantiator.GetActiveCharacter(Characters.Child);
-        GameData.GetData<ChildData>("Child").tempSpeed = GameData.GetData<ChildData>("Child").defaultSpeed;
+    }
+
+    protected IEnumerator LollyTimer()
+    {
+        runningLollyTimer = true;
+        ChildData childData = GameData.GetData<ChildData>("Child");
+        childData.tempSpeed = childData.lollySpeed;
+        Debug.Log("LollyPickUp");
+        yield return new WaitForSeconds(timerLolly);
+        Debug.Log ("Lolly over");
+        childData.tempSpeed = childData.defaultSpeed;
+        runningLollyTimer = false;
     }
 
     protected ChildState CheckAction()
@@ -46,21 +59,10 @@ abstract class ChildState : State
         bool interactableInRange = InteractableInRange(Characters.Child, out GameObject interactableObject, out string actionHint);
 
         //HandleSpeedBoost
-        if (lollyPickedUp)
+        if (lollyPickedUp && !runningLollyTimer)
         {
-            ChildData childData = GameData.GetData<ChildData>("Child");
-            timerLolly -= Time.deltaTime;
-
-            if (timerLolly > 0)
-            {
-                childData.tempSpeed = childData.lollySpeed;
-            }
-
-            else
-            {
-                childData.tempSpeed = childData.defaultSpeed;
-                lollyPickedUp = false;
-            }
+            //ScreenSwitcher.OutsourceCoroutine(LollyTimer());
+            lollyPickedUp = false;
         }
 
         if (interactableInRange)
@@ -176,7 +178,7 @@ abstract class ChildState : State
 
     protected void LollyPickUp(bool isLolly,GameObject interactableObject)
     {
-        if (Input.GetButtonDown(inputButton))
+        if (Input.GetButtonDown(inputButton) && !runningLollyTimer)
         {
             //Lollyspeed
             lollyPickedUp = true;
@@ -187,6 +189,8 @@ abstract class ChildState : State
             timerLolly = GameData.GetData<ChildData>("Child").lollyDuration;
             SoundSystem.PlaySound("eatingLolli");
             SoundSystem.PlayMusic("LollyMusic", 5, 0.5f);
+
+            ScreenSwitcher.OutsourceCoroutine(LollyTimer());
         }     
     }
 

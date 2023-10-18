@@ -47,6 +47,11 @@ public class LastInputDevice : MonoBehaviour
         allowOnlyKeyboard = active;
     }
 
+    public static bool GetOnlyKeyboard()
+    {
+        return allowOnlyKeyboard;
+    }
+
 
     public void RegisterLastDevice()
     {   
@@ -74,8 +79,7 @@ public class LastInputDevice : MonoBehaviour
 
             }
             else
-            {
-                                    
+            {             
                 if (eventSystem!=null
                 &&eventSystem.currentSelectedGameObject==null 
                 && GameData.GetData<LastInputDeviceData>("LastInputDeviceData").inputDevice==InputDevice.Keyboard)
