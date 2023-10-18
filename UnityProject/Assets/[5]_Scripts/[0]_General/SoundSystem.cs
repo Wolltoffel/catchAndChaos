@@ -91,7 +91,7 @@ public class SoundSystem : MonoBehaviour
     /// </summary>
     /// <param name="soundType">The type of sound to play.</param>
     /// <param name="volume">The volume of the sound (Clamped between 0 and 1).</param>
-    public static void PlaySound(AudioClip soundClip, float delay = 0, float volume = -1)
+    public static void PlaySound(AudioClip soundClip, float volume = -1, float delay = 0)
     {
         volume = Mathf.Min(1, volume);
         IEnumerator i = instance._PlaySound(soundClip, volume, delay);
@@ -103,6 +103,9 @@ public class SoundSystem : MonoBehaviour
         //Delay the sound start
         if (delay > 0)
             yield return new WaitForSeconds(delay);
+
+        if (volume <= 0)
+            volume = SFXDefaultVolume;
 
         // Create a new AudioSource component to play the sound
         AudioSource source = gameObject.AddComponent<AudioSource>();
