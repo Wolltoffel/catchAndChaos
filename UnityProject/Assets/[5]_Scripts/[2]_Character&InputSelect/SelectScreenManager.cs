@@ -225,7 +225,6 @@ public class Ready: MenuState
     {   
         AnimationClip animationClip = CharacterInstantiator.GetActiveCharacter(dataPack.character).GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip;
 
-
         if (animationClip.name.Equals("animReady") && startedTimer==false)
         {
             startedTimer = true;
