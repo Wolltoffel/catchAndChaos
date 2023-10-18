@@ -9,6 +9,7 @@ public class DoorSwitch : MonoBehaviour
     private bool isOpen;
     private Vector3 leftDoorOrigin, rightDoorOrigin;
     private Coroutine coroutine;
+    private Coroutine openDoor;
 
     private void Start()
     {
@@ -29,8 +30,20 @@ public class DoorSwitch : MonoBehaviour
 
         if (!isOpen)
         {
+            if (openDoor != null)
+            {
+                StopCoroutine(openDoor);
+            }
             lTarget = leftDoorOrigin - transform.right * 1;
             rTarget = rightDoorOrigin + transform.right * 1;
+        }
+        else
+        {
+            if (openDoor != null)
+            {
+                StopCoroutine(openDoor);
+            }
+            openDoor = StartCoroutine(OpenDoorAfter(10));
         }
 
         coroutine = StartCoroutine(ToggleDoor(leftDoor.transform.position,lTarget,rightDoor.transform.position,rTarget));
@@ -53,5 +66,12 @@ public class DoorSwitch : MonoBehaviour
         rightDoor.transform.position = rTarget;
 
         coroutine = null;
+    }
+
+    private IEnumerator OpenDoorAfter(float openAfter)
+    {
+        yield return new WaitForSeconds(openAfter);
+
+        Toggle();
     }
 }

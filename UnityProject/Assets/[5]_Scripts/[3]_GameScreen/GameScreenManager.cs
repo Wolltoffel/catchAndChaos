@@ -117,6 +117,7 @@ public class GameScreenManager : MonoBehaviour
 
         parent.enabled = true;
         child.enabled = true;
+        SoundSystem.PlaySound("roundStart", 0.3f);
 
         checkForChaosUpdate = StartCoroutine(CheckForChaos());
     }
