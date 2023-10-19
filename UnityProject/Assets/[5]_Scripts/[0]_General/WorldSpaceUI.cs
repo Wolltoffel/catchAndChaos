@@ -62,12 +62,15 @@ public class WorldSpaceUI : MonoBehaviour
       Prompt promptData = new Prompt(spawnedPrompt,coroutine,target);
       prompts.Add (promptData);
 
+      //Save scale
+      Vector3 originalScale = spawnedPrompt.transform.localScale;
+
       //Add mask
       spawnedPrompt.transform.SetParent(globalMaskInstance.transform);
 
       //Set Scale
       float scaleFactor = 3840/Screen.width;
-      spawnedPrompt.transform.localScale = (spawnedPrompt.transform.localScale*scaleFactor)/scaleFactor;
+      spawnedPrompt.transform.localScale = originalScale/scaleFactor;
    } 
  
    public static void ShowButtonPrompt(Transform target,string buttonName, out GameObject spriteHolder, string hintName = "")
