@@ -1180,9 +1180,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3fecd5f7cb81be48bbcaba722e2acfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amountOfDestructables: 5
+  amountOfDestructables: 6
   highlightShader: {fileID: -6465566751694194690, guid: d9a2720d6594fc74e8731f2e0d8997ab, type: 3}
-  emissionColor: {r: 0.5921569, g: 0.9137255, b: 0.28235295, a: 0}
+  emissionColor: {r: 0.4086421, g: 0.8301887, b: 0.13627622, a: 1}
   emissionStrength: 2
 --- !u!1 &5714107526777891168
 GameObject:
