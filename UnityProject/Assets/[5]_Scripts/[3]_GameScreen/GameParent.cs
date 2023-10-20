@@ -375,7 +375,7 @@ class ParentCatch : ParentBaseState
                     gameObject.transform.position + Vector3.up,
                     CharacterInstantiator.GetActiveCharacter(Characters.Child).transform.position + Vector3.up,
                     LayerMask.GetMask("Walls")
-                    ))
+                    ) && GameData.GetData<ChildData>("Child").isCatchable)
                 {
                     movement.StopCatch();
                     SoundSystem.PlaySound("Catch");

@@ -21,6 +21,7 @@ public class ChildData : PlayerData
     [HideInInspector] public float tempSpeed;
     public float timeToDestroy;
     public int chaosScorePerChaosObject;
+    public bool isCatchable = true;
 
     private bool hasReturnedTrue = true;
     public bool IsSlideReady { get {

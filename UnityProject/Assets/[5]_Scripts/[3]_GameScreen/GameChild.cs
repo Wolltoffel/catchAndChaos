@@ -339,6 +339,7 @@ class Slide : ChildState
     public Slide()
     {
         movement = CharacterInstantiator.GetActiveCharacter(Characters.Child).GetComponent<MovementScript>();
+        GameData.GetData<ChildData>("Child").isCatchable = false;
     }
 
     public override ChildState UpdateState()
@@ -349,6 +350,7 @@ class Slide : ChildState
             ventRollUp.CloseVent();
             lastVentInRange = null;
             ScreenSwitcher.OutsourceCoroutine(DecreaseSlideCoolDown(3));
+            GameData.GetData<ChildData>("Child").isCatchable = true;
             return new Idle();
         }
             
