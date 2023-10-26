@@ -232,11 +232,16 @@ public class MovementScript : MonoBehaviour
     private Vector3 GetSlideDir(GameObject vent)
     {
         Vector3 ventPos = vent.transform.position;
-        Vector3 ventDir = vent.transform.forward;
+        Vector3 ventDir = vent.transform.up; //Up because vent asset is rotated
+
+        Debug.Log ("VentDirBefore "+ventDir);
         Vector3 relativePos = Vector3.Normalize(transform.position - ventPos);
+
         float scalar = Vector3.Dot(relativePos, ventDir) > 0 ? -1 : 1;
         ventDir = new Vector3(ventDir.x, 0, ventDir.z).normalized;
 
+        Debug.Log ("VentPos "+ventPos);
+        Debug.Log ("VentDir "+ventDir);
         return ventDir * scalar;
     }
     #endregion

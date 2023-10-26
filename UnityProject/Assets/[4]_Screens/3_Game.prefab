@@ -1181,9 +1181,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amountOfDestructables: 6
-  highlightShader: {fileID: -6465566751694194690, guid: d9a2720d6594fc74e8731f2e0d8997ab, type: 3}
+  highlightShader: {fileID: -6465566751694194690, guid: 2b132952b42c01c4f84cbf4cb128f8d3, type: 3}
   emissionColor: {r: 0.4086421, g: 0.8301887, b: 0.13627622, a: 1}
   emissionStrength: 2
+  highlightMaterial: {fileID: -876546973899608171, guid: d9a2720d6594fc74e8731f2e0d8997ab, type: 3}
 --- !u!1 &5714107526777891168
 GameObject:
   m_ObjectHideFlags: 0
@@ -1833,6 +1834,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -11.012
       objectReference: {fileID: 0}
+    - target: {fileID: 551025861390806145, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 599620136677800842, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
       value: LollySpawnPoint
@@ -1840,6 +1845,10 @@ PrefabInstance:
     - target: {fileID: 774663971522137898, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
       value: Ignore
+      objectReference: {fileID: 0}
+    - target: {fileID: 968980457246132573, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 1106975779169182910, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
@@ -1864,6 +1873,10 @@ PrefabInstance:
     - target: {fileID: 2033181724852938828, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_Shadows.m_Type
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2071955845070660604, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Vent
       objectReference: {fileID: 0}
     - target: {fileID: 2268447374936176050, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
@@ -1893,6 +1906,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3191314282493795272, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 3328572530911224600, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Vent
+      objectReference: {fileID: 0}
     - target: {fileID: 3355522749023979620, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
       value: Plushie
@@ -1900,6 +1921,10 @@ PrefabInstance:
     - target: {fileID: 3389813693373960456, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3440957874688880944, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Vent
       objectReference: {fileID: 0}
     - target: {fileID: 3459372471376739102, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
@@ -1937,9 +1962,17 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Door
       objectReference: {fileID: 0}
+    - target: {fileID: 4206403857842539072, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 4297916001388143523, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
       value: Plushie
+      objectReference: {fileID: 0}
+    - target: {fileID: 4538444966995984252, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4543296225549451553, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
@@ -1952,6 +1985,10 @@ PrefabInstance:
     - target: {fileID: 4740258173026330593, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
       value: Ignore
+      objectReference: {fileID: 0}
+    - target: {fileID: 4773766141648017234, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Vent
       objectReference: {fileID: 0}
     - target: {fileID: 4855181143334485436, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
@@ -2049,6 +2086,18 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Ignore
       objectReference: {fileID: 0}
+    - target: {fileID: 6482177422886099230, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Vent
+      objectReference: {fileID: 0}
+    - target: {fileID: 6618884873411341158, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6618884873411341158, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.005
+      objectReference: {fileID: 0}
     - target: {fileID: 6714984567277880643, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
       value: Untagged
@@ -2064,6 +2113,10 @@ PrefabInstance:
     - target: {fileID: 7058459143131470819, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
       value: LollySpawnPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 7161856928508678632, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 7330038950761631001, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
@@ -2089,9 +2142,17 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Vent
       objectReference: {fileID: 0}
+    - target: {fileID: 7836758943961964486, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Vent
+      objectReference: {fileID: 0}
     - target: {fileID: 8223131665747525944, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
       value: Ignore
+      objectReference: {fileID: 0}
+    - target: {fileID: 8255679717533579127, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Vent
       objectReference: {fileID: 0}
     - target: {fileID: 8728228773147878455, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
@@ -2108,6 +2169,10 @@ PrefabInstance:
     - target: {fileID: 9017186860986393143, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
       propertyPath: m_TagString
       value: Ignore
+      objectReference: {fileID: 0}
+    - target: {fileID: 9164753573368051561, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5859681585659379149, guid: 95e3ad831676c5d4db49157184ee3545, type: 3}
