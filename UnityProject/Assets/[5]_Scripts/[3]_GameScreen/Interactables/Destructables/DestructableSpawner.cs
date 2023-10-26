@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DestructableSpawner : MonoBehaviour
@@ -11,6 +12,8 @@ public class DestructableSpawner : MonoBehaviour
     [SerializeField] Shader highlightShader;
     [SerializeField] Color emissionColor;
     [SerializeField] float emissionStrength;
+
+    [SerializeField] Material highlightMaterial;
     
     
     GameObject randomDestructable;
@@ -61,7 +64,8 @@ public class DestructableSpawner : MonoBehaviour
        {    
             materials.Add (materialImport[i]);
             
-            Material highlightMaterial = new Material(highlightShader);
+            //Material highlightMaterial = new Material(highlightShader);
+            Material highlightMaterial = this.highlightMaterial;
             highlightMaterial.SetColor("_EmissionColor", emissionColor*emissionStrength);
             materials.Add (highlightMaterial);
        }
