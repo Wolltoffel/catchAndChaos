@@ -62,7 +62,7 @@ Material:
     - _EmissionStrength: 1
     - _Frequency: 0
     - _FresnelInput: 0
-    - _FresnelStrength: 50
+    - _FresnelStrength: 5
     - _QueueControl: 0
     - _QueueOffset: 0
     - _RimPower: 1

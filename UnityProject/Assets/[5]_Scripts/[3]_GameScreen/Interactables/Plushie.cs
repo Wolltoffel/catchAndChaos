@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Net;
 using System.Security.Cryptography;
 using Unity.Burst.CompilerServices;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class Plushie : MonoBehaviour
@@ -126,16 +128,33 @@ public class Plushie : MonoBehaviour
     IEnumerator Blink()
     {
         float startTime = Time.time;
-        float duration = 40f;
-        float target = 2*Mathf.PI;
+        float duration = 0.3f;
         float currentVal = 0;
-        while(target>=currentVal)
-        {
-            float t = Time.time-startTime/(1/duration);
-            currentVal = t;
-            float fresnelValue = Mathf.Sin(currentVal)+1;
-            AdjustFresnelInput(fresnelValue*5);
+        bool increasing = true;
+
+        while (true)
+        {   
+            float t = (Time.time-startTime)/duration;
+            if (increasing)
+            {
+                currentVal = Mathf.Lerp(0,1,t);
+                if (currentVal>=1)
+                {
+                    increasing = false;
+                    startTime =Time.time;
+                }       
+            }
+            else
+            {
+                currentVal = Mathf.Lerp(1,0,t);
+                if (currentVal<=0)
+                    break;
+            }
+
+            AdjustFresnelInput(currentVal);   
+
             yield return null;
+
         }
     }
 
