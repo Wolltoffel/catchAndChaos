@@ -910,7 +910,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d154620e97dd25845811f11da7c73468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startScreen: 3
+  startScreen: 1
   loadingScreen: {fileID: 4540070008507954311, guid: 385271db481224000b0ee8fb5baffa79, type: 3}
   loadingScreenCompact: {fileID: 4540070008507954311, guid: bac59f1b3499e41bebee928ccf1d9a03, type: 3}
   mainMenu: {fileID: 8617863531841441982, guid: 90dee2eefa574c145bcd64903fe1bb60, type: 3}
