@@ -349,7 +349,7 @@ class Slide : ChildState
             VentRollup ventRollUp = lastVentInRange.GetComponent<VentRollup>();
             ventRollUp.CloseVent();
             lastVentInRange = null;
-            ScreenSwitcher.OutsourceCoroutine(DecreaseSlideCoolDown(3));
+            ScreenSwitcher.OutsourceCoroutine(DecreaseSlideCoolDown(1));
             GameData.GetData<ChildData>("Child").isCatchable = true;
             return new Idle();
         }

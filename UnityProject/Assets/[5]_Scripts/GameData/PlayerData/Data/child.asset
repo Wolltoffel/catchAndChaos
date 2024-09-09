@@ -13,17 +13,17 @@ MonoBehaviour:
   m_Name: child
   m_EditorClassIdentifier: 
   key: Child
-  tempScore: 0
-  tempInputDevice: K1
+  tempScore: 2
+  tempInputDevice: J1
   characterAssets: {fileID: 11400000, guid: e14adfe80b0e29745a2d7ae43e53559c, type: 2}
   tempSlideCoolDown: 0
   stunned: 0
-  slideCoolDown: 0
   stunTime: 5
   lollyDuration: 5
   lollySpeed: 2
-  defaultSpeed: 1
-  tempSpeed: 1
-  timeToDestroy: 5
-  chaosScorePerChaosObject: 30
+  defaultSpeed: 1.15
+  tempSpeed: 1.2
+  timeToDestroy: 2
+  chaosScorePerChaosObject: 40
+  isCatchable: 1
   destroyParticles: {fileID: 2992653543910639731, guid: 1ad43715c83d95843996e69c4f0521af, type: 3}
